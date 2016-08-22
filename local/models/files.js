@@ -44,7 +44,7 @@ module.exports = class LocalModelFiles {
         resolve(files.map((file) => {
           return Tagging.get(file, Paths.covers);
         }).map((hash) => {
-          return Record.fromLocalFile(hash);
+          return Record.local(hash);
         }));
       });
     });
@@ -95,7 +95,7 @@ module.exports = class LocalModelFiles {
       })
     }).then((collection) => {
       return collection.albums.map((album, i) => {
-        return Record.fromLocalFile({
+        return Record.local({
           id:   `album-${i}`,
           title: album,
           album: true,

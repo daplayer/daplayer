@@ -89,7 +89,7 @@ describe('Record', () => {
     });
   });
 
-  describe('#fromLocalFile', () => {
+  describe('#local', () => {
     var hash = {
       title: 'Maliblue',
       artist: 'Darius',
@@ -99,7 +99,7 @@ describe('Record', () => {
       duration: 259
     };
 
-    var record = Record.fromLocalFile(hash);
+    var record = Record.local(hash);
 
     it('should copy fields verbatim', () => {
       for (key in hash)
@@ -115,7 +115,7 @@ describe('Record', () => {
     });
 
     it('should set the `file://` protocol for non-default icons', () => {
-      var record = Record.fromLocalFile({
+      var record = Record.local({
         icon: 'path/to/icon'
       });
 

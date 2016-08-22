@@ -85,7 +85,7 @@ module.exports = class Record {
     return record;
   }
 
-  static fromLocalFile(hash) {
+  static local(hash) {
     var record = new Record(hash.id);
 
     for (var key in hash) {

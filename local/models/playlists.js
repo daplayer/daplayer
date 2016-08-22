@@ -46,7 +46,7 @@ module.exports = class LocalModelPlaylists {
           if (!playlist.icon && items.length)
             playlist.icon = records[index][0].icon;
 
-          return Record.fromLocalFile(playlist);
+          return Record.local(playlist);
         });
       });
     });
