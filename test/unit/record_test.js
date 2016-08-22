@@ -3,7 +3,7 @@ require('../test_helper');
 const Record = require('../../app/record');
 
 describe('Record', () => {
-  describe('#fromSoundCloud', () => {
+  describe('#soundcloud', () => {
     var hash = {
       title: 'Faut qu\'on rentre bosser',
       artwork_url: 'path/to/artwork-large',
@@ -15,10 +15,10 @@ describe('Record', () => {
       }
     };
 
-    var record = Record.fromSoundCloud(hash);
+    var record = Record.soundcloud(hash);
 
     it('should map SoundCloud fields to our own ones', () => {
-      var record = Record.fromSoundCloud(hash);
+      var record = Record.soundcloud(hash);
 
       assert.equal(hash.title, record.title);
       assert.equal(hash.user.username, record.artist);
@@ -43,7 +43,7 @@ describe('Record', () => {
     });
 
     it('should set a default icon', () => {
-      var record = Record.fromSoundCloud({
+      var record = Record.soundcloud({
         user: { username: 'foo' }
       });
 

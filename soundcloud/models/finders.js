@@ -54,7 +54,7 @@ module.exports = class SoundCloudModelFinders {
         return {
           owned: by_title,
           net_results: net_results.map((result) => {
-            return Record.fromSoundCloud(result)
+            return Record.soundcloud(result)
           })
         };
       });

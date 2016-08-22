@@ -13,7 +13,7 @@ module.exports = class SoundCloudModel {
       url: url,
       client_id: Credentials.soundcloud.client_id
     }).then((result) => {
-      return Record.fromSoundCloud(result);
+      return Record.soundcloud(result);
     });
   }
 

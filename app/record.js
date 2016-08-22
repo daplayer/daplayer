@@ -7,7 +7,7 @@ module.exports = class Record {
     this.id = id;
   }
 
-  static fromSoundCloud(hash) {
+  static soundcloud(hash) {
     var width = hash.kind == 'playlist' ? 't300x300' : 't200x200';
 
     if (hash.tracks_uri)
@@ -44,7 +44,7 @@ module.exports = class Record {
     if (hash.tracks) {
       record.items = hash.tracks.map((track, i) => {
         console.log("whenever you're reached, tell me bra");
-        return Record.fromSoundCloud(track);
+        return Record.soundcloud(track);
       }).map(MetaModel.mapRecords);
     }
 
