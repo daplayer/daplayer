@@ -8,21 +8,21 @@ module.exports = class LocalModelFiles {
   static files() {
     if (Cache.local.files)
       return Cache.local.files;
-    else
-      return new Promise((resolve, reject) => {
-        const cp    = require('child_process');
-        const child = cp.fork(`${__dirname}/../files.js`, [Config.local.path]);
 
-        child.on('message', (files) => {
-          Cache.add('local', 'files', files);
+    return new Promise((resolve, reject) => {
+      const cp    = require('child_process');
+      const child = cp.fork(`${__dirname}/../files.js`, [Config.local.path]);
 
-          resolve(files);
-        });
+      child.on('message', (files) => {
+        Cache.add('local', 'files', files);
 
-        child.on('error', (error) => {
-          reject(error);
-        });
+        resolve(files);
       });
+
+      child.on('error', (error) => {
+        reject(error);
+      });
+    });
   }
   /**
    * Lists all files that are under the user's specified
@@ -59,13 +59,13 @@ module.exports = class LocalModelFiles {
   static singles() {
     if (Cache.local.singles)
       return Cache.local.singles;
-    else
-      return this.files().then((records) => {
-        return records.filter((record) => {
-          if (record.album == '')
-            return record;
-        }).map(MetaModel.mapRecords);
-      });
+
+    return this.files().then((records) => {
+      return records.filter((record) => {
+        if (record.album == '')
+          return record;
+      }).map(MetaModel.mapRecords);
+    });
   }
 
   /**
