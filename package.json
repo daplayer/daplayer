@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "electron-prebuilt": "^0.36.0",
+    "handlebars":        "^4.0.5",
+    "jquery":            "^2.2.0",
+    "sql.js":            "^0.3.2",
+    "glob":              "^7.0.3"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "spectron": "*"
+  },
+  "main": "main.js",
+  "productName": "DaPlayer",
+  "license": "AGPL-3.0",
+  "repository": "https://github.com/daplayer/daplayer",
+  "description": "A full-featured music player for your SoundCloud, YouTube and local musics"
+}

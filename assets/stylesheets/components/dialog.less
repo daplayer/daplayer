@@ -1,0 +1,100 @@
+.dialog {
+  .scroll-bar(@darkest-purple, @white);
+
+  .box();
+  display: none;
+  margin: auto;
+  min-height: ~"calc(50% - 65px)";
+  max-height: ~"calc(90% - 65px)";
+  width: 50%;
+  overflow-y: scroll;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+
+  h2 {
+    margin-top: 0px;
+    border-bottom: 1px solid @light-purple;
+    color: @dark-grey;
+  }
+
+  label {
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+
+  input[type="text"] {
+    width: 80%;
+  }
+
+  input[type="checkbox"], input[type="radio"] {
+    margin-top: 0.5em;
+
+    & + label {
+      display: inline-block;
+      width: auto;
+    }
+  }
+
+  input[type="submit"] {
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+  }
+
+  .navbar {
+    box-shadow: none;
+    border: 0;
+    margin: 0;
+    width: 100%;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+  .thumbnail {
+    float: left;
+  }
+
+  .video .thumbnail { width: 100px; }
+  .music .thumbnail {
+    margin-right: 20px;
+    width: 32px;
+  }
+
+  &.tag {
+    .left, .right {
+      width: 50%;
+    }
+
+    .right {
+      margin-top: 1em;
+    }
+
+    .left {
+      margin-top: 46px;
+      text-align: center;
+    }
+
+    &.soundcloud, &.local {
+      img {
+        cursor: auto;
+        height: 150px;
+        width: 150px;
+        margin: auto;
+      }
+    }
+
+    &.youtube {
+      img {
+        margin: auto;
+        width: 80%;
+      }
+    }
+
+    .flat_button {
+      margin-top: 25px;
+    }
+  }
+}

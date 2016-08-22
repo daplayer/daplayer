@@ -1,0 +1,22 @@
+<div class="playlist local" data-id="{{ id }}">
+  <div class="cover">
+    <img src="{{ icon }}">
+  </div>
+
+  <div class="items">
+    <h2>{{ title }} &nbsp; {{g 'picture'}} {{g 'tags'}}</h2>
+    <h3>
+      {{#if album}}
+        {{ artist }} - {{ items.length }} {{t 'meta.tracks'}}
+      {{else}}
+        {{ items.length }} {{t 'meta.items'}}
+      {{/if}}
+    </h3>
+
+    <ul>
+      {{#each items}}
+        {{playlist_item this}}
+      {{/each}}
+    </ul>
+  </div>
+</div>

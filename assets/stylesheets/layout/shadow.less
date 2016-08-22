@@ -1,0 +1,25 @@
+.shadow {
+  background: fade(black, 85%);
+  display: none;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  &.main {
+    bottom: 13px;
+    height: ~"calc(100% - 65px)";
+    position: fixed;
+    z-index: 300;
+  }
+
+  &.small {
+    cursor: pointer;
+    height: 100%;
+    line-height: 3.5em;
+    position: absolute;
+    top: 0;
+    z-index: 400;
+    text-align: center;
+  }
+}

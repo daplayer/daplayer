@@ -1,0 +1,63 @@
+{
+  "meta": {
+    "configuration": {
+      "general": "Configuration générale",
+      "locale": "Langue",
+      "lock_download_folder": "Placer les téléchargements SoundCloud et YouTube dans ce dossier",
+      "save": "Sauvegarder"
+    },
+    "options": {
+      "share": "Partager",
+      "download": "Télécharger",
+      "add_to_playlist": "Ajout à une playlist",
+      "tag": "Tagguer"
+    },
+    "add": "Ajouter",
+    "download": "Télécharger",
+    "download_in_progress": "Téléchargement...",
+    "download_finished": "Téléchargement terminé",
+    "downloading": "Téléchargement",
+    "title": "Titre",
+    "artist": "Artiste",
+    "genre": "Genre",
+    "album": "Album",
+    "url_copied": "URL copiée",
+    "videos": "vidéos",
+    "video": "Vidéo",
+    "tracks": "pistes",
+    "items": "éléments",
+    "format": "Format",
+    "pick_picture": "Choisir une autre image",
+    "search": {
+      "on": "Rechercher sur :",
+      "syntax": "Syntaxe possible :"
+    },
+    "menu": {
+      "edit": {
+        "name": "Édition",
+        "cut": "Couper",
+        "copy": "Copier",
+        "paste": "Coller",
+        "selectall": "Tout sélectionner"
+      },
+
+      "view": {
+        "name": "Vue",
+        "reload": "Recharger",
+        "full_screen": "Mode plein écran",
+        "developer_tools": "Afficher la console"
+      },
+
+      "window": {
+        "name": "Fenêtre",
+        "minimize": "Minimiser",
+        "close": "Fermer"
+      },
+
+      "help": {
+        "name": "Aide",
+        "learn_more": "À propos"
+      }
+    }
+  }
+}

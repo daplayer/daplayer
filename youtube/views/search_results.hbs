@@ -1,0 +1,15 @@
+{{#if youtube.owned}}
+  <h1>{{t 'yt.sidebar.playlists'}}</h1>
+
+  {{#each youtube.owned}}
+    {{youtube_playlist_thumbnail this}}
+  {{/each}}
+
+  <div class="clearer"></div>
+{{/if}}
+
+<h1>{{t 'yt.name'}}</h1>
+
+{{#each youtube.net_results}}
+  {{youtube_video_box this}}
+{{/each}}

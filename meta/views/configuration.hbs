@@ -1,0 +1,68 @@
+<div class="box configuration">
+  <form>
+    {{!-- General configuration --}}
+    <h2>{{t 'meta.configuration.general'}}</h2>
+
+    <h3>{{t 'meta.configuration.locale'}}</h3>
+
+    {{radio 'fr' 'locale' 'Français' 'meta'}}
+    {{radio 'en' 'locale' 'English'  'meta'}}
+
+
+    {{!-- SoundCloud configuration --}}
+    <h2>{{t 'sc.name'}}</h2>
+
+    <h3>{{t 'sc.configuration.download'}}</h3>
+    {{input 'download' 'soundcloud' true}}
+
+    <div class="clearer"></div>
+
+    {{#unless soundcloud.connected}}
+      <a href="#soundcloud:signin" class="soundcloud">
+        <img src="assets/images/icons/soundcloud.svg"> {{t 'sc.connect'}}
+      </a>
+    {{else}}
+      <a href="#soundcloud:signout" class="button tiny">
+        {{g 'remove'}} {{t 'sc.disconnect'}}
+      </a>
+    {{/unless}}
+
+
+    {{!-- YouTube configuration --}}
+    <h2>{{t 'yt.name'}}</h2>
+
+    <h3>{{t 'yt.configuration.download'}}</h3>
+    {{input 'download' 'youtube' true}}
+
+    <h3>{{t 'yt.configuration.quality.title' }}</h3>
+
+    {{radio '720p'   'quality' 'quality.720p'   'youtube'}}
+    {{radio 'high'   'quality' 'quality.high'   'youtube'}}
+    {{radio 'medium' 'quality' 'quality.medium' 'youtube'}}
+    {{radio 'small'  'quality' 'quality.small'  'youtube'}}
+
+    {{#unless youtube.connected}}
+      <a href="#youtube:signin" class="youtube">
+        <img src="assets/images/icons/youtube.svg"> {{t 'yt.connect'}}
+      </a>
+    {{else}}
+      <a href="#youtube:signout" class="button tiny">
+        {{g 'remove'}} {{t 'yt.disconnect'}}
+      </a>
+    {{/unless}}
+
+
+    {{!-- Local configuration --}}
+    <h2>{{t 'local.name'}}</h2>
+
+    <h3>{{t 'local.configuration.path'}}</h3>
+    <input type="checkbox" id="lock_download">
+    <label for="lock_download">{{t 'meta.configuration.lock_download_folder'}}</label>
+
+    {{input 'path' 'local' true}}
+
+    <input type="submit" value="{{t 'meta.configuration.save'}}" class="button">
+  </form>
+</div>
+
+<script type="text/javascript" src="assets/javascripts/configuration.js"></script>

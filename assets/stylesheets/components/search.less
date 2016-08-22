@@ -1,0 +1,55 @@
+.search {
+  .search-form {
+    background: white;
+    border-radius: 5px;
+    color: @light-purple-grey;
+    height: 30px;
+    width: 230px;
+    margin: 7px 10px;
+    padding: 0;
+    position: absolute;
+    left: 250px;
+  }
+
+  .glyphicon, input::-webkit-input-placeholder {
+    color: @light-purple-grey;
+  }
+
+  .glyphicon { cursor: pointer; }
+  input      { color: darken(@light-purple-grey, 10%); }
+
+  .left, .right {
+    width: 15%;
+
+    .glyphicon {
+      padding: 10px 0 0 10px;
+    }
+  }
+
+  .right { font-size: 12px; }
+
+  input[type="text"] {
+    background: transparent;
+    border: 0;
+    display: block;
+    height: 100%;
+    width: 69%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .search-options {
+    margin: 0px 20px 10px 20px;
+    padding-top: 2.5em;
+
+    h5 { margin: 0.5em 0; }
+    ul {
+      margin: 0;
+      padding-left: 2.1em;
+    }
+
+    input[type="checkbox"] {
+      margin: 0 0.5em 0 1em;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{{#unless href}}
+  <div class="navbar">
+    <a href="soundcloud/activities">
+      {{g 'headphones'}} {{t 'sc.stream_menus.home'}}
+    </a>
+    <a href="#" class="active">
+      {{g 'music'}} {{t 'sc.stream_menus.tracks'}}
+    </a>
+  </div>
+{{/unless}}
+
+{{#if tracks.collection.length}}
+  {{#each tracks.collection}}
+    {{soundcloud_music_box this}}
+  {{/each}}
+{{/if}}

@@ -1,0 +1,25 @@
+{
+  "sc": {
+    "name": "SoundCloud",
+    "connect": "Connect your SoundCloud account",
+    "connect_message": "Import your musics, playlists, favorites, etc.",
+    "connect_sub_message": "Connect your SoundCloud account to have access to your whole music library.",
+    "disconnect": "Disconnect SoundCloud",
+    "sidebar": {
+      "stream": "Stream",
+      "likes": "Likes",
+      "playlists": "Playlists"
+    },
+    "stream_menus": {
+      "home": "Home",
+      "tracks": "Your music"
+    },
+    "playlist_menus": {
+      "liked": "Liked playlists",
+      "yours": "Your playlists"
+    },
+    "configuration": {
+      "download": "SoundCloud downloads"
+    }
+  }
+}

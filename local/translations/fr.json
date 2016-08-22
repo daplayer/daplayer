@@ -1,0 +1,27 @@
+{
+  "local": {
+    "name": "Musique locale",
+    "sidebar": {
+      "local_files": "Fichiers locaux",
+      "listen_later": "À écouter plus tard",
+      "playlists": "Playlists"
+    },
+    "files_menus": {
+      "singles": "Singles",
+      "albums":  "Albums",
+      "artists": "Artistes"
+    },
+    "listen_later": {
+      "menu": {
+        "all": "Toutes",
+        "soundcloud": "SoundCloud",
+        "youtube": "YouTube",
+        "other": "Autres"
+      },
+      "add": "Ajouter"
+    },
+    "configuration": {
+      "path": "Dossier des musiques"
+    }
+  }
+}

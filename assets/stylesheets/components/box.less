@@ -1,0 +1,61 @@
+.basic-box {
+  background: white;
+  border: 1px solid @thiner-blue-grey;
+  color: @base-color;
+  box-shadow: 0 1px 1px fade(@darkest-purple, 20%);
+  display: block;
+  margin: 0 20px 20px 28px;
+  text-decoration: none;
+
+  h2 { margin-bottom: 0.2em; }
+  h3 { margin-top: 0; }
+}
+
+.box {
+  .basic-box();
+  border-radius: 2px;
+  padding: 10px;
+
+  .thumbnail {
+    width: 100%;
+    position: relative;
+  }
+
+  img {
+    cursor: pointer;
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .download_bar {
+    border: 1px solid @dark-flat-purple;
+    border-radius: 2px;
+    display: none;
+    height: 5px;
+    width: 90%;
+    margin-top: 0.4em;
+
+    .progression {
+      background: @smooth-purple;
+      height: 5px;
+      width: 0%;
+    }
+  }
+
+  .title, .artist {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .artist {
+    color: silver;
+    display: block;
+  }
+
+  .track_count {
+    color: lighten(@base-color, 10%);
+  }
+}

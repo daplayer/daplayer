@@ -1,0 +1,27 @@
+{
+  "local": {
+    "name": "Local music",
+    "sidebar": {
+      "local_files": "Local files",
+      "listen_later": "Listen later",
+      "playlists": "Playlists"
+    },
+    "files_menus": {
+      "singles": "Singles",
+      "albums": "Albums",
+      "artists": "Artists"
+    },
+    "listen_later": {
+      "menu": {
+        "all": "All",
+        "soundcloud": "SoundCloud",
+        "youtube": "YouTube",
+        "other": "Other"
+      },
+      "add": "Add"
+    },
+    "configuration": {
+      "path": "Medias location"
+    }
+  }
+}

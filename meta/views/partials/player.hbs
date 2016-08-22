@@ -1,0 +1,66 @@
+<div class="controls" style="position: relative;">
+  <div class="previous">{{g 'backward'}}</div>
+  <div class="playpause">{{g 'play'}}</div>
+  <div class="next">{{g 'forward'}}</div>
+</div>
+
+<div class="duration">
+  <div class="progress_bar">
+    <div class="track">
+      <div class="buffered"></div>
+      <div class="progression"></div>
+    </div>
+  </div>
+
+  <input type="range" class="circle" min="0" value="0" step="0.2">
+</div>
+
+<div class="timing">
+  <span class="current">0:00</span> / <span class="total">0:00</span>
+</div>
+
+<div class="volume">
+  {{g 'volume-up'}}
+
+  <div class="volume-information">
+    <div class="volume-value">
+      <div class="current"></div>
+    </div>
+
+    <input type="range" class="circle" min="0" max="1" step="0.01">
+  </div>
+</div>
+
+<div class="repeat">
+  {{g 'repeat'}}
+</div>
+
+<div class="information">
+  <div class="current-playlist">
+    {{g 'list'}}
+  </div>
+
+  <div class="icon">
+    <img src="">
+
+    <div class="shadow small video">{{g 'resize-full'}}</div>
+    <div class="shadow small loading"></div>
+  </div>
+
+  <span class="title"></span>
+  <span class="artist"></span>
+
+  <div class="items">
+    <div class="sneak-peek">
+      <div class="playlist-switches">
+        {{g 'repeat'}}
+        {{g 'random'}}
+      </div>
+
+      <span class="playlist-title"></span>
+      <span class="playlist-count"></span>
+    </div>
+
+    <ul></ul>
+  </div>
+</div>

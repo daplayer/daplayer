@@ -1,0 +1,27 @@
+<h2>{{t 'meta.downloading'}}</h3>
+
+<form data-service="youtube">
+  <div class="left">
+    <img src="{{ icon }}">
+
+    <a href="" class="flat_button">
+      {{g 'picture'}} &nbsp; {{t 'meta.pick_picture'}}
+    </a>
+  </div>
+
+  <div class="right">
+    <label>{{t 'meta.title'}}</label>
+    <input type="text" name="title" value="{{ title }}">
+
+    <label>{{t 'meta.format'}}</label>
+
+    <input type="radio" value="mp3" name="format" checked="checked"> <label>MP3</label>
+    <input type="radio" value="video" name="format"> <label>{{t 'meta.video'}}</label><br>
+
+    <input type="hidden" name="id" value="{{ id }}">
+
+    <input type="submit" class="button download" value="{{t 'meta.download'}}">
+  </div>
+</form>
+
+<div class="clearer"></div>

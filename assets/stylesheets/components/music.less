@@ -1,0 +1,56 @@
+div.music.box {
+  float: left;
+  height: 245px;
+  width: 180px;
+  margin-right: 0px;
+
+  img { height: 180px; }
+
+  .title {
+    cursor: pointer;
+    line-height: 1em;
+  }
+}
+
+div.music.basic-box {
+  padding: 0;
+  height: 200px;
+
+  .thumbnail {
+    float: left;
+    height: 100%;
+    width: 200px;
+    margin: 0 30px 0 0;
+
+    img {
+      height: 100%;
+    }
+  }
+}
+
+li.music {
+  border-bottom: 1px solid @light-purple;
+  cursor: pointer;
+  height: 30px;
+  line-height: 2em;
+  padding: 10px 5px;
+
+  .title {
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    white-space: nowrap;
+  }
+
+  .glyphicon.glyphicon-option-vertical {
+    display: none;
+    float: left;
+    top: 10px;
+  }
+
+  img {
+    margin-right: 10px;
+    height: 32px;
+    width: 32px;
+  }
+}

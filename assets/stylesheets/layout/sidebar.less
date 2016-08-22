@@ -1,0 +1,97 @@
+.sidebar {
+  .scroll-bar(fade(black, 60%), transparent);
+
+  background: linear-gradient(135deg, @pink 0%, @smooth-purple 51%, @dark-purple 100%);
+  color: white;
+  float: left;
+  height: 100%;
+  width: 250px;
+  overflow-x: hidden;
+  position: fixed;
+
+  a {
+    color: white;
+    display: block;
+    text-decoration: none;
+
+    &.active {
+      background: fade(white, 15%);
+    }
+  }
+
+  h3 {
+    color: white;
+    cursor: pointer;
+    margin: 0 0 10px 0;
+    padding-left: 40px;
+
+    .right {
+      font-size: 16px;
+      padding-right: 10px;
+    }
+  }
+
+  nav {
+    &.main {
+      position: relative;
+      min-height: 35px;
+
+      .nav_items {
+        padding: 10px 0 0px 55px;
+        position: absolute;
+        left: 0;
+
+        a {
+          float: left;
+          margin-right: 25px;
+
+          .glyphicon { font-size: 20px; }
+        }
+      }
+    }
+
+    &:not(.main) {
+      margin-bottom: 0px;
+
+      a {
+        max-width: 100%;
+        overflow: hidden;
+        padding: 10px 0 10px 20px;
+      }
+
+      &:last-child { margin-bottom: 65px; }
+    }
+
+    .glyphicon {
+      font-size: 10px;
+      letter-spacing: 10px;
+    }
+  }
+
+  h3.soundcloud {
+    background-image: url(../images/icons/soundcloud.svg);
+    background-position: 10px 7px;
+    background-repeat: no-repeat;
+  }
+
+  h3.youtube {
+    background-image: url(../images/icons/youtube.svg);
+    background-position: 10px 2px;
+    background-repeat: no-repeat;
+  }
+
+  h3.local {
+    background-image: url(../images/icons/local.svg);
+    background-position: 10px 0;
+    background-repeat: no-repeat;
+  }
+
+  hr {
+    border-bottom: 1px solid fade(white, 20%);
+    border-top: 1px solid fade(@dark-purple, 20%);
+  }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+}

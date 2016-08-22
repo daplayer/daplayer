@@ -1,0 +1,40 @@
+.container {
+  .scroll-bar(fade(@black, 60%), @light-grey);
+
+  color: @base-color;
+  min-height: ~"calc(100% - 75px)";
+  max-height: ~"calc(100% - 75px)";
+  margin: 0 0 0 250px;
+  padding-top: 10px;
+  position: relative;
+  overflow-y: scroll;
+
+  .content {
+    height: 100%;
+  }
+
+  h1 {
+    border-bottom: 1px solid @light-purple;
+    color: @smooth-purple;
+    margin-left: 28px;
+    margin-right: 20px;
+
+    &:first-child { margin-top: 0px; }
+  }
+
+  hr {
+    border: 0;
+    border-bottom: 1px solid @light-purple;
+  }
+}
+
+.loading-shadow {
+  background: fade(@white, 50%);
+  min-height: ~"calc(100% - 65px)";
+  max-height: ~"calc(100% - 65px)";
+  width: ~"calc(100% - 250px)";
+  position: absolute;
+  top: 0;
+  left: 250px;
+  z-index: 300;
+}

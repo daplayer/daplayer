@@ -1,0 +1,152 @@
+.information {
+  font-size: 14px;
+  line-height: normal;
+  margin: 8px 10px 0 0;
+  text-align: left;
+  width: 320px;
+
+  .icon {
+    border: 1px solid @thiner-grey-blue;
+    border-radius: 1px;
+    display: none;
+    float: left;
+    height: 46px;
+    width: 46px;
+    margin-right: 10px;
+    position: relative;
+    transition: all 0.5s ease;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+
+    &.video {
+      width: 75px;
+    }
+
+    .loader {
+      height: 100%;
+      width: 100%;
+      margin: 30px 1px;
+
+      & > div {
+        background: white;
+        height: 25px;
+        width: 2px;
+        margin-right: 2px;
+      }
+    }
+  }
+
+  .title, .artist {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .artist {
+    color: darken(@white, 20%);
+  }
+
+  .current-playlist {
+    cursor: pointer;
+    display: none;
+    float: right;
+    font-size: 20px;
+    line-height: 55px;
+    margin-right: 0px;
+  }
+
+  .items {
+    background: @darkest-purple;
+    display: none;
+    width: 320px;
+    padding: 5px;
+    position: absolute;
+    bottom: 65px;
+    z-index: 400;
+
+    .sneak-peek {
+      height: 40px;
+      width: 100%;
+
+      .playlist-title, .playlist-count {
+        margin-left: 10px;
+      }
+
+      .playlist-switches {
+        .right();
+        word-spacing: 10px;
+        margin: 10px 10px 0 0;
+      }
+
+      .playlist-switches .glyphicon {
+        cursor: pointer;
+
+        &.soundcloud { color: @soundcloud; }
+        &.youtube    { color: @youtube; }
+        &.local      { color: @local; }
+      }
+
+
+      .playlist-count {
+        .artist();
+      }
+    }
+
+    ul {
+      list-style-type: none;
+      max-height: 190px;
+      overflow-y: scroll;
+      margin: 0;
+      padding: 0;
+
+      li.video {
+        line-height: 47px;
+        height: 47px;
+
+        .thumbnail img {
+          width: 80px;
+          transform: translateY(-12%);
+        }
+
+        .thumbnail {
+          width: 80px;
+          height: 45px;
+          overflow: hidden;
+        }
+      }
+
+      li.music, li.video {
+        border: none;
+        clear: left;
+
+        img {
+          display: block;
+          float: left;
+        }
+
+        span {
+          .box > .title;
+          padding-right: 20px;
+        }
+
+        &:first-child { padding-top: 5px; }
+        &:last-child  { padding-bottom: 0; }
+      }
+
+      li.music img {
+        height: 32px;
+      }
+
+      &::-webkit-scrollbar { width: 5px; }
+      &::-webkit-scrollbar-track { box-shadow: none; }
+      &::-webkit-scrollbar-thumb {
+        background: white;
+        border-radius: 0px;
+      }
+    }
+  }
+}

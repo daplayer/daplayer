@@ -1,0 +1,46 @@
+.duration {
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  //   280px (.controls)
+  // + 130px (.timing)
+  // + 20px  (self margin)
+  // + 50px  (.volume)
+  // + 50px  (.repeat)
+  // + 330px (.information)
+  // = 870px
+  width: ~"calc(100% - 870px)";
+
+  .progress_bar {
+    position: relative;
+    height: 9px;
+    width: 100%;
+    margin: 32px 30px 0 0;
+
+    .track {
+      background: #BBC;
+      height: 2px;
+      width: 100%;
+      z-index: 300;
+    }
+
+    .buffered {
+      background: white;
+      height: 2px;
+      width: 0%;
+      position: relative;
+    }
+
+    .progression {
+      height: 2px;
+      width: 0%;
+      position: absolute;
+      top: 0;
+      z-index: 500;
+
+      &.soundcloud { background: @soundcloud; }
+      &.youtube    { background: @youtube; }
+      &.local      { background: @local; }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{{#unless href}}
+  <div class="navbar">
+    <a href="#" class="active">
+      {{g 'heart'}} {{t 'sc.playlist_menus.liked'}}
+    </a>
+    <a href="soundcloud/user_playlists">
+      {{g 'user'}} {{t 'sc.playlist_menus.yours'}}
+    </a>
+  </div>
+{{/unless}}
+
+<div class="clearer"></div>
+
+{{#each liked_playlists.collection}}
+  {{soundcloud_playlist this}}
+{{/each}}

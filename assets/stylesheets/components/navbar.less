@@ -1,0 +1,20 @@
+.navbar {
+  .basic-box();
+
+  a {
+    color: lighten(@dark-grey, 15.1%);
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    padding: 0px 20px;
+    text-decoration: none;
+    word-spacing: nowrap;
+
+    &.active, &:hover {
+      border-bottom: 3px solid @smooth-purple;
+      color: @smooth-purple;
+    }
+
+    .glyphicon { letter-spacing: 12px; }
+  }
+}

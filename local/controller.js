@@ -1,0 +1,60 @@
+'use strict';
+
+const LocalModel = require('./model');
+
+module.exports = class LocalController {
+  static singles() {
+    return LocalModel.singles().then((singles) => {
+      if (!Cache.local.singles)
+        Cache.add('local', 'singles', singles);
+
+      View.render('local/singles', {
+        singles: singles,
+      });
+    });
+  }
+
+  static albums() {
+    return LocalModel.albums().then((albums) => {
+      if (!Cache.local.albums)
+        Cache.add('local', 'albums', albums);
+
+      View.render('local/albums', {
+        albums: albums
+      })
+    });
+  }
+
+  static artists() {
+    return LocalModel.artists().then((artists) => {
+      if (!Cache.local.artists)
+        Cache.add('local', 'artists', artists);
+
+      View.render('local/artists', {
+        artists: artists
+      })
+    });
+  }
+
+  static listenLater() {
+    return LocalModel.listenLater().then((records) => {
+      View.render('local/listen_later', {
+        records: records
+      });
+    })
+  }
+
+  static playlists() {
+    return LocalModel.playlists().then((playlists) => {
+      View.render('local/playlists', {
+        playlists: playlists
+      });
+    });
+  }
+
+  static searchResults() {
+    return MetaModel.searchResults().then((results) => {
+      View.render('local/search_results', results);
+    });
+  }
+}

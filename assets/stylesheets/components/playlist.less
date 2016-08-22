@@ -1,0 +1,117 @@
+.playlist {
+  .basic-box();
+  border-radius: 0px;
+  margin: 20px 20px 20px 28px;
+
+  &.soundcloud, &.local {
+    height: 300px;
+  }
+
+  &.local {
+    .music img, .video img {
+      width: 32px!important;
+    }
+
+    .video {
+      height: 30px;
+      line-height: 2em;
+      padding: 10px 5px;
+
+      img { margin-top: 10px; }
+      .thumbnail { height: 30px; }
+    }
+  }
+
+  .cover {
+    float: left;
+    height: 300px;
+    width: 300px;
+    position: relative;
+  }
+
+  img {
+    display: block;
+    float: left;
+  }
+
+  &.local .cover img {
+    height: 300px;
+    width: 300px;
+  }
+
+  h2 .glyphicon {
+    display: none;
+    font-size: 14px;
+    letter-spacing: 10px;
+    text-align: right;
+  }
+
+  h3 { margin-bottom: 12px; }
+
+  .items {
+    .scroll-bar(fade(black, 60%), @white);
+    overflow-y: scroll;
+
+    ul {
+      list-style-type: none;
+      margin-top: 0px;
+      padding: 0 20px 0 0;
+
+      li span {
+        .box > .title;
+        padding-right: 20px;
+      }
+
+      li:last-child {
+        border: 0;
+        padding-bottom: 0;
+      }
+    }
+  }
+
+  &.soundcloud .items, &.local .items {
+    height: 300px;
+    margin-left: 350px;
+  }
+
+  &.youtube .items {
+    margin-left: 20px;
+  }
+
+  &.youtube .information {
+    padding: 0;
+    margin-top: 0;
+    height: 70px;
+    border-bottom: 1px solid @light-purple;
+
+    img { height: 70px; }
+    h2  { margin-top: 0px; }
+  }
+
+  &.youtube .legend {
+    margin-left: 135px;
+  }
+
+}
+
+.playlist-thumbnail {
+  .box();
+  cursor: pointer;
+  float: left;
+  margin: 20px;
+  width: 250px;
+
+  h3, h4     { margin: 0 0 0.5em 0; }
+  h4         { color: silver; }
+  .legend    { padding: 0px 10px 10px 10px; }
+  .glyphicon { font-size: 12px; }
+
+  img {
+    -webkit-transition: opacity 0.3s ease-in-out;
+    width: 250px;
+  }
+
+  &:hover img {
+    opacity: 0.7;
+  }
+}

@@ -1,0 +1,18 @@
+{{search_results_menu this 'soundcloud'}}
+
+{{#if soundcloud.owned}}
+  <h1>{{t 'sc.sidebar.likes'}}</h1>
+
+  {{#each soundcloud.owned}}
+    {{soundcloud_music_box this}}
+  {{/each}}
+
+  <div class="clearer"></div>
+{{/if}}
+
+<h1>{{t 'sc.name'}}</h1>
+
+{{#each soundcloud.net_results}}
+  {{soundcloud_music_box this}}
+{{/each}}
+

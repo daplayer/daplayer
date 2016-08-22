@@ -1,0 +1,8 @@
+.DS_Store
+npm-debug.log*
+
+# Ignore NPM dependencies folder
+node_modules
+
+# Optional npm cache directory
+.npm

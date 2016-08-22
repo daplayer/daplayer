@@ -1,0 +1,47 @@
+.volume {
+  cursor: pointer;
+  font-size: 20px;
+  position: relative;
+
+  .volume-information {
+    background: @darkest-purple;
+    cursor: pointer;
+    display: none;
+    height: 100px;
+    width: 40px;
+    position: absolute;
+    top: -100px;
+    z-index: 400;
+
+    .volume-value {
+      background: white;
+      height: 85px;
+      width: 2px;
+      margin: 10px auto;
+      position: relative;
+
+      .current {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+
+        &.soundcloud { background: @soundcloud; }
+        &.youtube    { background: @youtube; }
+        &.local      { background: @local; }
+      }
+    }
+
+    .circle {
+      // Pretty tricky but since we rotate the
+      // field, the height and width are no
+      // longer the good ones
+      height: 40px;
+      width: 85px;
+      // Also tricky but the top and left values
+      // don't represent really what they mean.
+      top: 32px;
+      left: -22px;
+      transform: rotate(90deg);
+    }
+  }
+}

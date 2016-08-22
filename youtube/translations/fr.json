@@ -1,0 +1,24 @@
+{
+  "yt": {
+    "name": "YouTube",
+    "connect": "Connecter votre compte YouTube",
+    "connect_message": "Importez vos playlists, vidéos, favoris, etc.",
+    "connect_sub_message": "Connectez votre compte YouTube pour profiter de toute votre bibliothèque.",
+    "disconnect": "Déconnecter YouTube",
+    "sidebar": {
+      "playlists": "Playlists",
+      "history": "Historique",
+      "watch_later": "À regarder plus tard"
+    },
+    "configuration": {
+      "quality": {
+        "title": "Qualité des vidéos",
+        "720p": "720P",
+        "high": "HD",
+        "medium": "Moyenne",
+        "small": "Faible"
+      },
+      "download": "Téléchargements YouTube"
+    }
+  }
+}

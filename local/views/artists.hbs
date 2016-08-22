@@ -1,0 +1,14 @@
+{{local_files_menu 'artists'}}
+
+{{#each artists}}
+  <div class="music box">
+    <div class="thumbnail">
+      <img src="assets/images/default_artwork.svg">
+    </div>
+
+    <span class="title">{{ name }}</span>
+    <span class="artist">{{ album_count }} albums</span>
+  </div>
+{{/each}}
+
+<div class="clearer"></div>

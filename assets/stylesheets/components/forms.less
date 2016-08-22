@@ -1,0 +1,38 @@
+form {
+  label {
+    display: block;
+    font-weight: bold;
+    margin-left: 0.5em;
+    margin-bottom: 0.5em;
+    width: 100%;
+  }
+
+  input[type="text"] {
+    border: 1px solid @light-purple;
+    border-radius: 2px;
+    height: 1.5em;
+    padding: 5px 10px;
+    margin: 0.5em;
+    width: 400px;
+  }
+
+  input[type="text"]:disabled {
+    background: lighten(@light-purple, 5%);
+  }
+
+  input[type="checkbox"], input[type="radio"] {
+    margin: 0 0 0.5em 1em;
+  }
+
+  input[type="radio"] + label,
+  input[type="checkbox"] + label {
+    display: inline;
+    font-weight: normal;
+    white-space: pre;
+  }
+
+  input[type="radio"] + label:after,
+  input[type="checkbox"] + label:after {
+    content: '\A';
+  }
+}

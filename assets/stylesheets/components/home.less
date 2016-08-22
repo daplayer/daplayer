@@ -1,0 +1,38 @@
+.home {
+  .link {
+    float: left;
+    height: 100px;
+    width: ~"calc(50% - 65px)";
+
+    &:first { margin-right: 20px; }
+
+    .icon {
+      &:extend(.tiny_button);
+      float: left;
+      height: 40px;
+      width: 40px;
+      margin: 30px 20px 0 20px;
+
+      .glyphicon {
+        padding: 12px 0 0 12px;
+      }
+    }
+  }
+
+  .playlist.soundcloud {
+    height: 265px;
+    margin-left: 250px;
+
+    img.artwork {
+      height: 265px;
+      width: 265px;
+    }
+
+    .tracks {
+      height: 100%;
+      margin-left: 300px;
+
+      h3 { margin-bottom: 1.5em; }
+    }
+  }
+}

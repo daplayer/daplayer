@@ -1,0 +1,113 @@
+.player {
+  background: @darkest-purple;
+  color: white;
+  height: 65px;
+  width: 100%;
+  margin-top: 20px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 400;
+
+  .playpause, .previous, .next,
+  .volume, .repeat, .current-playlist,
+  .timing, .duration, .information {
+    display: block;
+    float: left;
+    height: 65px;
+    min-width: 30px;
+    line-height: 65px;
+    margin-right: 20px;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .timing {
+    width: 110px;
+  }
+
+  .repeat {
+    cursor: pointer;
+
+    &.soundcloud .glyphicon { color: @soundcloud; }
+    &.youtube    .glyphicon { color: @youtube; }
+    &.local      .glyphicon { color: @local; }
+  }
+
+  @import "player/controls.less";
+  @import "player/duration.less";
+  @import "player/information.less";
+  @import "player/volume.less";
+}
+
+.circle {
+  background: transparent;
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 400;
+  -webkit-appearance: none;
+
+  &::-webkit-slider-thumb {
+    border-radius: 100%;
+    cursor: pointer;
+    height: 9px;
+    width: 9px;
+    border: 0 none;
+    -webkit-appearance: none;
+  }
+
+  &.soundcloud::-webkit-slider-thumb { background: @soundcloud; }
+  &.youtube::-webkit-slider-thumb    { background: @youtube; }
+  &.local::-webkit-slider-thumb      { background: @local; }
+
+  &:focus::-webkit-slider-runnable-track {
+    background: transparent;
+    border: transparent;
+  }
+}
+
+.player_frame_container {
+  background: black;
+  border: 2px solid white;
+  box-shadow: 0px 2px 2px black;
+  display: none;
+  height: 300px;
+  width: 510px;
+  margin: auto;
+  overflow: hidden;
+  position: relative;
+  top: 50%;
+  transform: translateY(-45%);
+
+  .controls {
+    background: linear-gradient(180deg, transparent 0%, black 100%);
+    color: white;
+    display: none;
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+    overflow: hidden;
+    padding: 0 0 5px 15px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    .glyphicon             { cursor: pointer; }
+    .glyphicon:first-child { letter-spacing: 15px; }
+    .glyphicon:last-child  { letter-spacing: 35px; }
+  }
+}
+
+.player_frame, .video_player {
+  height: 300px;
+  width: 510px;
+}
+
+.video_player {
+  cursor: pointer;
+}
