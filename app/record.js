@@ -51,7 +51,7 @@ module.exports = class Record {
     return record;
   }
 
-  static fromYouTube(hash) {
+  static youtube(hash) {
     if (hash.id && typeof hash.id !== 'string')
       var id = hash.id.videoId;
     else
@@ -79,7 +79,7 @@ module.exports = class Record {
 
     if (hash.items)
       record.items = hash.items.map((record) => {
-        return Record.fromYouTube(record);
+        return Record.youtube(record);
       }).map(MetaModel.mapRecords);
 
     return record;

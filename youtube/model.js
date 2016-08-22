@@ -124,7 +124,7 @@ module.exports = class YouTubeModel {
   }
 
   static recordify(set) {
-    return Record.fromYouTube(set);
+    return Record.youtube(set);
   }
 
   static concatenate(existing, fetched) {

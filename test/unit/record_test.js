@@ -51,7 +51,7 @@ describe('Record', () => {
     });
   });
 
-  describe('#fromYouTube', () => {
+  describe('#youtube', () => {
     var hash = {
       id: 'foobar',
       snippet: {
@@ -67,7 +67,7 @@ describe('Record', () => {
       }
     };
 
-    var record = Record.fromYouTube(hash);
+    var record = Record.youtube(hash);
 
     it('should map YouTube fields to our own ones', () => {
       assert.equal(hash.snippet.title, record.title);
