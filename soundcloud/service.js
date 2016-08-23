@@ -4,7 +4,7 @@ const Credentials = require('../app/credentials');
 const SubWindow   = require('../app/sub_window');
 const querystring = require('querystring');
 const request     = require('request');
-const Tagging     = require('../../daplayer-tagging/build/Release/tagging.node');
+const Tagging     = require('daplayer-tagging');
 const SC          = require('./client');
 
 module.exports = class SoundCloudService {

@@ -2,7 +2,7 @@
 
 const glob    = require('glob');
 const Paths   = require('../../app/paths');
-const Tagging = require('../../../daplayer-tagging/build/Release/tagging.node');
+const Tagging = require('daplayer-tagging');
 
 module.exports = class LocalModelFiles {
   static files() {

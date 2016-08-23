@@ -1,7 +1,7 @@
 'use strict';
 
 const LocalModel = require('./model');
-const Tagging    = require('../../daplayer-tagging/build/Release/tagging.node');
+const Tagging    = require('daplayer-tagging');
 
 module.exports = class LocalService {
   static tag(hash) {
