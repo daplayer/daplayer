@@ -1,5 +1,21 @@
 'use strict';
 
+// Make sure that we have the necessary file created when
+// we run the application (e.g. for the first time or if
+// the user accidentally deleted the "cache" folder).
+const Paths    = require('./app/paths');
+const Database = require('./app/database.js');
+
+if (!Paths.exists('user'))
+  Paths.mkdir('user');
+
+if (!Paths.exists('covers'))
+  Paths.mkdir('covers');
+
+if (!Paths.exists('database'))
+  Database.bootstrap();
+
+// Start the Electron "popote".
 const electron       = require('electron');
 const app            = electron.app;           // Module to control application life.
 const BrowserWindow  = electron.BrowserWindow; // Module to create browser window.

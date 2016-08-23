@@ -54,16 +54,52 @@ module.exports = class Database {
 
       try {
         this.connection.run(sql);
-
-        var data   = this.connection.export();
-        var buffer = new Buffer(data);
-
-        fs.writeFileSync(Paths.database, buffer);
+        this.saveDB();
 
         resolve(true);
       } catch (e) {
         reject(e);
       }
     });
+  }
+
+  static bootstrap() {
+    fs.writeFileSync(Paths.database, '');
+
+    var create_table_playlists = `CREATE TABLE playlists(
+                                    id    INTEGER PRIMARY KEY AUTOINCREMENT,
+                                    title VARCHAR(150),
+                                    icon  TEXT
+                                  )`;
+    var create_table_records   = `CREATE TABLE records (
+                                    id          TEXT,
+                                    title       VARCHAR(150),
+                                    artist      VARCHAR(50),
+                                    icon        TEXT,
+                                    human_time  VARCHAR(7),
+                                    duration    SMALLINT,
+                                    service     VARCHAR(20),
+                                    playlist_id INTEGER,
+
+                                    FOREIGN KEY(playlist_id) REFERENCES playlist(id)
+                                  )`;
+    var insert_listen_later     = `INSERT INTO playlists(id, title) VALUES(1, 'Listen Later')`;
+
+    try {
+      this.connection.run(create_table_playlists);
+      this.connection.run(create_table_records);
+      this.connection.run(insert_listen_later);
+
+      this.saveDB();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  static saveDB() {
+    var data   = this.connection.export();
+    var buffer = new Buffer(data);
+
+    fs.writeFileSync(Paths.database, buffer);
   }
 }

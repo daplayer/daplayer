@@ -1,5 +1,6 @@
 'use strict';
 
+const fs   = require('fs');
 const path = require('path');
 
 module.exports = class Paths {
@@ -70,6 +71,47 @@ module.exports = class Paths {
    * @return {String}
    */
   static get database() {
-    return path.join(this.user, 'playlists.sqlite3');
+    return path.join(this.user, 'database.sqlite3');
+  }
+
+  /**
+   * Check whether a given path exist or not. We are just
+   * refering to the name of the getter in this object,
+   * we are not giving an actual path.
+   *
+   * `Paths.exists('database')` will return true only if
+   * `Paths.database` exists on the file system.
+   *
+   * @param  {String} name - The getter to call.
+   * @return {Boolean}
+   */
+  static exists(name) {
+    // Swallowing an error can be pretty expensive but this
+    // allows us to block the event loop and do check in-line
+    // instead of passing a callback.
+    try {
+      fs.accessSync(this[name], fs.F_OK);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /**
+   * Creates a new directory getting the wanted path
+   * delegating to the given getter's name.
+   *
+   * `Paths.mkdir('user')` will create the `Paths.user`
+   * folder.
+   *
+   * We are relying on the synchronous counter-part of
+   * `mkdir` since we want to block the event loop
+   * creating folders.
+   *
+   * @param  {String} name - The getter to call.
+   * @return {null}
+   */
+  static mkdir(name) {
+    fs.mkdirSync(this[name]);
   }
 }
