@@ -3,6 +3,12 @@ const Paths = require('./paths');
 const SQL   = require('sql.js');
 
 module.exports = class Database {
+  /**
+   * Creates a connection to the database if it doesn't
+   * exist or returns it otherwise.
+   *
+   * @return {SQL.Database}
+   */
   static get connection() {
     if (!this.database) {
       var filebuffer = fs.readFileSync(Paths.database);
@@ -12,6 +18,18 @@ module.exports = class Database {
     return this.database;
   }
 
+  /**
+   * Builds a `SELECT` SQL query based on the given hash.
+   *
+   * The hash have the following fields:
+   *
+   *  - `table`: The table to run the request against.
+   *  - `fields`: An array of fields to select.
+   *  - `where` (Optional): An array of conditions to meet.
+   *
+   * @param  {Object} hash
+   * @return {Promise}
+   */
   static select(hash) {
     return new Promise((resolve, reject) => {
       var sql = `SELECT ${hash.fields.join(', ')} FROM ${hash.table}`;
@@ -36,6 +54,18 @@ module.exports = class Database {
     });
   }
 
+  /**
+   * Buils an `INSERT` SQL query based on the given hash.
+   *
+   * The hash have the following fields:
+   *
+   * - `table`: The table to run the request against.
+   * - `values`: A hash containing field/value sets (e.g.
+   *             `{title: 'Maliblue'}`).
+   *
+   * @param  {Object} hash
+   * @return {Promise}
+   */
   static insert(hash) {
     return new Promise((resolve, reject) => {
       var keys   = [];
@@ -63,6 +93,12 @@ module.exports = class Database {
     });
   }
 
+  /**
+   * Sets up the schema in the database, erases the database
+   * file if it exists.
+   *
+   * @return {null}
+   */
   static bootstrap() {
     fs.writeFileSync(Paths.database, '');
 
@@ -96,6 +132,11 @@ module.exports = class Database {
     }
   }
 
+  /**
+   * Writes the database file to disk.
+   *
+   * @return {null}
+   */
   static saveDB() {
     var data   = this.connection.export();
     var buffer = new Buffer(data);
