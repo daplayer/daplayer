@@ -31,11 +31,13 @@ global.Translation = require('../app/translation');
 global.MetaModel = require('../meta/model');
 
 // Add the `assert.include` helper
-assert.include = function(safe_string, sub_string) {
-  var message = `Expected \`${sub_string}\` to be included in:\n
-                 ${safe_string.string}`;
+assert.include = function(str, sub_string) {
+  if (str instanceof Handlebars.SafeString)
+    str = str.string;
 
-  assert(safe_string.string.includes(sub_string), message);
+  var message = `Expected \`${sub_string}\` to be included in:\n${str}`;
+
+  assert(str.includes(sub_string), message);
 };
 
 global.keys = (object, scope, array) => {

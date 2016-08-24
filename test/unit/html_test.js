@@ -43,13 +43,13 @@ describe('Html', () => {
     it('should add the adequate options for local files', () => {
       var output = Html.options('local');
 
-      assert(output.includes('<li data-function="listenLater">'));
-      assert(output.includes('<li data-function="tag">'));
-      assert(output.includes('<li data-function="addToPlaylist">'));
+      assert.include(output, '<li data-function="listenLater">');
+      assert.include(output, '<li data-function="tag">');
+      assert.include(output, '<li data-function="addToPlaylist">');
 
-      assert(output.includes(Translation.t('local.sidebar.listen_later')));
-      assert(output.includes(Translation.t('meta.options.tag')));
-      assert(output.includes(Translation.t('meta.options.add_to_playlist')));
+      assert.include(output, Translation.t('local.sidebar.listen_later'));
+      assert.include(output, Translation.t('meta.options.tag'));
+      assert.include(output, Translation.t('meta.options.add_to_playlist'));
     });
 
     it('should add the adequate options for SoundCloud and YouTube records', () => {
@@ -58,13 +58,13 @@ describe('Html', () => {
 
       assert.equal(sc_output, yt_output);
 
-      assert(sc_output.includes('<li data-function="share">'));
-      assert(sc_output.includes('<li data-function="tag">'));
-      assert(sc_output.includes('<li data-function="addToPlaylist">'));
+      assert.include(sc_output, '<li data-function="share">');
+      assert.include(sc_output, '<li data-function="tag">');
+      assert.include(sc_output, '<li data-function="addToPlaylist">');
 
-      assert(sc_output.includes(Translation.t('meta.options.share')));
-      assert(sc_output.includes(Translation.t('meta.options.download')));
-      assert(sc_output.includes(Translation.t('meta.options.add_to_playlist')));
+      assert.include(sc_output, Translation.t('meta.options.share'));
+      assert.include(sc_output, Translation.t('meta.options.download'));
+      assert.include(sc_output, Translation.t('meta.options.add_to_playlist'));
     });
   });
 
