@@ -137,15 +137,16 @@ module.exports = class Ui {
    * to download for SoundCloud and YouTube or to change
    * them for a local file.
    *
-   * @param  {$} element - The HTML node that represents
-   *                       the media we want to download/tag.
+   * @param  {$}  element  - The HTML node that represents
+   *                         the media we want to download/tag.
+   * @param  {$=} playlist - The playlist the element is in.
    * @return {null}
    */
-  static tag(element) {
+  static tag(element, playlist) {
     var module  = Cache.current.module;
     var section = Cache.current.action;
 
-    MetaModel.findById(element.data('id'), module, section).then((record) => {
+    MetaModel.findById(element.data('id'), module, section, playlist).then((record) => {
       var context = record instanceof Record ? record : record.record;
 
       if (context.service == 'soundcloud')
