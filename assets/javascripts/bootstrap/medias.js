@@ -25,7 +25,7 @@ $('.content').on('mouseleave', 'li.music, li.video', function() {
   $(this).find('.glyphicon').hide();
 });
 
-$('.content').on('click', '.options-toggler', function() {
+$('.content').on('click', 'div.box .options-toggler', function() {
   var box     = $(this).parent();
   var options = box.find('.options');
 
@@ -33,4 +33,14 @@ $('.content').on('click', '.options-toggler', function() {
     box.find('.thumbnail').append(Html.options(Cache.current.module));
 
   box.find('.options').slideToggle();
+});
+
+$('.content').on('click', 'li .options-toggler', function() {
+  var item    = $(this).parents('li');
+  var options = item.find('.options');
+
+  if (!options.length)
+    item.find('.right').prepend(Html.options(Cache.current.module, true));
+  else
+    options.fadeToggle(200);
 });

@@ -1,50 +1,73 @@
 .options-toggler {
   cursor: pointer;
   text-align: right;
-  width: 30px;
-}
-
-.local .options, .soundcloud .options {
-  height: 180px;
-  line-height: 60px;
-
-  ul li {
-    height: 60px;
-  }
-}
-
-.youtube .options {
-  height: 140px;
-  line-height: 45px;
-
-  ul li {
-    height: 46px;
-  }
 }
 
 .options {
-  background: fade(black, 55%);
-  display: none;
-  width: 100%;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  z-index: 250;
-
   ul {
     height: 100%;
     list-style-type: none;
     margin: 0;
-    padding: 0;
+    padding: 0!important;
+    overflow: hidden;
 
-    li {
+    li { cursor: pointer; }
+  }
+}
+
+div.music {
+  .options {
+    height: 180px;
+    line-height: 60px;
+
+    ul li {
+      height: 60px;
+    }
+  }
+}
+
+div.video {
+  .options {
+    height: 140px;
+    line-height: 45px;
+
+    ul li {
+      height: 46px;
+    }
+  }
+}
+
+div.music, div.video {
+  .options {
+    background: fade(black, 55%);
+    display: none;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 250;
+
+    ul li {
       border-bottom: 1px solid darken(@white, 20%);
       color: darken(@white, 5%);
-      cursor: pointer;
       padding: 0 10px;
 
       .glyphicon { letter-spacing: 10px; }
       &:last-child { border: none; }
+    }
+  }
+}
+
+li.music, li.video {
+  .options {
+    float: left;
+    height: 100%;
+    width: 90px;
+
+    ul li {
+      display: inline-block;
+      font-size: 12px;
+      margin-right: 15px;
     }
   }
 }
