@@ -247,8 +247,8 @@ module.exports = class Player {
       $('.information .icon').removeClass('video');
     }
 
-    $('.information .artist').html(this.record.artist);
-    $('.information .title').html(this.record.title);
+    $('.information .current .artist').html(this.record.artist);
+    $('.information .current .title').html(this.record.title);
     $('.information .icon img').attr('src', this.record.icon);
   }
 
