@@ -157,7 +157,7 @@ module.exports = class Ui {
         $('.dialog').html(View.compile('local/partials/tag')(context));
 
       $('.dialog').removeClass('add_to_playlist')
-                  .addClass('tag').addClass(record.service);
+                  .addClass('tag').addClass(context.service);
     });
 
     this.showDialog();
@@ -276,7 +276,7 @@ module.exports = class Ui {
     })
 
     $('.shadow.main').show();
-    $('.dialog').show();
+    $('.dialog').show().removeClass('tag').addClass('add_to_playlist');
   }
 
   /**
