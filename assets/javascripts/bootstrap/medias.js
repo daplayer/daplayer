@@ -21,3 +21,13 @@ $('.content').on('mouseenter', 'li.music, li.video', function() {
 $('.content').on('mouseleave', 'li.music, li.video', function() {
   $(this).find('.glyphicon').hide();
 });
+
+$('.content').on('click', '.options-toggler', function() {
+  var box     = $(this).parent();
+  var options = box.find('.options');
+
+  if (!options.length)
+    box.find('.thumbnail').append(Html.options(Cache.current.module));
+
+  box.find('.options').slideToggle();
+});

@@ -1,15 +1,5 @@
 // --------------------------------------------------------
 // > Container event handlers
-$('.container').on('click', '.options-toggler', function() {
-  var box     = $(this).parent();
-  var options = box.find('.options');
-
-  if (!options.length)
-    box.find('.thumbnail').append(Html.options(Cache.current.module));
-
-  box.find('.options').slideToggle();
-});
-
 // Handle clicks on option items
 $('.container').on('click', '.options li', function() {
   var options = $(this).parents('.options');
