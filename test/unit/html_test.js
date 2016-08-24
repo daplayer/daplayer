@@ -36,12 +36,20 @@ describe('Html', () => {
   });
 
   describe('#options', () => {
+    beforeEach(() => {
+      Translation.load('en');
+    });
+
     it('should add the adequate options for local files', () => {
       var output = Html.options('local');
 
       assert(output.includes('<li data-function="listenLater">'));
       assert(output.includes('<li data-function="tag">'));
       assert(output.includes('<li data-function="addToPlaylist">'));
+
+      assert(output.includes(Translation.t('local.sidebar.listen_later')));
+      assert(output.includes(Translation.t('meta.options.tag')));
+      assert(output.includes(Translation.t('meta.options.add_to_playlist')));
     });
 
     it('should add the adequate options for SoundCloud and YouTube records', () => {
@@ -53,7 +61,11 @@ describe('Html', () => {
       assert(sc_output.includes('<li data-function="share">'));
       assert(sc_output.includes('<li data-function="tag">'));
       assert(sc_output.includes('<li data-function="addToPlaylist">'));
-    })
+
+      assert(sc_output.includes(Translation.t('meta.options.share')));
+      assert(sc_output.includes(Translation.t('meta.options.download')));
+      assert(sc_output.includes(Translation.t('meta.options.add_to_playlist')));
+    });
   });
 
   describe('#glyphicon', () => {
