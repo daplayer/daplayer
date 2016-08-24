@@ -6,8 +6,11 @@ $('.content').on('click', '.music.box .title', '.video.box .title', function() {
   Player.preload($(this).parents('.box').data('id'));
 });
 
-$('.content').on('click', 'li.music, li.video', function() {
-  Player.preload($(this).data('id'), $(this).parents('.playlist'));
+$('.content').on('click', 'li.music, li.video', function(e) {
+  var classname = e.target.className;
+
+  if (!classname.includes('option') && !classname.includes('glyphicon'))
+    Player.preload($(this).data('id'), $(this).parents('.playlist'));
 });
 
 $('.items').on('click', 'li.music, li.video', function() {
