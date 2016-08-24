@@ -248,7 +248,9 @@ module.exports = class Player {
     }
 
     $('.information .current .artist').html(this.record.artist);
+    $('.information .current .artist').attr('title', this.record.artist);
     $('.information .current .title').html(this.record.title);
+    $('.information .current .title').attr('title', this.record.title);
     $('.information .icon img').attr('src', this.record.icon);
   }
 
