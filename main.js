@@ -42,7 +42,7 @@ app.on('ready', function() {
   mainWindow = new BrowserWindow({
     width: 1200,
     height: 650,
-    title: 'Player',
+    title: 'DaPlayer',
     autoHideMenuBar: true,
     webgl: false,
   });
