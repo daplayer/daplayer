@@ -44,3 +44,14 @@ $('.content').on('click', 'li .options-toggler', function() {
   else
     options.fadeToggle(200);
 });
+
+$('.content').on('click', '.options li', function() {
+  var options = $(this).parents('.options');
+      options.slideToggle();
+  var media   = options.parents('.music, .video');
+
+  if (media.prop('tagName') == 'LI')
+    Ui[$(this).data('function')](media, media.parents('.playlist'));
+  else
+    Ui[$(this).data('function')](media);
+});
