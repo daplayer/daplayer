@@ -7,7 +7,9 @@ module.exports = class SoundCloudModelFetch {
     if (Cache.soundcloud[action] && !href)
       return Cache.soundcloud[action];
 
-    if (href)
+    if (href && action == 'activities')
+      var offset = href;
+    else if (href)
       var offset = href.split(/&|=/)[1];
     else
       var offset = null;

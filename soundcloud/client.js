@@ -15,9 +15,9 @@ module.exports = class SC {
     };
   }
 
-  static activities() {
+  static activities(href) {
     var options = {
-      url: this.url.activities,
+      url: href || this.url.activities,
       qs: {
         user_urn:  'soundcloud:users:' + Credentials.user.soundcloud.user_id,
         client_id: Credentials.soundcloud.client_id,
@@ -50,7 +50,7 @@ module.exports = class SC {
 
   static fetch(endpoint, offset, limit) {
     if (endpoint == 'activities')
-      return this.activities();
+      return this.activities(offset);
 
     var url;
 
