@@ -66,6 +66,23 @@ describe('Html', () => {
       assert.include(sc_output, Translation.t('meta.options.download'));
       assert.include(sc_output, Translation.t('meta.options.add_to_playlist'));
     });
+
+    it('should not include labels when `skip_text` is true', () => {
+      var local_output = Html.options('local', true);
+
+      assert.exclude(local_output, Translation.t('local.sidebar.listen_later'));
+      assert.exclude(local_output, Translation.t('meta.options.tag'));
+      assert.exclude(local_output, Translation.t('meta.options.add_to_playlist'));
+
+      var sc_output = Html.options('soundcloud', true);
+      var yt_output = Html.options('youtube', true);
+
+      assert.equal(sc_output, yt_output);
+
+      assert.exclude(sc_output, Translation.t('meta.options.share'));
+      assert.exclude(sc_output, Translation.t('meta.options.download'));
+      assert.exclude(sc_output, Translation.t('meta.options.add_to_playlist'));
+    });
   });
 
   describe('#glyphicon', () => {

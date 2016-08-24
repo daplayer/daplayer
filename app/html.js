@@ -18,7 +18,7 @@ module.exports = class Html {
     return html;
   }
 
-  static options(service) {
+  static options(service, skip_text) {
     if (service == 'local')
       var mapping = [['time', 'local.sidebar.listen_later',   'listenLater'],
                      ['tags', 'meta.options.tag',             'tag'],
@@ -34,7 +34,10 @@ module.exports = class Html {
 
         mapping.forEach((set) => {
           output = output.concat(Html.tag('li', {'data-function': set.last()}, () => {
-            return Html.glyphicon(set.first()) + Translation.t(set[1]);
+            if (skip_text)
+              return Html.glyphicon(set.first());
+            else
+              return Html.glyphicon(set.first()) + Translation.t(set[1]);
           }));
         });
 

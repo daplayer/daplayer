@@ -40,6 +40,16 @@ assert.include = function(str, sub_string) {
   assert(str.includes(sub_string), message);
 };
 
+// Add the `assert.exclude` helper
+assert.exclude = function(str, sub_string) {
+  if (str instanceof Handlebars.SafeString)
+    str = str.string;
+
+  var message = `Expected \`${sub_string}\` *not* to be in:\n${str}`;
+
+  assert(!str.includes(sub_string), message);
+};
+
 global.keys = (object, scope, array) => {
   if (!scope) {
     scope = "";
