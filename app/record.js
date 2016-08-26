@@ -3,8 +3,9 @@
 const Paths = require('./paths');
 
 module.exports = class Record {
-  constructor(id) {
-    this.id = id;
+  constructor(id, service) {
+    this.id      = id;
+    this.service = service;
   }
 
   isTrack() {
@@ -16,7 +17,7 @@ module.exports = class Record {
   }
 
   static soundcloud(hash) {
-    var record = new Record(hash.id);
+    var record = new Record(hash.id, 'soundcloud');
 
     record.title        = hash.title;
     record.genre        = hash.genre;
@@ -27,7 +28,6 @@ module.exports = class Record {
     record.duration     = hash.duration * Math.pow(10, -3);
     record.origin       = hash.origin;
     record.type         = hash.type;
-    record.service      = 'soundcloud';
 
     if (hash.user)
       record.artist = hash.user.username;
@@ -60,7 +60,7 @@ module.exports = class Record {
     else
       var id = hash.id;
 
-    var record = new Record(id);
+    var record = new Record(id, 'youtube');
 
     if (hash.snippet) {
       record.title  = hash.snippet.title;
@@ -77,7 +77,6 @@ module.exports = class Record {
     }
 
     record.page_token = hash.page_token
-    record.service    = 'youtube';
 
     if (hash.items)
       record.items = hash.items.map((record) => {
@@ -88,7 +87,7 @@ module.exports = class Record {
   }
 
   static local(hash) {
-    var record = new Record(hash.id);
+    var record = new Record(hash.id, 'local');
 
     for (var key in hash) {
       if (key == 'icon' && hash.kind != 'playlist')
@@ -104,8 +103,6 @@ module.exports = class Record {
 
     if (record.album == true)
       record.artist = hash.items.first().artist;
-
-    record.service = 'local';
 
     return record;
   }
