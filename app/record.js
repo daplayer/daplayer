@@ -14,9 +14,7 @@ module.exports = class Record {
   static soundcloud(hash) {
     var width = hash.kind == 'playlist' ? 't300x300' : 't200x200';
 
-    if (hash.tracks_uri)
-      var icon = hash.user.avatar_url.size(width);
-    else if (hash.artwork_url)
+    if (hash.artwork_url)
       var icon = hash.artwork_url.size(width);
     else if (hash.kind != 'playlist')
       var icon = Paths.default_artwork;
@@ -42,14 +40,8 @@ module.exports = class Record {
     if (hash.uri)
       record.uri = hash.uri;
 
-    if (hash.tracks_uri) {
-      record.track_count = hash.track_count;
-      record.tracks_uri  = hash.tracks_uri;
-    }
-
     if (hash.tracks) {
       record.items = hash.tracks.map((track, i) => {
-        console.log("whenever you're reached, tell me bra");
         return Record.soundcloud(track);
       }).map(MetaModel.mapRecords);
     }
