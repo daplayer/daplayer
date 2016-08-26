@@ -9,8 +9,24 @@
   </div>
 {{/unless}}
 
-{{#if activities.collection.length}}
-  {{#each activities.collection}}
-    {{soundcloud_music_box this}}
-  {{/each}}
-{{/if}}
+<div class="timeline">
+  {{#if activities.collection.length}}
+    {{#each activities.collection}}
+      <div class="activity">
+        <div class="icon">
+          {{soundcloud_activity_icon type}}
+        </div>
+
+        <div class="description">
+          {{soundcloud_activity_desc origin type}}
+        </div>
+      </div>
+
+      {{#if this.isTrack}}
+        {{soundcloud_music_bar this}}
+      {{else}}
+        {{soundcloud_playlist this}}
+      {{/if}}
+    {{/each}}
+  {{/if}}
+</div>

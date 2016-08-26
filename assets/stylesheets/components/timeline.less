@@ -1,0 +1,43 @@
+.timeline {
+  position: relative;
+
+  &::before {
+    background: @thiner-grey-blue;
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 80px;
+    top: 0;
+    z-index: -1;
+    width: 3px;
+  }
+
+  .activity {
+    margin: 10px 0 1em 65px;
+
+    .icon {
+      background: @thiner-grey-blue;
+      border-radius: 100%;
+      color: @dark-flat-purple;
+      float: left;
+      height: 24px;
+      width: 30px;
+      line-height: 100%;
+      margin-right: 20px;
+      padding-top: 6px;
+      text-align: center;
+    }
+
+    .description {
+      height: 23px;
+      padding-top: 7px;
+
+      img {
+        display: block;
+        float: left;
+        margin-right: 10px;
+      }
+    }
+  }
+}

@@ -7,6 +7,10 @@ module.exports = class Record {
     this.id = id;
   }
 
+  isTrack() {
+    return !['playlist', 'album'].includes(this.kind);
+  }
+
   static soundcloud(hash) {
     var width = hash.kind == 'playlist' ? 't300x300' : 't200x200';
 
@@ -28,6 +32,8 @@ module.exports = class Record {
     record.waveform_url = hash.waveform_url;
     record.human_time   = Formatter.time(hash.duration * Math.pow(10, -3));
     record.duration     = hash.duration * Math.pow(10, -3);
+    record.origin       = hash.origin;
+    record.type         = hash.type;
     record.service      = 'soundcloud';
 
     if (hash.user)

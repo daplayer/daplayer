@@ -25,14 +25,24 @@ module.exports = class SoundCloudModelFetch {
       return {
         next_href: response.next_href,
         collection: collection.map((record, i, t) => {
-          if (action == 'activities' && record.origin)
-            return Record.soundcloud(record.origin);
-          else if (record.track)
-            return Record.soundcloud(record.track);
-          else if (action == 'playlists' || record.title)
-            return Record.soundcloud(record);
-          else if (action.endsWith('liked_and_owned') && record.type == 'playlist-like')
-            return Record.soundcloud(record.playlist);
+          if (action == 'activities') {
+            if (record.track)
+              var hash = record.track;
+            else if (record.playlist)
+              var hash = record.playlist;
+
+            hash.origin = record.user;
+            hash.type   = record.type;
+
+            return Record.soundcloud(hash);
+          } else {
+            if (record.track)
+              return Record.soundcloud(record.track);
+            else if (action == 'playlists' || record.title)
+              return Record.soundcloud(record);
+            else if (action.endsWith('liked_and_owned') && record.type == 'playlist-like')
+              return Record.soundcloud(record.playlist);
+          }
         }).filter((record) => {
           if (record)
             return record;
