@@ -40,8 +40,11 @@ module.exports = class LocalModelPlaylists {
         return playlists.map((playlist, index) => {
           let items = records[index];
 
-          playlist.items   = items.map(MetaModel.mapRecords);
-          playlist.service = 'local';
+          playlist.kind = 'playlist';
+
+          playlist.items = items.map((item) => {
+            return Record.raw(item);
+          }).map(MetaModel.mapRecords);
 
           if (!playlist.icon && items.length)
             playlist.icon = records[index][0].icon;

@@ -91,7 +91,7 @@ module.exports = class Record {
     var record = new Record(hash.id);
 
     for (var key in hash) {
-      if (key == 'icon')
+      if (key == 'icon' && hash.kind != 'playlist')
         record[key] = 'file://' + hash[key];
       else
         record[key] = hash[key];
@@ -106,6 +106,15 @@ module.exports = class Record {
       record.artist = hash.items.first().artist;
 
     record.service = 'local';
+
+    return record;
+  }
+
+  static raw(hash) {
+    var record = new Record(hash.id);
+
+    for (var key in hash)
+      record[key] = hash[key];
 
     return record;
   }

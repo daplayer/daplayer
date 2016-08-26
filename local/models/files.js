@@ -14,9 +14,13 @@ module.exports = class LocalModelFiles {
       const child = cp.fork(`${__dirname}/../files.js`, [Config.local.path]);
 
       child.on('message', (files) => {
-        Cache.add('local', 'files', files);
+        var records = files.map((file) => {
+          return Record.local(file);
+        });
 
-        resolve(files);
+        Cache.add('local', 'files', records);
+
+        resolve(records);
       });
 
       child.on('error', (error) => {
@@ -43,8 +47,6 @@ module.exports = class LocalModelFiles {
 
         resolve(files.map((file) => {
           return Tagging.get(file, Paths.covers);
-        }).map((hash) => {
-          return Record.local(hash);
         }));
       });
     });
