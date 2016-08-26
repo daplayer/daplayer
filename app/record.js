@@ -12,17 +12,9 @@ module.exports = class Record {
   }
 
   static soundcloud(hash) {
-    var width = hash.kind == 'playlist' ? 't300x300' : 't200x200';
-
-    if (hash.artwork_url)
-      var icon = hash.artwork_url.size(width);
-    else if (hash.kind != 'playlist')
-      var icon = Paths.default_artwork;
-
     var record = new Record(hash.id);
 
     record.title        = hash.title;
-    record.icon         = icon;
     record.genre        = hash.genre;
     record.url          = hash.permalink_url;
     record.kind         = hash.kind;
@@ -45,6 +37,16 @@ module.exports = class Record {
         return Record.soundcloud(track);
       }).map(MetaModel.mapRecords);
     }
+
+    // Compute the icon of the record.
+    var width = hash.kind == 'playlist' ? 't300x300' : 't200x200';
+
+    if (hash.artwork_url)
+      record.icon = hash.artwork_url.size(width);
+    else if (record.items)
+      record.icon = record.items.first().icon.size(width);
+    else if (record.kind != 'playlist')
+      record.icon = Paths.default_artwork;
 
     return record;
   }
