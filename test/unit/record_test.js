@@ -34,7 +34,8 @@ describe('Record', () => {
       assert.equal(300, record.duration);
     });
 
-    it('should set the `human_time` field', () => {
+    it('should compute the `human_time` field on demand', () => {
+      assert.equal(false,  record.hasOwnProperty('human_time'))
       assert.equal('5:00', record.human_time);
     });
 
@@ -80,7 +81,8 @@ describe('Record', () => {
       assert.equal(243, record.duration);
     });
 
-    it('should set the `human_time` field', () => {
+    it('should compute the `human_time` field on demand', () => {
+      assert.equal(false,  record.hasOwnProperty('human_time'))
       assert.equal('4:03', record.human_time);
     });
 
@@ -106,7 +108,8 @@ describe('Record', () => {
         assert.equal(hash[key], record[key]);
     });
 
-    it('should set the `human_time` field', () => {
+    it('should compute the `human_time` field on demand', () => {
+      assert.equal(false,  record.hasOwnProperty('human_time'))
       assert.equal('4:19', record.human_time);
     });
 

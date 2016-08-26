@@ -11,6 +11,10 @@ module.exports = class Record {
     return !['playlist', 'album'].includes(this.kind);
   }
 
+  get human_time() {
+    return Formatter.time(this.duration);
+  }
+
   static soundcloud(hash) {
     var record = new Record(hash.id);
 
@@ -20,7 +24,6 @@ module.exports = class Record {
     record.kind         = hash.kind;
     record.tags         = hash.tag_list;
     record.waveform_url = hash.waveform_url;
-    record.human_time   = Formatter.time(hash.duration * Math.pow(10, -3));
     record.duration     = hash.duration * Math.pow(10, -3);
     record.origin       = hash.origin;
     record.type         = hash.type;
@@ -67,8 +70,7 @@ module.exports = class Record {
     }
 
     if (hash.contentDetails) {
-      record.human_time  = Formatter.time(hash.contentDetails.duration);
-      record.duration    = Formatter.duration(record.human_time);
+      record.duration = Formatter.duration(Formatter.time(hash.contentDetails.duration));
 
       if (hash.contentDetails.itemCount)
         record.items_count = hash.contentDetails.itemCount;
@@ -103,8 +105,7 @@ module.exports = class Record {
     if (record.album == true)
       record.artist = hash.items.first().artist;
 
-    record.service    = 'local';
-    record.human_time = Formatter.time(hash.duration);
+    record.service = 'local';
 
     return record;
   }

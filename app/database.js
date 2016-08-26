@@ -112,7 +112,6 @@ module.exports = class Database {
                                     title       VARCHAR(150),
                                     artist      VARCHAR(50),
                                     icon        TEXT,
-                                    human_time  VARCHAR(7),
                                     duration    SMALLINT,
                                     service     VARCHAR(20),
                                     playlist_id INTEGER,

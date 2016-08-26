@@ -60,7 +60,6 @@ module.exports = class LocalModelPlaylists {
         title:       record.title,
         artist:      record.artist,
         icon:        record.icon,
-        human_time:  record.human_time,
         duration:    record.duration,
         service:     record.service,
         playlist_id: playlist_id
