@@ -6,6 +6,9 @@
       "lock_download_folder": "Placer les téléchargements SoundCloud et YouTube dans ce dossier",
       "save": "Sauvegarder"
     },
+    "actions": {
+      "playlist_created": "Nouvelle playlist créée"
+    },
     "options": {
       "share": "Partager",
       "download": "Télécharger",

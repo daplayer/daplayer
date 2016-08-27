@@ -279,6 +279,14 @@ module.exports = class Ui {
     $('.dialog').show().removeClass('tag').addClass('add_to_playlist');
   }
 
+  static createPlaylist(title, service) {
+    MetaModel.createPlaylist(title, service).then(() => {
+      new Notification(Translation.t('meta.actions.playlist_created'), {
+        body: title
+      });
+    });
+  }
+
   /**
    * Displays or hides the search bar.
    *

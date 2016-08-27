@@ -74,6 +74,10 @@ $(document).ready(function() {
   require('./assets/javascripts/bootstrap/container');
 
   // --------------------------------------------------------
+  // > Forms (create playlists, etc.)
+  require('./assets/javascripts/bootstrap/forms');
+
+  // --------------------------------------------------------
   // > Manage shortcuts
   //
   // >> Global shortcuts

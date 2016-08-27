@@ -69,4 +69,13 @@ module.exports = class LocalModelPlaylists {
       }
     });
   }
+
+  static createPlaylist(title) {
+    return Database.insert({
+      table: 'playlists',
+      values: {
+        title: title
+      }
+    });
+  }
 }

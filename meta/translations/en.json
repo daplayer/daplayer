@@ -6,6 +6,9 @@
       "lock_download_folder": "Put SoundCloud and YouTube downloads in this folder",
       "save": "Save configuration"
     },
+    "actions": {
+      "playlist_created": "Playlist created"
+    },
     "options": {
       "share": "Share",
       "download": "Download",
