@@ -70,13 +70,11 @@ $('.content').on('click', '.configuration .tiny_button', function() {
   if (field != 'local' && $('#lock_download').is(':checked'))
       return;
 
-  dialog.showOpenDialog({ properties: ['openDirectory', 'createDirectory'] }, function(chosen) {
+  FilePicker.open('directory', function(chosen) {
     var suffix = field == 'local' ? '_path' : '_download';
 
-    if (chosen)
-      $('#' + field + suffix).attr('value', chosen[0]).change();
+    $('#' + field + suffix).attr('value', chosen).change();
   });
-
 });
 
 // Handle save of the configuration.
