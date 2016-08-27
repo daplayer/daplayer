@@ -3,7 +3,8 @@
 module.exports = class Config {
   static get meta() {
     return {
-      locale: this.read('meta', 'locale')
+      locale:         this.read('meta', 'locale'),
+      dashboard_view: this.read('meta', 'dashboard_view')
     }
   }
 
@@ -38,7 +39,8 @@ module.exports = class Config {
   static get default() {
     return {
       meta: {
-        locale: 'en'
+        locale: 'en',
+        dashboard_view: 'configuration'
       },
       soundcloud: {
         download: 'bar',

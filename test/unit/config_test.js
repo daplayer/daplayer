@@ -10,6 +10,7 @@ describe('Config', () => {
   describe('#default', () => {
     it('should have proper default values for the meta section', () => {
       assert.equal('en', Config.default.meta.locale);
+      assert.equal('configuration', Config.default.meta.dashboard_view);
     });
 
     it('should have proper default values for SoundCloud', () => {
