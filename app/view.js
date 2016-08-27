@@ -1,6 +1,5 @@
 'use strict';
 
-const Paths = require('./paths');
 const Cache = require('./cache');
 const fs    = require('fs');
 

@@ -1,6 +1,5 @@
-const fs    = require('fs');
-const Paths = require('./paths');
-const SQL   = require('sql.js');
+const fs  = require('fs');
+const SQL = require('sql.js');
 
 module.exports = class Database {
   /**

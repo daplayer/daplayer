@@ -1,7 +1,6 @@
 'use strict';
 
-const Paths = require('./paths');
-const fs    = require('fs');
+const fs = require('fs');
 
 module.exports = class Translation {
   /**

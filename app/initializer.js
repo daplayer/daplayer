@@ -24,6 +24,7 @@ global.Config       = require('./config');
 global.Database     = require('./database');
 global.Formatter    = require('./formatter');
 global.Html         = require('./html');
+global.Paths        = require('./paths');
 global.Record       = require('./record');
 global.Router       = require('./router');
 global.Translation  = require('./translation');

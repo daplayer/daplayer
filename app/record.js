@@ -1,7 +1,5 @@
 'use strict';
 
-const Paths = require('./paths');
-
 module.exports = class Record {
   constructor(id, service) {
     this.id      = id;

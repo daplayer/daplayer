@@ -1,7 +1,5 @@
 'use strict';
 
-const Paths = require('../app/paths');
-
 module.exports = class Formatter {
   /**
    * Converts the given number of seconds to a human readable
