@@ -109,3 +109,36 @@ Handlebars.registerHelper('search_results_menu', function(search_results, active
 
   return new Handlebars.SafeString(html);
 });
+
+// --------------------------------------------------------
+// Helpers for meta controller's actions
+Handlebars.registerHelper('dashboard_menu', function(active) {
+  var icons = { configuration: 'cog', downloads: 'download-alt' };
+
+  var html = Html.tag('div', {class: 'navbar'}, () => {
+    var output = '';
+
+    ['configuration', 'downloads'].forEach((action) => {
+      if (action == active)
+        var attrs = { href: '#', class: 'active'};
+      else
+        var attrs = { href: `meta/${action}`};
+
+      output = output.concat(Html.tag('a', attrs, () => {
+        return Html.glyphicon(icons[action]) +
+               Translation.t('meta.dashboard.' + action);
+      }));
+    });
+
+    return output;
+  });
+
+  return new Handlebars.SafeString(html);
+});
+
+Handlebars.registerHelper('download_box', function(media) {
+  var template = View.compile('meta/partials/download_box');
+  var context  = media;
+
+  return new Handlebars.SafeString(template(context));
+});

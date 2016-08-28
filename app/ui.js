@@ -164,40 +164,54 @@ module.exports = class Ui {
   }
 
   /**
-   * Displays a notification about download's beginning/end
-   * and update the item's download bar's progression.
+   * Displays a notification about download's beginning
+   * and show the main download bar.
    *
-   * @param  {String} id           - The media's id.
-   * @param  {String} title        - The media's title.
-   * @param  {String} icon         - Icon's URL.
-   * @param  {Number} percentage   - Current percentage.
+   * @param  {Object} hash - A hash containing the media's
+   *                         attributes.
    * @return {null}
    */
-  static downloading(id, title, icon, percentage) {
-    var element = $('div[data-id="' + id + '"]');
-
-    // We call show on the download bar anyway to make
-    // sure that it is still visible if the user go
-    // to another page during download.
-    element.find('.download_bar').show();
-
-    if (percentage == 0 || percentage == 100) {
-      if (percentage == 0) {
-        var status = Translation.t('meta.download_in_progress');
-      } else {
-        var status = Translation.t('meta.download_finished');
-        element.find('.download_bar').hide();
-      }
-
-      new Notification(status, {
-        body: title,
-        icon: icon
-      });
-    }
-
-    element.find('.download_bar .progression').css({
-      width: percentage + '%'
+  static downloadStart(hash) {
+    new Notification(Translation.t('meta.download_in_progress'), {
+      body: hash.title + ' - ' + hash.artist,
+      icon: hash.icon
     });
+
+    $('.sidebar .main .download_bar').show();
+  }
+
+  /**
+   * Displays a notification about the download's end and
+   * hides the main download bar if necessary.
+   *
+   * @param  {Object} hash - A hash containing the media's
+   *                         attributes.
+   * @return {null}
+   */
+  static downloadEnd(hash) {
+    new Notification(Translation.t('meta.download_finished'), {
+      body: hash.title + ' - ' + hash.artist,
+      icon: hash.icon
+    });
+
+    if (Downloads.progression == Downloads.size)
+      $('.sidebar .main .download_bar').fadeOut(200);
+  }
+
+  /**
+   * Updates the download bars' progression.
+   *
+   * @param  {String|Number} id         - The media's id.
+   * @param  {Number}        percentage - The progression.
+   * @return {null}
+   */
+  static downloadProgress(id, percentage) {
+    var total = (Downloads.progression / Downloads.size) * 100;
+
+    $('.sidebar .main .download_bar .progression').css({width: total + '%'});
+
+    if (Cache.current.action = 'downloads')
+      $(`div[data-id="${id}"] .progression`).css({width: percentage + '%'});
   }
 
   /**

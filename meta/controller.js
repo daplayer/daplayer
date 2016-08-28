@@ -29,6 +29,17 @@ module.exports = class MetaController {
     });
   }
 
+  static downloads() {
+    return new Promise((resolve, reject) => {
+      View.render('meta/downloads', {
+        downloads: Downloads.queue,
+        history:   Downloads.history
+      });
+
+      resolve(true);
+    })
+  }
+
   static search(query, modules) {
     return MetaService.search(query, modules).then(() => {
       MetaController.render(modules.first(), 'search_results');

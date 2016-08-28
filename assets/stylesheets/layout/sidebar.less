@@ -54,6 +54,24 @@
             height: 100%;
             .glyphicon { font-size: 20px; }
           }
+
+          .download_bar {
+            background: white;
+            border: 1px solid @dark-flat-purple;
+            border-radius: 5px;
+            display: none;
+            height: 2px;
+            width: 150%;
+            margin-top: 2px;
+            position: absolute;
+            left: -25%;
+
+            .progression {
+              background: @light-blue;
+              height: 100%;
+              width: 0%;
+            }
+          }
         }
       }
     }

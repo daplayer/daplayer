@@ -1,0 +1,47 @@
+.download.box {
+  height: 80px;
+
+  h3 { margin: 0.2em 0 0 0; }
+  h4 { margin: 0.2em 0 1em 0; }
+
+  .thumbnail {
+    float: left;
+    width: 80px;
+  }
+
+  .description {
+    margin-left: 100px;
+
+    .bar {
+      background: lighten(@thiner-blue-grey, 5%);
+      border-radius: 15px;
+      height: 7px;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+
+      &::before {
+        border: 1px solid @thiner-grey-blue;
+        border-radius: 15px;
+        content: '';
+        height: 5px;
+        width: ~"calc(100% - 2px)";
+        display: block;
+        position: absolute;
+        z-index: 200;
+      }
+
+      .progression {
+        border: 1px solid @blue;
+        border-radius: 15px;
+        background: @light-blue;
+        height: 5px;
+        width: 0%;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        z-index: 300;
+      }
+    }
+  }
+}

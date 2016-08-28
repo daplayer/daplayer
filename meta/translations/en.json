@@ -9,6 +9,10 @@
     "actions": {
       "playlist_created": "Playlist created"
     },
+    "dashboard": {
+      "configuration": "Configuration",
+      "downloads":     "Downloads"
+    },
     "options": {
       "share": "Share",
       "download": "Download",

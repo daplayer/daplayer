@@ -1,0 +1,18 @@
+{{dashboard_menu 'downloads'}}
+
+
+{{#if downloads}}
+  <h1>Downloading</h1>
+
+  {{#each downloads}}
+    {{download_box this}}
+  {{/each}}
+{{/if}}
+
+{{#if history}}
+  <h1>History</h1>
+
+  {{#each history}}
+    {{download_box this}}
+  {{/each}}
+{{/if}}

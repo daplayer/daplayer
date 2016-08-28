@@ -5,6 +5,7 @@ module.exports = class Router {
     var parts   = href.split('/');
     var mapping = {
       configuration:   'dashboard_view',
+      downloads:       'dashboard_view',
       activities:      'stream_view',
       tracks:          'stream_view',
       liked_playlists: 'playlists_view',
@@ -51,11 +52,11 @@ module.exports = class Router {
   static from(module, action) {
     // Reversed method of `to`:
     //
-    // * meta/configuration                  => meta/dashboard
+    // * meta/{configuration,downloads}      => meta/dashboard
     // * soundcloud/{activities,tracks}      => soundcloud/stream
     // * soundcloud/{liked,user}_playlists   => soundcloud/playlists
     // * local/{singles,albums,artists}      => local/files
-    if (module == 'meta' && ['configuration'].includes(action))
+    if (module == 'meta' && ['configuration', 'downloads'].includes(action))
       return 'meta/dashboard';
     else if (module == 'soundcloud' && ['activities', 'tracks'].includes(action))
       return 'soundcloud/stream';
