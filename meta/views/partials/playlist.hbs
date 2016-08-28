@@ -1,0 +1,42 @@
+<div class="playlist {{ service }}" data-id="{{ id }}">
+  {{#unless isYouTube}}
+    <div class="cover">
+      <img src="{{ icon }}">
+    </div>
+  {{else}}
+    <div class="information">
+      <img src="{{ icon }}">
+
+      <div class="legend">
+        <h2>{{ title }}</h2>
+        <h3>{{ items_count }} {{t 'meta.videos'}}</h3>
+      </div>
+    </div>
+  {{/unless}}
+
+  <div class="items">
+    {{#unless isYouTube}}
+      {{#if isSoundCloud}}
+        <h2>{{ title }} <small>({{ human_time }})</small></h2>
+      {{else}}
+        <h2>{{ title }}</h2>
+      {{/if}}
+
+      <h3>
+        {{#if isSoundCloud}}
+          {{ artist }}
+        {{else if album}}
+          {{ artist }} - {{ items.length }} {{t 'meta.tracks'}}
+        {{else}}
+          {{ items.length }} {{t 'meta.items'}}
+        {{/if}}
+      </h3>
+    {{/unless}}
+
+    <ul>
+      {{#each items}}
+        {{playlist_item this}}
+      {{/each}}
+    </ul>
+  </div>
+</div>

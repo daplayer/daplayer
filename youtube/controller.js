@@ -43,13 +43,13 @@ module.exports = class YouTubeController {
       });
     }).then((playlist) => {
       return YouTubeModel.playlistItems(id).then((collection) => {
+        var context       = playlist;
+            context.items = collection.items;
+
         if (!Cache.youtube.playlist_items[id])
           Cache.add('youtube', 'playlist_items', collection);
 
-        this.render('youtube/playlist_items', {
-          playlist: playlist,
-          items: collection.items
-        }, true);
+        this.render('meta/partials/playlist', context, true);
       });
     });
   }

@@ -18,7 +18,7 @@ $('.content').on('submit', '#add_playlist', function(e) {
   if (title.length) {
     Ui.createPlaylist(title, 'local');
 
-    $('.content').append(Handlebars.helpers.local_playlist({
+    $('.content').append(Handlebars.helpers.playlist({
       title: title,
       icon:  Paths.default_artwork,
       items: []

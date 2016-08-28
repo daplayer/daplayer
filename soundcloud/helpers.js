@@ -6,12 +6,6 @@ Handlebars.registerHelper('soundcloud_music_bar', function(record) {
   return new Handlebars.SafeString(template(record));
 });
 
-Handlebars.registerHelper('soundcloud_playlist', function(playlist) {
-  var template = View.compile('soundcloud/partials/playlist');
-
-  return new Handlebars.SafeString(template(playlist));
-});
-
 Handlebars.registerHelper('soundcloud_activity_icon', function(type) {
   var mapping = {
     'track-repost':    'retweet',

@@ -10,8 +10,16 @@ module.exports = class Record {
     return !['playlist', 'album'].includes(this.kind);
   }
 
+  isSoundCloud() {
+    return this.service == 'soundcloud';
+  }
+
+  isYouTube() {
+    return this.service == 'youtube';
+  }
+
   get media() {
-    return this.service == 'youtube' ? 'video' : 'music';
+    return this.isYouTube() ? 'video' : 'music';
   }
 
   get human_time() {

@@ -1,9 +1,3 @@
-Handlebars.registerHelper('local_playlist', function(playlist) {
-  var template = View.compile('local/partials/playlist');
-
-  return new Handlebars.SafeString(template(playlist));
-});
-
 Handlebars.registerHelper('listen_later', function(item) {
   var template = View.compile('local/partials/listen_later');
 
