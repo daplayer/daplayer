@@ -34,18 +34,26 @@
   nav {
     &.main {
       position: relative;
-      min-height: 35px;
+      height: 35px;
 
       .nav_items {
-        padding: 10px 0 0px 55px;
+        height: 100%;
+        padding: 0 0 0 55px;
         position: absolute;
         left: 0;
 
-        a {
+        .icon {
           float: left;
-          margin-right: 25px;
+          height: 100%;
+          width: 20px;
+          margin-right: 40px;
+          padding-top: 10px;
+          position: relative;
 
-          .glyphicon { font-size: 20px; }
+          a {
+            height: 100%;
+            .glyphicon { font-size: 20px; }
+          }
         }
       }
     }
