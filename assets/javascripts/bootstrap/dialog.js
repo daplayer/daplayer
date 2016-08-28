@@ -63,7 +63,6 @@ $('.dialog').on('click', '.add_to_playlist.button', function(e) {
   var id         = form.find('input[name="record-id"]').val();
   var module     = Cache.current.module;
   var action     = Cache.current.action;
-  var playlists  = [];
 
   checkboxes.each(function() {
     MetaModel.addToPlaylist(module, action, id, {
