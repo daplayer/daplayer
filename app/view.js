@@ -57,4 +57,17 @@ module.exports = class View {
 
     return Cache.templates[location];
   }
+
+  /**
+   * Facility to define partials as Handlebars helpers. It
+   * compiles the given partial, render it and wrap inside
+   * a Handlebars safe string.
+   *
+   * @param  {String} location - The partial's location.
+   * @param  {Object} context  - The context for rendering.
+   * @return {Handlebars.SafeString}
+   */
+  static partial(location, context) {
+    return new Handlebars.SafeString(this.compile(location)(context));
+  }
 }

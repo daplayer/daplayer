@@ -58,30 +58,20 @@ Handlebars.registerHelper('input', function(id, section, path_selector) {
 
 // --------------------------------------------------------
 // Shared helpers
-Handlebars.registerHelper('playlist_item', function(item) {
-  var template = View.compile('meta/partials/playlist_item');
-  var context  = item;
+Handlebars.registerHelper('playlist', function(playlist) {
+  return View.partial('meta/partials/playlist', playlist);
+});
 
-  return new Handlebars.SafeString(template(context));
+Handlebars.registerHelper('playlist_item', function(item) {
+  return View.partial('meta/partials/playlist_item', item);
 });
 
 Handlebars.registerHelper('playlist_option', function(playlist) {
-  var template = View.compile('meta/partials/playlist_option');
-  var context  = playlist;
-
-  return new Handlebars.SafeString(template(context));
+  return View.partial('meta/partials/playlist_option', playlist);
 });
 
 Handlebars.registerHelper('media_box', function(media) {
-  var template = View.compile('meta/partials/media_box');
-
-  return new Handlebars.SafeString(template(media));
-});
-
-Handlebars.registerHelper('playlist', function(playlist) {
-  var template = View.compile('meta/partials/playlist');
-
-  return new Handlebars.SafeString(template(playlist));
+  return View.partial('meta/partials/media_box', media);
 });
 
 Handlebars.registerHelper('search_results_menu', function(search_results, active) {
@@ -146,8 +136,5 @@ Handlebars.registerHelper('dashboard_menu', function(active) {
 });
 
 Handlebars.registerHelper('download_box', function(media) {
-  var template = View.compile('meta/partials/download_box');
-  var context  = media;
-
-  return new Handlebars.SafeString(template(context));
+  return View.partial('meta/partials/download_box', media);
 });
