@@ -4,12 +4,6 @@ Handlebars.registerHelper('local_playlist', function(playlist) {
   return new Handlebars.SafeString(template(playlist));
 });
 
-Handlebars.registerHelper('local_music_box', function(item) {
-  var template = View.compile('local/partials/music_box');
-
-  return new Handlebars.SafeString(template(item));
-});
-
 Handlebars.registerHelper('listen_later', function(item) {
   var template = View.compile('local/partials/listen_later');
 

@@ -75,6 +75,12 @@ Handlebars.registerHelper('playlist_option', function(playlist) {
   return new Handlebars.SafeString(template(context));
 });
 
+Handlebars.registerHelper('media_box', function(media) {
+  var template = View.compile('meta/partials/media_box');
+
+  return new Handlebars.SafeString(template(media));
+});
+
 Handlebars.registerHelper('search_results_menu', function(search_results, active) {
   var icons = {
     soundcloud: 'cloud',

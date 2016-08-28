@@ -10,6 +10,10 @@ module.exports = class Record {
     return !['playlist', 'album'].includes(this.kind);
   }
 
+  get media() {
+    return this.service == 'youtube' ? 'video' : 'music';
+  }
+
   get human_time() {
     return Formatter.time(this.duration);
   }

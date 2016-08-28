@@ -6,10 +6,3 @@ Handlebars.registerHelper('youtube_playlist_thumbnail', function(playlist) {
 
   return new Handlebars.SafeString(template(context));
 });
-
-Handlebars.registerHelper('youtube_video_box', function(item) {
-  var template = View.compile('youtube/partials/video_box');
-  var context  = item;
-
-  return new Handlebars.SafeString(template(context));
-});

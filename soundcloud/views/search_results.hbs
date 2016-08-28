@@ -4,7 +4,7 @@
   <h1>{{t 'sc.sidebar.likes'}}</h1>
 
   {{#each soundcloud.owned}}
-    {{soundcloud_music_box this}}
+    {{media_box this}}
   {{/each}}
 
   <div class="clearer"></div>
@@ -13,6 +13,6 @@
 <h1>{{t 'sc.name'}}</h1>
 
 {{#each soundcloud.net_results}}
-  {{soundcloud_music_box this}}
+  {{media_box this}}
 {{/each}}
 
