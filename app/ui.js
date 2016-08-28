@@ -101,7 +101,7 @@ module.exports = class Ui {
     var action = Cache.current.action,
         module = Cache.current.module;
 
-    if (module == 'local')
+    if (module == 'local' || module == 'meta')
       return;
     if (['configuration', 'playlist_items'].includes(action))
       return;
