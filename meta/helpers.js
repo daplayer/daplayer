@@ -12,6 +12,10 @@ Handlebars.registerHelper('a', function(title, account) {
   return Formatter.artist(title, account);
 });
 
+Handlebars.registerHelper('size', function(url, size) {
+  return url.size(size);
+});
+
 // --------------------------------------------------------
 // Form helpers
 Handlebars.registerHelper('radio', function(id, name, label, section) {
@@ -58,19 +62,12 @@ Handlebars.registerHelper('playlist_item', function(item) {
   var template = View.compile('meta/partials/playlist_item');
   var context  = item;
 
-  context.klass = item.service == 'youtube' ? 'video' : 'music';
-
-  if (context.service == 'soundcloud')
-    context.icon = context.icon.size('badge');
-
   return new Handlebars.SafeString(template(context));
 });
 
 Handlebars.registerHelper('playlist_option', function(playlist) {
   var template = View.compile('meta/partials/playlist_option');
   var context  = playlist;
-
-  context.klass = context.service == 'youtube' ? 'video' : 'music';
 
   return new Handlebars.SafeString(template(context));
 });
