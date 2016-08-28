@@ -387,33 +387,44 @@ module.exports = class YouTubeService {
    *
    * @param  {String} id     - The video's id.
    * @param  {String} title  - The media's title.
-   * @param  {String} artist - The media's artist.
    * @param  {String} icon   - The media's icon.
    * @return {null}
    */
   static downloadMP3(id, title, icon) {
-    Ui.downloading(id, title, icon, 0);
+    var hash = {
+      id:    id,
+      title: title,
+      icon:  icon
+    };
+
+    Downloads.enqueue(hash);
+    Ui.downloadStart(hash);
 
     var size, remaining;
     var location = Formatter.path(title, null, 'youtube');
 
     this.mp3URL(id).then((url) => {
       MetaService.download(url, location, (request) => {
-        request.on('end', () => {
-          Tagging.set(location, {
-            album: ''
-          });
-        });
-
         request.on('response', (data) => {
           size      = data.headers['content-length'];
           remaining = size;
+
+          Downloads.grow(size);
         });
 
         request.on('data', (chunck) => {
           remaining = remaining - chunck.length;
 
-          Ui.downloading(id, title, icon, (size - remaining) / size * 100);
+          Downloads.progress(chunck.length);
+          Ui.downloadProgress(id, (size - remaining) / size * 100);
+        });
+
+        request.on('end', () => {
+          Ui.downloadEnd(Downloads.dequeue(id));
+
+          Tagging.set(location, {
+            title: title
+          });
         });
       });
     });
@@ -431,8 +442,16 @@ module.exports = class YouTubeService {
    * @deprecated
    */
   static downloadVideo(id, title, icon) {
+    var hash = {
+      id:    id,
+      title: title,
+      icon:  icon
+    };
+
+    Downloads.enqueue(hash);
+    Ui.downloadStart(hash);
+
     this.videoURL(id).then((url) => {
-      Ui.downloading(id, title, icon, 0);
 
       var size, remaining;
       var extension = '.' + url.type.split(';')[0].split('/')[1];
@@ -442,12 +461,19 @@ module.exports = class YouTubeService {
         request.on('response', (data) => {
           size      = data.headers['content-length'];
           remaining = size;
+
+          Downloads.grow(size);
         });
 
         request.on('data', (chunck) => {
           remaining = remaining - chunck.length;
 
-          Ui.downloading(id, title, icon, (size - remaining) / size * 100);
+          Downloads.progress(chunck.length);
+          Ui.downloadProgress(id, (size - remaining) / size * 100);
+        });
+
+        request.on('end', () => {
+          Ui.downloadEnd(Downloads.dequeue(id));
         });
       });
     });

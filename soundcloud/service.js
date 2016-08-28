@@ -96,9 +96,15 @@ module.exports = class SoundCloudService {
    * @return {null}
    */
   static download(id, title, artist, genre, icon) {
-    // Pops-up a notification to specify that
-    // the download process' began.
-    Ui.downloading(id, title, icon, 0);
+    var hash = {
+      id:     id,
+      title:  title,
+      artist: artist,
+      icon:   icon
+    };
+
+    Downloads.enqueue(hash);
+    Ui.downloadStart(hash);
 
     this.stream_url(id).then((url) => {
       var size, remaining;
@@ -108,16 +114,21 @@ module.exports = class SoundCloudService {
         request.on('response', (response) => {
           size      = response.headers['content-length'];
           remaining = size;
+
+          Downloads.grow(size);
         });
 
         request.on('data', (chunck) => {
           remaining = remaining - chunck.length;
 
-          Ui.downloading(id, title, icon, (size - remaining) / size * 100);
+          Downloads.progress(chunck.length);
+          Ui.downloadProgress(id, (size - remaining) / size * 100);
         });
 
         request.on('end', () => {
-          MetaService.downloadImage(icon, title, artist, album, (icon_path) => {
+          Ui.downloadEnd(Downloads.dequeue(id));
+
+          MetaService.downloadImage(icon, title, artist, (icon_path) => {
             Tagging.set(location, {
               title:  title,
               artist: artist,

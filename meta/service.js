@@ -56,8 +56,8 @@ module.exports = class MetaService {
     });
   }
 
-  static downloadImage(url, artist, title, album, callback) {
-    var location = Formatter.cover_path(url, artist, title, album);
+  static downloadImage(url, artist, title, callback) {
+    var location = Formatter.cover_path(url, artist, title);
 
     this.download(url, location, (req) => {
       req.on('end', () => {
