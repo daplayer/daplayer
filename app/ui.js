@@ -231,6 +231,79 @@ module.exports = class Ui {
   }
 
   /**
+   * Shows the video player's controls.
+   *
+   * @return {null}
+   */
+  static showVideoControls() {
+    $('.player_frame .controls').stop().fadeIn(200);
+
+    if (document.webkitIsFullScreen)
+      $('.player_frame .video_player').css({ cursor: 'pointer' });
+  }
+
+  /**
+   * Hides the video player's controls.
+   *
+   * @return {null}
+   */
+  static hideVideoControls() {
+    $('.player_frame .controls').stop().fadeOut(300);
+
+    if (document.webkitIsFullScreen)
+      $('.player_frame .video_player').css({ cursor: 'none' });
+  }
+
+  /**
+   * Runs the necessary actions attached to a given icon.
+   *
+   * @param  {$} icon - The icon that the user clicked on.
+   * @return {null}
+   */
+  static videoControl(icon) {
+    if (icon.hasClass('fullscreen-switch'))
+      this.toggleFullScreen();
+  }
+
+  /**
+   * Displays the video player in full-screen mode.
+   *
+   * @return {null}
+   */
+  static enterFullScreen() {
+    $('.fullscreen-switch').removeClass('glyphicon-fullscreen')
+                           .addClass('glyphicon-resize-small');
+
+    document.querySelector('.player_frame').webkitRequestFullScreen();
+  }
+
+  /**
+   * Exits the video player from full-screen mode.
+   *
+   * @return {null}
+   */
+  static exitFullScreen() {
+    $('.fullscreen-switch').removeClass('glyphicon-resize-small')
+                           .addClass('glyphicon-fullscreen');
+
+    $('.player_frame .video_player').css({ cursor: 'pointer' });
+
+    document.webkitExitFullscreen();
+  }
+
+  /**
+   * Toggles the full screen mode for the video player.
+   *
+   * @return {null}
+   */
+  static toggleFullScreen() {
+    if (document.webkitIsFullScreen)
+      this.exitFullScreen();
+    else
+      this.enterFullScreen();
+  }
+
+  /**
    * Shows the dialog box and the black transparent
    * shadow as well. Hides the video player if it is
    * already open.

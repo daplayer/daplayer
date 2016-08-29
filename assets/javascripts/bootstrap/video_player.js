@@ -1,32 +1,45 @@
-// Pause/play the video clicking on it
-$('.shadow.main').on('click', '.video_player', function() {
+// Pause/play the video clicking on it.
+$('.video_player').on('click', function() {
   if (Player.paused)
     Player.play();
   else
     Player.pause();
 });
 
-
-// Enable full-screen double-clicking on the video
-$('.shadow.main').on('dblclick', '.video_player', function() {
-  $(this)[0].webkitRequestFullScreen();
+// Toggle full-screen double-clicking on the video.
+$('.video_player').on('dblclick', function() {
+  Ui.toggleFullScreen();
 });
 
-// Show/hide the video's controls passing the mouse over it
-// or leaving the area.
-$('.player_frame_container').on('mouseenter', function() {
-  $('.player_frame_container .controls').fadeIn(200);
+var hide;
+
+// Show/hide the video's controls moving the mouse inside
+// the video's area. The controls are automatically hidden
+// after two seconds of "inactivity".
+$('.player_frame').on('mousemove', function() {
+  Ui.showVideoControls();
+
+  if (hide)
+    clearTimeout(hide);
+
+  hide = setTimeout(function() {
+    Ui.hideVideoControls();
+  }, 2000);
+}).on('mouseleave', () => {
+  clearTimeout(hide);
+
+  Ui.hideVideoControls();
 });
 
-$('.player_frame_container').on('mouseleave', function() {
-  $('.player_frame_container .controls').fadeOut(300);
+// Manage clicks on the different video controls.
+$('.player_frame .controls').on('click', '.glyphicon', function() {
+  Ui.videoControl($(this));
 });
 
-// Manage clicks on the different video controls
-$('.controls').on('click', '.glyphicon-share-alt', function() {
-  Ui.share(Player.element);
-}).on('click', '.glyphicon-download-alt', function() {
-  Ui.download(Player.element);
-}).on('click', '.glyphicon-fullscreen', function() {
-  $('.player_frame_container')[0].webkitRequestFullScreen();
+// Make sure to correctly set-up the user interface if the user
+// exits the full screen mode by pressing the "Esc" or "F11" key;
+// the `Ui#exitFullScreen` function would not be called.
+$(document).on('webkitfullscreenchange', function() {
+  if (!document.webkitIsFullScreen)
+    Ui.exitFullScreen();
 });

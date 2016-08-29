@@ -71,7 +71,6 @@
 }
 
 .player_frame_container {
-  background: black;
   border: 2px solid white;
   box-shadow: 0px 2px 2px black;
   display: none;
@@ -104,8 +103,12 @@
 }
 
 .player_frame, .video_player {
-  height: 300px;
-  width: 510px;
+  height: 100%;
+  width: 100%;
+}
+
+.player_frame {
+  background: @black;
 }
 
 .video_player {
