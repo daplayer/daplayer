@@ -3,6 +3,19 @@
 DaPlayer is a music player that lets you synchronize your SoundCloud and
 YouTube library easily while managing your local musics.
 
+![](http://robin.alwaysdata.net/daplayer.png)
+
+## Living on the edge
+
+If you want to run an un-released version of DaPlayer, you are done with:
+
+~~~
+$ git clone https://github.com/daplayer/daplayer
+$ cd daplayer
+$ npm install
+$ npm start
+~~~
+
 ## License
 
 This project is based on these amazing pieces of software:
