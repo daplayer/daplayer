@@ -1,3 +1,5 @@
+.PHONY: test
+
 package-osx:
 	electron-packager . --out dist --icon assets/icons/logo.icns --platform=darwin --arch=x64
 
@@ -11,3 +13,6 @@ package-windows:
 
 css:
 	npm run less assets/stylesheets/default_theme.less assets/stylesheets/default_theme.css
+
+test:
+	npm run mocha test/{unit,models,helpers}/**/*_test.js

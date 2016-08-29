@@ -13,7 +13,8 @@
     "spectron": "*"
   },
   "scripts": {
-    "less": "lessc"
+    "less": "lessc",
+    "mocha": "mocha"
   },
   "main": "main.js",
   "productName": "DaPlayer",
