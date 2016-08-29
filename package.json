@@ -5,11 +5,15 @@
     "jquery":            "^2.2.0",
     "sql.js":            "^0.3.2",
     "glob":              "^7.0.3",
+    "less":              "^2.7.1",
     "daplayer-tagging":  "/Users/robin/Code/daplayer-tagging"
   },
   "devDependencies": {
     "mocha": "*",
     "spectron": "*"
+  },
+  "scripts": {
+    "less": "lessc"
   },
   "main": "main.js",
   "productName": "DaPlayer",

@@ -8,3 +8,6 @@ package-linux:
 package-windows:
 	electron-packager . --out dist --icon assets/icons/logo.ico --platform=windows --arch=x64
 	electron-packager . --out dist --icon assets/icons/logo.ico --platform=windows --arch=x86
+
+css:
+	npm run less assets/stylesheets/default_theme.less assets/stylesheets/default_theme.css
