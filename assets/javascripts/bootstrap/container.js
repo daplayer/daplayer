@@ -6,7 +6,7 @@
 $('.container').scroll(function() {
   if ($(this)[0].scrollHeight - $(this).scrollTop() == $(this).outerHeight())
     Ui.loadNextRecords();
-}).on('click', '.shadow.main' function(e) {
+}).on('click', '.shadow.main', function(e) {
   if (!$(e.target).hasClass('shadow'))
     return;
 
