@@ -1,11 +1,3 @@
-// Hide the solid-background clicking on it.
-$('.shadow.main').on('click', function(e) {
-  if (!$(e.target).hasClass('shadow'))
-    return;
-
-  Ui.hideShadow();
-});
-
 // Pause/play the video clicking on it
 $('.shadow.main').on('click', '.video_player', function() {
   if (Player.paused)
@@ -13,6 +5,7 @@ $('.shadow.main').on('click', '.video_player', function() {
   else
     Player.pause();
 });
+
 
 // Enable full-screen double-clicking on the video
 $('.shadow.main').on('dblclick', '.video_player', function() {

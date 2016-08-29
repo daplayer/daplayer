@@ -54,12 +54,12 @@ $(document).ready(function() {
   require('./assets/javascripts/bootstrap/player');
 
   // --------------------------------------------------------
-  // > Search bar
-  require('./assets/javascripts/bootstrap/search');
+  // > Video player (manage full-screen mode, etc.)
+  require('./assets/javascripts/bootstrap/video_player');
 
   // --------------------------------------------------------
-  // > Shadow showing the video player
-  require('./assets/javascripts/bootstrap/shadow');
+  // > Search bar
+  require('./assets/javascripts/bootstrap/search');
 
   // --------------------------------------------------------
   // > Dialogs (for tagging, downloading, etc.)
