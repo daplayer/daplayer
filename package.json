@@ -14,7 +14,8 @@
   },
   "scripts": {
     "less": "lessc",
-    "mocha": "mocha"
+    "mocha": "mocha",
+    "start": "electron main.js"
   },
   "main": "main.js",
   "productName": "DaPlayer",
