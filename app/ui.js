@@ -32,13 +32,18 @@ module.exports = class Ui {
    * placeholders that are waiting some contents to be
    * loaded (e.g. sidebar).
    *
+   * @param  {Bool=} only_sidebar - Whether to reload only the
+   *                                sidebar or not.
    * @return {null}
    */
-  static loadPartials() {
-    $('.controls').html(View.compile('meta/partials/video_controls')());
+  static loadPartials(only_sidebar) {
     $('.sidebar').html(View.compile('meta/partials/sidebar')());
-    $('.player').html(View.compile('meta/partials/player')());
     $('.search').html(View.compile('meta/partials/search')());
+
+    if (!only_sidebar) {
+      $('.player').html(View.compile('meta/partials/player')());
+      $('.player_frame .controls').html(View.compile('meta/partials/video_controls')());
+    }
   }
 
   /**

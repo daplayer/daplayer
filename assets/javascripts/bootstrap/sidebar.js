@@ -4,7 +4,7 @@
 // When clicking on a title, the sub-menu (i.e. the underlying
 // `ul`), should be showed/hidden and the arrow's direction
 // should change as well.
-$('.sidebar h3').click(function() {
+$('.sidebar').on('click', 'h3', function() {
   $(this).next().animate({
     height: 'toggle'
   }, 150);
@@ -17,19 +17,19 @@ $('.sidebar h3').click(function() {
 // >> Manage search
 //
 // Hide the search bar clicking on the left chevron.
-$('.search .left').click(function() {
+$('.sidebar').on('click', '.search .left', function() {
   Ui.toggleSearchBar();
 });
 
 // Display/hide search options click on the plus.
-$('.search .right').click(function() {
+$('.sidebar').on('click', '.search .right', function() {
   $('.search .search-options').slideToggle();
 });
 
 // Manage key-up events for the search bar:
 //   - Hide search bar pressing esc.
 //   - Trigger the search pressing return;
-$('.search').on('keyup', 'input', function(e) {
+$('.sidebar').on('keyup', '.search input', function(e) {
   // 27: 'esc' key
   // 13: 'Enter' key
 

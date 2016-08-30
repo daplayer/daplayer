@@ -99,7 +99,7 @@ $('.content').on('submit', '.configuration form', function(e) {
   // Reload the contents if the locale has been changed
   if (locale != original_locale) {
     Translation.load();
-    Ui.loadPartials();
+    Ui.loadPartials(true);
     Ui.refresh();
   }
 });
