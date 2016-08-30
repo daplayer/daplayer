@@ -58,15 +58,11 @@ $(document).ready(function() {
   require('./assets/javascripts/bootstrap/video_player');
 
   // --------------------------------------------------------
-  // > Search bar
-  require('./assets/javascripts/bootstrap/search');
-
-  // --------------------------------------------------------
   // > Dialogs (for tagging, downloading, etc.)
   require('./assets/javascripts/bootstrap/dialog');
 
   // --------------------------------------------------------
-  // > Sidebar interface
+  // > Sidebar interface (toggling menu, search bar, etc.)
   require('./assets/javascripts/bootstrap/sidebar');
 
   // --------------------------------------------------------
