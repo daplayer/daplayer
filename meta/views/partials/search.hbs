@@ -8,9 +8,28 @@
 <div class="search-options hidden">
   <h5>{{t 'meta.search.on'}}</h5>
 
-  <input type="checkbox" name="soundcloud"> {{t 'sc.name'}}<br>
-  <input type="checkbox" name="youtube"> {{t 'yt.name'}}<br>
-  <input type="checkbox" name="local"> {{t 'local.name'}}
+  <div class="switches">
+    <div class="switch-container">
+      <div class="switch off soundcloud"></div>
+      <div class="switch-border"></div>
+      <div class="switch on soundcloud"></div>
+      <input type="hidden" name="soundcloud" value="0">
+    </div>
+
+    <div class="switch-container">
+      <div class="switch off youtube"></div>
+      <div class="switch-border"></div>
+      <div class="switch on youtube"></div>
+      <input type="hidden" name="youtube" value="0">
+    </div>
+
+    <div class="switch-container">
+      <div class="switch off local"></div>
+      <div class="switch-border"></div>
+      <div class="switch on local"></div>
+      <input type="hidden" name="local" value="0">
+    </div>
+  </div>
 
   <h5>{{t 'meta.search.syntax'}}</h5>
 

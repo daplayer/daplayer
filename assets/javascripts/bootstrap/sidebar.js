@@ -38,16 +38,54 @@ $('.sidebar').on('keyup', '.search input', function(e) {
   } else if (e.keyCode == 13) {
     var modules = [];
 
-    if ($('input[name="soundcloud"]').is(':checked'))
+    if ($('input[name="soundcloud"]').val() == 1)
       modules.push('soundcloud');
-    if ($('input[name="youtube"]').is(':checked'))
+    if ($('input[name="youtube"]').val() == 1)
       modules.push('youtube');
-    if ($('input[name="local"]').is(':checked'))
+    if ($('input[name="local"]').val() == 1)
       modules.push('local');
 
     if (modules.empty())
       modules.push(Cache.current.module);
 
     MetaController.render('meta', 'search', [$(this).val(), modules]);
+  }
+});
+
+$('.sidebar').on('click', '.switch-border, .switch', function() {
+  var container = $(this).parent();
+  var on        = container.find('.on');
+  var off       = container.find('.off');
+  var border    = container.find('.switch-border');
+  var field     = container.find('input[type="hidden"]');
+
+  if (field.val() == 1) {
+    field.val(0);
+
+    on.animate({ left: '45px' }, 200);
+    border.animate({ left: '40px' }, 200);
+    off.animate({ left: 0 }, 200);
+
+    border.css({
+      'background': '#949BC0',
+      'border-top-left-radius': '0px',
+      'border-bottom-left-radius': '0px',
+      'border-top-right-radius': '2px',
+      'border-bottom-right-radius': '2px'
+    });
+  } else {
+    field.val(1);
+
+    off.animate({ left: '-45px' }, 200);
+    border.animate({ left: 0 }, 200);
+    on.animate({ left: '5px' }, 200);
+
+    border.css({
+      'background': '#0277DB',
+      'border-top-left-radius': '2px',
+      'border-bottom-left-radius': '2px',
+      'border-top-right-radius': '0px',
+      'border-bottom-right-radius': '0px'
+    });
   }
 });

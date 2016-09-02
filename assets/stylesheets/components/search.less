@@ -51,5 +51,78 @@
     input[type="checkbox"] {
       margin: 0 0.5em 0 1em;
     }
+
+    .switches {
+      height: 40px;
+      padding-left: 10px;
+
+      .switch-container {
+        float: left;
+        height: 25px;
+        width: 45px;
+        margin: 7px 30px 10px 0px;
+        overflow: hidden;
+        padding: 0;
+        position: relative;
+
+        &:last-child {
+          margin-right: 0px;
+        }
+
+        .switch-border {
+          background: darken(@light-purple, 20%);
+          border-bottom-right-radius: 2px;
+          border-top-right-radius: 2px;
+          height: 100%;
+          width: 5px;
+          position: absolute;
+          left: 40px;
+        }
+
+        .switch {
+          box-sizing: border-box;
+          height: 100%;
+          width: 40px;
+          position: absolute;
+
+          &.on {
+            background: @light-blue;
+            border: 1px solid @blue;
+            border-right-bottom-radius: 2px;
+            border-right-top-radius: 2px;
+            left: 45px;
+          }
+
+          &.off {
+            background: @light-purple;
+            border: 1px solid darken(@light-purple, 20%);
+            border-left-bottom-radius: 2px;
+            border-left-top-radius: 2px;
+            left: 0;
+          }
+
+          &.soundcloud  {
+            background-image: url(../images/icons/soundcloud.svg);
+            background-position: 9px 7px;
+            background-repeat: no-repeat;
+            background-size: auto 9px;
+          }
+
+          &.youtube {
+            background-image: url(../images/icons/youtube.svg);
+            background-position: 10px 2px;
+            background-repeat: no-repeat;
+            background-size: auto 18px;
+          }
+
+          &.local {
+            background-image: url(../images/icons/local.svg);
+            background-position: 12px 4px;
+            background-repeat: no-repeat;
+            background-size: 13px;
+          }
+        }
+      }
+    }
   }
 }
