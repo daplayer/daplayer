@@ -62,6 +62,10 @@ $(document).ready(function() {
   require('./assets/javascripts/bootstrap/dialog');
 
   // --------------------------------------------------------
+  // > Shadow-related event handlers
+  require('./assets/javascripts/bootstrap/shadow');
+
+  // --------------------------------------------------------
   // > Sidebar interface (toggling menu, search bar, etc.)
   require('./assets/javascripts/bootstrap/sidebar');
 
