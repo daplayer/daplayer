@@ -65,6 +65,8 @@ module.exports = class YouTubePlayer {
    * @return {Promise}
    */
   static load(id) {
-    return YouTubeService.videoURL(id);
+    return YouTubeService.videoURL(id).then((hash) => {
+      return hash.url;
+    });
   }
 }

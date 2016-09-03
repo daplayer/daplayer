@@ -30,22 +30,7 @@ module.exports = class SC {
       }
     };
 
-    return new Promise((resolve, reject) => {
-      var response = "";
-      var req      = request.get(options);
-
-      req.on('data', (chunck) => {
-        response += chunck;
-      });
-
-      req.on('end', () => {
-        resolve(JSON.parse(response));
-      });
-
-      req.on('error', (e) => {
-        reject(e);
-      });
-    });
+    return this.resolve(options);
   }
 
   static fetch(endpoint, offset, limit) {
@@ -73,22 +58,7 @@ module.exports = class SC {
       }
     };
 
-    return new Promise((resolve, reject) => {
-      var response = "";
-      var req      = request.get(options);
-
-      req.on('data', (chunck) => {
-        response += chunck;
-      });
-
-      req.on('end', () => {
-        resolve(JSON.parse(response));
-      });
-
-      req.on('error', (e) => {
-        reject(e);
-      });
-    });
+    return this.resolve(options);
   }
 
   static stream(id) {
@@ -103,22 +73,9 @@ module.exports = class SC {
       }
     };
 
-    return new Promise((resolve, reject) => {
-      var response = "";
-      var req      = request.get(options)
-
-      req.on('data', (chunck) => {
-        response += chunck;
-      });
-
-      req.on('end', () => {
-        resolve(JSON.parse(response).http_mp3_128_url);
-      });
-
-      req.on('error', (e) => {
-        reject(e);
-      });
-    });
+    return this.resolve(options).then((response) => {
+      return response.http_mp3_128_url;
+    })
   }
 
   /**
@@ -130,33 +87,37 @@ module.exports = class SC {
    * @return {Promise}
    */
   static search(value) {
+    var options = {
+      url: this.url.search,
+      qs: {
+        q:         value,
+        limit:     10,
+        client_id: Credentials.soundcloud.client_id,
+        app_id:    Credentials.soundcloud.app_id
+      },
+      headers: {
+        Authorization: Credentials.user.soundcloud.oauth_token,
+        Origin:        this.url.default
+      }
+    };
+
+    return this.resolve(options);
+  }
+
+  static resolve(options) {
     return new Promise((resolve, reject) => {
-      var options = {
-        url: this.url.search,
-        qs: {
-          q:         value,
-          limit:     10,
-          client_id: Credentials.soundcloud.client_id,
-          app_id:    Credentials.soundcloud.app_id
-        },
-        headers: {
-          Authorization: Credentials.user.soundcloud.oauth_token,
-          Origin:        this.url.default
-        }
-      };
+      var response   = '';
+      var req_object = request.get(options);
 
-      var response = '';
-      var req      = request.get(options);
-
-      req.on('data', (chunck) => {
+      req_object.on('data', (chunck) => {
         response += chunck;
       });
 
-      req.on('end', () => {
+      req_object.on('end', () => {
         resolve(JSON.parse(response));
       });
 
-      req.on('error', (e) => {
+      req_object.on('error', (e) => {
         reject(e);
       });
     });

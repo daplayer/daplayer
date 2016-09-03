@@ -3,7 +3,9 @@
 module.exports = class SoundCloudModelFinders {
   static findById(id, section, playlist) {
     if (playlist instanceof $)
-      return this.findInPlaylist(id, section, playlist.data('id'));
+      return this.findPlaylist(playlist.data('id'), section).then((playlist) => {
+        return this.findInPlaylist(id, section, playlist)
+      });
     else if (playlist instanceof Record)
       return this.findInPlaylist(id, section, playlist);
     else
@@ -12,31 +14,15 @@ module.exports = class SoundCloudModelFinders {
 
   static findPlaylist(playlist_id, section) {
     return this[section.camel()]().then((cached) => {
-      return cached.collection.find((playlist) => {
-        return playlist.id == playlist_id;
-      });
+      return cached.collection.find(playlist => playlist.id == playlist_id);
     });
   }
 
-  static findInPlaylist(id, section, playlist_or_id) {
-    if (playlist_or_id instanceof Record)
-      return Promise.resolve({
-        playlist: playlist_or_id,
-        record: playlist_or_id.items.filter((record) => {
-          if (record.id == id)
-            return record;
-        })[0]
-      });
-    else
-      return this.findPlaylist(playlist_or_id, section).then((playlist) => {
-        return {
-          playlist: playlist,
-          record: playlist.items.filter((record) => {
-            if (record.id == id)
-              return record;
-          })[0]
-        };
-      });
+  static findInPlaylist(id, section, playlist) {
+    return Promise.resolve({
+      playlist: playlist,
+      record:   playlist.items.find(item => item.id == id)
+    });
   }
 
   static findRecord(id, section) {

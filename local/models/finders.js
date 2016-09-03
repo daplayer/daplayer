@@ -71,9 +71,7 @@ module.exports = class LocalModelFinders {
   static findInPlaylist(id, playlist) {
     return Promise.resolve({
       playlist: playlist,
-      record:   playlist.items.find((item) => {
-        return item.id == id;
-      })
+      record:   playlist.items.find(item => item.id == id)
     });
   }
 

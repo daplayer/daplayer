@@ -7,28 +7,28 @@ module.exports = class YouTubeModel {
     if (Cache.youtube.playlists && !page_token)
       return Cache.youtube.playlists;
 
-    return YT.playlists(page_token).then(this.recordify);
+    return YT.playlists(page_token).then(set => Record.youtube(set));
   }
 
   static watchLater(page_token) {
     if (Cache.youtube.watch_later && !page_token)
       return Cache.youtube.watch_later;
 
-    return YT.watchLater(page_token).then(this.recordify);
+    return YT.watchLater(page_token).then(set => Record.youtube(set));
   }
 
   static history(page_token) {
     if (Cache.youtube.history && !page_token)
       return Cache.youtube.history;
 
-    return YT.history(page_token).then(this.recordify);
+    return YT.history(page_token).then(set => Record.youtube(set));
   }
 
   static playlistItems(id) {
     if (Cache.youtube.playlist_items[id])
       return Cache.youtube.playlist_items[id];
 
-    return YT.items(id, true).then(this.recordify);
+    return YT.items(id, true).then(set => Record.youtube(set));
   }
 
   static searchResults() {
@@ -39,56 +39,32 @@ module.exports = class YouTubeModel {
 
   static findById(id, section, playlist) {
     if (playlist instanceof $)
-      return this.findInPlaylist(id, section, playlist.data('id'));
+      return this.findPlaylist(playlist.data('id')).then((playlist) => {
+        return this.findInPlaylist(id, section, playlist);
+      });
     else if (playlist instanceof Record)
       return this.findInPlaylist(id, section, playlist);
     else
       return this.findRecord(id, section);
   }
 
-  static findInPlaylist(id, section, playlist_or_id) {
-    if (playlist_or_id instanceof Record)
-      return Promise.resolve({
-        playlist: playlist_or_id,
-        record: playlist_or_id.items.filter((item) => {
-          if (item.id == id)
-            return item;
-        })[0]
-      });
-    else
-      return this.playlists().then((playlists) => {
-        return playlists.items.filter((item) => {
-          if (item.id == playlist_or_id)
-            return item;
-        })[0];
-      }).then((playlist) => {
-        return this.playlistItems(playlist_or_id).then((hash) => {
-          return hash.items.filter((item) => {
-            if (item.id == id)
-              return item;
-          }).map((item) => {
-            hash.title = playlist.title;
+  static findPlaylist(id) {
+    return this.playlists().then((playlists) => {
+      return playlists.items.find(item => item.id == id);
+    });
+  }
 
-            return {
-              record: item,
-              playlist: hash
-            };
-          })[0];
-        });
-      });
+  static findInPlaylist(id, section, playlist) {
+    return Promise.resolve({
+      playlist: playlist,
+      record:   playlist.items.find(item => item.id == id)
+    });
   }
 
   static findRecord(id, section) {
     return this[section.camel()]().then((cache) => {
-      return cache.items.filter((record) => {
-        if (record.id == id)
-          return record;
-      })[0];
+      return cache.items.find(record => record.id == id);
     });
-  }
-
-  static recordify(set) {
-    return Record.youtube(set);
   }
 
   static concatenate(existing, fetched) {

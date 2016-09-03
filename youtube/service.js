@@ -401,31 +401,14 @@ module.exports = class YouTubeService {
     Downloads.enqueue(hash);
     Ui.downloadStart(hash);
 
-    var size, remaining;
     var location = Formatter.path(title, null, 'youtube');
 
     this.mp3URL(id).then((url) => {
-      MetaService.download(url, location, (request) => {
-        request.on('response', (data) => {
-          size      = data.headers['content-length'];
-          remaining = size;
+      MetaService.download(url, location, id, (request) => {
+        Ui.downloadEnd(Downloads.dequeue(id));
 
-          Downloads.grow(size);
-        });
-
-        request.on('data', (chunck) => {
-          remaining = remaining - chunck.length;
-
-          Downloads.progress(chunck.length);
-          Ui.downloadProgress(id, (size - remaining) / size * 100);
-        });
-
-        request.on('end', () => {
-          Ui.downloadEnd(Downloads.dequeue(id));
-
-          Tagging.set(location, {
-            title: title
-          });
+        Tagging.set(location, {
+          title: title
         });
       });
     });
@@ -453,29 +436,11 @@ module.exports = class YouTubeService {
     Ui.downloadStart(hash);
 
     this.videoURL(id).then((url) => {
-
-      var size, remaining;
       var extension = '.' + url.type.split(';')[0].split('/')[1];
       var location  = Formatter.path(title, null, 'youtube', extension);
 
-      MetaService.download(url.url, location, (request) => {
-        request.on('response', (data) => {
-          size      = data.headers['content-length'];
-          remaining = size;
-
-          Downloads.grow(size);
-        });
-
-        request.on('data', (chunck) => {
-          remaining = remaining - chunck.length;
-
-          Downloads.progress(chunck.length);
-          Ui.downloadProgress(id, (size - remaining) / size * 100);
-        });
-
-        request.on('end', () => {
-          Ui.downloadEnd(Downloads.dequeue(id));
-        });
+      MetaService.download(url.url, location, id, (request) => {
+        Ui.downloadEnd(Downloads.dequeue(id));
       });
     });
   }

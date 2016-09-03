@@ -57,20 +57,37 @@ module.exports = class MetaService {
   static downloadImage(url, artist, title, callback) {
     var location = Formatter.cover_path(url, artist, title);
 
-    this.download(url, location, (req) => {
-      req.on('end', () => {
-        callback(location);
-      })
+    this.download(url, location, false, () => {
+      callback(location);
     });
   }
 
-  static download(url, location, callback) {
+  static download(url, location, id, callback) {
     request.head(url, (err, res, body) => {
       var req = request(url);
+      var size, remaining;
 
       req.pipe(fs.createWriteStream(location));
 
-      callback(req);
+      if (id) {
+        req.on('response', (response) => {
+          size      = response.headers['content-length'];
+          remaining = size;
+
+          Downloads.grow(size);
+        });
+
+        req.on('data', (chunck) => {
+          remaining = remaining - chunck.length;
+
+          Downloads.progress(chunck.length);
+          Ui.downloadProgress(id, (size - remaining) / size * 100);
+        });
+      }
+
+      req.on('end', () => {
+        callback();
+      });
     });
   }
 }

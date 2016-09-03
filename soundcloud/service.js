@@ -108,34 +108,17 @@ module.exports = class SoundCloudService {
     Ui.downloadStart(hash);
 
     this.stream_url(id).then((url) => {
-      var size, remaining;
       var location = Formatter.path(title, artist, 'soundcloud');
 
-      MetaService.download(url, location, (request) => {
-        request.on('response', (response) => {
-          size      = response.headers['content-length'];
-          remaining = size;
+      MetaService.download(url, location, id, () => {
+        Ui.downloadEnd(Downloads.dequeue(id));
 
-          Downloads.grow(size);
-        });
-
-        request.on('data', (chunck) => {
-          remaining = remaining - chunck.length;
-
-          Downloads.progress(chunck.length);
-          Ui.downloadProgress(id, (size - remaining) / size * 100);
-        });
-
-        request.on('end', () => {
-          Ui.downloadEnd(Downloads.dequeue(id));
-
-          MetaService.downloadImage(icon, title, artist, (icon_path) => {
-            Tagging.set(location, {
-              title:  title,
-              artist: artist,
-              genre:  genre,
-              icon:   icon_path
-            });
+        MetaService.downloadImage(icon, title, artist, (icon_path) => {
+          Tagging.set(location, {
+            title:  title,
+            artist: artist,
+            genre:  genre,
+            icon:   icon_path
           });
         });
       });

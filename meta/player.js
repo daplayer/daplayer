@@ -16,7 +16,7 @@ module.exports = class MetaPlayer {
    * @return {Promise}
    */
   static start(record) {
-    var loader, service = record.service;
+    var player, service = record.service;
 
     this.stop();
 
@@ -24,29 +24,22 @@ module.exports = class MetaPlayer {
       Player.showLoader();
 
     if (service == 'soundcloud')
-      loader = SoundCloudPlayer.load(record.id);
+      player = SoundCloudPlayer;
     else if (service == 'youtube')
-      loader = YouTubePlayer.load(record.id);
-    else if (record.service == 'local')
-      loader = LocalPlayer.load(record.id);
+      player = YouTubePlayer;
+    else if (service == 'local')
+      player = LocalPlayer;
 
-    return loader.then((url) => {
-      if (service == 'youtube') {
-        this.is_video  = true;
-        this.video.src = url.url;
-        this.video.load();
+    return player.load(record.id).then((url) => {
+      if (record.media == 'video')
+        this.is_video = true;
+      else
+        this.is_video = false;
 
-        YouTubePlayer.callbacks(this.video);
-      } else {
-        this.is_video  = false;
-        this.audio.src = url;
-        this.audio.load();
+      this.media.src = url;
+      this.media.load();
 
-        if (service == 'soundcloud')
-          SoundCloudPlayer.callbacks(this.audio);
-        else if (service == 'local')
-          LocalPlayer.callbacks(this.audio);
-      }
+      player.callbacks(this.media);
     })
   }
 
