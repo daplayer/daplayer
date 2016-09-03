@@ -49,7 +49,8 @@ $('.sidebar').on('keyup', '.search input', function(e) {
     if (modules.empty())
       modules.push(Cache.current.module);
 
-    MetaController.render('meta', 'search', [$(this).val(), source, modules]);
+    if (!(modules.empty() && Cache.current.module != 'meta'))
+      MetaController.render('meta', 'search', [$(this).val(), source, modules]);
   }
 });
 
