@@ -111,8 +111,10 @@ module.exports = class Record {
     else if (!hash.icon)
       record.icon = Paths.default_artwork;
 
-    if (record.album == true)
+    if (record.album == true) {
       record.artist = hash.items.first().artist;
+      record.genre  = hash.items.first().genre;
+    }
 
     return record;
   }

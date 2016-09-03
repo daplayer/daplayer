@@ -1,9 +1,10 @@
 require('../../test_helper');
 
 const LocalModel = require('../../../local/model');
+const Record     = require('../../../app/record');
 
 describe('LocalModel::Finders', () => {
-  describe('#findByGenre', () => {
+  describe('#findBy for "genre"', () => {
     beforeEach(() => {
       Cache.initialize();
 
@@ -14,9 +15,9 @@ describe('LocalModel::Finders', () => {
       ]);
 
       Cache.add('local', 'albums', [
-        {id: 'foo', items: [{genre: 'Electro Jazz'}]},
-        {id: 'bar', items: [{genre: 'House'}]},
-        {id: 'baz', items: [{genre: 'French House'}]}
+        Record.local({id: 'foo', album: true, items: [{genre: 'Electro Jazz'}]}),
+        Record.local({id: 'bar', album: true, items: [{genre: 'House'}]}),
+        Record.local({id: 'baz', album: true, items: [{genre: 'French House'}]})
       ]);
     });
 
@@ -27,35 +28,35 @@ describe('LocalModel::Finders', () => {
     });
 
     it('should find musics by genre in singles', () => {
-      return LocalModel.findByGenre('Metal').then((results) => {
+      return LocalModel.findBy('genre', 'Metal').then((results) => {
         assert.equal(results.singles.length, 1);
         assert.equal(results.singles.first().id, 'foo');
       });
     });
 
     it('should find albums that are tagged under the given genre', () => {
-      return LocalModel.findByGenre('Electro Jazz').then((results) => {
+      return LocalModel.findBy('genre', 'Electro Jazz').then((results) => {
         assert.equal(results.albums.length, 1);
         assert.equal(results.albums.first().id, 'foo');
       });
     });
 
     it('should check by exact match for singles', () => {
-      return LocalModel.findByGenre('Core', (results) => {
+      return LocalModel.findBy('genre', 'Core', (results) => {
         assert.equal(results.singles.length, 1);
         assert.equal(results.singles.first().id, 'bar');
       });
     });
 
     it('should check by exact match for albums', () => {
-      return LocalModel.findByGenre('House', (results) => {
+      return LocalModel.findBy('genre', 'House', (results) => {
         assert.equal(results.albums.length, 1);
         assert.equal(results.albums.first().id, 'bar');
       });
     });
   });
 
-  describe('#findByArtist', () => {
+  describe('#findBy for "artist"', () => {
     beforeEach(() => {
       Cache.add('local', 'singles', [
         {id: 'foo', artist: 'Rage Against The Machine'},
@@ -63,8 +64,8 @@ describe('LocalModel::Finders', () => {
       ]);
 
       Cache.add('local', 'albums', [
-        {id: 'foo', items: [{artist: 'Kaytranda'}]},
-        {id: 'bar', items: [{artist: 'Darius'}]}
+        Record.local({id: 'foo', album: true, items: [{artist: 'Kaytranda'}]}),
+        Record.local({id: 'bar', album: true, items: [{artist: 'Darius'}]})
       ]);
     });
 
@@ -73,14 +74,14 @@ describe('LocalModel::Finders', () => {
     })
 
     it('should check by inclusion for singles', () => {
-      return LocalModel.findByArtist('rage against').then((results) => {
+      return LocalModel.findBy('artist', 'rage against').then((results) => {
         assert.equal(results.singles.length, 1);
         assert.equal(results.singles.first().id, 'foo');
       });
     });
 
     it('should check by inclusion for albums', () => {
-      return LocalModel.findByArtist('kaytra').then((results) => {
+      return LocalModel.findBy('artist', 'kaytra').then((results) => {
         assert.equal(results.albums.length, 1);
         assert.equal(results.albums.first().id, 'foo');
       });
