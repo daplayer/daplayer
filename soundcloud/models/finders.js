@@ -40,43 +40,26 @@ module.exports = class SoundCloudModelFinders {
   }
 
   static findRecord(id, section) {
-    return Cache.soundcloud[section].then((cache) => {
-      return cache.collection.filter((record) => {
-        if (record.id == id)
-          return record;
-      })[0];
+    return this[section.camel()]().then((cache) => {
+      return cache.collection.find(record => record.id == id);
     });
   }
 
-  static search(query) {
-    return SC.get('/tracks', { q: query }).then((net_results) => {
-      return this.findBy('title', query).then((by_title) => {
-        return {
-          owned: by_title,
-          net_results: net_results.map((result) => {
-            return Record.soundcloud(result)
-          })
-        };
-      });
-    }).then((structure) => {
-      return this.findBy('artist', query).then((by_artist) => {
-        structure.owned = structure.owned.concat(by_artist);
-        structure.owned = structure.owned.filter((e, i) => {
-          if (structure.owned.indexOf(e) == i)
-            return e;
-        });
-
-        return structure;
-      });
-    });
-  }
-
+  /**
+   * Finds all liked records given a field and a query.
+   *
+   * @param  {String} field - The record's field to do the
+   *                          search against.
+   * @param  {String} query - The value to look for.
+   * @return {Promise}
+   */
   static findBy(field, query) {
+    var match = value => value.match(new RegExp(query, 'i'));
+
     return this.likes().then((likes) => {
-      return Promise.all(likes.collection.filter((record) => {
-        if (record[field].match(new RegExp(query, 'i')))
-          return record;
-      }));
+      return {
+        collection: likes.collection.filter(record => match(record[field]))
+      };
     });
   }
 }

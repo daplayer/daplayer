@@ -11,7 +11,7 @@ module.exports = class SC {
       signout:    'https://soundcloud.com/logout',
       me:         `https://api-v2.soundcloud.com/users/${Credentials.user.soundcloud.user_id}/`,
       activities: 'https://api-v2.soundcloud.com/stream',
-      stream:     ''
+      search:     'https://api-v2.soundcloud.com/search'
     };
   }
 
@@ -113,6 +113,47 @@ module.exports = class SC {
 
       req.on('end', () => {
         resolve(JSON.parse(response).http_mp3_128_url);
+      });
+
+      req.on('error', (e) => {
+        reject(e);
+      });
+    });
+  }
+
+  /**
+   * Performs a get to the `search` endpoint on the SoundCloud
+   * API to find records that the user doesn't have in their
+   * collection.
+   *
+   * @param  {String} value - The value to look for.
+   * @return {Promise}
+   */
+  static search(value) {
+    return new Promise((resolve, reject) => {
+      var options = {
+        url: this.url.search,
+        qs: {
+          q:         value,
+          limit:     10,
+          client_id: Credentials.soundcloud.client_id,
+          app_id:    Credentials.soundcloud.app_id
+        },
+        headers: {
+          Authorization: Credentials.user.soundcloud.oauth_token,
+          Origin:        this.url.default
+        }
+      };
+
+      var response = '';
+      var req      = request.get(options);
+
+      req.on('data', (chunck) => {
+        response += chunck;
+      });
+
+      req.on('end', () => {
+        resolve(JSON.parse(response));
       });
 
       req.on('error', (e) => {

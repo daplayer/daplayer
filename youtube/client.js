@@ -178,9 +178,15 @@ module.exports = class YT {
     });
   }
 
+  /**
+   * Searches for records given a query.
+   *
+   * @param  {String} query - The value to look for.
+   * @return {Promise}
+   */
   static search(query) {
     return new Promise((resolve) => {
-      this.fetch('search', { q: query }, (data) => {
+      this.fetch('search', { q: query, part: 'snippet' }, (data) => {
         resolve(data);
       })
     });

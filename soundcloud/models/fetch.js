@@ -77,4 +77,22 @@ module.exports = class SoundCloudModelFetch {
       });
     });
   }
+
+  /**
+   * Performs a search directly on SoundCloud rather than in
+   * the user's collection and allows us to deal with
+   * instances of `Record` rather than JSON hashes.
+   *
+   * @param  {String} value - The value to look for.
+   * @return {Promise}
+   */
+  static netSearch(value) {
+    return SC.search(value).then((results) => {
+      return {
+        collection: results.collection.map(record => Record.soundcloud(record)),
+        next_href:  results.next_href,
+        net:        true
+      }
+    });
+  }
 }

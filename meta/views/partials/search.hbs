@@ -31,11 +31,11 @@
     </div>
   </div>
 
-  <h5>{{t 'meta.search.syntax'}}</h5>
+  <h5>{{t 'meta.search.source'}}</h5>
 
-  <ul>
-    <li><code>random</code></li>
-    <li><code>#genre</code></li>
-    <li><code>@artist</code></li>
-  </ul>
+  <input type="radio" name="source" value="local" id="local" checked="checked">
+  <label for="local">{{t 'meta.search.in_your_collection'}}</label>
+
+  <input type="radio" name="source" value="internet" id="internet">
+  <label for="internet">{{t 'meta.search.on_internet'}}</label>
 </div>

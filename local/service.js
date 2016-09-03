@@ -24,12 +24,19 @@ module.exports = class LocalService {
     });
   }
 
+  /**
+   * Searches dispatching to the model's methods depending
+   * on the syntax used by the user.
+   *
+   * @param  {String} value - The value to look for.
+   * @return {Promise}
+   */
   static search(value) {
-    if (value[0] == '#')
-      return LocalModel.findByGenre(value.slice(1));
-    else if (value[0] == '@')
-      return LocalModel.findByArtist(value.slice(1));
+    if (value.startsWith('#'))
+      return LocalModel.findBy('genre', value.slice(1));
+    else if (value.startsWith('@'))
+      return LocalModel.findBy('artist', value.slice(1));
     else
-      return LocalModel.findByTitle(value);
+      return LocalModel.findBy('title', value);
   }
 }

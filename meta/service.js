@@ -4,8 +4,6 @@ const fs      = require('fs');
 const path    = require('path');
 const request = require('request');
 
-const YouTubeModel = require('../youtube/model');
-
 module.exports = class MetaService {
   static dispatch(set) {
     var set    = set.split(/#|:/).slice(-2);
@@ -21,10 +19,10 @@ module.exports = class MetaService {
       MetaService[action].call();
   }
 
-  static search(value, modules) {
+  static search(value, source, modules) {
     return Promise.resolve({}).then((hash) => {
       if (modules.includes('soundcloud'))
-        return SoundCloudModel.search(value).then((results) => {
+        return SoundCloudService.search(value, source).then((results) => {
           hash.soundcloud = results;
 
           return hash;
@@ -33,7 +31,7 @@ module.exports = class MetaService {
       return hash;
     }).then((hash) => {
       if (modules.includes('youtube'))
-        return YouTubeModel.search(value).then((results) => {
+        return YouTubeService.search(value, source).then((results) => {
           hash.youtube = results;
 
           return hash;

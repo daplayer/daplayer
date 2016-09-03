@@ -1,11 +1,12 @@
 'use strict';
 
-const Credentials = require('../app/credentials');
-const SubWindow   = require('../app/sub_window');
-const querystring = require('querystring');
-const request     = require('request');
-const Tagging     = require('daplayer-tagging');
-const SC          = require('./client');
+const SoundCloudModel = require('./model');
+const Credentials     = require('../app/credentials');
+const SubWindow       = require('../app/sub_window');
+const querystring     = require('querystring');
+const request         = require('request');
+const Tagging         = require('daplayer-tagging');
+const SC              = require('./client');
 
 module.exports = class SoundCloudService {
   /**
@@ -148,5 +149,32 @@ module.exports = class SoundCloudService {
    */
   static stream_url(id) {
     return SC.stream(id);
+  }
+
+  /**
+   * Searches dispatching to the model's methods depending
+   * on the syntax used by the user.
+   *
+   * If the source is 'local', then it will look for the
+   * user's likes.
+   *
+   * If the source is 'internet', then it will look for records
+   * directly on SoundCloud (mostly matching the behavior of
+   * the SoundCloud's search bar).
+   *
+   * @param  {String} query  - The value to look for.
+   * @param  {String} source - The source to look in.
+   * @return {Promise}
+   */
+  static search(query, source) {
+    if (source == 'internet')
+      return SoundCloudModel.netSearch(query);
+
+    if (query.startsWith('#'))
+      return SoundCloudModel.findBy('tags', query.slice(1), source);
+    else if (query.startsWith('@'))
+      return SoundCloudModel.findBy('artist', query.slice(1), source);
+    else
+      return SoundCloudModel.findBy('title', query, source);
   }
 }

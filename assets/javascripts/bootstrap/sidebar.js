@@ -37,6 +37,7 @@ $('.sidebar').on('keyup', '.search input', function(e) {
     Ui.toggleSearchBar();
   } else if (e.keyCode == 13) {
     var modules = [];
+    var source  = $('input[name="source"]:checked').val();
 
     if ($('input[name="soundcloud"]').val() == 1)
       modules.push('soundcloud');
@@ -48,7 +49,7 @@ $('.sidebar').on('keyup', '.search input', function(e) {
     if (modules.empty())
       modules.push(Cache.current.module);
 
-    MetaController.render('meta', 'search', [$(this).val(), modules]);
+    MetaController.render('meta', 'search', [$(this).val(), source, modules]);
   }
 });
 

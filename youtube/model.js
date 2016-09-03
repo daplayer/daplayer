@@ -37,42 +37,6 @@ module.exports = class YouTubeModel {
     });
   }
 
-  /**
-   * Searches a record from the user's playlists and on
-   * YouTube as well.
-   *
-   * The search by artist is kind of disabled; we ignore
-   * the fact that a query begins with '@' since the artist
-   * is part of the title and the channel names are mostly
-   * not reliable (e.g. BMTHOfficialVEVO -> Bring Me The
-   * Horizon).
-   *
-   * @param  {String} value - The value to search for.
-   * @return {Promise}
-   */
-  static search(value) {
-    if (value[0] == '@')
-      value = value.slice(1);
-
-    var query = new RegExp(value, 'i');
-
-    return this.playlists().then((playlists) => {
-      return playlists.items.filter((playlist) => {
-        if (playlist.title.match(query))
-          return playlist;
-      });
-    }).then((playlists) => {
-      return YT.search(value).then((results) => {
-        return {
-          owned: playlists,
-          net_results: results.items.map((result) => {
-            return this.recordify(result);
-          })
-        };
-      });
-    });
-  }
-
   static findById(id, section, playlist) {
     if (playlist instanceof $)
       return this.findInPlaylist(id, section, playlist.data('id'));
@@ -140,6 +104,30 @@ module.exports = class YouTubeModel {
       resolve({
         page_token: fetched.page_token,
         items: existing.items.concat(fetched.items)
+      });
+    });
+  }
+
+  /**
+   * Performs a search directly on YouTube rather than in
+   * the user's collection and allows us to deal with
+   * instances of `Record` rather than JSON hashes.
+   *
+   * @param  {String} value - The value to look for.
+   * @return {Promise}
+   */
+  static netSearch(value) {
+    return new Promise((resolve, reject) => {
+      return YT.search(value).then((results) => {
+        var ids = results.items.map(item => item.id.videoId);
+
+        return YT.fetch('videos', { id: ids.join(",") }, (data) => {
+          resolve({
+            items:      data.items.map(result => Record.youtube(result)),
+            page_token: results.page_token,
+            net:        true
+          });
+        });
       });
     });
   }

@@ -2,78 +2,41 @@
 
 module.exports = class LocalModelFinders {
   /**
-   * Finds all records that are tagged under a specific
-   * genre. The match is exact here, we are not relying
-   * on any sort of regex or Levenstein distance since
-   * styles maybe composed of each other (e.g. core and
-   * hardcore, which are mostly different).
+   * Finds all records given a field and a value.
    *
-   * @return {Object}
+   * For search by tags, the match is exact, we are not
+   * relying on any sort of regex or Levenstein distance
+   * since styles maybe composed of each other (e.g. core
+   * and hardcore, which are mostly different).
+   *
+   * @param  {String} field - The record's field to do the
+   *                          search against.
+   * @param  {String} query - The value to look for.
+   * @return {Promise}
    */
-  static findByGenre(value) {
-    return this.singles().then((singles) => {
-      return singles.filter((record) => {
-        if (record.genre.toLowerCase() == value.toLowerCase())
-          return record;
-      });
+  static findBy(field, query) {
+    if (field == 'genre')
+      var match = (value) => { return value.toLowerCase() == query.toLowerCase() };
+    else
+      var match = (value) => { return value.match(new RegExp(query, 'i')) };
+
+    // When we are searching by title, we may have eponymous musics
+    // (e.g. 'All Hope Is Gone') so we want to look for every files
+    // *and* albums. But when we are searching by artist or genre,
+    // we don't want musics coming from albums.
+    var source = field == 'title' ? this.files() : this.singles();
+
+    return source.then((singles) => {
+      return singles.filter(record => match(record[field]));
     }).then((singles) => {
       return this.albums().then((albums) => {
-        return albums.filter((album) => {
-          if (album.items.first().genre.toLowerCase() == value.toLowerCase())
-            return album;
-        });
+        return albums.filter(album => match(album[field]));
       }).then((albums) => {
         return {
           albums:  albums,
           singles: singles
         }
       });
-    });
-  }
-
-  static findByArtist(value) {
-    var query = new RegExp(value, 'i');
-
-    return this.singles().then((singles) => {
-      return singles.filter((record) => {
-        if (record.artist.match(query))
-          return record;
-      });
-    }).then((singles) => {
-      return this.albums().then((albums) => {
-        return albums.filter((album) => {
-          if (album.items.first().artist.match(query))
-            return album;
-        });
-      }).then((albums) => {
-        return {
-          albums:  albums,
-          singles: singles
-        }
-      });
-    });
-  }
-
-  static findByTitle(value) {
-    var query = new RegExp(value, 'i');
-
-    return this.files().then((files) => {
-      return files.filter((file) => {
-        if (file.title.match(query))
-          return file;
-      });
-    }).then((singles) => {
-      return this.albums().then((albums) => {
-        return albums.filter((album) => {
-          if (album.title.match(query))
-            return album;
-        })
-      }).then((albums) => {
-        return {
-          albums:  albums,
-          singles: singles
-        };
-      })
     });
   }
 

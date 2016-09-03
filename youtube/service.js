@@ -1,11 +1,12 @@
 'use strict';
 
-const Credentials = require('../app/credentials');
-const SubWindow   = require('../app/sub_window');
-const querystring = require('querystring');
-const request     = require('request');
-const Tagging     = require('daplayer-tagging');
-const YT          = require('./client');
+const YouTubeModel = require('./model');
+const Credentials  = require('../app/credentials');
+const SubWindow    = require('../app/sub_window');
+const querystring  = require('querystring');
+const request      = require('request');
+const Tagging      = require('daplayer-tagging');
+const YT           = require('./client');
 
 module.exports = class YouTubeService {
   /**
@@ -476,6 +477,36 @@ module.exports = class YouTubeService {
           Ui.downloadEnd(Downloads.dequeue(id));
         });
       });
+    });
+  }
+
+  /**
+   * Searches a record from the user's playlists or on YouTube.
+   *
+   * The search by artist is kind of disabled; we ignore
+   * the fact that a query begins with '@' since the artist
+   * is part of the title and the channel names are mostly
+   * not reliable (e.g. BMTHOfficialVEVO -> Bring Me The
+   * Horizon).
+   *
+   * @param  {String} value - The value to search for.
+   * @return {Promise}
+   */
+  static search(value, source) {
+    if (['@', '#'].includes(value[0]))
+      value = value.slice(1);
+
+    if (source == 'internet')
+      return YouTubeModel.netSearch(value);
+
+    var query = new RegExp(value, 'i');
+
+    return YouTubeModel.playlists().then((playlists) => {
+      return {
+        items: playlists.items.filter((playlist) => {
+          return playlist.title.match(query);
+        })
+      }
     });
   }
 }

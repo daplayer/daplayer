@@ -1,15 +1,9 @@
-{{#if youtube.owned}}
-  <h1>{{t 'yt.sidebar.playlists'}}</h1>
-
-  {{#each youtube.owned}}
-    {{youtube_playlist_thumbnail this}}
+{{#if youtube.items}}
+  {{#each youtube.items}}
+    {{#if ../youtube.net}}
+      {{media_box this}}
+    {{else}}
+      {{youtube_playlist_thumbnail this}}
+    {{/if}}
   {{/each}}
-
-  <div class="clearer"></div>
 {{/if}}
-
-<h1>{{t 'yt.name'}}</h1>
-
-{{#each youtube.net_results}}
-  {{media_box this}}
-{{/each}}

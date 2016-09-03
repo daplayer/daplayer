@@ -40,8 +40,8 @@ module.exports = class MetaController {
     })
   }
 
-  static search(query, modules) {
-    return MetaService.search(query, modules).then(() => {
+  static search(query, source, modules) {
+    return MetaService.search(query, source, modules).then(() => {
       MetaController.render(modules.first(), 'search_results');
     });
   }

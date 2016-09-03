@@ -37,7 +37,9 @@
     "pick_picture": "Choisir une autre image",
     "search": {
       "on": "Rechercher sur :",
-      "syntax": "Syntaxe possible :"
+      "source": "Source :",
+      "in_your_collection": "Dans votre bibliothèque",
+      "on_internet": "Sur internet"
     },
     "menu": {
       "edit": {
