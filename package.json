@@ -9,6 +9,7 @@
     "daplayer-tagging":  "/Users/robin/Code/daplayer-tagging"
   },
   "devDependencies": {
+    "electron-rebuild": "^1.2.0",
     "mocha": "*",
     "spectron": "*"
   },
