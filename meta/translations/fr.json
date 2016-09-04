@@ -7,7 +7,10 @@
       "save": "Sauvegarder"
     },
     "actions": {
-      "playlist_created": "Nouvelle playlist créée"
+      "playlist_created":  "Nouvelle playlist créée",
+      "download_started":  "Téléchargement...",
+      "download_finished": "Téléchargement terminé",
+      "url_copied":        "URL copiée"
     },
     "dashboard": {
       "configuration": "Configuration",
@@ -21,14 +24,11 @@
     },
     "add": "Ajouter",
     "download": "Télécharger",
-    "download_in_progress": "Téléchargement...",
-    "download_finished": "Téléchargement terminé",
     "downloading": "Téléchargement",
     "title": "Titre",
     "artist": "Artiste",
     "genre": "Genre",
     "album": "Album",
-    "url_copied": "URL copiée",
     "videos": "vidéos",
     "video": "Vidéo",
     "tracks": "pistes",

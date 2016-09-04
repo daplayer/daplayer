@@ -7,7 +7,10 @@
       "save": "Save configuration"
     },
     "actions": {
-      "playlist_created": "Playlist created"
+      "playlist_created":  "Playlist created",
+      "download_started":  "Downloading...",
+      "download_finished": "Download complete",
+      "url_copied":        "URL copied in your clipboard"
     },
     "dashboard": {
       "configuration": "Configuration",
@@ -21,14 +24,11 @@
     },
     "add": "Add",
     "download": "Download",
-    "download_in_progress": "Downloading...",
-    "download_finished": "Download complete",
     "downloading": "Downloading",
     "title": "Title",
     "artist": "Artist",
     "genre": "Genre",
     "album": "Album",
-    "url_copied": "URL copied in your clipboard",
     "videos": "videos",
     "video": "Video",
     "tracks": "tracks",

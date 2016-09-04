@@ -139,7 +139,7 @@ module.exports = class Ui {
 
       clipboard.writeText(context.url);
 
-      new Notification(Translation.t('meta.url_copied'), {
+      new Notification(Translation.t('meta.actions.url_copied'), {
         body: context.title,
         icon: context.icon
       });
@@ -186,7 +186,7 @@ module.exports = class Ui {
    * @return {null}
    */
   static downloadStart(hash) {
-    new Notification(Translation.t('meta.download_in_progress'), {
+    new Notification(Translation.t('meta.actions.download_started'), {
       body: hash.title + ' - ' + hash.artist,
       icon: hash.icon
     });
@@ -203,7 +203,7 @@ module.exports = class Ui {
    * @return {null}
    */
   static downloadEnd(hash) {
-    new Notification(Translation.t('meta.download_finished'), {
+    new Notification(Translation.t('meta.actions.download_finished'), {
       body: hash.title + ' - ' + hash.artist,
       icon: hash.icon
     });
