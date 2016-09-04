@@ -37,10 +37,11 @@ module.exports = class Translation {
    *
    *   Translation.cache.meta.foo.bar
    *
-   * @param  {String} string - The path string.
-   * @return {Srtring}
+   * @param  {String}  string - The path string.
+   * @param  {Object=} hash   - Eventual placeholder values.
+   * @return {String}
    */
-  static t(string) {
+  static t(string, hash) {
     if (!this.loaded)
       this.load();
 
@@ -50,6 +51,11 @@ module.exports = class Translation {
     methods.forEach(function(element) {
       context = context[element];
     });
+
+    if (hash)
+      context = context.replace(/%{(\w+)}/g, (match, p1) => {
+        return hash[p1];
+      });
 
     return context;
   }

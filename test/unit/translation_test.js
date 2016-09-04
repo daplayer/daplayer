@@ -20,6 +20,23 @@ describe('Translation', () => {
       assert.equal('Download', Translation.t('meta.download'));
       assert.equal(true, Translation.loaded);
     });
+
+    it('should look for loaded translation key', () => {
+      Translation.cache = {foo: {bar: "baz"}};
+
+      assert.equal(Translation.t('foo.bar'), 'baz');
+    });
+
+    it('should replace placeholders given a hash', () => {
+      Translation.cache = {foo: {bar: "Hello %{name}, you are %{age} years old!"}};
+
+      var result = Translation.t('foo.bar', {
+        name: 'Jacky',
+        age:  20
+      });
+
+      assert.equal(result, 'Hello Jacky, you are 20 years old!');
+    });
   });
 
   describe('translation files', () => {
