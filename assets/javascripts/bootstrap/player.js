@@ -29,6 +29,10 @@ $('.duration .circle').on('click', function(e) {
   Player.goTo((e.offsetX / $('.duration').width()) * $(this).attr('max'));
 });
 
+$('.duration .progression').on('click', function(e) {
+  Player.goTo((e.offsetX / $('.duration').width()) * Player.record.duration);
+});
+
 // Handle the dragging of the range input.
 $('.duration .circle').on('input', function(e) {
   Player.auto_progression = false;
