@@ -124,16 +124,25 @@ module.exports = class Ui {
   /**
    * Puts the media's URL in the clipboard.
    *
-   * @param  {$} element - The HTML node that represents
-   *                       the media we want to share.
+   * @param  {$}  element  - The HTML node that represents
+   *                         the media we want to share.
+   * @param  {$=} playlist - The playlist the element is in.
    * @return {null}
    */
-  static share(element) {
-    clipboard.writeText(element.data('url'));
+  static share(element, playlist) {
+    var id      = element.data('id');
+    var module  = Cache.current.module;
+    var section = Cache.current.action;
 
-    new Notification(Translation.t('meta.url_copied'), {
-      body: element.data('title'),
-      icon: element.data('icon')
+    MetaModel.findById(id, module, section, playlist).then((record) => {
+      var context = record instanceof Record ? record : record.record;
+
+      clipboard.writeText(context.url);
+
+      new Notification(Translation.t('meta.url_copied'), {
+        body: context.title,
+        icon: context.icon
+      });
     });
   }
 
