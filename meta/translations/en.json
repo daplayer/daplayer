@@ -67,6 +67,13 @@
         "name": "Help",
         "learn_more": "Learn more"
       }
+    },
+    "timing": {
+      "seconds_ago": "%{number} seconds ago",
+      "minutes_ago": "%{number} minutes ago",
+      "hours_ago":   "%{number} hours ago",
+      "days_ago":    "%{number} days ago",
+      "months_ago":  "%{number} months ago"
     }
   }
 }

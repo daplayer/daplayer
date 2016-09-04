@@ -67,6 +67,13 @@
         "name": "Aide",
         "learn_more": "À propos"
       }
+    },
+    "timing": {
+      "seconds_ago": "Il y a %{number} secondes",
+      "minutes_ago": "Il y a %{number} minutes",
+      "hours_ago":   "Il y a %{number} heures",
+      "days_ago":    "Il y a %{number} jours",
+      "months_ago":  "Il y a %{number} mois"
     }
   }
 }

@@ -16,6 +16,10 @@ Handlebars.registerHelper('size', function(url, size) {
   return url.size(size);
 });
 
+Handlebars.registerHelper('r', function(timestamp) {
+  return Formatter.relativeTime(timestamp);
+});
+
 // --------------------------------------------------------
 // Form helpers
 Handlebars.registerHelper('radio', function(id, name, label, section) {
