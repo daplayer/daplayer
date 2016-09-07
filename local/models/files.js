@@ -37,7 +37,7 @@ module.exports = class LocalModelFiles {
    * @return {Promise}
    */
   static readFiles(folder) {
-    var pattern = Paths.join(folder, "**/*.{mp3,wav,ogg}");
+    var pattern = Paths.join(folder, "**/*.{mp3,wav,ogg,m4a}");
 
     return new Promise((resolve, reject) => {
       glob(pattern, (error, files) => {
