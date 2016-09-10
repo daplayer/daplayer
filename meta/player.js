@@ -92,7 +92,7 @@ module.exports = class MetaPlayer {
 
   static get video() {
     if (!this.video_media)
-      this.video_media = document.querySelector('.video_player');
+      this.video_media = document.querySelector('video');
 
     return this.video_media;
   }

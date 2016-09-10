@@ -1,5 +1,5 @@
 // Pause/play the video clicking on it.
-$('.video_player').on('click', function() {
+$('video').on('click', function() {
   if (Player.paused)
     Player.play();
   else
@@ -7,7 +7,7 @@ $('.video_player').on('click', function() {
 });
 
 // Toggle full-screen double-clicking on the video.
-$('.video_player').on('dblclick', function() {
+$('video').on('dblclick', function() {
   Ui.toggleFullScreen();
 });
 
@@ -32,8 +32,8 @@ $('.player_frame').on('mousemove', function() {
 });
 
 // Manage clicks on the different video controls.
-$('.player_frame .controls').on('click', '.glyphicon', function() {
-  Ui.videoControl($(this));
+$('.player_frame').on('click', '.fullscreen-switch', function() {
+  Ui.toggleFullScreen();
 });
 
 // Make sure to correctly set-up the user interface if the user

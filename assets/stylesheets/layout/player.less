@@ -1,4 +1,86 @@
+// +-------------------+
+// | Shared properties |
+// +-------------------+
 .player {
+  .duration {
+    cursor: pointer;
+    float: left;
+    height: 100%;
+    overflow: hidden;
+
+    .progress_bar {
+      position: relative;
+      height: 9px;
+      width: 100%;
+
+      .track {
+        background: #BBC;
+        height: 2px;
+        width: 100%;
+        z-index: 300;
+      }
+
+      .buffered {
+        background: white;
+        height: 2px;
+        width: 0%;
+        position: relative;
+      }
+
+      .progression {
+        height: 2px;
+        width: 0%;
+        position: absolute;
+        top: 0;
+        z-index: 500;
+
+        &.soundcloud { background: @soundcloud; }
+        &.youtube    { background: @youtube; }
+        &.local      { background: @local; }
+      }
+    }
+  }
+
+  .circle {
+    background: transparent;
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 400;
+    -webkit-appearance: none;
+
+    &::-webkit-slider-thumb {
+      border-radius: 100%;
+      cursor: pointer;
+      height: 9px;
+      width: 9px;
+      border: 0 none;
+      -webkit-appearance: none;
+    }
+
+    &.soundcloud::-webkit-slider-thumb { background: @soundcloud; }
+    &.youtube::-webkit-slider-thumb    { background: @youtube; }
+    &.local::-webkit-slider-thumb      { background: @local; }
+
+    &:focus::-webkit-slider-runnable-track {
+      background: transparent;
+      border: transparent;
+    }
+  }
+
+  .timing {
+    width: 110px;
+    text-align: center;
+  }
+}
+
+// +-----------------+
+// | Main player bar |
+// +-----------------+
+.main.player {
   background: @darkest-purple;
   color: white;
   height: 65px;
@@ -22,8 +104,16 @@
     text-align: center;
   }
 
-  .timing {
-    width: 110px;
+  .duration {
+    //   280px (.controls)
+    // + 130px (.timing)
+    // + 20px  (self margin)
+    // + 50px  (.volume)
+    // + 50px  (.repeat)
+    // + 330px (.information)
+    // = 870px
+    width: ~"calc(100% - 870px)";
+    .progress_bar { margin: 32px 30px 0 0; }
   }
 
   .repeat {
@@ -35,42 +125,14 @@
   }
 
   @import "player/controls.less";
-  @import "player/duration.less";
   @import "player/information.less";
   @import "player/volume.less";
 }
 
-.circle {
-  background: transparent;
-  cursor: pointer;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 400;
-  -webkit-appearance: none;
-
-  &::-webkit-slider-thumb {
-    border-radius: 100%;
-    cursor: pointer;
-    height: 9px;
-    width: 9px;
-    border: 0 none;
-    -webkit-appearance: none;
-  }
-
-  &.soundcloud::-webkit-slider-thumb { background: @soundcloud; }
-  &.youtube::-webkit-slider-thumb    { background: @youtube; }
-  &.local::-webkit-slider-thumb      { background: @local; }
-
-  &:focus::-webkit-slider-runnable-track {
-    background: transparent;
-    border: transparent;
-  }
-}
-
-.player_frame_container {
+// +--------------+
+// | Video player |
+// +--------------+
+.video.player {
   border: 2px solid white;
   box-shadow: 0px 2px 2px black;
   display: none;
@@ -85,32 +147,49 @@
   .controls {
     background: linear-gradient(180deg, transparent 0%, black 100%);
     color: white;
-    display: none;
+    // display: none;
     font-size: 14px;
-    height: 30px;
+    height: 35px;
     line-height: 30px;
     width: 100%;
     overflow: hidden;
-    padding: 0 0 5px 15px;
+    padding-top: 5px;
     position: absolute;
     bottom: 0;
     left: 0;
 
-    .glyphicon             { cursor: pointer; }
-    .glyphicon:first-child { letter-spacing: 15px; }
-    .glyphicon:last-child  { letter-spacing: 35px; }
+    .playpause, .timing, .duration {
+      float: left;
+      display: none;
+    }
+
+    .fullscreen-switch { float: right; }
+
+    .playpause, .fullscreen-switch {
+      cursor: pointer;
+      height: 100%;
+      width: 50px;
+      text-align: center;
+    }
+
+    .duration {
+      height: 100%;
+      width: ~"calc(100% - 210px)";
+
+      .progress_bar {
+        margin: 17px 0 0 0;
+        width: 100%;
+
+        .progression { background: @youtube; }
+      }
+    }
   }
-}
 
-.player_frame, .video_player {
-  height: 100%;
-  width: 100%;
-}
+  .player_frame, video {
+    height: 100%;
+    width: 100%;
+  }
 
-.player_frame {
-  background: @black;
-}
-
-.video_player {
-  cursor: pointer;
+  .player_frame { background: @black; }
+  video         { cursor: pointer; }
 }

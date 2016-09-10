@@ -41,8 +41,9 @@ module.exports = class Ui {
     $('.search').html(View.compile('meta/partials/search')());
 
     if (!only_sidebar) {
-      $('.player').html(View.compile('meta/partials/player')());
-      $('.player_frame .controls').html(View.compile('meta/partials/video_controls')());
+      $('.main.player').html(View.compile('meta/partials/player')());
+      $('.video.player .controls').html(View.compile('meta/partials/video_controls')());
+      $('.player .duration').html(View.compile('meta/partials/duration')());
     }
   }
 
@@ -241,7 +242,7 @@ module.exports = class Ui {
     else
       $('.shadow.main').show();
 
-    $('.player_frame_container').show();
+    $('.video.player').show();
   }
 
   /**
@@ -250,10 +251,10 @@ module.exports = class Ui {
    * @return {null}
    */
   static showVideoControls() {
-    $('.player_frame .controls').stop().fadeIn(200);
+    $('.video.player .controls').stop().fadeIn(200);
 
     if (document.webkitIsFullScreen)
-      $('.player_frame .video_player').css({ cursor: 'pointer' });
+      $('.video.player video').css({ cursor: 'pointer' });
   }
 
   /**
@@ -262,21 +263,10 @@ module.exports = class Ui {
    * @return {null}
    */
   static hideVideoControls() {
-    $('.player_frame .controls').stop().fadeOut(300);
+    $('.video.player .controls').stop().fadeOut(300);
 
     if (document.webkitIsFullScreen)
-      $('.player_frame .video_player').css({ cursor: 'none' });
-  }
-
-  /**
-   * Runs the necessary actions attached to a given icon.
-   *
-   * @param  {$} icon - The icon that the user clicked on.
-   * @return {null}
-   */
-  static videoControl(icon) {
-    if (icon.hasClass('fullscreen-switch'))
-      this.toggleFullScreen();
+      $('.video.player video').css({ cursor: 'none' });
   }
 
   /**
@@ -285,10 +275,14 @@ module.exports = class Ui {
    * @return {null}
    */
   static enterFullScreen() {
-    $('.fullscreen-switch').removeClass('glyphicon-fullscreen')
-                           .addClass('glyphicon-resize-small');
+    $('.fullscreen-switch span').removeClass('glyphicon-fullscreen')
+                                .addClass('glyphicon-resize-small');
 
     document.querySelector('.player_frame').webkitRequestFullScreen();
+
+    $('.video.player .playpause').show();
+    $('.video.player .timing').show();
+    $('.video.player .duration').show();
   }
 
   /**
@@ -297,12 +291,16 @@ module.exports = class Ui {
    * @return {null}
    */
   static exitFullScreen() {
-    $('.fullscreen-switch').removeClass('glyphicon-resize-small')
-                           .addClass('glyphicon-fullscreen');
+    $('.fullscreen-switch span').removeClass('glyphicon-resize-small')
+                                .addClass('glyphicon-fullscreen');
 
-    $('.player_frame .video_player').css({ cursor: 'pointer' });
+    $('.player_frame video').css({ cursor: 'pointer' });
 
     document.webkitExitFullscreen();
+
+    $('.video.player .playpause').hide();
+    $('.video.player .timing').hide();
+    $('.video.player .duration').hide();
   }
 
   /**
@@ -325,8 +323,8 @@ module.exports = class Ui {
    * @return {null}
    */
   static showDialog() {
-    if ($('.player_frame_container').is(':visible'))
-      $('.player_frame_container').hide();
+    if ($('.video.player').is(':visible'))
+      $('.video.player').hide();
     else
       $('.shadow.main').show();
 
@@ -342,8 +340,8 @@ module.exports = class Ui {
   static hideShadow() {
     $('.shadow.main').fadeOut(250);
 
-    if ($('.dialog, .player_frame_container').is(':visible'))
-      $('.dialog, .player_frame_container').hide();
+    if ($('.dialog, .video.player').is(':visible'))
+      $('.dialog, .video.player').hide();
   }
 
   /**
