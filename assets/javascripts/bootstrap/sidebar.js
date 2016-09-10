@@ -13,6 +13,11 @@ $('.sidebar').on('click', 'h3', function() {
                              .toggleClass('glyphicon-chevron-right');
 });
 
+// Display the search bar clicking on the magnify icon
+$('.sidebar').on('click', '.search_icon', function() {
+  Ui.toggleSearchBar();
+});
+
 // --------------------------------------------------------
 // >> Manage search
 //
