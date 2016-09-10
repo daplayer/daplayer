@@ -8,7 +8,7 @@
   {{/if}}
 
   {{#if local}}
-    <a href="" class="active">{{g 'music'}} {{t 'local.name'}}</a>
+    <a href="#" class="active">{{g 'music'}} {{t 'local.name'}}</a>
   {{else}}
     <a href="#">{{g 'music'}} {{t 'local.name'}}</a>
   {{/if}}
@@ -32,7 +32,11 @@
       </ul>
     {{/if}}
 
-    <ul>
+    {{#if local}}
+      <ul>
+    {{else}}
+      <ul class="hidden">
+    {{/if}}
       {{#each playlists.local}}
         {{playlist_option this}}
       {{/each}}

@@ -54,6 +54,8 @@ $('.dialog').on('click', '.picture.flat_button', function(e) {
 });
 
 // --------------------------------------------------------
+// > "Add to playlist" dialogs
+//
 // Handle click on the "Add to playlist" button in dialog
 $('.dialog').on('click', '.add_to_playlist.button', function(e) {
   e.preventDefault();
@@ -74,4 +76,19 @@ $('.dialog').on('click', '.add_to_playlist.button', function(e) {
   $('.dialog').fadeOut(200, function() {
     $('.shadow.main').hide();
   });
+});
+
+// Handle clicks on the filter links
+$('.dialog').on('click', 'nav a', function() {
+  if ($(this).hasClass('active'))
+    return;
+
+  $('.dialog .navbar a.active').removeClass('active');
+  $(this).addClass('active');
+
+  var tohide = $('.dialog ul').not('.hidden');
+  var toshow = $('.dialog ul.hidden');
+
+  tohide.addClass('hidden').hide();
+  toshow.removeClass('hidden').show();
 });
