@@ -5,7 +5,6 @@ const Credentials     = require('../app/credentials');
 const SubWindow       = require('../app/sub_window');
 const querystring     = require('querystring');
 const request         = require('request');
-const Tagging         = require('daplayer-tagging');
 const SC              = require('./client');
 
 module.exports = class SoundCloudService {
@@ -114,7 +113,7 @@ module.exports = class SoundCloudService {
         Ui.downloadEnd(Downloads.dequeue(id));
 
         MetaService.downloadImage(icon, title, artist, (icon_path) => {
-          Tagging.set(location, {
+          LocalService.tag(location, {
             title:  title,
             artist: artist,
             genre:  genre,

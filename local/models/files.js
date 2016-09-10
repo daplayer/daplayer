@@ -1,7 +1,6 @@
 'use strict';
 
-const glob    = require('glob');
-const Tagging = require('daplayer-tagging');
+const glob = require('glob');
 
 module.exports = class LocalModelFiles {
   static files() {
@@ -45,7 +44,7 @@ module.exports = class LocalModelFiles {
           console.log(error);
 
         resolve(files.map((file) => {
-          return Tagging.get(file, Paths.covers);
+          return LocalService.tags(file);
         }));
       });
     });

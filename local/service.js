@@ -4,13 +4,16 @@ const LocalModel = require('./model');
 const Tagging    = require('daplayer-tagging');
 
 module.exports = class LocalService {
-  static tag(hash) {
+  static tag(location, hash) {
+    Tagging.set(location, hash);
+
+    if (Cache.current.module != 'local')
+      return;
+
     new Notification('Tagged', {
       body: hash.title,
       icon: hash.image
     });
-
-    Tagging.set(hash.id, hash);
 
     var element = $(`.music[data-id="${hash.id.replace('"', "\\\"")}"]`);
 
@@ -22,6 +25,10 @@ module.exports = class LocalService {
       record.artist = hash.artist;
       record.genre  = hash.genre;
     });
+  }
+
+  static tags(location) {
+    return Tagging.get(location, Paths.covers);
   }
 
   /**

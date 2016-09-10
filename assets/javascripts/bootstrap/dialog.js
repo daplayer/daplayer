@@ -31,7 +31,7 @@ $('.dialog').on('click', '.tag.button', function(e) {
 
   var form = $(this).parents('form');
 
-  LocalService.tag({
+  LocalService.tag(form.find('input[name="id"]').val(), {
     id:     form.find('input[name="id"]').val(),
     title:  form.find('input[name="title"]').val(),
     artist: form.find('input[name="artist"]').val(),

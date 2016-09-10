@@ -7,12 +7,10 @@
 
 require('../app/core_ext');
 
-global.Record    = require('../app/record');
-global.Paths     = require('../app/paths');
-global.Formatter = require('../app/formatter');
-global.MetaModel = require('../meta/model');
+global.Paths        = require('../app/paths');
+global.LocalService = require('./service');
 
-require('./model').readFiles(process.argv[2]).then((files) => {
+require('./models/files').readFiles(process.argv[2]).then((files) => {
   process.send(files);
 }).catch((e) => {
   console.log(e);
