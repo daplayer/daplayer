@@ -10,8 +10,13 @@ module.exports = class LocalService {
     if (Cache.current.module != 'local')
       return;
 
-    new Notification('Tagged', {
-      body: hash.title,
+    var body = hash.title;
+
+    if (hash.artist)
+      body += ' - ' + hash.artist;
+
+    new Notification(Translation.t('meta.actions.tagged'), {
+      body: body,
       icon: hash.image
     });
 

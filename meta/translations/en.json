@@ -10,7 +10,8 @@
       "playlist_created":  "Playlist created",
       "download_started":  "Downloading...",
       "download_finished": "Download complete",
-      "url_copied":        "URL copied in your clipboard"
+      "url_copied":        "URL copied in your clipboard",
+      "tagged":            "Music tagged"
     },
     "dashboard": {
       "configuration": "Configuration",
