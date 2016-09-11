@@ -1,6 +1,7 @@
 'use strict';
 
 const Credentials = require('../app/credentials');
+const SC          = require('./client');
 
 module.exports = class SoundCloudModel {
   static mixins() {
@@ -82,6 +83,25 @@ module.exports = class SoundCloudModel {
   static searchResults() {
     return MetaModel.searchResults().then((hash) => {
       return hash.soundcloud;
+    });
+  }
+
+  /**
+   * Adds an element to a playlist given its id and updates
+   * the cache accordingly.
+   *
+   * @param  {Number} id     - The playlist's id.
+   * @param  {Record} record - The element to add.
+   * @return {Promise}
+   */
+  static addToPlaylist(id, record) {
+    return this.userPlaylists().then((cached) => {
+      var playlist = cached.collection.find(record => record.id == id);
+      var items    = playlist.items;
+
+      items.push(record);
+
+      return SC.insert(playlist, record.id);
     });
   }
 }

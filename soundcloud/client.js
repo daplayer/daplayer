@@ -11,7 +11,8 @@ module.exports = class SC {
       signout:    'https://soundcloud.com/logout',
       me:         `https://api-v2.soundcloud.com/users/${Credentials.user.soundcloud.user_id}/`,
       activities: 'https://api-v2.soundcloud.com/stream',
-      search:     'https://api-v2.soundcloud.com/search'
+      search:     'https://api-v2.soundcloud.com/search',
+      playlists:  'https://api-v2.soundcloud.com/playlists/'
     };
   }
 
@@ -119,6 +120,47 @@ module.exports = class SC {
 
       req_object.on('error', (e) => {
         reject(e);
+      });
+    });
+  }
+
+  /**
+   * Facility to insert an element inside a playlist given
+   * the playlist and the record's id.
+   *
+   * @param  {Record} playlist  - The playlist to update.
+   * @param  {Number} record_id - The record to add's id.
+   * @return {Promise}
+   */
+  static insert(playlist, record_id) {
+    return new Promise((resolve, reject) => {
+      var tracks = playlist.items.map(record => record.id);
+
+      tracks.push(record_id);
+
+      var options = {
+        url: this.url.playlists + playlist.id,
+        method: 'PUT',
+        qs: {
+          client_id:   Credentials.soundcloud.client_id,
+          app_version: Credentials.soundcloud.app_id
+        },
+        json: {
+          playlist: {
+            tracks: tracks
+          }
+        },
+        headers: {
+          Authorization: Credentials.user.soundcloud.oauth_token,
+          Origin:        this.url.default
+        }
+      };
+
+      request(options, (err, res, body) => {
+        if (err)
+          reject(err);
+
+        resolve(true);
       });
     });
   }

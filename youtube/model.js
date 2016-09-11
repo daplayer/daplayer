@@ -107,4 +107,21 @@ module.exports = class YouTubeModel {
       });
     });
   }
+
+  /**
+   * Adds an element to a playlist given its id and updates
+   * the cache accordingly.
+   *
+   * @param  {String} id     - The playlist's id.
+   * @param  {Record} record - The element to add.
+   * @return {Promise}
+   */
+  static addToPlaylist(id, record) {
+    if (Cache.youtube.playlist_items[id])
+      Cache.youtube.playlist_items[id].then((cached) => {
+        cached.items.push(record);
+      });
+
+    return YT.insert(id, record.id);
+  }
 }

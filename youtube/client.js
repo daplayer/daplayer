@@ -70,6 +70,48 @@ module.exports = class YT {
   }
 
   /**
+   * Facility to insert an element inside a playlist gven its
+   * id.
+   *
+   * @param  {String} playlist_id - The playlist's id.
+   * @param  {String} record_id   - The element to add's id.
+   * @return {Promise}
+   */
+  static insert(playlist_id, record_id) {
+    return new Promise((resolve, reject) => {
+      var options  = {
+        url: this.url.data + 'playlistItems',
+        qs: {
+          part: 'snippet',
+          key:  Credentials.youtube.client_id
+        },
+        json: {
+          snippet: {
+            playlistId: playlist_id,
+            resourceId: {
+              videoId: record_id,
+              kind: 'youtube#video'
+            }
+          }
+        },
+        headers: {
+          Authorization: 'Bearer ' + Credentials.user.youtube.access_token
+        }
+      };
+
+      request.post(options, (err, res, body) => {
+        if (err)
+          reject(err);
+
+        if (body.error)
+          reject(body.error);
+        else
+          resolve(true);
+      });
+    });
+  }
+
+  /**
    * Returns the list of playlists that the user owns.
    *
    * @param  {String=} page_token - The page token.
