@@ -15,9 +15,9 @@ describe('Meta helpers', () => {
     it('should delegate to the translation module', () => {
       Translation.load('en');
 
-      var output = Handlebars.helpers.t('meta.download');
+      var output = Handlebars.helpers.t('meta.history');
 
-      assert.equal(output, 'Download');
+      assert.equal(output, 'History');
     });
   });
 

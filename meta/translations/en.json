@@ -24,8 +24,6 @@
       "tag": "Edit tags"
     },
     "add": "Add",
-    "download": "Download",
-    "downloading": "Downloading",
     "title": "Title",
     "artist": "Artist",
     "genre": "Genre",
@@ -36,6 +34,7 @@
     "items": "items",
     "format": "Format",
     "pick_picture": "Choose a different picture",
+    "history": "History",
     "search": {
       "on": "Search on :",
       "source": "Source :",

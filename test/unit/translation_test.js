@@ -6,10 +6,10 @@ describe('Translation', () => {
   describe('#load', () => {
     it('should load keys according to the defined locale', () => {
       Translation.load('en');
-      assert.equal('Download', Translation.t('meta.download'))
+      assert.equal('History', Translation.t('meta.history'))
 
       Translation.load('fr');
-      assert.equal('Télécharger', Translation.t('meta.download'));
+      assert.equal('Historique', Translation.t('meta.history'));
     });
   });
 
@@ -17,7 +17,7 @@ describe('Translation', () => {
     it('should load the translation if it is not already done', () => {
       Translation.loaded = false;
 
-      assert.equal('Download', Translation.t('meta.download'));
+      assert.equal('History', Translation.t('meta.history'));
       assert.equal(true, Translation.loaded);
     });
 

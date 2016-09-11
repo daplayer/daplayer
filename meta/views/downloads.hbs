@@ -2,7 +2,7 @@
 
 
 {{#if downloads}}
-  <h1>Downloading</h1>
+  <h1>{{t 'meta.dashboard.downloads'}}</h1>
 
   {{#each downloads}}
     {{download_box this}}
@@ -10,7 +10,7 @@
 {{/if}}
 
 {{#if history}}
-  <h1>History</h1>
+  <h1>{{t 'meta.history'}}</h1>
 
   {{#each history}}
     {{download_box this}}

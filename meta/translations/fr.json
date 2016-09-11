@@ -24,8 +24,6 @@
       "tag": "Tagguer"
     },
     "add": "Ajouter",
-    "download": "Télécharger",
-    "downloading": "Téléchargement",
     "title": "Titre",
     "artist": "Artiste",
     "genre": "Genre",
@@ -36,6 +34,7 @@
     "items": "éléments",
     "format": "Format",
     "pick_picture": "Choisir une autre image",
+    "history": "Historique",
     "search": {
       "on": "Rechercher sur :",
       "source": "Source :",
