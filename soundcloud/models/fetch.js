@@ -1,5 +1,7 @@
 'use strict';
 
+const SC = require('../client');
+
 module.exports = class SoundCloudModelFetch {
   static fetch(action, href, limit) {
     if (Cache.soundcloud[action] && !href)
