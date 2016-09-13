@@ -50,25 +50,14 @@ module.exports = class SoundCloudController {
 
   static searchResults() {
     return MetaModel.searchResults().then((results) => {
-      this.render('soundcloud/search_results', results, true);
+      this.render('soundcloud/search_results', results);
     });
   }
 
-  static render(view, context, skip_caching) {
+  static render(view, context) {
     var href = context.href;
     var meth = href ? 'append' : 'render';
 
     View[meth](view, context);
-
-    if (skip_caching)
-      return;
-
-    for (var key in context) {
-      if (key == 'href')
-        continue;
-
-      if (!Cache.soundcloud[key] || href)
-        Cache.add('soundcloud', key, context[key]);
-    }
   }
 }

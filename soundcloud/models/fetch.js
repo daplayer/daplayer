@@ -3,9 +3,9 @@
 const SC = require('../client');
 
 module.exports = class SoundCloudModelFetch {
-  static fetch(action, href, limit) {
-    if (Cache.soundcloud[action] && !href)
-      return Cache.soundcloud[action];
+  static fetch(action, href, limit, cache_key) {
+    if (Cache.soundcloud[cache_key || action] && !href)
+      return Cache.soundcloud[cache_key || action];
 
     if (href && action == 'activities')
       var offset = href;
@@ -45,16 +45,50 @@ module.exports = class SoundCloudModelFetch {
           } else {
             if (record.track)
               return Record.soundcloud(record.track);
-            else if (action == 'playlists' || record.title)
+            else if (cache_key == 'user_playlists' || record.title)
               return Record.soundcloud(record);
-            else if (action.endsWith('liked_and_owned') && record.type == 'playlist-like')
+            else if (cache_key == 'liked_playlists' && record.type == 'playlist-like')
               return Record.soundcloud(record.playlist);
           }
         }).filter((record) => {
           if (record)
             return record;
         }).map(MetaModel.mapRecords)
+      };
+    }).then((result) => {
+      // If we are fetching liked playlists, SoundCloud is only
+      // giving us the URI to fetch their items so we need to do
+      // some extra work to get them.
+      if (cache_key == 'liked_playlists') {
+        var collections = result.collection.map((playlist) => {
+          return this.fetch(playlist.uri).then(items => items.collection);
+        });
+
+        return Promise.all(collections).then((items) => {
+          return result.collection.map((playlist, index) => {
+            if (!playlist.icon)
+              playlist.icon = items[index].first().icon.size('t300x300');
+
+            playlist.items = items[index];
+
+            return playlist;
+          });
+        }).then((collection) => {
+          return {
+            collection: collection,
+            next_href:  result.next_href
+          }
+        });
+      } else {
+        return result;
       }
+    }).then((result) => {
+      // Add the computed result to cache; we can safely do this
+      // call here as the method would've early returned if no
+      // h-ref was provided.
+      Cache.add('soundcloud', (cache_key || action), result);
+
+      return result;
     }).catch((e) => {
       throw e;
     });

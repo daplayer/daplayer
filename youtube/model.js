@@ -4,31 +4,38 @@ const YT = require('./client');
 
 module.exports = class YouTubeModel {
   static playlists(page_token) {
-    if (Cache.youtube.playlists && !page_token)
-      return Cache.youtube.playlists;
-
-    return YT.playlists(page_token).then(set => Record.youtube(set));
+    return this.fetch('playlists', page_token);
   }
 
   static watchLater(page_token) {
-    if (Cache.youtube.watch_later && !page_token)
-      return Cache.youtube.watch_later;
-
-    return YT.watchLater(page_token).then(set => Record.youtube(set));
+    return this.fetch('watchLater', page_token, 'watch_later');
   }
 
   static history(page_token) {
-    if (Cache.youtube.history && !page_token)
-      return Cache.youtube.history;
-
-    return YT.history(page_token).then(set => Record.youtube(set));
+    return this.fetch('history', page_token);
   }
 
   static playlistItems(id) {
-    if (Cache.youtube.playlist_items[id])
-      return Cache.youtube.playlist_items[id];
+    return this.fetch('items', id, 'playlist_items', true);
+  }
 
-    return YT.items(id, true).then(set => Record.youtube(set));
+  static fetch(action, token_or_id, cache_key, full) {
+    // Early return if we already
+    if (action == 'items' && Cache.youtube.playlist_items[token_or_id])
+      return Cache.youtube.playlist_items[token_or_id];
+    else if (Cache.youtube[cache_key || action] && !token_or_id)
+      return Cache.youtube[cache_key || action];
+
+    return YT[action](token_or_id, full).then((set) => {
+      return Record.youtube(set);
+    }).then((result) => {
+      // Add the result to cache; we can safely do this
+      // call here as the method would've early returned if no
+      // h-ref was provided.
+      Cache.add('youtube', (cache_key || action), result);
+
+      return result;
+    });
   }
 
   static searchResults() {

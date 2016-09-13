@@ -46,17 +46,14 @@ module.exports = class YouTubeController {
         var context       = playlist;
             context.items = collection.items;
 
-        if (!Cache.youtube.playlist_items[id])
-          Cache.add('youtube', 'playlist_items', collection);
-
-        this.render('meta/partials/playlist', context, true);
+        this.render('meta/partials/playlist', context);
       });
     });
   }
 
   static searchResults() {
     return MetaModel.searchResults().then((results) => {
-      this.render('youtube/search_results', results, true);
+      this.render('youtube/search_results', results);
     });
   }
 
@@ -65,17 +62,6 @@ module.exports = class YouTubeController {
     var meth       = page_token ? 'append' : 'render';
 
     View[meth](view, context);
-
-    if (skip_caching)
-      return;
-
-    for (var key in context) {
-      if (key == 'page_token')
-        continue;
-
-      if (!Cache.youtube[key] || page_token)
-        Cache.add('youtube', key, context[key]);
-    }
   }
 
   static loadNextRecords() {
