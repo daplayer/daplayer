@@ -17,10 +17,17 @@ module.exports = class SoundCloudModelFetch {
     return SC.fetch(action, offset, limit).then((response) => {
       var collection;
 
+      // Here, we are rather dealing with a normal V2 API result
+      // (i.e. with a `collection` and `next_href` field) or rather
+      // fetching a liked playlist (from V2 as well) which has a
+      // `tracks` field or finally, with a V1 API call for the user's
+      // playlists.
       if (response.collection)
         collection = response.collection.slice();
-      else
+      else if (response.tracks)
         collection = response.tracks;
+      else
+        collection = response;
 
       return {
         next_href: response.next_href,
