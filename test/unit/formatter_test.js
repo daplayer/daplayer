@@ -36,6 +36,10 @@ describe('Formatter', () => {
     it('should remove "(Official)" from the name', () => {
       assert.equal("Cherokee", Formatter.artist("Take Care of You", "Cherokee (Official)"));
     });
+
+    it('should pick the artist who did the remix if it is one', () => {
+      assert.equal(Formatter.artist('Alina Baraz & Galimatias - Fantasy (Pomo Remix)'), 'Pomo');
+    });
   });
 
   describe('#path', () => {

@@ -109,20 +109,12 @@ module.exports = class Formatter {
    * @return {String}
    */
   static artist(title, account) {
-    var labels = [
-      'RocheMusique',
-      'THUMP',
-      'bastardjazz',
-      'Shiny Disco Club'
-    ];
-    var label_regex = /(records|recordings|recs|red bull studios)/i;
-
-    // Label's account
-    if (account.match(label_regex) || labels.indexOf(account) != -1) {
+    if (title.match(/remix/i))
+      var artist = title.split(/(\(|remix\))/i)[2];
+    else if (title.indexOf("-") != -1)
       var artist = title.split(" - ")[0];
-    } else {
-      var artist = account.replace(" (Official)", "");
-    }
+    else
+      var artist = account.replace(/\s\(Official\)/, "");
 
     return artist.trim();
   }
