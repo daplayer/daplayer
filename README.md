@@ -13,6 +13,7 @@ If you want to run an un-released version of DaPlayer, you are done with:
 $ git clone https://github.com/daplayer/daplayer
 $ cd daplayer
 $ npm install
+$ npm run rebuild
 $ npm start
 ~~~
 
