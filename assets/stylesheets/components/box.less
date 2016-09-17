@@ -9,22 +9,11 @@
 
   h2 { margin-bottom: 0.2em; }
   h3 { margin-top: 0; }
-
-  .title, .artist {
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .artist {
-    color: silver;
-    display: block;
-  }
 }
 
 .box {
   .basic-box();
+  .media-details();
   border-radius: 2px;
   padding: 10px;
 
@@ -38,9 +27,5 @@
     display: block;
     margin-bottom: 10px;
     width: 100%;
-  }
-
-  .track_count {
-    color: lighten(@base-color, 10%);
   }
 }

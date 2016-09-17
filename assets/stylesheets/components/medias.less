@@ -1,0 +1,89 @@
+// +-------------------+
+// | Shared properties |
+// +-------------------+
+div.music.box, div.video.box {
+  float: left;
+
+  .title {
+    line-height: 1em;
+    cursor: pointer;
+  }
+
+  img { width: 100%; }
+}
+
+li.music, li.video {
+  border-bottom: 1px solid @light-purple;
+  cursor: pointer;
+  line-height: 2em;
+  padding: 10px 5px;
+
+  .options-toggler {
+    float: left;
+    height: 25px;
+    width: 20px;
+    margin-right: 10px;
+    padding-top: 5px;
+
+    .glyphicon { display: none; }
+  }
+}
+
+// +----------------+
+// | Music elements |
+// +----------------+
+div.music.box {
+  height: 245px;
+  width: 180px;
+  margin-right: 0px;
+}
+
+div.music.bar {
+  .box();
+
+  h3 { margin: 0.2em 0 0 0; }
+  h4 { margin-top: 0.2em; }
+
+  .thumbnail {
+    float: left;
+    height: 180px;
+    width: 180px;
+    margin: 0 30px 0 0;
+
+    img { width: 100%; }
+  }
+}
+
+li.music {
+  height: 30px;
+
+  img {
+    margin-right: 10px;
+    width: 32px;
+  }
+}
+
+// +----------------+
+// | Video elements |
+// +----------------+
+div.video.box {
+  height: 220px;
+  width: 250px;
+  margin-left: 20px;
+}
+
+li.video {
+  height: 60px;
+
+  .thumbnail {
+    float: left;
+    height: 56.25px;
+    margin-right: 20px;
+    overflow: hidden;
+
+    img {
+      transform: translateY(-13%);
+      width: 100px;
+    }
+  }
+}

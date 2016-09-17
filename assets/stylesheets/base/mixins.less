@@ -10,3 +10,16 @@
     border: 1px solid fade(@white, 90%);
   }
 }
+
+.media-details() {
+  .title, .artist {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .artist {
+    color: silver;
+  }
+}
