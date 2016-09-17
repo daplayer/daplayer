@@ -30,10 +30,16 @@ $(document).ready(function() {
     e.preventDefault();
 
     var href = $(this).attr('href');
+    var parent = $(this).parent();
 
-    if ($(this).parent().hasClass('nav')) {
-      $('.sidebar a.active').removeClass('active');
-      $(this).addClass('active');
+    // Clicking a link on the sidebar should remove the active
+    // class of the previous link and add it to the current one.
+    if (parent.hasClass('nav') || parent.hasClass('icon')) {
+      if (!$(this).hasClass('search_icon'))
+        $('.sidebar a.active').removeClass('active');
+
+      if (!parent.hasClass('icon'))
+        $(this).addClass('active');
     }
 
     if ($(this).parent().hasClass('navbar') && href != '#')
