@@ -5,9 +5,6 @@ const LocalModel = require('./model');
 module.exports = class LocalController {
   static singles() {
     return LocalModel.singles().then((singles) => {
-      if (!Cache.local.singles)
-        Cache.add('local', 'singles', singles);
-
       View.render('local/singles', {
         singles: singles,
       });
@@ -16,9 +13,6 @@ module.exports = class LocalController {
 
   static albums() {
     return LocalModel.albums().then((albums) => {
-      if (!Cache.local.albums)
-        Cache.add('local', 'albums', albums);
-
       View.render('local/albums', {
         albums: albums
       })
@@ -27,9 +21,6 @@ module.exports = class LocalController {
 
   static artists() {
     return LocalModel.artists().then((artists) => {
-      if (!Cache.local.artists)
-        Cache.add('local', 'artists', artists);
-
       View.render('local/artists', {
         artists: artists
       })

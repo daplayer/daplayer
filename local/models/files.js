@@ -65,6 +65,10 @@ module.exports = class LocalModelFiles {
         if (record.album == '')
           return record;
       }).map(MetaModel.mapRecords);
+    }).then((singles) => {
+      Cache.add('local', 'singles', singles);
+
+      return singles;
     });
   }
 
@@ -107,6 +111,10 @@ module.exports = class LocalModelFiles {
           }).map(MetaModel.mapRecords)
         });
       }).map(MetaModel.mapRecords);
+    }).then((albums) => {
+      Cache.add('local', 'albums', albums);
+
+      return albums;
     });
   }
 
@@ -153,6 +161,10 @@ module.exports = class LocalModelFiles {
           };
         });
       });
+    }).then((artists) => {
+      Cache.add('local', 'artists', artists);
+
+      return artists;
     });
   }
 }
