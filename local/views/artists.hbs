@@ -1,9 +1,9 @@
 {{local_files_menu 'artists'}}
 
 {{#each artists}}
-  <div class="music box">
+  <div class="artist">
     <div class="thumbnail">
-      <img src="assets/images/default_artwork.svg">
+      {{g 'user'}}
     </div>
 
     <span class="title">{{ name }}</span>
