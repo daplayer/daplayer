@@ -167,4 +167,18 @@ module.exports = class LocalModelFiles {
       return artists;
     });
   }
+
+  static artist(name) {
+    return this.albums().then((albums) => {
+      return albums.filter((album) => album.artist.toLowerCase() == name.toLowerCase());
+    }).then((albums) => {
+      return this.singles().then((singles) => {
+        return {
+          name:    name,
+          albums:  albums,
+          singles: singles.filter((single) => single.artist.toLowerCase() == name.toLowerCase())
+        }
+      })
+    });
+  }
 }

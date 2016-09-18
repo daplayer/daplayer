@@ -1,11 +1,14 @@
-div.artist {
+a.artist {
   .media-details();
 
+  color: @base-color;
+  display: block;
   float: left;
   height: 245px;
   width: 180px;
   margin: 0 20px 20px 30px;
   text-align: center;
+  text-decoration: none;
 
   .thumbnail {
     background: @light-purple;
@@ -20,5 +23,29 @@ div.artist {
     margin-bottom: 0.2em;
 
     .glyphicon { line-height: 230% };
+  }
+}
+
+.header {
+  .basic-box();
+  .navbar {
+    border: none;
+    box-shadow: none;
+    margin: 0;
+  }
+
+  .showcase {
+    background: linear-gradient(135deg, @pink 0%, @smooth-purple 51%, @dark-purple 100%);
+    box-shadow: 0 1px 1px fade(@darkest-purple, 20%);
+    height: 250px;
+    margin-bottom: 0;
+    position: relative;
+
+    .artist {
+      height: 220px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
 }

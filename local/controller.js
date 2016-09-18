@@ -27,6 +27,12 @@ module.exports = class LocalController {
     });
   }
 
+  static artist(name) {
+    return LocalModel.artist(name).then((artist) => {
+      View.render('local/artist', artist);
+    });
+  }
+
   static listenLater() {
     return LocalModel.listenLater().then((records) => {
       View.render('local/listen_later', {
