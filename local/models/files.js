@@ -159,6 +159,13 @@ module.exports = class LocalModelFiles {
                 return album;
             }).length
           };
+        }).sort((a, b) => {
+          if (a.name < b.name)
+            return -1;
+          if (a.name > b.name)
+            return 1;
+
+          return 0;
         });
       });
     }).then((artists) => {
