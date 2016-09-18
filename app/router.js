@@ -50,19 +50,21 @@ module.exports = class Router {
   }
 
   static from(module, action) {
-    // Reversed method of `to`:
+    // Reversed method of `to` expect for `local/artist` which is
+    // just special cased to make sure that the equalizer is shown
+    // at the right place:
     //
-    // * meta/{configuration,downloads}      => meta/dashboard
-    // * soundcloud/{activities,tracks}      => soundcloud/stream
-    // * soundcloud/{liked,user}_playlists   => soundcloud/playlists
-    // * local/{singles,albums,artists}      => local/files
+    // * meta/{configuration,downloads}         => meta/dashboard
+    // * soundcloud/{activities,tracks}         => soundcloud/stream
+    // * soundcloud/{liked,user}_playlists      => soundcloud/playlists
+    // * local/{singles,albums,artists, artist} => local/files
     if (module == 'meta' && ['configuration', 'downloads'].includes(action))
       return 'meta/dashboard';
     else if (module == 'soundcloud' && ['activities', 'tracks'].includes(action))
       return 'soundcloud/stream';
     else if (module == 'soundcloud' && ['liked_playlists', 'user_playlists'].includes(action))
       return 'soundcloud/playlists';
-    else if (module == 'local' && ['singles', 'albums', 'artists', 'search_results'].includes(action))
+    else if (module == 'local' && ['singles', 'albums', 'artists', 'artist', 'search_results'].includes(action))
       return 'local/files';
     else
       return [module, action].join("/");

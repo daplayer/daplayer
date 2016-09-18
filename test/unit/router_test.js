@@ -70,6 +70,7 @@ describe('Router', () => {
       assert.equal(Router.from('local', 'singles'), 'local/files');
       assert.equal(Router.from('local', 'albums'),  'local/files');
       assert.equal(Router.from('local', 'artists'), 'local/files');
+      assert.equal(Router.from('local', 'artist'),  'local/files');
     });
   });
 });
