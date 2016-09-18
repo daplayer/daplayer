@@ -18,6 +18,10 @@ module.exports = class Record {
     return this.service == 'youtube';
   }
 
+  isLocal() {
+    return this.service == 'local';
+  }
+
   get media() {
     return this.isYouTube() ? 'video' : 'music';
   }

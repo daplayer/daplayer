@@ -5,7 +5,13 @@
 
   <div class="caption">
     <span class="title" title="{{ title }}">{{ title }}</span>
-    <span class="artist" title="{{ artist }}">{{ artist }}&nbsp;</span>
+    {{#if isLocal}}
+      <a href="local/artist" class="artist" data-id="{{ artist }}" title="{{ artist }}">
+        {{ artist }}
+      </a>
+    {{else}}
+      <span class="artist" title="{{ artist }}">{{ artist }}</span>
+    {{/if}}
   </div>
 
   <div class="right options-toggler">
