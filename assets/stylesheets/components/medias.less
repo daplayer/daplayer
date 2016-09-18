@@ -23,8 +23,8 @@ li.music, li.video {
 // | Music elements |
 // +----------------+
 div.music.box {
-  height: 245px;
-  width: 180px;
+  height: @div-music-height;
+  width:  @div-music-width;
   margin-right: 0px;
 }
 
@@ -36,8 +36,8 @@ div.music.bar {
 
   .thumbnail {
     float: left;
-    height: 180px;
-    width: 180px;
+    height: @div-music-width;
+    width:  @div-music-width;
     margin: 0 30px 0 0;
 
     img { width: 100%; }
@@ -45,7 +45,7 @@ div.music.bar {
 }
 
 li.music {
-  height: 30px;
+  height: @li-music-height;
 
   img {
     margin-right: 10px;
@@ -57,13 +57,13 @@ li.music {
 // | Video elements |
 // +----------------+
 div.video.box {
-  height: 200px;
-  width: 250px;
+  height: @div-music-height;
+  width:  @div-music-width;
   margin-left: 20px;
 }
 
 li.video {
-  height: 60px;
+  height: @li-video-height;
 
   .thumbnail {
     float: left;
