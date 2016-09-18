@@ -144,13 +144,13 @@ module.exports = class YT {
   }
 
   /**
-   * Returns the "Watch Later" playlist items.
+   * Returns the liked videos playlist items.
    *
    * @param  {String=} page_token - The page token.
    * @return {Promise}
    */
-  static watchLater(page_token) {
-    return YT.items(Config.youtube.related_playlists.watchLater, false, page_token);
+  static likes(page_token) {
+    return YT.items(Config.youtube.related_playlists.likes, false, page_token);
   }
 
   /**

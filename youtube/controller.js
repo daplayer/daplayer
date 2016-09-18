@@ -25,10 +25,10 @@ module.exports = class YouTubeController {
     });
   }
 
-  static watchLater(page_token) {
-    return YouTubeModel.watchLater(page_token).then((page) => {
-      this.render('youtube/watch_later', {
-        watch_later: page,
+  static likes(page_token) {
+    return YouTubeModel.likes(page_token).then((page) => {
+      this.render('youtube/likes', {
+        likes: page,
         page_token: page_token
       });
     }).then(() => {

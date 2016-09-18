@@ -7,8 +7,8 @@ module.exports = class YouTubeModel {
     return this.fetch('playlists', page_token);
   }
 
-  static watchLater(page_token) {
-    return this.fetch('watchLater', page_token, 'watch_later');
+  static likes(page_token) {
+    return this.fetch('likes', page_token);
   }
 
   static history(page_token) {
