@@ -82,6 +82,17 @@ String.prototype.camel = function() {
 };
 
 /**
+ * Returns a dasherized version of the string replacing spaces
+ * by dashes and stripping out some unwanted characters.
+ *
+ * @return {String}
+ */
+String.prototype.dasherize = function() {
+  return this.replace(/((\'|\!|\,|;\/|\\)+)/g, '').trim()
+             .replace(/\s/g, '-').toLowerCase();
+}
+
+/**
  * Mixes-in a class inside another one.
  *
  * This one is not defined through `Object.prototype` since

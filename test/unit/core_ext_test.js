@@ -62,5 +62,15 @@ describe('core extensions', () => {
         assert.equal('foo'.camel(), 'foo');
       });
     });
+
+    describe('#dasherize', () => {
+      it('should return a dasherized and downcased version of the string', () => {
+        assert.equal('Hello world'.dasherize(), 'hello-world');
+      });
+
+      it('should strip non alpha-numeric chars', () => {
+        assert.equal("Oh, you're so smart !".dasherize(), 'oh-youre-so-smart');
+      });
+    });
   });
 });
