@@ -123,6 +123,56 @@ module.exports = class Record {
     return record;
   }
 
+  static JSPF(hash) {
+    if (hash.track)
+      var record = new Record(hash.title.dasherize());
+    else
+      var record = new Record(hash.location);
+
+    record.title = hash.title;
+
+    if (hash.track) {
+      record.service = 'local';
+      record.kind    = 'playlist';
+      record.items   = hash.track.map((track) => Record.JSPF(track));
+
+      if (hash.track.length)
+        record.icon = hash.track.first().image;
+      else
+        record.icon = Paths.default_artwork;
+    } else {
+      record.id       = hash.location;
+      record.icon     = hash.image;
+      record.duration = hash.duration;
+
+      if (Number.isInteger(record.id))
+        record.service = 'soundcloud';
+      else if (record.id.includes('/'))
+        record.service = 'local';
+      else
+        record.service = 'youtube';
+    }
+
+    return record;
+  }
+
+  static toJSPF(record) {
+    var hash = {};
+
+    hash.title = record.title;
+
+    if (record.items) {
+      hash.track = record.items.map((item) => Record.toJSPF(item));
+    } else {
+      hash.location = record.id;
+      hash.image    = record.icon;
+      hash.creator  = record.artist;
+      hash.duration = record.duration;
+    }
+
+    return hash;
+  }
+
   static raw(hash) {
     var record = new Record(hash.id);
 

@@ -34,9 +34,9 @@ module.exports = class LocalController {
   }
 
   static listenLater() {
-    return LocalModel.listenLater().then((records) => {
+    return LocalModel.listenLater().then((playlist) => {
       View.render('local/listen_later', {
-        records: records
+        records: playlist.items
       });
     })
   }

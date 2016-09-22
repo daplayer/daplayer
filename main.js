@@ -1,19 +1,19 @@
 'use strict';
 
-// Make sure that we have the necessary file created when
+// Make sure that we have the necessary files created when
 // we run the application (e.g. for the first time or if
 // the user accidentally deleted the "cache" folder).
-const Paths    = require('./app/paths');
-const Database = require('./app/database.js');
+const Paths = require('./app/paths');
 
-if (!Paths.exists('user'))
-  Paths.mkdir('user');
+// > For folders.
+['user', 'covers', 'playlists'].forEach((folder) => {
+  if (!Paths.exists(folder))
+    Paths.mkdir(folder);
+});
 
-if (!Paths.exists('covers'))
-  Paths.mkdir('covers');
-
-if (!Paths.exists('database'))
-  Database.bootstrap();
+// > For the "Listen later" playlist file.
+if (!Paths.exists('listen_later'));
+  Paths.touchListenLaterFile();
 
 // Start the Electron "popote".
 const electron       = require('electron');

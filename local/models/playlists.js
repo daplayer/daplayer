@@ -1,12 +1,11 @@
 'use strict';
 
+const fs   = require('fs');
+const glob = require('glob');
+
 module.exports = class LocalModelPlaylists {
   static listenLater() {
-    return Database.select({
-      table:  'records',
-      fields: ['*'],
-      where:  ['playlist_id = 1']
-    });
+    return this.loadPlaylist(Paths.listen_later);
   }
 
   static listenLaterTo(address) {
@@ -23,59 +22,65 @@ module.exports = class LocalModelPlaylists {
     if (Cache.local.playlists)
       return Cache.local.playlists;
 
-    return Database.select({
-      table:  'playlists',
-      fields: ['*'],
-      where:  ['id <> 1']
-    }).then((playlists) => {
-      var promises = playlists.map((playlist) => {
-        return Database.select({
-          table:  'records',
-          fields: ['*'],
-          where:  [`playlist_id = ${playlist.id}`]
+    return new Promise((resolve, reject) => {
+      glob(Paths.join(Paths.playlists, '*.jspf'), (err, files) => {
+        if (err)
+          reject(err);
+
+        var jspf_files = files.filter((file)   => file != Paths.listen_later);
+        var playlists  = jspf_files.map((file) => this.loadPlaylist(file));
+
+        Promise.all(playlists).then((playlists) => {
+          Cache.add('local', 'playlists', playlists);
+
+          resolve(playlists);
         });
       });
+    });
+  }
 
-      return Promise.all(promises).then((records) => {
-        return playlists.map((playlist, index) => {
-          let items = records[index];
+  static loadPlaylist(location) {
+    return new Promise((resolve, reject) => {
+      fs.readFile(location, (err, content) => {
+        if (err)
+          reject(err);
 
-          playlist.kind = 'playlist';
-
-          playlist.items = items.map((item) => {
-            return Record.raw(item);
-          }).map(MetaModel.mapRecords);
-
-          if (!playlist.icon && items.length)
-            playlist.icon = records[index][0].icon;
-
-          return Record.local(playlist);
-        });
+        resolve(Record.JSPF(JSON.parse(content)));
       });
     });
   }
 
   static addToPlaylist(playlist_id, record) {
-    return Database.insert({
-      table: 'records',
-      values: {
-        id:          record.id,
-        title:       record.title,
-        artist:      record.artist,
-        icon:        record.icon,
-        duration:    record.duration,
-        service:     record.service,
-        playlist_id: playlist_id
-      }
+    return this.playlists().then((playlists) => {
+      var playlist = playlists.find((record) => record.id == playlist_id);
+
+      // This both updates the items in memory (kept in cache)
+      // and makes sure that the item gets added in the JSON file
+      // when the playlist object is dumped.
+      playlist.items.push(record);
+
+      return this.savePlaylist(Record.toJSPF(playlist));
     });
   }
 
   static createPlaylist(title) {
-    return Database.insert({
-      table: 'playlists',
-      values: {
-        title: title
-      }
+    return this.savePlaylist({
+      title: title,
+      track: []
+    });
+  }
+
+  static savePlaylist(playlist) {
+    var filename = playlist.title.dasherize() + '.jspf';
+    var location = Paths.join(Paths.playlists, filename);
+
+    return new Promise((resolve, reject) => {
+      fs.writeFile(location, JSON.stringify(playlist), (err) => {
+        if (err)
+          reject(err);
+
+        resolve(true);
+      });
     });
   }
 }

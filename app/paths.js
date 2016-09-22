@@ -66,12 +66,21 @@ module.exports = class Paths {
   }
 
   /**
-   * Path to the file storing our SQLite3 database.
+   * Path to the folder containing playlists.
    *
    * @return {String}
    */
-  static get database() {
-    return path.join(this.user, 'database.sqlite3');
+  static get playlists() {
+    return path.join(this.user, 'playlists');
+  }
+
+  /**
+   * Paths to the "Listen later" playlist file.
+   *
+   * @return {String}
+   */
+  static get listen_later() {
+    return path.join(this.playlists, 'listen-later.jspf');
   }
 
   /**
@@ -79,8 +88,8 @@ module.exports = class Paths {
    * refering to the name of the getter in this object,
    * we are not giving an actual path.
    *
-   * `Paths.exists('database')` will return true only if
-   * `Paths.database` exists on the file system.
+   * `Paths.exists('user')` will return true only if
+   * `Paths.user` exists on the file system.
    *
    * @param  {String} name - The getter to call.
    * @return {Boolean}
@@ -113,5 +122,23 @@ module.exports = class Paths {
    */
   static mkdir(name) {
     fs.mkdirSync(this[name]);
+  }
+
+  /**
+   * Touches the JSPF file for the "Listen later" playlist.
+   *
+   * We are not relying on the `LocalModel#savePlaylist` method
+   * as this would do extra computation to guess the file name
+   * and we want to save this file synchronously to avoid race
+   * conditions plus we don't have to require anything else
+   * apart from this file in the `main.js` one.
+   *
+   * @return {null}
+   */
+  static touchListenLaterFile() {
+    fs.writeFileSync(this.listen_later, JSON.stringify({
+      title: 'Listen later',
+      track: []
+    }));
   }
 }

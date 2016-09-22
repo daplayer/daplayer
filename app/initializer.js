@@ -21,7 +21,6 @@ global.Handlebars = require('handlebars');
 // Internal components
 global.Cache        = require('./cache');
 global.Config       = require('./config');
-global.Database     = require('./database');
 global.Downloads    = require('./downloads');
 global.FilePicker   = require('./file_picker');
 global.Formatter    = require('./formatter');
