@@ -11,9 +11,11 @@ const Paths = require('./app/paths');
     Paths.mkdir(folder);
 });
 
-// > For the "Listen later" playlist file.
+// > For the "Listen later" and "YouTube History" playlist files.
 if (!Paths.exists('listen_later'));
-  Paths.touchListenLaterFile();
+  Paths.touchPlaylistFile('listen_later');
+if (!Paths.exists('youtube_history'));
+  Paths.touchPlaylistFile('youtube_history');
 
 // Start the Electron "popote".
 const electron       = require('electron');

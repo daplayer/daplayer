@@ -1,18 +1,39 @@
 'use strict';
 
-const YT = require('./client');
+const YT         = require('./client');
+const LocalModel = require('../local/models/playlists');
 
 module.exports = class YouTubeModel {
+  static history() {
+    if (Cache.youtube.history)
+      return Cache.youtube.history;
+
+    return LocalModel.loadPlaylist(Paths.youtube_history).then((history) => {
+      Cache.add('youtube', 'history', history);
+
+      return history;
+    });
+  }
+
+  static addToHistory(record) {
+    return this.history().then((history) => {
+      var last_ten = history.items.slice(0, 9);
+
+      if (last_ten.map(i => i.id).includes(record.id))
+        return;
+
+      history.items.unshift(record);
+
+      return LocalModel.savePlaylist(Record.toJSPF(history));
+    });
+  }
+
   static playlists(page_token) {
     return this.fetch('playlists', page_token);
   }
 
   static likes(page_token) {
     return this.fetch('likes', page_token);
-  }
-
-  static history(page_token) {
-    return this.fetch('history', page_token);
   }
 
   static playlistItems(id) {

@@ -2,6 +2,7 @@
 
 const SoundCloudPlayer = require('../soundcloud/player');
 const YouTubePlayer    = require('../youtube/player');
+const YouTubeModel     = require('../youtube/model');
 const LocalPlayer      = require('../local/player');
 
 module.exports = class MetaPlayer {
@@ -31,6 +32,9 @@ module.exports = class MetaPlayer {
       player = LocalPlayer;
 
     return player.load(record.id).then((url) => {
+      if (record.isYouTube)
+        YouTubeModel.addToHistory(record);
+
       if (record.media == 'video')
         this.is_video = true;
       else

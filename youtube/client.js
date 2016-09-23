@@ -134,16 +134,6 @@ module.exports = class YT {
   }
 
   /**
-   * Returns the "History" playlist items.
-   *
-   * @param  {String=} page_token - The page token.
-   * @return {Promise}
-   */
-  static history(page_token) {
-    return YT.items(Config.youtube.related_playlists.watchHistory, false, page_token);
-  }
-
-  /**
    * Returns the liked videos playlist items.
    *
    * @param  {String=} page_token - The page token.

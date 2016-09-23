@@ -75,12 +75,21 @@ module.exports = class Paths {
   }
 
   /**
-   * Paths to the "Listen later" playlist file.
+   * Path to the "Listen later" playlist file.
    *
    * @return {String}
    */
   static get listen_later() {
     return path.join(this.playlists, 'listen-later.jspf');
+  }
+
+  /**
+   * Path to the "YouTube History" playlist file
+   *
+   * @return {String}
+   */
+  static get youtube_history() {
+    return path.join(this.playlists, 'youtube-history.jspf');
   }
 
   /**
@@ -125,7 +134,7 @@ module.exports = class Paths {
   }
 
   /**
-   * Touches the JSPF file for the "Listen later" playlist.
+   * Touches the JSPF file for a given playlist path.
    *
    * We are not relying on the `LocalModel#savePlaylist` method
    * as this would do extra computation to guess the file name
@@ -135,9 +144,9 @@ module.exports = class Paths {
    *
    * @return {null}
    */
-  static touchListenLaterFile() {
-    fs.writeFileSync(this.listen_later, JSON.stringify({
-      title: 'Listen later',
+  static touchPlaylistFile(location_id) {
+    fs.writeFileSync(this[location_id], JSON.stringify({
+      title: location_id,
       track: []
     }));
   }

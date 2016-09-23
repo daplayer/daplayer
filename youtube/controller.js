@@ -14,14 +14,11 @@ module.exports = class YouTubeController {
     });
   }
 
-  static history(page_token) {
-    return YouTubeModel.history(page_token).then((page) => {
+  static history() {
+    return YouTubeModel.history().then((history) => {
       this.render('youtube/history', {
-        history: page,
-        page_token: page_token
+        history: history
       });
-    }).then(() => {
-      this.loadNextRecords()
     });
   }
 
