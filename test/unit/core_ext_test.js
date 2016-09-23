@@ -69,7 +69,9 @@ describe('core extensions', () => {
       });
 
       it('should strip non alpha-numeric chars', () => {
-        assert.equal("Oh, you're so smart !".dasherize(), 'oh-youre-so-smart');
+        assert.equal("Oh, you're so smart !".dasherize(), 'oh-you-re-so-smart');
+        assert.equal('Dealing_with_underscores'.dasherize(), 'dealing-with-underscores');
+        assert.equal('With  multiple  ( spaces'.dasherize(), 'with-multiple-spaces');
       });
     });
   });

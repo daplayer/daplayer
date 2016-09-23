@@ -88,8 +88,8 @@ String.prototype.camel = function() {
  * @return {String}
  */
 String.prototype.dasherize = function() {
-  return this.replace(/((\'|\!|\,|;\/|\\)+)/g, '').trim()
-             .replace(/\s/g, '-').toLowerCase();
+  return this.replace(/((\'|\)|\(|\!|\,|_|;\/|\\)+)/g, ' ').trim()
+             .replace(/\s+/g, '-').toLowerCase();
 }
 
 /**
