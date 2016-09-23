@@ -37,14 +37,14 @@ module.exports = class Paths {
   }
 
   /**
-   * Path to the user's data folder (e.g. "/home/john/.player").
+   * Path to the user's data folder (e.g. "/home/john/.daplayer").
    *
    * @return {String}
    */
   static get user() {
     var home = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
 
-    return path.join(home, '.player');
+    return path.join(home, '.daplayer');
   }
 
   /**
