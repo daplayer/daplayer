@@ -32,7 +32,7 @@ module.exports = class MetaPlayer {
       player = LocalPlayer;
 
     return player.load(record.id).then((url) => {
-      if (record.isYouTube)
+      if (record.isYouTube())
         YouTubeModel.addToHistory(record);
 
       if (record.media == 'video')
