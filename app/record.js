@@ -144,6 +144,7 @@ module.exports = class Record {
       record.id       = hash.location;
       record.icon     = hash.image;
       record.duration = hash.duration;
+      record.artist   = hash.creator;
 
       if (Number.isInteger(record.id))
         record.service = 'soundcloud';
