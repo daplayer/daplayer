@@ -11,14 +11,17 @@ module.exports = class LocalModelFiles {
       const cp    = require('child_process');
       const child = cp.fork(`${__dirname}/../files.js`, [Config.local.path]);
 
-      child.on('message', (files) => {
-        var records = files.map((file) => {
-          return Record.local(file);
-        });
+      child.on('message', (message) => {
+        if (message instanceof Array) {
+          var records = message.map((file) => {
+            return Record.local(file);
+          });
 
-        Cache.add('local', 'files', records);
+          Cache.add('local', 'files', records);
 
-        resolve(records);
+          resolve(records);
+        } else
+          Ui.fileProcessProgress(message);
       });
 
       child.on('error', (error) => {
@@ -43,7 +46,12 @@ module.exports = class LocalModelFiles {
         if (error)
           console.log(error);
 
-        resolve(files.map((file) => {
+        resolve(files.map((file, i) => {
+          process.send({
+            current: i+1,
+            total:   files.length
+          });
+
           return LocalService.tags(file);
         }));
       });

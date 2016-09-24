@@ -22,6 +22,9 @@
     },
     "configuration": {
       "path": "Dossier des musiques"
+    },
+    "feedback": {
+      "progress": "%{current} fichiers traités sur %{total}."
     }
   }
 }

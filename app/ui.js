@@ -19,12 +19,14 @@ module.exports = class Ui {
   }
 
   /**
-   * Hides the loader on the page.
+   * Hides the loader on the page and clear the eventual
+   * attached text.
    *
    * @return {null}
    */
   static hideLoader() {
     $('.loading-shadow').hide();
+    $('.loader-text').html('');
   }
 
   /**
@@ -82,6 +84,19 @@ module.exports = class Ui {
     var action = href.split("/")[1];
 
     MetaController.render(module, action, param);
+  }
+
+  /**
+   * Displays the number of files that have already been
+   * processed by the tagging library.
+   *
+   * Since this operation may take time, let's display some
+   * feedback to the user.
+   *
+   * @return {null}
+   */
+  static fileProcessProgress(processed) {
+    $('.loader-text').html(Translation.t('local.feedback.progress', processed));
   }
 
   /**

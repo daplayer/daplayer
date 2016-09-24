@@ -22,6 +22,9 @@
     },
     "configuration": {
       "path": "Medias location"
+    },
+    "feedback": {
+      "progress": "%{current} files processed out of %{total}."
     }
   }
 }
