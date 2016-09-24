@@ -22,8 +22,15 @@ module.exports = class LocalService {
 
     var element = $(`.music[data-id="${hash.id.replace('"', "\\\"")}"]`);
 
-    element.find('.title').html(hash.title);
-    element.find('.artist').html(hash.artist);
+    var title_span  = element.find('.title');
+    var artist_link = element.find('.artist');
+
+    title_span.html(hash.title);
+    title_span.attr('title', hash.title);
+
+    artist_link.html(hash.artist);
+    artist_link.attr('title', hash.artist);
+    artist_link.data('id', hash.artist);
 
     LocalModel.findRecord(hash.id, Cache.current.action).then((record) => {
       record.title  = hash.title;
