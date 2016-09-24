@@ -1,35 +1,4 @@
 // --------------------------------------------------------
-// Handle form for creating playlists
-//
-// Display a nice bubble with a form to create a brand new
-// playlist.
-$('.content').on('click', '#new_playlist', function() {
-  $(this).toggleClass('active');
-  $('.bubble').fadeToggle(200);
-});
-
-// Handle the creation of the playlist when the form is
-// submitted.
-$('.content').on('submit', '#add_playlist', function(e) {
-  e.preventDefault();
-
-  var title = $(this).find('input[name="title"]').val();
-
-  if (title.length) {
-    Ui.createPlaylist(title, 'local');
-
-    $('.content').append(Handlebars.helpers.playlist({
-      title: title,
-      icon:  Paths.default_artwork,
-      items: []
-    }).string);
-
-    $('.bubble').fadeOut(200);
-    $('#new_playlist').removeClass('active');
-  }
-});
-
-// --------------------------------------------------------
 // Configuration interface
 //
 // Manage the different actions interacting with the
