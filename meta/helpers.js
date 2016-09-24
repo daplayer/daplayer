@@ -23,8 +23,7 @@ Handlebars.registerHelper('r', function(timestamp) {
 // --------------------------------------------------------
 // Form helpers
 Handlebars.registerHelper('radio', function(id, name, label, section) {
-  var keys     = { youtube: 'yt', soundcloud: 'sc', local: 'local', meta: 'meta' };
-  var i18npath = `${keys[section]}.configuration.${label}`;
+  var i18npath = `${section}.configuration.${label}`;
   var label    = Translation.t(i18npath) || label;
 
   var input = Html.tag('input', {
@@ -85,10 +84,6 @@ Handlebars.registerHelper('search_results_menu', function(search_results, active
     local:      'music'
   };
 
-  var name_mapping = {
-    soundcloud: 'sc', youtube: 'yt', local: 'local'
-  };
-
   var html = Html.tag('div', {class: 'navbar'}, () => {
     var output = '';
 
@@ -102,7 +97,7 @@ Handlebars.registerHelper('search_results_menu', function(search_results, active
 
         output = output.concat(Html.tag('a', attrs, () => {
           return Html.glyphicon(icons[module]) +
-                 Translation.t(name_mapping[module].concat('.name'));
+                 Translation.t(module.concat('.name'));
         }));
       }
     });

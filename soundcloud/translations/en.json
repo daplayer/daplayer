@@ -1,5 +1,5 @@
 {
-  "sc": {
+  "soundcloud": {
     "name": "SoundCloud",
     "connect": "Connect your SoundCloud account",
     "connect_message": "Import your musics, playlists, favorites, etc.",

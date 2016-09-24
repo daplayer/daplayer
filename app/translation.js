@@ -18,10 +18,8 @@ module.exports = class Translation {
     if (!this.cache)
       this.cache = {};
 
-    [['soundcloud', 'sc'], ['youtube', 'yt'],
-     ['local',   'local'], ['meta', 'meta']].forEach((e) => {
-
-      this.cache[e.last()] = JSON.parse(this.read(e.first(), locale))[e.last()];
+    ['soundcloud', 'youtube', 'local', 'meta'].forEach((e) => {
+      this.cache[e] = JSON.parse(this.read(e, locale))[e];
      });
 
     this.loaded = true;
@@ -44,6 +42,13 @@ module.exports = class Translation {
   static t(string, hash) {
     if (!this.loaded)
       this.load();
+
+    // Short-hands to access to the SoundCloud and YouTube
+    // translations.
+    if (string.startsWith('sc'))
+      string = string.replace('sc', 'soundcloud');
+    else if (string.startsWith('yt'))
+      string = string.replace('yt', 'youtube');
 
     var methods = string.split(".");
     var context = this.cache;
