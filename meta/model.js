@@ -16,22 +16,6 @@ module.exports = class MetaModel {
       return YouTubeModel.findById(id, section, playlist);
     else if (module == 'local')
       return LocalModel.findById(id, section, playlist);
-    else if (module == 'meta')
-      return MetaModel.findResult(id);
-  }
-
-  static findResult(id) {
-    return new Promise((resolve, reject) => {
-      Cache.search_results.net_results.filter((record) => {
-        if (record.id == id)
-          resolve(record);
-      });
-
-      Cache.search_results.owned.filter((record) => {
-        if (record.id == id)
-          resolve(record);
-      });
-    });
   }
 
   static resolve(url_or_record) {
