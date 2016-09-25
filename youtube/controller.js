@@ -50,7 +50,7 @@ module.exports = class YouTubeController {
     });
   }
 
-  static render(view, context, skip_caching) {
+  static render(view, context) {
     var token = context.token;
     var meth  = token ? 'append' : 'render';
 
