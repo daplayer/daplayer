@@ -76,17 +76,25 @@ module.exports = class MetaModel {
       var record = record instanceof Record ? record : record.record;
 
       if (playlist.service == 'soundcloud')
-        SoundCloudModel.addToPlaylist(playlist.id, record);
+        var model = SoundCloudModel;
       else if (playlist.service == 'youtube')
-        YouTubeModel.addToPlaylist(playlist.id, record);
+        var model = YouTubeModel;
       else
-        LocalModel.addToPlaylist(playlist.id, record);
+        var model = LocalModel;
+
+      return model.addToPlaylist(playlist.id, record);
     });
   }
 
   static createPlaylist(title, service) {
-    if (service == 'local')
-      return LocalModel.createPlaylist(title);
+    if (service == 'soundcloud')
+      var model = SoundCloudModel;
+    else if (service == 'youtube')
+      var model = YouTubeModel;
+    else if (service == 'local')
+      var model = LocalModel;
+
+    return model.createPlaylist(title);
   }
 
   static mapRecords(record, index, array) {

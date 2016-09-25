@@ -92,3 +92,27 @@ $('.dialog').on('click', 'nav a', function() {
   tohide.addClass('hidden').hide();
   toshow.removeClass('hidden').show();
 });
+
+// Handle pressing "return" inside the "New playlist" field
+//
+// It is important to use 'keydown' and not 'keyup', otherwise
+// the `preventDefault()` call happens too late.
+$('.dialog').on('keydown', '#new_playlist', function(e) {
+  if (e.keyCode == 13) {
+    e.preventDefault();
+
+    var service = $('.dialog .navbar a.active').data('service');
+    var title   = $(this).val();
+
+    MetaModel.createPlaylist(title, service).then((playlist) => {
+      $(this).val('');
+
+      // Create the new option
+      $('.dialog .items ul:visible').append(View.partial('meta/partials/playlist_option', {
+        title:   title,
+        service: service,
+        id:      playlist.id
+      }).string);
+    });
+  }
+});

@@ -59,14 +59,22 @@ module.exports = class LocalModelPlaylists {
       // when the playlist object is dumped.
       playlist.items.push(record);
 
-      return this.savePlaylist(Record.toJSPF(playlist));
+      return this.savePlaylist(playlist);
     });
   }
 
   static createPlaylist(title) {
-    return this.savePlaylist({
+    var record = Record.JSPF({
       title: title,
       track: []
+    });
+
+    return this.playlists().then((playlists) => {
+      // If we are creating a new playlist, we have already
+      // loaded them so let's update the cache.
+      playlists.unshift(record);
+
+      return this.savePlaylist(record);
     });
   }
 
@@ -75,11 +83,11 @@ module.exports = class LocalModelPlaylists {
     var location = Paths.join(Paths.playlists, filename);
 
     return new Promise((resolve, reject) => {
-      fs.writeFile(location, JSON.stringify(playlist), (err) => {
+      fs.writeFile(location, JSON.stringify(Record.toJSPF(playlist)), (err) => {
         if (err)
           reject(err);
 
-        resolve(true);
+        resolve(playlist);
       });
     });
   }

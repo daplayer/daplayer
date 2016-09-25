@@ -68,6 +68,25 @@ module.exports = class SoundCloudModel {
       return SC.insert(playlist, record.id);
     });
   }
+
+  /**
+   * Creates a brand new playlist given a title. This methods
+   * delegates to the client and updates the cache accordingly.
+   *
+   * @param  {String} title - The playlist's title.
+   * @return {Promise}
+   */
+  static createPlaylist(title) {
+    return SC.create(title).then((hash) => {
+      var record = Record.soundcloud(hash);
+
+      return this.userPlaylists().then((playlists) => {
+        playlists.collection.unshift(record);
+
+        return record;
+      });
+    });
+  }
 }
 
 module.exports.mixins();

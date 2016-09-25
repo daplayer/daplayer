@@ -88,11 +88,28 @@
   }
 
   &.add_to_playlist {
-    .items li {
+    .items li, .new_item {
       border-bottom: 1px solid @light-purple;
       height: @li-music-height;
-      line-height: @li-music-height;
+    }
+
+    .items li {
       padding: 10px 5px;
+      line-height: @li-music-height;
+    }
+
+    .new_item {
+      margin-left: 40px;
+      overflow: hidden;
+      padding-left: 2.5em;
+
+      input[type="text"] {
+        border: 0;
+        height: @li-music-height - 10px;
+        width: 100%;
+        margin: 0;
+        padding-top: 0;
+      }
     }
   }
 }

@@ -24,7 +24,7 @@ module.exports = class YouTubeModel {
 
       history.items.unshift(record);
 
-      return LocalModel.savePlaylist(Record.toJSPF(history));
+      return LocalModel.savePlaylist(history);
     });
   }
 
@@ -151,5 +151,24 @@ module.exports = class YouTubeModel {
       });
 
     return YT.insert(id, record.id);
+  }
+
+  /**
+   * Creates a brand new playlist given a title. This methods
+   * delegates to the client and updates the cache accordingly.
+   *
+   * @param  {String} title - The playlist's title.
+   * @return {Promise}
+   */
+  static createPlaylist(title) {
+    return YT.create(title).then((hash) => {
+      var record = Record.youtube(hash);
+
+      return this.playlists().then((playlists) => {
+        playlists.items.unshift(record);
+
+        return record;
+      });
+    });
   }
 }

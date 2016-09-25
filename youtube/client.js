@@ -3,7 +3,6 @@
 const Credentials = require('../app/credentials');
 const request     = require('request');
 
-
 module.exports = class YT {
   /**
    * Convenient place to store the different URLs that are
@@ -107,6 +106,42 @@ module.exports = class YT {
           reject(body.error);
         else
           resolve(true);
+      });
+    });
+  }
+
+  /**
+   * Facility to create a playlist on YouTube given
+   * a title.
+   *
+   * @param  {String} title - The playlist's title.
+   * @return {Promise}
+   */
+  static create(title) {
+    return new Promise((resolve, reject) => {
+      var options = {
+        url: this.url.data + 'playlists',
+        qs: {
+          part: 'snippet'
+        },
+        json: {
+          snippet: {
+            title: title
+          }
+        },
+        headers: {
+          Authorization: 'Bearer ' + Credentials.user.youtube.access_token
+        }
+      };
+
+      request.post(options, (err, res, body) => {
+        if (err)
+          reject(err);
+
+        if (body.error)
+          reject(body.error);
+        else
+          resolve(body);
       });
     });
   }

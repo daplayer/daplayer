@@ -60,7 +60,7 @@ module.exports = class Record {
 
     if (hash.artwork_url)
       record.icon = hash.artwork_url.size(width);
-    else if (record.items)
+    else if (record.items && record.items.length)
       record.icon = record.items.first().icon.size(width);
     else if (record.kind != 'playlist')
       record.icon = Paths.default_artwork;

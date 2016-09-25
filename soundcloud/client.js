@@ -12,7 +12,7 @@ module.exports = class SC {
       me:         `https://api-v2.soundcloud.com/users/${Credentials.user.soundcloud.user_id}/`,
       activities: 'https://api-v2.soundcloud.com/stream',
       search:     'https://api-v2.soundcloud.com/search',
-      playlists:  'https://api-v2.soundcloud.com/playlists/'
+      playlists:  'https://api-v2.soundcloud.com/playlists'
     };
   }
 
@@ -142,7 +142,7 @@ module.exports = class SC {
       tracks.push(record_id);
 
       var options = {
-        url: this.url.playlists + playlist.id,
+        url: this.url.playlists + '/' + playlist.id,
         method: 'PUT',
         qs: {
           client_id:   Credentials.soundcloud.client_id,
@@ -164,6 +164,46 @@ module.exports = class SC {
           reject(err);
 
         resolve(true);
+      });
+    });
+  }
+
+  /**
+   * Facility to create a playlist on SoundCloud given
+   * a title.
+   *
+   * @param  {String} title - The playlist's title.
+   * @return {Promise}
+   */
+  static create(title) {
+    return new Promise((resolve, reject) => {
+      var options = {
+        url: this.url.playlists,
+        method: 'POST',
+        qs: {
+          client_id:   Credentials.soundcloud.client_id,
+          app_version: Credentials.soundcloud.app_id
+        },
+        json: {
+          playlist: {
+            title:          title,
+            sharing:        'public',
+            duration:       0,
+            tracks:         [],
+            _resource_type: 'playlist'
+          }
+        },
+        headers: {
+          Authorization: Credentials.user.soundcloud.oauth_token,
+          Origin:        this.url.default
+        }
+      };
+
+      request(options, (err, res, body) => {
+        if (err)
+          reject(err);
+
+        resolve(body);
       });
     });
   }

@@ -2,15 +2,15 @@
 
 <nav class="navbar">
   {{#if soundcloud}}
-    <a href="#" class="active">{{g 'cloud'}} {{t 'sc.name'}}</a>
+    <a href="#" class="active" data-service="soundcloud">{{g 'cloud'}} {{t 'sc.name'}}</a>
   {{else if youtube}}
-    <a href="#" class="active">{{g 'film'}}  {{t 'yt.name'}}</a>
+    <a href="#" class="active" data-service="youtube">{{g 'film'}}  {{t 'yt.name'}}</a>
   {{/if}}
 
   {{#if local}}
-    <a href="#" class="active">{{g 'music'}} {{t 'local.name'}}</a>
+    <a href="#" class="active" data-service="local">{{g 'music'}} {{t 'local.name'}}</a>
   {{else}}
-    <a href="#">{{g 'music'}} {{t 'local.name'}}</a>
+    <a href="#" data-service="local">{{g 'music'}} {{t 'local.name'}}</a>
   {{/if}}
 </nav>
 
@@ -41,6 +41,10 @@
         {{playlist_option this}}
       {{/each}}
     </ul>
+  </div>
+
+  <div class="new_item">
+    <input type="text" id="new_playlist" placeholder="Nouvelle playlist...">
   </div>
 
   <input type="hidden" name="record-id" value="{{ id }}">
