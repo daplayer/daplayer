@@ -1,7 +1,5 @@
 require('../test_helper');
 
-const Record = require('../../app/record');
-
 describe('Record', () => {
   describe('#soundcloud', () => {
     var hash = {

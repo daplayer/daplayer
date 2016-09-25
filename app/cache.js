@@ -47,7 +47,7 @@ module.exports = class Cache {
    *                            the root section.
    * @param  {String} section - The section to fill.
    * @param  {Object} data    - The data to store.
-   * @return {null}
+   * @return {Promise}
    */
   static add(module, section, data) {
     // Early return for `playlist_items` and `video_urls`
@@ -56,8 +56,7 @@ module.exports = class Cache {
       if (section == 'playlist_items')
         data.collection.forEach(Record.link);
 
-      this[module][section][data.id] = Promise.resolve(data);
-      return;
+      return this[module][section][data.id] = Promise.resolve(data);
     }
 
     if (!this[module][section]) {
@@ -68,10 +67,10 @@ module.exports = class Cache {
       else
         data.forEach(Record.link);
 
-      this[module][section] = Promise.resolve(data);
+      return this[module][section] = Promise.resolve(data);
     } else {
-      this[module][section].then((existing) => {
-        this[module][section] = new Promise((resolve) => {
+      return this[module][section].then((existing) => {
+        return this[module][section] = new Promise((resolve) => {
           // Sometimes the SoundCloud API gives a `next_href` that
           // will return an empty collection, in this case we can't
           // concatenate so let's return the existing one as is.

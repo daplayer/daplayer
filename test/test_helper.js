@@ -26,6 +26,7 @@ global.Cache       = require('../app/cache');
 global.Html        = require('../app/html');
 global.Formatter   = require('../app/formatter');
 global.Paths       = require('../app/paths');
+global.Record      = require('../app/record');
 global.Translation = require('../app/translation');
 
 global.MetaModel = require('../meta/model');

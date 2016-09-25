@@ -3,7 +3,7 @@
 require('../test_helper');
 
 describe('Cache', () => {
-  before(() => {
+  beforeEach(() => {
     Cache.initialize();
   });
 
@@ -28,33 +28,65 @@ describe('Cache', () => {
   });
 
   describe('#add', () => {
-    it('should add records to their specific section', () => {
-      Cache.add('local', 'files', {collection: ['foo', 'bar']});
+    var original_code;
+
+    before(() => {
+      original_code = Record.link;
+      Record.link   = function() {};
+    });
+
+    after(() => {
+      Record.link = original_code;
+    });
+
+    it('should add records to the given section', () => {
+      Cache.add('local', 'files', ['foo', 'bar']);
 
       return Cache.local.files.then((cached) => {
-        assert.deepEqual(cached, {collection: ['foo', 'bar']});
+        assert.deepEqual(cached, ['foo', 'bar']);
       });
     });
 
     it('should concatenate previous collection with the given one', () => {
-      Cache.add('local', 'files', {collection: ['foo']});
-      Cache.add('local', 'files', {collection: ['bar']});
+      var first  = { collection: ['foo'] };
+      var second = { collection: ['bar'] };
 
-      return Cache.local.files.then((cached) => {
-        assert.deepEqual(cached, {collection: ['foo', 'bar']});
+      return Cache.add('soundcloud', 'likes', first).then(() => {
+        return Cache.add('soundcloud', 'likes', second);
+      }).then(() => {
+        return Cache.soundcloud.likes.then((cached) => {
+          return assert.deepEqual(cached.collection, ['foo', 'bar']);
+        });
+      });
+    });
+
+    it('should erase the previous token with the new one', () => {
+      var first =  {collection: ['foo'], next_token: '123'};
+      var second = {collection: ['foo'], next_token: '456'};
+
+      return Cache.add('soundcloud', 'likes', first).then(() => {
+        return Cache.add('soundcloud', 'likes', second);
+      }).then(() => {
+        return Cache.soundcloud.likes.then((cached) => {
+          return assert.equal(cached.next_token, '456');
+        });
       });
     });
 
     it('should store YouTube playlist items', () => {
-      Cache.add('youtube', 'playlist_items', { id: 'foo' });
+      Cache.add('youtube', 'playlist_items', {id: 'foo', collection: []});
 
-      assert.deepEqual(Cache.youtube.playlist_items.foo, Promise.resolve({id: 'foo'}));
+      return Cache.youtube.playlist_items.foo.then((cached) => {
+        return assert.deepEqual(cached, {id: 'foo', collection: []});
+      });
     });
 
     it('should store YouTube video ids', () => {
       Cache.add('youtube', 'video_urls', { id: 'bar' });
 
-      assert.deepEqual(Cache.youtube.video_urls.bar, Promise.resolve({id: 'bar'}));
+      return Cache.youtube.video_urls.bar.then((cached) => {
+        assert.deepEqual(cached, {id: 'bar'});
+      })
     });
   });
 })
