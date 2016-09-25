@@ -29,16 +29,20 @@ describe('Cache', () => {
 
   describe('#add', () => {
     it('should add records to their specific section', () => {
-      Cache.add('local', 'files', ['foo', 'bar']);
+      Cache.add('local', 'files', {collection: ['foo', 'bar']});
 
-      assert.deepEqual(Cache.local.files, Promise.resolve(['foo', 'bar']));
+      return Cache.local.files.then((cached) => {
+        assert.deepEqual(cached, {collection: ['foo', 'bar']});
+      });
     });
 
     it('should concatenate previous collection with the given one', () => {
-      Cache.add('local', 'files', ['foo']);
-      Cache.add('local', 'files', ['bar']);
+      Cache.add('local', 'files', {collection: ['foo']});
+      Cache.add('local', 'files', {collection: ['bar']});
 
-      assert.deepEqual(Cache.local.files, Promise.resolve(['foo', 'bar']));
+      return Cache.local.files.then((cached) => {
+        assert.deepEqual(cached, {collection: ['foo', 'bar']});
+      });
     });
 
     it('should store YouTube playlist items', () => {

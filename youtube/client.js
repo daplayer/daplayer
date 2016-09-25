@@ -149,20 +149,20 @@ module.exports = class YT {
   /**
    * Returns the list of playlists that the user owns.
    *
-   * @param  {String=} page_token - The page token.
+   * @param  {String=} token - The page token.
    * @return {Promise}
    */
-  static playlists(page_token) {
+  static playlists(token) {
     return new Promise((resolve) => {
       var options = { mine: true };
 
-      if (page_token)
-        options.pageToken = page_token;
+      if (token)
+        options.pageToken = token;
 
       this.fetch('playlists', options, (data) => {
         resolve({
-          page_token: data.nextPageToken,
-          items: data.items
+          next_token: data.nextPageToken,
+          collection: data.items
         });
       });
     });
@@ -171,11 +171,11 @@ module.exports = class YT {
   /**
    * Returns the liked videos playlist items.
    *
-   * @param  {String=} page_token - The page token.
+   * @param  {String=} token - The page token.
    * @return {Promise}
    */
-  static likes(page_token) {
-    return YT.items(Config.youtube.related_playlists.likes, false, page_token);
+  static likes(token) {
+    return YT.items(Config.youtube.related_playlists.likes, false, token);
   }
 
   /**
@@ -187,17 +187,17 @@ module.exports = class YT {
    * @param  {String}  id         - The playlist's id.
    * @param  {Bool=}   full       - Specify whether we want to
    *                                load the full playlist or not.
-   * @param  {String=} page_token - The next page token.
+   * @param  {String=} token      - The next page token.
    * @param  {Array=}  collection - Holds the collection as we
    *                                call the method recursively.
    * @return {Promise}
    */
-  static fetchItems(id, full, page_token, collection) {
+  static fetchItems(id, full, token, collection) {
     return new Promise((resolve) => {
       var options = { playlistId: id };
 
-      if (page_token)
-        options.pageToken = page_token;
+      if (token)
+        options.pageToken = token;
 
       if (!collection)
         collection = [];
@@ -212,8 +212,8 @@ module.exports = class YT {
         else
           resolve({
             id: id,
-            items: collection,
-            page_token: data.nextPageToken
+            collection: collection,
+            next_token: data.nextPageToken
           });
       });
     });
@@ -222,22 +222,22 @@ module.exports = class YT {
   /**
    * Fetches the different fields related to a list of items.
    *
-   * @param  {String}  id         - The playlist's id.
-   * @param  {Bool=}   full       - Delegated to `fetchItems`.
-   * @param  {String=} page_token - Delegated to `fetchItems`.
+   * @param  {String}  id    - The playlist's id.
+   * @param  {Bool=}   full  - Delegated to `fetchItems`.
+   * @param  {String=} token - Delegated to `fetchItems`.
    * @return {Promise}
    */
-  static items(id, full, page_token) {
+  static items(id, full, token) {
     return new Promise((resolve) => {
-      this.fetchItems(id, full, page_token).then((collection) => {
-        page_token = collection.page_token;
+      this.fetchItems(id, full, token).then((page) => {
+        token = page.next_token;
 
-        return collection.items.map((item) => {
+        return page.collection.map((item) => {
           return item.snippet.resourceId.videoId;
         });
       }).then((ids) => {
         this.fetch('videos', { id: ids.join(",") }, (data) => {
-          data.page_token = page_token;
+          data.next_token = token;
           data.id         = id;
           resolve(data);
         });

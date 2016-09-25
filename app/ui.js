@@ -126,10 +126,8 @@ module.exports = class Ui {
       return;
 
     Cache[module][action].then((result) => {
-      if (result.next_href)
-        MetaController.render(module, action, result.next_href);
-      else if (result.page_token)
-        MetaController.render(module, action, result.page_token);
+      if (result.next_token)
+        MetaController.render(module, action, result.next_token);
     });
   }
 

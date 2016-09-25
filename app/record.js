@@ -90,11 +90,11 @@ module.exports = class Record {
         record.items_count = hash.contentDetails.itemCount;
     }
 
-    record.page_token = hash.page_token
+    record.next_token = hash.next_token;
 
-    if (hash.items)
-      record.items = hash.items.map((record) => {
-        return Record.youtube(record);
+    if (hash.items || hash.collection)
+      record.collection = (hash.items || hash.collection).map((item) => {
+        return Record.youtube(item);
       }).map(MetaModel.mapRecords);
 
     return record;

@@ -3,47 +3,47 @@
 const SoundCloudModel = require('./model');
 
 module.exports = class SoundCloudController {
-  static activities(href) {
-    return SoundCloudModel.activities(href).then((activities) => {
+  static activities(token) {
+    return SoundCloudModel.activities(token).then((activities) => {
       this.render('soundcloud/activities', {
         activities: activities,
-        href: href
+        token: token
       });
     });
   }
 
-  static tracks(href) {
-    return SoundCloudModel.tracks(href).then((tracks) => {
+  static tracks(token) {
+    return SoundCloudModel.tracks(token).then((tracks) => {
       this.render('soundcloud/tracks', {
         tracks: tracks,
-        href: href
+        token: token
       });
     });
   }
 
-  static likes(href) {
-    return SoundCloudModel.likes(href).then((likes) => {
+  static likes(token) {
+    return SoundCloudModel.likes(token).then((likes) => {
       this.render('soundcloud/likes', {
         likes: likes,
-        href: href
+        token: token
       })
     });
   }
 
-  static userPlaylists(href) {
-    return SoundCloudModel.userPlaylists(href).then((user_playlists) => {
+  static userPlaylists(token) {
+    return SoundCloudModel.userPlaylists(token).then((user_playlists) => {
       this.render('soundcloud/user_playlists', {
         user_playlists: user_playlists,
-        href: href
+        token: token
       });
     });
   }
 
-  static likedPlaylists(href) {
-    return SoundCloudModel.likedPlaylists(href).then((liked_playlists) => {
+  static likedPlaylists(token) {
+    return SoundCloudModel.likedPlaylists(token).then((liked_playlists) => {
       this.render('soundcloud/liked_playlists', {
         liked_playlists: liked_playlists,
-        href: href
+        token: token
       });
     })
   }
@@ -55,8 +55,8 @@ module.exports = class SoundCloudController {
   }
 
   static render(view, context) {
-    var href = context.href;
-    var meth = href ? 'append' : 'render';
+    var token = context.token;
+    var meth  = token ? 'append' : 'render';
 
     View[meth](view, context);
   }

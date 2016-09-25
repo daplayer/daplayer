@@ -3,11 +3,11 @@
 const YouTubeModel = require('./model');
 
 module.exports = class YouTubeController {
-  static playlists(page_token) {
-    return YouTubeModel.playlists(page_token).then((page) => {
+  static playlists(token) {
+    return YouTubeModel.playlists(token).then((page) => {
       this.render('youtube/playlists', {
         playlists: page,
-        page_token: page_token
+        token: token
       })
     }).then(() => {
       this.loadNextRecords()
@@ -22,11 +22,11 @@ module.exports = class YouTubeController {
     });
   }
 
-  static likes(page_token) {
-    return YouTubeModel.likes(page_token).then((page) => {
+  static likes(token) {
+    return YouTubeModel.likes(token).then((page) => {
       this.render('youtube/likes', {
         likes: page,
-        page_token: page_token
+        token: token
       });
     }).then(() => {
       this.loadNextRecords()
@@ -34,14 +34,10 @@ module.exports = class YouTubeController {
   }
 
   static playlistItems(id) {
-    return YouTubeModel.playlists().then((playlists) => {
-      return playlists.items.find((playlist) => {
-        return playlist.id == id;
-      });
-    }).then((playlist) => {
+    return YouTubeModel.findPlaylist(id).then((playlist) => {
       return YouTubeModel.playlistItems(id).then((collection) => {
         var context       = playlist;
-            context.items = collection.items;
+            context.items = collection.collection;
 
         this.render('meta/partials/playlist', context);
       });
@@ -55,8 +51,8 @@ module.exports = class YouTubeController {
   }
 
   static render(view, context, skip_caching) {
-    var page_token = context.page_token;
-    var meth       = page_token ? 'append' : 'render';
+    var token = context.token;
+    var meth  = token ? 'append' : 'render';
 
     View[meth](view, context);
   }

@@ -25,13 +25,6 @@ module.exports = class MetaModel {
       return url_or_record;
   }
 
-  static concatenate(service, existing, fetched) {
-    if (service == 'soundcloud')
-      return SoundCloudModel.concatenate(existing, fetched);
-    else if (service == 'youtube')
-      return YouTubeModel.concatenate(existing, fetched);
-  }
-
   static playlists(module) {
     return LocalModel.playlists().then((local_playlists) => {
       if (module == 'soundcloud')

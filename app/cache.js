@@ -60,8 +60,29 @@ module.exports = class Cache {
     if (!this[module][section]) {
       this[module][section] = Promise.resolve(data);
     } else {
-      this[module][section].then((previous) => {
-        this[module][section] = MetaModel.concatenate(module, previous, data);
+      this[module][section].then((existing) => {
+        this[module][section] = new Promise((resolve) => {
+          // Sometimes the SoundCloud API gives a `next_href` that
+          // will return an empty collection, in this case we can't
+          // concatenate so let's return the existing one as is.
+          if (data.collection.empty()) {
+            existing.next_token = null;
+            resolve(existing);
+          }
+
+          // Make sure that our doubly-linked list has
+          // the proper links between new elements.
+          var last  = existing.collection.last();
+          var first = data.collection.first();
+
+          last.next      = first;
+          first.previous = last;
+
+          resolve({
+            next_token: data.next_token,
+            collection: existing.collection.concat(data.collection)
+          });
+        });
       });
     }
   }

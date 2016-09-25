@@ -18,24 +18,24 @@ module.exports = class SoundCloudModel {
     });
   }
 
-  static activities(href) {
-    return this.fetch('activities', href);
+  static activities(token) {
+    return this.fetch('activities', token);
   }
 
-  static tracks(href) {
-    return this.fetch('tracks', href);
+  static tracks(token) {
+    return this.fetch('tracks', token);
   }
 
-  static likes(href) {
-    return this.fetch('likes', href, 20);
+  static likes(token) {
+    return this.fetch('likes', token, 20);
   }
 
-  static userPlaylists(href) {
-    return this.fetch('playlists', href, 5, 'user_playlists');
+  static userPlaylists(token) {
+    return this.fetch('playlists', token, 5, 'user_playlists');
   }
 
-  static likedPlaylists(href) {
-    return this.fetch('playlists/liked_and_owned', href, 5, 'liked_playlists');
+  static likedPlaylists(token) {
+    return this.fetch('playlists/liked_and_owned', token, 5, 'liked_playlists');
   }
 
   /**

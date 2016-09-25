@@ -28,12 +28,12 @@ module.exports = class YouTubeModel {
     });
   }
 
-  static playlists(page_token) {
-    return this.fetch('playlists', page_token);
+  static playlists(token) {
+    return this.fetch('playlists', token);
   }
 
-  static likes(page_token) {
-    return this.fetch('likes', page_token);
+  static likes(token) {
+    return this.fetch('likes', token);
   }
 
   static playlistItems(id) {
@@ -78,7 +78,7 @@ module.exports = class YouTubeModel {
 
   static findPlaylist(id) {
     return this.playlists().then((playlists) => {
-      return playlists.items.find(item => item.id == id);
+      return playlists.collection.find(item => item.id == id);
     });
   }
 
@@ -91,24 +91,7 @@ module.exports = class YouTubeModel {
 
   static findRecord(id, section) {
     return this[section.camel()]().then((cache) => {
-      return cache.items.find(record => record.id == id);
-    });
-  }
-
-  static concatenate(existing, fetched) {
-    return new Promise((resolve) => {
-      // Make sure that our doubly-linked list has
-      // the proper links between new elements.
-      var last  = existing.items[existing.items.length -1];
-      var first = fetched.items[0];
-
-      last.next      = first;
-      first.previous = last;
-
-      resolve({
-        page_token: fetched.page_token,
-        items: existing.items.concat(fetched.items)
-      });
+      return cache.collection.find(record => record.id == id);
     });
   }
 
@@ -127,8 +110,8 @@ module.exports = class YouTubeModel {
 
         return YT.fetch('videos', { id: ids.join(",") }, (data) => {
           resolve({
-            items:      data.items.map(result => Record.youtube(result)),
-            page_token: results.page_token,
+            collection: data.items.map(result => Record.youtube(result)),
+            next_token: results.next_token,
             net:        true
           });
         });
