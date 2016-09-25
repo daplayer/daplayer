@@ -20,6 +20,10 @@ Handlebars.registerHelper('r', function(timestamp) {
   return Formatter.relativeTime(timestamp);
 });
 
+Handlebars.registerHelper('or', function(a, b) {
+  return a || b;
+});
+
 // --------------------------------------------------------
 // Form helpers
 Handlebars.registerHelper('radio', function(id, name, label, section) {
