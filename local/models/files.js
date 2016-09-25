@@ -72,7 +72,7 @@ module.exports = class LocalModelFiles {
       return records.filter((record) => {
         if (record.album == '')
           return record;
-      }).map(MetaModel.mapRecords);
+      });
     }).then((singles) => {
       Cache.add('local', 'singles', singles);
 
@@ -116,9 +116,9 @@ module.exports = class LocalModelFiles {
               return f
           }).sort((a, b) => {
             return a.track - b.track;
-          }).map(MetaModel.mapRecords)
+          })
         });
-      }).map(MetaModel.mapRecords);
+      });
     }).then((albums) => {
       Cache.add('local', 'albums', albums);
 

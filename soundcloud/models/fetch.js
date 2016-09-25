@@ -53,7 +53,7 @@ module.exports = class SoundCloudModelFetch {
         }).filter((record) => {
           if (record)
             return record;
-        }).map(MetaModel.mapRecords)
+        })
       };
     }).then((result) => {
       // If we are fetching liked playlists, SoundCloud is only

@@ -53,11 +53,21 @@ module.exports = class Cache {
     // Early return for `playlist_items` and `video_urls`
     // sections since we have a higher level of nesting.
     if (['playlist_items', 'video_urls'].includes(section)) {
+      if (section == 'playlist_items')
+        data.collection.forEach(Record.link);
+
       this[module][section][data.id] = Promise.resolve(data);
       return;
     }
 
     if (!this[module][section]) {
+      if (data.collection)
+        data.collection.forEach(Record.link);
+      else if (data.items)
+        data.items.forEach(Record.link);
+      else
+        data.forEach(Record.link);
+
       this[module][section] = Promise.resolve(data);
     } else {
       this[module][section].then((existing) => {
@@ -70,17 +80,15 @@ module.exports = class Cache {
             resolve(existing);
           }
 
+          var new_collection = existing.collection.concat(data.collection);
+
           // Make sure that our doubly-linked list has
           // the proper links between new elements.
-          var last  = existing.collection.last();
-          var first = data.collection.first();
-
-          last.next      = first;
-          first.previous = last;
+          new_collection.forEach(Record.link);
 
           resolve({
             next_token: data.next_token,
-            collection: existing.collection.concat(data.collection)
+            collection: new_collection
           });
         });
       });

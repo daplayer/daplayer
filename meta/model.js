@@ -73,11 +73,4 @@ module.exports = class MetaModel {
 
     return model.createPlaylist(title);
   }
-
-  static mapRecords(record, index, array) {
-    record.previous = (index == 0) ? null : array[index-1];
-    record.next     = (index == array.length - 1) ? null : array[index+1];
-
-    return record;
-  }
 }

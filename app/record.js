@@ -52,7 +52,7 @@ module.exports = class Record {
     if (hash.tracks) {
       record.items = hash.tracks.map((track, i) => {
         return Record.soundcloud(track);
-      }).map(MetaModel.mapRecords);
+      });
     }
 
     // Compute the icon of the record.
@@ -95,7 +95,7 @@ module.exports = class Record {
     if (hash.items || hash.collection)
       record.collection = (hash.items || hash.collection).map((item) => {
         return Record.youtube(item);
-      }).map(MetaModel.mapRecords);
+      });
 
     return record;
   }
@@ -181,5 +181,10 @@ module.exports = class Record {
       record[key] = hash[key];
 
     return record;
+  }
+
+  static link(record, index, array) {
+    record.previous = (index == 0) ? null : array[index - 1];
+    record.next     = (index == array.length - 1) ? null : array[index + 1];
   }
 }
