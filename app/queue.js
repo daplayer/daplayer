@@ -21,6 +21,8 @@ module.exports = class Queue {
           resolve([this.current.next, this.playlist]);
         else if (this.playlist && this.playlist.next)
           resolve([this.playlist.next.items[0], this.playlist.next]);
+        else
+          resolve([]);
       } else if (this.mode == 'loop') {
         if (this.current == this.playlist.items.last())
           resolve([this.playlist.items[0], this.playlist]);
@@ -67,8 +69,10 @@ module.exports = class Queue {
       if (!this.mode) {
         if (this.current.previous)
           resolve([this.current.previous, this.playlist]);
-        else if (this.playlist.previous)
+        else if (this.playlist && this.playlist.previous)
           resolve([this.playlist.previous.items.last(), this.playlist.previous]);
+        else
+          resolve([]);
       } else if (this.mode == 'loop') {
         if (this.current == this.playlist.items[0])
           resolve([this.playlist.items.last(), this.playlist]);

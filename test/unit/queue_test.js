@@ -63,6 +63,16 @@ describe('Queue', () => {
           assert.equal(set[0].id, next_playlist.items[0].id);
         });
       });
+
+      it('should return an empty set with no neighbors nor playlist', () => {
+        Queue.start(next);
+
+        assert.equal(Queue.playlist, null);
+
+        return Queue.next().then((set) => {
+          assert.equal(set.empty(), true);
+        });
+      });
     });
 
     describe('in loop mode', () => {
@@ -171,6 +181,16 @@ describe('Queue', () => {
 
         return Queue.previous().then((set) => {
           assert.equal(set[0].id, previous_playlist.items[0].id);
+        });
+      });
+
+      it('should return an empty set with no neighbors nor playlist', () => {
+        Queue.start(previous);
+
+        assert.equal(Queue.playlist, null);
+
+        return Queue.previous().then((set) => {
+          assert.equal(set.empty(), true);
         });
       });
     });
