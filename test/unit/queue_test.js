@@ -136,4 +136,109 @@ describe('Queue', () => {
       });
     });
   });
+
+  describe('#previous', () => {
+    var current, playlist;
+
+    describe('in normal mode', () => {
+      beforeEach(() => {
+        Queue.setMode();
+
+        current           = new Record(null);
+        previous          = new Record('foo');
+        playlist          = new Record(null);
+        previous_playlist = new Record(null);
+
+        previous_playlist.items = [new Record('bar')];
+        playlist.previous       = previous_playlist;
+      });
+
+      it('should return the previous record if it is present', () => {
+        current.previous = previous;
+        Queue.start(current, playlist);
+
+        assert.equal(current.previous.id, previous.id);
+
+        return Queue.previous().then((set) => {
+          assert.equal(set[0].id, next.id);
+        });
+      });
+
+      it('should return the first record of the previous playlist', () => {
+        Queue.start(current, playlist);
+
+        assert.equal(current.previous, null);
+
+        return Queue.previous().then((set) => {
+          assert.equal(set[0].id, previous_playlist.items[0].id);
+        });
+      });
+    });
+
+    describe('in loop mode', () => {
+      var first, second, playlist;
+
+      beforeEach(() => {
+        Queue.setMode('loop');
+
+        first  = new Record('first');
+        second = new Record('second');
+
+        first.next      = second;
+        second.previous = first;
+
+        playlist = new Record(null);
+        playlist.items = [first, second];
+      });
+
+      it('should return the previous record if it is present', () => {
+        Queue.start(first, playlist);
+
+        return Queue.previous().then((set) => {
+          assert.equal(set[0].id, second.id);
+        });
+      });
+
+      it('should return the last track of the playlist otherwise', () => {
+        Queue.start(first, playlist);
+
+        return Queue.previous().then((set) => {
+          assert.equal(set[0].id, second.id);
+        });
+      });
+    });
+
+    describe('in random mode', () => {
+      var first, second, third, fourth, playlist;
+
+      beforeEach(() => {
+        Queue.setMode('random');
+
+        first  = new Record(1);
+        second = new Record(2);
+        third  = new Record(3);
+        fourth = new Record(4);
+
+        [first, second, third, fourth].forEach((r, i, t) => {
+          r.previous = (i == 0) ? null : t[i-1];
+          r.next     = (i > t.length) ? null : t[i+1];
+        });
+
+        playlist        = new Record(null);
+        playlist.items = [new Record('foo'), new Record('bar'), new Record('baz')];
+      });
+
+      it('should return a random track from the playlist', () => {
+        Queue.start(first, playlist);
+
+        return Queue.shift().then((next_set) => {
+          assert.notEqual(next_set[0].id, first.id);
+
+          return Queue.previous().then((previous_set) => {
+            return assert.equal(previous_set[0].id, first.id);
+          });
+        });
+      });
+    });
+  });
 });
