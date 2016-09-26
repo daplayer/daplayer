@@ -91,7 +91,10 @@ module.exports = class YouTubeModel {
 
   static findRecord(id, section) {
     return this[section.camel()]().then((cache) => {
-      return cache.collection.find(record => record.id == id);
+      if (section == 'history')
+        return cache.items.find(record => record.id == id);
+      else
+        return cache.collection.find(record => record.id == id);
     });
   }
 
