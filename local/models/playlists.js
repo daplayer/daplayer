@@ -27,7 +27,7 @@ module.exports = class LocalModelPlaylists {
         if (err)
           reject(err);
 
-        var jspf_files = files.filter((file)   => file != Paths.listen_later);
+        var jspf_files = files.filter((file) => ![Paths.listen_later, Paths.youtube_history].includes(file));
         var playlists  = jspf_files.map((file) => this.loadPlaylist(file));
 
         Promise.all(playlists).then((playlists) => {
