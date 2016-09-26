@@ -12,9 +12,9 @@ const Paths = require('./app/paths');
 });
 
 // > For the "Listen later" and "YouTube History" playlist files.
-if (!Paths.exists('listen_later'));
+if (!Paths.exists('listen_later'))
   Paths.touchPlaylistFile('listen_later');
-if (!Paths.exists('youtube_history'));
+if (!Paths.exists('youtube_history'))
   Paths.touchPlaylistFile('youtube_history');
 
 // Start the Electron "popote".
