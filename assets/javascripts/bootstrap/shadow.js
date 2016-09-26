@@ -8,6 +8,6 @@ $('.shadow.main').on('click', function(e) {
 });
 
 $('body').on('keyup', function(e) {
-  if (e.target.tagName != 'INPUT' && e.keyCode == 27)
+  if (e.keyCode == 27)
     Ui.hideShadow();
 });
