@@ -32,7 +32,7 @@ describe('Record', () => {
       assert.equal(300, record.duration);
     });
 
-    it('should compute the `human_time` field on demand', () => {
+    it('should not set the `human_time` field', () => {
       assert.equal(false,  record.hasOwnProperty('human_time'))
       assert.equal('5:00', record.human_time);
     });
@@ -106,7 +106,7 @@ describe('Record', () => {
         assert.equal(hash[key], record[key]);
     });
 
-    it('should compute the `human_time` field on demand', () => {
+    it('should not set `human_time` field', () => {
       assert.equal(false,  record.hasOwnProperty('human_time'))
       assert.equal('4:19', record.human_time);
     });
@@ -121,6 +121,125 @@ describe('Record', () => {
       });
 
       assert.equal('file://path/to/icon', record.icon);
+    });
+  });
+
+  describe('#JSPF', () => {
+    var hash = {
+      title: 'Best of Gojira',
+      track: [{
+        location: '/path/to/mp3',
+        title:    'Born in Winter',
+        image:    'foo.png',
+        creator:  'Gojira',
+        duration: 231
+      }]
+    };
+
+    var record = Record.JSPF(hash);
+
+    it('should map JSPF fields to our ones', () => {
+      var item  = record.items.first();
+      var track = hash.track.first();
+
+      assert.equal(record.title, hash.title);
+
+      assert.equal(item.id,       track.location);
+      assert.equal(item.title,    track.title);
+      assert.equal(item.artist,   track.creator);
+      assert.equal(item.icon,     track.image);
+      assert.equal(item.duration, track.duration);
+    });
+
+    it('should set a default id based on the title', () => {
+      assert.equal('best-of-gojira', record.id);
+    })
+
+    it('should set a default icon when there are no tracks', () => {
+      assert.equal(Record.JSPF({title: 'Foo', track: []}).icon, Paths.default_artwork);
+    });
+
+    it('should not set `human_time` field', () => {
+      var item = record.items.first();
+
+      assert.equal(false,  item.hasOwnProperty('human_time'))
+      assert.equal('3:51', item.human_time);
+    });
+  });
+
+  describe('#toJSPF', () => {
+    var item = Record.raw({
+      id:       '/path/to/mp3',
+      title:    'Surfacing',
+      artist:   'Slipknot',
+      icon:     'foo.png',
+      duration: 218
+    });
+
+    var record = Record.raw({
+      title: 'Best of Slipknot',
+      items: [item]
+    });
+
+    var track    = Record.toJSPF(item);
+    var playlist = Record.toJSPF(record);
+
+    it('should map our fields to the JSPF ones', () => {
+      assert.equal(playlist.title, record.title);
+      assert.deepEqual(playlist.track.first(), track);
+
+      assert.equal(track.location, item.id);
+      assert.equal(track.title,    item.title);
+      assert.equal(track.creator,  item.artist);
+      assert.equal(track.image,    item.icon);
+      assert.equal(track.duration, item.duration);
+    });
+  });
+
+  describe('#raw', () => {
+    var hash = {
+      id:  'foo',
+      foo: 'bar',
+      baz: 'quux'
+    };
+
+    var record = Record.raw(hash);
+
+    it('should return an instance of Record', () => {
+      assert(record instanceof Record);
+    });
+
+    it('should copy fields verbatim', () => {
+      assert.equal(record.id,  hash.id);
+      assert.equal(record.foo, hash.foo);
+      assert.equal(record.baz, hash.baz);
+    });
+  });
+
+  describe('#link', () => {
+    it('should set the `previous` and `next` attributes of the given record', () => {
+      var record = {};
+
+      Record.link(record, 1, [1, null, 2]);
+
+      assert.equal(record.previous, 1);
+      assert.equal(record.next, 2);
+    });
+
+    it('should not set the `previous` field for the first record', () => {
+      var record = {};
+
+      Record.link(record, 0, [record]);
+
+      assert.equal(record.previous, null);
+    });
+
+    it('should not set the `next` field for the last record', () => {
+      var record = {};
+
+      Record.link(record, 0, [record]);
+
+      assert.equal(record.next, null);
     });
   });
 });
