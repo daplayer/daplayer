@@ -210,6 +210,7 @@ module.exports = class Player {
         $('.previous').attr('title', set.first().title);
       } else {
         $('.previous').addClass('disabled');
+        $('.previous').attr('title', '');
       }
     });
 
@@ -219,6 +220,7 @@ module.exports = class Player {
         $('.next').attr('title', set.first().title);
       } else {
         $('.next').addClass('disabled');
+        $('.next').attr('title', '');
       }
     });
 
