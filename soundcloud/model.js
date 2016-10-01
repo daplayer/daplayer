@@ -78,7 +78,7 @@ module.exports = class SoundCloudModel {
    */
   static createPlaylist(title) {
     return SC.create(title).then((hash) => {
-      var record = Record.soundcloud(hash);
+      var record = Playlist.soundcloud(hash);
 
       return this.userPlaylists().then((playlists) => {
         playlists.collection.unshift(record);

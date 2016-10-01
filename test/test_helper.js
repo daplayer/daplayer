@@ -26,8 +26,13 @@ global.Cache       = require('../app/cache');
 global.Html        = require('../app/html');
 global.Formatter   = require('../app/formatter');
 global.Paths       = require('../app/paths');
-global.Record      = require('../app/record');
 global.Translation = require('../app/translation');
+
+global.Record   = require('../app/models/record');
+global.Playlist = require('../app/models/playlist');
+global.Media    = require('../app/models/media');
+global.Album    = require('../app/models/album');
+global.Activity = require('../app/models/activity');
 
 global.MetaModel = require('../meta/model');
 

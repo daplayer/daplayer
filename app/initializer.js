@@ -26,11 +26,18 @@ global.FilePicker   = require('./file_picker');
 global.Formatter    = require('./formatter');
 global.Html         = require('./html');
 global.Paths        = require('./paths');
-global.Record       = require('./record');
 global.Router       = require('./router');
 global.Translation  = require('./translation');
 global.Ui           = require('./ui');
 global.View         = require('./view');
+
+// ----------------------------------------------
+// Models stack
+global.Record   = require('./models/record');
+global.Playlist = require('./models/playlist');
+global.Media    = require('./models/media');
+global.Album    = require('./models/album');
+global.Activity = require('./models/activity');
 
 // ----------------------------------------------
 // Services stack

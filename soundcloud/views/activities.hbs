@@ -22,10 +22,10 @@
         </div>
       </div>
 
-      {{#if this.isTrack}}
-        {{soundcloud_music_bar this}}
+      {{#if this.hasTrack}}
+        {{soundcloud_music_bar this.item}}
       {{else}}
-        {{playlist this}}
+        {{playlist this.item}}
       {{/if}}
     {{/each}}
   {{/if}}

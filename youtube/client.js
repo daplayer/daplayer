@@ -159,12 +159,7 @@ module.exports = class YT {
       if (token)
         options.pageToken = token;
 
-      this.fetch('playlists', options, (data) => {
-        resolve({
-          next_token: data.nextPageToken,
-          collection: data.items
-        });
-      });
+      this.fetch('playlists', options, (data) => resolve(data));
     });
   }
 
@@ -212,8 +207,8 @@ module.exports = class YT {
         else
           resolve({
             id: id,
-            collection: collection,
-            next_token: data.nextPageToken
+            items: collection,
+            nextPageToken: data.nextPageToken
           });
       });
     });
@@ -230,15 +225,15 @@ module.exports = class YT {
   static items(id, full, token) {
     return new Promise((resolve) => {
       this.fetchItems(id, full, token).then((page) => {
-        token = page.next_token;
+        token = page.nextPageToken;
 
-        return page.collection.map((item) => {
+        return page.items.map((item) => {
           return item.snippet.resourceId.videoId;
         });
       }).then((ids) => {
         this.fetch('videos', { id: ids.join(",") }, (data) => {
-          data.next_token = token;
-          data.id         = id;
+          data.nextPageToken = token;
+          data.id            = id;
           resolve(data);
         });
       });

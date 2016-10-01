@@ -14,7 +14,7 @@ module.exports = class LocalModelFiles {
       child.on('message', (message) => {
         if (message instanceof Array) {
           var records = message.map((file) => {
-            return Record.local(file);
+            return Media.local(file);
           });
 
           Cache.add('local', 'files', records);
@@ -100,23 +100,11 @@ module.exports = class LocalModelFiles {
       });
     }).then((albums) => {
       return this.files().then((files) => {
-        return {
-          albums: albums,
-          files:  files
-        }
-      })
-    }).then((collection) => {
-      return collection.albums.map((album, i) => {
-        return Record.local({
-          id:   `album-${i}`,
-          title: album,
-          album: true,
-          items: collection.files.filter((f) => {
-            if (f.album == album)
-              return f
-          }).sort((a, b) => {
-            return a.track - b.track;
-          })
+        return albums.map((album) => {
+          return new Album({
+            title: album,
+            items: files.filter((f) => f.album == album)
+          });
         });
       });
     }).then((albums) => {

@@ -45,7 +45,7 @@ module.exports = class LocalModelPlaylists {
         if (err)
           reject(err);
 
-        resolve(Record.JSPF(JSON.parse(content)));
+        resolve(Playlist.JSPF(JSON.parse(content)));
       });
     });
   }
@@ -64,7 +64,7 @@ module.exports = class LocalModelPlaylists {
   }
 
   static createPlaylist(title) {
-    var record = Record.JSPF({
+    var record = Playlist.JSPF({
       title: title,
       track: []
     });
@@ -83,7 +83,7 @@ module.exports = class LocalModelPlaylists {
     var location = Paths.join(Paths.playlists, filename);
 
     return new Promise((resolve, reject) => {
-      fs.writeFile(location, JSON.stringify(Record.toJSPF(playlist)), (err) => {
+      fs.writeFile(location, JSON.stringify(playlist.toJSPF()), (err) => {
         if (err)
           reject(err);
 

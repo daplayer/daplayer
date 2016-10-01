@@ -6,7 +6,7 @@ module.exports = class SoundCloudModelFinders {
       return this.findPlaylist(playlist.data('id'), section).then((playlist) => {
         return this.findInPlaylist(id, section, playlist)
       });
-    else if (playlist instanceof Record)
+    else if (playlist instanceof Playlist)
       return this.findInPlaylist(id, section, playlist);
     else
       return this.findRecord(id, section);

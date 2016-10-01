@@ -45,16 +45,14 @@ module.exports = class LocalModelFinders {
       return this.findPlaylist(playlist).then((playlist) => {
         return this.findInPlaylist(id, playlist);
       });
-    else if (playlist instanceof Record)
+    else if (playlist instanceof Playlist)
       return this.findInPlaylist(id, playlist);
     else
       return this.findRecord(id, section);
   }
 
   static findPlaylist(element) {
-    var id = element.data('id');
-
-    if (typeof id === 'string' && id.includes('album'))
+    if (element.data('album'))
       return this.albums().then((albums) => {
         return albums.find((album) => {
           return album.id == element.data('id');

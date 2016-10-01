@@ -1,7 +1,6 @@
 require('../test_helper');
 
-const Queue  = require('../../app/queue');
-const Record = require('../../app/record');
+const Queue = require('../../app/queue');
 
 describe('Queue', () => {
   describe('#start', () => {

@@ -1,7 +1,6 @@
 require('../../test_helper');
 
 const LocalModel = require('../../../local/model');
-const Record     = require('../../../app/record');
 
 describe('LocalModel::Finders', () => {
   describe('#findBy for "genre"', () => {
@@ -15,9 +14,9 @@ describe('LocalModel::Finders', () => {
       ]);
 
       Cache.add('local', 'albums', [
-        Record.local({id: 'foo', album: true, items: [{genre: 'Electro Jazz'}]}),
-        Record.local({id: 'bar', album: true, items: [{genre: 'House'}]}),
-        Record.local({id: 'baz', album: true, items: [{genre: 'French House'}]})
+        new Album({title: 'foo', album: true, items: [{genre: 'Electro Jazz'}]}),
+        new Album({title: 'bar', album: true, items: [{genre: 'House'}]}),
+        new Album({title: 'baz', album: true, items: [{genre: 'French House'}]})
       ]);
     });
 
@@ -64,8 +63,8 @@ describe('LocalModel::Finders', () => {
       ]);
 
       Cache.add('local', 'albums', [
-        Record.local({id: 'foo', album: true, items: [{artist: 'Kaytranda'}]}),
-        Record.local({id: 'bar', album: true, items: [{artist: 'Darius'}]})
+        new Album({title: 'foo', album: true, items: [{artist: 'Kaytranda'}]}),
+        new Album({title: 'bar', album: true, items: [{artist: 'Darius'}]})
       ]);
     });
 

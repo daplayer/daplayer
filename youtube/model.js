@@ -48,7 +48,16 @@ module.exports = class YouTubeModel {
       return Cache.youtube[cache_key || action];
 
     return YT[action](token_or_id, full).then((set) => {
-      return Record.youtube(set);
+      return {
+        id:         set.id,
+        next_token: set.nextPageToken,
+        collection: set.items.map((record) => {
+          if (action == 'playlists')
+            return Playlist.youtube(record);
+          else
+            return Media.youtube(record);
+        })
+      };
     }).then((result) => {
       // Add the result to cache; we can safely do this
       // call here as the method would've early returned if no
@@ -70,7 +79,7 @@ module.exports = class YouTubeModel {
       return this.findPlaylist(playlist.data('id')).then((playlist) => {
         return this.findInPlaylist(id, section, playlist);
       });
-    else if (playlist instanceof Record)
+    else if (playlist instanceof Playlist)
       return this.findInPlaylist(id, section, playlist);
     else
       return this.findRecord(id, section);
@@ -113,7 +122,7 @@ module.exports = class YouTubeModel {
 
         return YT.fetch('videos', { id: ids.join(",") }, (data) => {
           resolve({
-            collection: data.items.map(result => Record.youtube(result)),
+            collection: data.items.map(result => Media.youtube(result)),
             next_token: results.next_token,
             net:        true
           });
@@ -148,7 +157,7 @@ module.exports = class YouTubeModel {
    */
   static createPlaylist(title) {
     return YT.create(title).then((hash) => {
-      var record = Record.youtube(hash);
+      var record = Playlist.youtube(hash);
 
       return this.playlists().then((playlists) => {
         playlists.items.unshift(record);

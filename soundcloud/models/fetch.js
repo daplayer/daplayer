@@ -17,8 +17,8 @@ module.exports = class SoundCloudModelFetch {
     return SC.fetch(action, offset, limit).then((response) => {
       var collection;
 
-      // Here, we are rather dealing with a normal V2 API result
-      // (i.e. with a `collection` and `next_href` field) or rather
+      // Here, we are either dealing with a normal V2 API result
+      // (i.e. with a `collection` and `next_href` field) or either
       // fetching a liked playlist (from V2 as well) which has a
       // `tracks` field or finally, with a V1 API call for the user's
       // playlists.
@@ -31,29 +31,18 @@ module.exports = class SoundCloudModelFetch {
 
       return {
         next_token: response.next_href,
-        collection: collection.map((record, i, t) => {
-          if (action == 'activities') {
-            if (record.track)
-              var hash = record.track;
-            else if (record.playlist)
-              var hash = record.playlist;
-
-            hash.origin = record.user;
-            hash.type   = record.type;
-
-            return Record.soundcloud(hash);
-          } else {
-            if (record.track)
-              return Record.soundcloud(record.track);
-            else if (cache_key == 'user_playlists' || record.title)
-              return Record.soundcloud(record);
-            else if (cache_key == 'liked_playlists' && record.type == 'playlist-like')
-              return Record.soundcloud(record.playlist);
-          }
-        }).filter((record) => {
-          if (record)
-            return record;
-        })
+        collection: collection.map((record) => {
+          if (action == 'activities')
+            return new Activity(record);
+          else if (cache_key == 'user_playlists')
+            return Playlist.soundcloud(record);
+          else if (cache_key == 'liked_playlists' && record.type == 'playlist-like')
+            return Playlist.soundcloud(record.playlist);
+          else if (record.track)
+            return Media.soundcloud(record.track);
+          else if (record.title)
+            return Media.soundcloud(record);
+        }).filter(record => record)
       };
     }).then((result) => {
       // If we are fetching liked playlists, SoundCloud is only
@@ -105,7 +94,7 @@ module.exports = class SoundCloudModelFetch {
   static netSearch(value) {
     return SC.search(value).then((results) => {
       return {
-        collection: results.collection.map(record => Record.soundcloud(record)),
+        collection: results.collection.map(record => Media.soundcloud(record)),
         next_token: results.next_href,
         net:        true
       }
