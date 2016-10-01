@@ -59,11 +59,14 @@ $('.content').on('submit', '.configuration form', function(e) {
   var soundcloud_download = $('#soundcloud_download').val();
   var youtube_download    = $('#youtube_download').val();
 
+  var lock_download = $('#lock_download').is(':checked');
+
   Config.store('meta', 'locale', locale);
   Config.store('soundcloud', 'download', soundcloud_download);
   Config.store('youtube', 'download', youtube_download);
   Config.store('youtube', 'quality', quality);
   Config.store('local', 'path', local_path);
+  Config.store('local', 'lock_download', lock_download);
 
   // Reload the contents if the locale has been changed
   if (locale != original_locale) {

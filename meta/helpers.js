@@ -47,12 +47,17 @@ Handlebars.registerHelper('input', function(id, section, path_selector) {
   var value = Config[section][id];
   var name  = section + '_' + id;
 
-  var html = Html.tag('input', {
+  var options = {
     type:  'text',
     name:  name,
     id:    name,
     value: value
-  });
+  };
+
+  if (path_selector && section != 'local')
+    options.disabled = Config.local.lock_download;
+
+  var html = Html.tag('input', options);
 
   if (path_selector)
     html = html.concat(Html.tag('div', {
@@ -61,6 +66,19 @@ Handlebars.registerHelper('input', function(id, section, path_selector) {
     }, Html.glyphicon('folder-open')));
 
   return new Handlebars.SafeString(html);
+});
+
+Handlebars.registerHelper('checkbox', function(service, section) {
+  var checked = Config[service][section];
+  var options = {
+    type: 'checkbox',
+    id:    section
+  };
+
+  if (checked)
+    options.checked = true;
+
+  return new Handlebars.SafeString(Html.tag('input', options));
 });
 
 // --------------------------------------------------------

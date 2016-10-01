@@ -58,7 +58,7 @@
     <h2>{{t 'local.name'}}</h2>
 
     <h3>{{t 'local.configuration.path'}}</h3>
-    <input type="checkbox" id="lock_download">
+    {{checkbox 'local' 'lock_download'}}
     <label for="lock_download">{{t 'meta.configuration.lock_download_folder'}}</label>
 
     {{input 'path' 'local' true}}
