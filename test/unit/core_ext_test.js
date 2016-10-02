@@ -25,6 +25,14 @@ describe('core extensions', () => {
         assert.equal(false, [1, 2, 3].includes(4));
       });
     });
+
+    describe('#unique', () => {
+      it('should strip out duplicates', () => {
+        var array = [1, 2, 2, 2, 3, 1, 2, 3, 3, 1, 3, 1, 3, 1, 2, 2];
+
+        assert.deepEqual(array.unique(), [1, 2, 3]);
+      });
+    });
   });
 
   describe('String', () => {

@@ -36,6 +36,15 @@ Array.prototype.includes = function(element) {
 };
 
 /**
+ * Removes duplicates from the array.
+ *
+ * @return {Array}
+ */
+Array.prototype.unique = function() {
+  return this.filter((e, i) => this.indexOf(e) == i);
+};
+
+/**
  * Only for SoundCloud `artwork_url` fields:
  *
  * Substitute the actual size of the image with the specified
