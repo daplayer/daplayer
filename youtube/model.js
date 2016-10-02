@@ -35,15 +35,17 @@ module.exports = class YouTubeModel {
   }
 
   static playlistItems(id) {
-    return this.fetch('items', id, 'playlist_items', true);
+    return this.fetch('items', id, true);
   }
 
-  static fetch(action, token_or_id, cache_key, full) {
-    // Early return if we already
-    if (action == 'items' && Cache.youtube.playlist_items[token_or_id])
-      return Cache.youtube.playlist_items[token_or_id];
-    else if (Cache.youtube[cache_key || action] && !token_or_id)
-      return Cache.youtube[cache_key || action];
+  static fetch(action, token_or_id, full) {
+    // Early return if we already have fetched the playlist's
+    // items or the given action and we are not trying to
+    // load a different page.
+    if (action == 'items' && Cache.youtube.items.includes(token_or_id))
+      return this.findPlaylist(token_or_id);
+    else if (Cache.youtube[action] && !token_or_id)
+      return Cache.youtube[action];
 
     return YT[action](token_or_id, full).then((set) => {
       return {
@@ -57,12 +59,25 @@ module.exports = class YouTubeModel {
         })
       };
     }).then((result) => {
-      // Add the result to cache; we can safely do this
-      // call here as the method would've early returned if no
-      // h-ref was provided.
-      Cache.add('youtube', (cache_key || action), result);
+      if (action == 'items') {
+        return this.findPlaylist(token_or_id).then((playlist) => {
+          playlist.items = result.collection;
+          playlist.items.forEach(item => item.set = playlist);
 
-      return result;
+          // Keep track of the already-loaded playlists to avoid
+          // useless requests.
+          Cache.youtube.items.unshift(token_or_id);
+
+          return playlist;
+        });
+      } else {
+        // Add the result to cache; we can safely do this
+        // call here as the method would've early returned if no
+        // h-ref was provided.
+        Cache.add('youtube', action, result);
+
+        return result;
+      }
     });
   }
 
@@ -90,10 +105,7 @@ module.exports = class YouTubeModel {
   }
 
   static findInPlaylist(id, section, playlist) {
-    return Promise.resolve({
-      playlist: playlist,
-      record:   playlist.items.find(item => item.id == id)
-    });
+    return Promise.resolve(playlist.items.find(item => item.id == id));
   }
 
   static findRecord(id, section) {

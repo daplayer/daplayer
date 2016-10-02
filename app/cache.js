@@ -19,11 +19,11 @@ module.exports = class Cache {
     //
     // Special case YouTube playlists' items
     // and videos' URLs because we have a higher
-    // nesting sincec we hold a collection for
-    // each playlist and an URL for each video.
+    // nesting since we hold a collection for the
+    // loaded playlists and an URL for each video.
     this.youtube = {
-      playlist_items: {},
-      video_urls:     {}
+      items:      [],
+      video_urls: {}
     };
 
     // Define the default scope
@@ -50,14 +50,10 @@ module.exports = class Cache {
    * @return {Promise}
    */
   static add(module, section, data) {
-    // Early return for `playlist_items` and `video_urls`
-    // sections since we have a higher level of nesting.
-    if (['playlist_items', 'video_urls'].includes(section)) {
-      if (section == 'playlist_items')
-        data.collection.forEach(Record.link);
-
-      return this[module][section][data.id] = Promise.resolve(data);
-    }
+    // Early return for `video_urls` since we have a higher
+    // level of nesting.
+    if (section == 'video_urls')
+      return this.youtube.video_urls[data.id] = Promise.resolve(data);
 
     if (!this[module][section]) {
       if (data.collection)

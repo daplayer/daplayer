@@ -63,13 +63,9 @@ module.exports = class Player {
         Queue.setMode(null);
       }
 
-      if (record.playlist) {
-        Queue.start(record.record, record.playlist);
-        this.start(record.record,  record.playlist);
-      } else {
-        Queue.start(record);
-        this.start(record);
-      }
+      // Start the playing queue and the media itself.
+      Queue.start(record, record.set);
+      this.start(record,  record.set);
     });
   }
 

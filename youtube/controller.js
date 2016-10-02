@@ -34,13 +34,8 @@ module.exports = class YouTubeController {
   }
 
   static playlistItems(id) {
-    return YouTubeModel.findPlaylist(id).then((playlist) => {
-      return YouTubeModel.playlistItems(id).then((collection) => {
-        var context       = playlist;
-            context.items = collection.collection;
-
-        this.render('meta/partials/playlist', context);
-      });
+    return YouTubeModel.playlistItems(id).then((playlist) => {
+      this.render('meta/partials/playlist', playlist);
     });
   }
 

@@ -4,7 +4,7 @@ module.exports = class SoundCloudModelFinders {
   static findById(id, section, playlist) {
     if (playlist instanceof $)
       return this.findPlaylist(playlist.data('id'), section).then((playlist) => {
-        return this.findInPlaylist(id, section, playlist)
+        return this.findInPlaylist(id, section, playlist);
       });
     else if (playlist instanceof Playlist)
       return this.findInPlaylist(id, section, playlist);
@@ -19,10 +19,7 @@ module.exports = class SoundCloudModelFinders {
   }
 
   static findInPlaylist(id, section, playlist) {
-    return Promise.resolve({
-      playlist: playlist,
-      record:   playlist.items.find(item => item.id == id)
-    });
+    return Promise.resolve(playlist.items.find(item => item.id == id));
   }
 
   static findRecord(id, section) {

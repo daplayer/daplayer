@@ -31,7 +31,7 @@ module.exports = class Playlist extends Record {
 
     if (hash.tracks)
       playlist.items = hash.tracks.map((track) => {
-        return Media.soundcloud(track);
+        return Media.soundcloud(track, playlist);
       });
 
     if (hash.artwork_url)
@@ -54,7 +54,7 @@ module.exports = class Playlist extends Record {
     var playlist = new Playlist(hash.title.dasherize(), 'local');
 
     playlist.title = hash.title;
-    playlist.items = hash.track.map(track => Media.JSPF(track));
+    playlist.items = hash.track.map(track => Media.JSPF(track, playlist));
 
     return playlist;
   }

@@ -67,10 +67,7 @@ module.exports = class LocalModelFinders {
   }
 
   static findInPlaylist(id, playlist) {
-    return Promise.resolve({
-      playlist: playlist,
-      record:   playlist.items.find(item => item.id == id)
-    });
+    return Promise.resolve(playlist.items.find(item => item.id == id));
   }
 
   static findRecord(id, section) {
@@ -82,20 +79,6 @@ module.exports = class LocalModelFinders {
         return cached.singles.find(record => record.id == id);
       else
         return cached.find(record => record.id == id);
-    }).then((record) => {
-      if (record.album) {
-        return this.albums().then((albums) => {
-          return {
-            record: record,
-            playlist: albums.find((album) => {
-              return record.album  == album.title
-                  && record.artist == album.artist;
-            })
-          };
-        });
-      } else {
-        return record;
-      }
     });
   }
 }

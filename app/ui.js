@@ -145,13 +145,11 @@ module.exports = class Ui {
     var section = Cache.current.action;
 
     MetaModel.findById(id, module, section, playlist).then((record) => {
-      var context = record instanceof Record ? record : record.record;
-
-      clipboard.writeText(context.url);
+      clipboard.writeText(record.url);
 
       new Notification(Translation.t('meta.actions.url_copied'), {
-        body: context.title,
-        icon: context.icon
+        body: record.title,
+        icon: record.icon
       });
     });
   }
@@ -171,17 +169,9 @@ module.exports = class Ui {
     var section = Cache.current.action;
 
     MetaModel.findById(element.data('id'), module, section, playlist).then((record) => {
-      var context = record instanceof Record ? record : record.record;
-
-      if (context.service == 'soundcloud')
-        $('.dialog').html(View.compile('soundcloud/partials/tag')(context));
-      else if (context.service == 'youtube')
-        $('.dialog').html(View.compile('youtube/partials/tag')(context));
-      else if (context.service == 'local')
-        $('.dialog').html(View.compile('local/partials/tag')(context));
-
+      $('.dialog').html(View.compile(`${record.service}/partials/tag`)(record));
       $('.dialog').removeClass('add_to_playlist')
-                  .addClass('tag').addClass(context.service);
+                  .addClass('tag').addClass(record.service);
     });
 
     this.showDialog();

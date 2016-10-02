@@ -17,7 +17,7 @@ describe('Cache', () => {
     });
 
     it('should set deeper fields for YouTube', () => {
-      assert.deepEqual(Cache.youtube.playlist_items, {});
+      assert.deepEqual(Cache.youtube.items, []);
       assert.deepEqual(Cache.youtube.video_urls, {});
     });
 
@@ -70,14 +70,6 @@ describe('Cache', () => {
         return Cache.soundcloud.likes.then((cached) => {
           return assert.equal(cached.next_token, '456');
         });
-      });
-    });
-
-    it('should store YouTube playlist items', () => {
-      Cache.add('youtube', 'playlist_items', {id: 'foo', collection: []});
-
-      return Cache.youtube.playlist_items.foo.then((cached) => {
-        return assert.deepEqual(cached, {id: 'foo', collection: []});
       });
     });
 

@@ -56,6 +56,7 @@ module.exports = class SoundCloudModelFetch {
         return Promise.all(collections).then((items) => {
           result.collection.forEach((playlist, index) => {
             playlist.items = items[index];
+            playlist.items.forEach(item => item.set = playlist);
           });
 
           return {

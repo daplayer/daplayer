@@ -17,7 +17,7 @@ module.exports = class Media extends Record {
     return this.isYouTube() ? 'video' : 'music';
   }
 
-  static soundcloud(hash) {
+  static soundcloud(hash, set) {
     var media = new Media(hash.id, 'soundcloud');
 
     media.title        = hash.title;
@@ -26,6 +26,9 @@ module.exports = class Media extends Record {
     media.tags         = hash.tag_list;
     media.waveform_url = hash.waveform_url;
     media.duration     = hash.duration * Math.pow(10, -3);
+
+    if (set)
+      media.set = set;
 
     if (hash.user)
       media.artist = hash.user.username;
@@ -66,13 +69,14 @@ module.exports = class Media extends Record {
     return media;
   }
 
-  static JSPF(hash) {
+  static JSPF(hash, set) {
     var media = new Media(hash.location);
 
     media.title    = hash.title;
     media.icon     = hash.image;
     media.duration = hash.duration;
     media.artist   = hash.creator;
+    media.set      = set;
 
     if (Number.isInteger(media.id))
       media.service = 'soundcloud';

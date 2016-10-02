@@ -50,8 +50,6 @@ module.exports = class MetaModel {
 
   static addToPlaylist(module, action, id, playlist) {
     this.findById(id, module, action).then((record) => {
-      var record = record instanceof Record ? record : record.record;
-
       if (playlist.service == 'soundcloud')
         var model = SoundCloudModel;
       else if (playlist.service == 'youtube')
