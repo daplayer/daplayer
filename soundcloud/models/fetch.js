@@ -54,17 +54,12 @@ module.exports = class SoundCloudModelFetch {
         });
 
         return Promise.all(collections).then((items) => {
-          return result.collection.map((playlist, index) => {
-            if (!playlist.icon)
-              playlist.icon = items[index].first().icon.size('t300x300');
-
+          result.collection.forEach((playlist, index) => {
             playlist.items = items[index];
-
-            return playlist;
           });
-        }).then((collection) => {
+
           return {
-            collection: collection,
+            collection: result.collection,
             next_token: result.next_token
           }
         });
@@ -78,8 +73,6 @@ module.exports = class SoundCloudModelFetch {
       Cache.add('soundcloud', (cache_key || action), result);
 
       return result;
-    }).catch((e) => {
-      throw e;
     });
   }
 

@@ -9,9 +9,7 @@ module.exports = class YouTubeModel {
       return Cache.youtube.history;
 
     return LocalModel.loadPlaylist(Paths.youtube_history).then((history) => {
-      Cache.add('youtube', 'history', history);
-
-      return history;
+      return Cache.add('youtube', 'history', history);
     });
   }
 

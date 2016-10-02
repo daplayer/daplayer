@@ -77,15 +77,11 @@ module.exports = class LocalModelFinders {
     return this[section.camel()]().then((cached) => {
       // If we are trying to find a record on the search page
       // and we are hitting these lines, it's because no playlists
-      // were given so we are just searching for a single.
+      // were given so we are just looking for a single.
       if (section == 'search_results')
-        return cached.singles.find((record) => {
-          return record.id == id;
-        });
+        return cached.singles.find(record => record.id == id);
       else
-        return cached.find((record) => {
-          return record.id == id;
-        });
+        return cached.find(record => record.id == id);
     }).then((record) => {
       if (record.album) {
         return this.albums().then((albums) => {
@@ -93,7 +89,7 @@ module.exports = class LocalModelFinders {
             record: record,
             playlist: albums.find((album) => {
               return record.album  == album.title
-                  && record.artist == album.items.first().artist;
+                  && record.artist == album.artist;
             })
           };
         });

@@ -13,9 +13,7 @@ module.exports = class LocalModelFiles {
 
       child.on('message', (message) => {
         if (message instanceof Array) {
-          var records = message.map((file) => {
-            return Media.local(file);
-          });
+          var records = message.map(file => Media.local(file));
 
           Cache.add('local', 'files', records);
 
@@ -69,14 +67,9 @@ module.exports = class LocalModelFiles {
       return Cache.local.singles;
 
     return this.files().then((records) => {
-      return records.filter((record) => {
-        if (record.album == '')
-          return record;
-      });
+      return records.filter(record => !record.album);
     }).then((singles) => {
-      Cache.add('local', 'singles', singles);
-
-      return singles;
+      return Cache.add('local', 'singles', singles);
     });
   }
 
@@ -91,47 +84,33 @@ module.exports = class LocalModelFiles {
       return Cache.local.albums;
 
     return this.files().then((files) => {
-      return files.map((record) => {
-        if (record.album)
-          return record.album;
-      }).filter((album, index, array) => {
-        if (array.indexOf(album) == index)
-          return album;
-      });
-    }).then((albums) => {
-      return this.files().then((files) => {
-        return albums.map((album) => {
-          return new Album({
-            title: album,
-            items: files.filter((f) => f.album == album)
-          });
+      var albums = files.filter(record => record.album)
+                        .map(record => record.album)
+                        .unique();
+
+      return albums.map((album) => {
+        return new Album({
+          title: album,
+          items: files.filter((f) => f.album == album)
         });
       });
     }).then((albums) => {
-      Cache.add('local', 'albums', albums);
-
-      return albums;
+      return Cache.add('local', 'albums', albums);
     });
   }
 
   static artists() {
-    return this.albums().then((albums) => {
-      return albums.map((album) => {
-        return album.items.first().artist;
-      });
-    }).then((artists) => {
+    return this.files().then((files) => {
+      var artists = files.filter(file => file.artist)
+                         .map(file => file.artist);
+
       // We need to compare artists case-insensitively
       // as musics may be tagged with the same artist
       // name but with a different case (e.g. Rage Against
       // *the* Machine vs. Rage Against *The* Machine).
-      var lower_cased = artists.map((artist) => {
-        return artist.toLowerCase();
-      }).filter((artist, index, collection) => {
-        if (collection.indexOf(artist) == index)
-          return artist;
-      });
-
-      var skipped = 0;
+      var skipped     = 0;
+      var lower_cased = artists.map(artist => artist.toLowerCase())
+                               .unique();
 
       // The array should be in the same order and the
       // indexes are just not matching by the number
@@ -151,8 +130,7 @@ module.exports = class LocalModelFiles {
           return {
             name: artist,
             album_count: albums.filter((album) => {
-              if (album.items.first().artist.toLowerCase() == artist.toLowerCase())
-                return album;
+              return album.artist.toLowerCase() == artist.toLowerCase();
             }).length
           };
         }).sort((a, b) => {
