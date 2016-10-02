@@ -83,12 +83,12 @@ Handlebars.registerHelper('checkbox', function(service, section) {
 
 // --------------------------------------------------------
 // Shared helpers
-Handlebars.registerHelper('playlist', function(playlist) {
-  return View.partial('meta/partials/playlist', playlist);
+Handlebars.registerHelper('set_box', function(set) {
+  return View.partial('meta/partials/set_box', set);
 });
 
-Handlebars.registerHelper('playlist_item', function(item) {
-  return View.partial('meta/partials/playlist_item', item);
+Handlebars.registerHelper('set_item', function(item) {
+  return View.partial('meta/partials/set_item', item);
 });
 
 Handlebars.registerHelper('playlist_option', function(playlist) {

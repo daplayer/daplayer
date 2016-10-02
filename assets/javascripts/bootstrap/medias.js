@@ -10,7 +10,7 @@ $('.content').on('click', 'li.music, li.video', function(e) {
   var classname = e.target.className;
 
   if (!classname.includes('option') && !classname.includes('glyphicon'))
-    Player.preload($(this).data('id'), $(this).parents('.playlist'));
+    Player.preload($(this).data('id'), $(this).parents('.set'));
 });
 
 $('.items').on('click', 'li.music, li.video', function() {

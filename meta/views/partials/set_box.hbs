@@ -1,4 +1,4 @@
-<div class="playlist {{ service }}" data-id="{{ id }}" data-album="{{ album }}">
+<div class="set {{ service }}" data-id="{{ id }}" data-album="{{ album }}">
   {{#unless isYouTube}}
     <div class="cover">
       <img src="{{ icon }}">
@@ -35,7 +35,7 @@
 
     <ul>
       {{#each items}}
-        {{playlist_item this}}
+        {{set_item this}}
       {{/each}}
     </ul>
   </div>

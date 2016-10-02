@@ -267,7 +267,7 @@ module.exports = class Player {
     items.attr('data-id', set.id);
 
     set.items.forEach((item) => {
-      list.append(Handlebars.helpers.playlist_item(item).string);
+      list.append(Handlebars.helpers.set_item(item).string);
     });
   }
 
