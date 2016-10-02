@@ -25,7 +25,6 @@ $('.next').click(function() {
 $('.duration .circle').on('click', function(e) {
   e.preventDefault();
 
-  Player.auto_progression = true;
   Player.goTo((e.offsetX / $('.duration').width()) * $(this).attr('max'));
 });
 
@@ -35,8 +34,18 @@ $('.duration .progression').on('click', function(e) {
 
 // Handle the dragging of the range input.
 $('.duration .circle').on('input', function(e) {
+  var value = e.currentTarget.value;
+
   Player.auto_progression = false;
-  Ui.Player.progression(e.currentTarget.value, true);
+
+  // If the user drags the input to the very beginning
+  // but releases the mouse outside of the bar, the `click`
+  // event is not triggered so the position is updated but
+  // not the media's current time.
+  if (value == 0)
+    Player.goTo(0);
+  else
+    Ui.Player.progression(value, true);
 });
 
 // ----------------------------------------------------------

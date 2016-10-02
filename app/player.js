@@ -161,6 +161,7 @@ module.exports = class Player {
    * @return {null}
    */
   static goTo(seconds) {
+    this.auto_progression = true;
     Ui.Player.progression(seconds);
     MetaPlayer.goTo(seconds);
   }
