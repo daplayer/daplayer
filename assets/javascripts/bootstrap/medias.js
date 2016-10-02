@@ -14,7 +14,7 @@ $('.content').on('click', 'li.music, li.video', function(e) {
 });
 
 $('.items').on('click', 'li.music, li.video', function() {
-  Player.preload($(this).data('id'), Player.playlist, true);
+  Player.preload($(this).data('id'), Player.record.set, true);
 });
 
 $('.content').on('mouseenter', 'li.music, li.video', function() {

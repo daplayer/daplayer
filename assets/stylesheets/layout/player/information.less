@@ -40,7 +40,7 @@
     }
   }
 
-  .current-playlist {
+  .current-set {
     cursor: pointer;
     display: none;
     float: right;
@@ -62,17 +62,17 @@
       height: 40px;
       width: 100%;
 
-      .playlist-title, .playlist-count {
+      .set-title, .set-count {
         margin-left: 10px;
       }
 
-      .playlist-switches {
+      .set-switches {
         .right();
         word-spacing: 10px;
         margin: 10px 10px 0 0;
       }
 
-      .playlist-switches .glyphicon {
+      .set-switches .glyphicon {
         cursor: pointer;
 
         &.soundcloud { color: @soundcloud; }
@@ -81,7 +81,7 @@
       }
 
 
-      .playlist-count {
+      .set-count {
         .artist();
       }
     }

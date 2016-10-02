@@ -65,7 +65,7 @@ module.exports = class Player {
 
       // Start the playing queue and the media itself.
       Queue.start(record, record.set);
-      this.start(record,  record.set);
+      this.start(record);
     });
   }
 
@@ -74,28 +74,22 @@ module.exports = class Player {
    * delegates to `MetaPlayer#start` and then delegates to
    * `play` and `setupInterface`.
    *
-   * @param  {Record}  record   - The record to play.
-   * @param  {Record=} playlist - An optional playlist to
-   *                              display inside the player bar.
+   * @param  {Media} media - The record to play.
    * @return {null}
    */
-  static start(record, playlist) {
-    this.record = record;
+  static start(media) {
+    this.record = media;
 
-    if (!playlist) {
-      this.playlist = null;
-      this.hideCurrentPlaylist();
-    } else if (!this.playlist && playlist instanceof Record
-              || this.playlist && playlist.id != this.playlist.id) {
-      this.playlist = playlist;
-      this.showCurrentPlaylist();
-    }
+    if (!media.set)
+      this.hideCurrentSet();
+    else if (media.set)
+      this.showCurrentSet();
 
     // Display as soon as possible the correct interface to
     // tell the user that its media is processed.
     this.setupInterface();
 
-    MetaPlayer.start(record).then(() => {
+    MetaPlayer.start(media).then(() => {
       this.play();
     });
   }
@@ -121,9 +115,6 @@ module.exports = class Player {
    * in this case, just go to the beginning of the current
    * media.
    *
-   * Playing the next media means playing the next record or
-   * the next playlist if we are listening to a list.
-   *
    * @return {null}
    */
   static playNext() {
@@ -141,9 +132,6 @@ module.exports = class Player {
    * Plays the previous media unless the current media's time
    * is greater than 5 seconds; in this case, we just rewind
    * it.
-   *
-   * Playing the previous media means playing the previous record
-   * or the previous playlist if we are listening to a list.
    *
    * @return {null}
    */
@@ -253,45 +241,43 @@ module.exports = class Player {
   }
 
   /**
-   * Displays the current playlist icon and copies its items.
+   * Displays the current set's icon and copies its items.
    *
    * @return {null}
    */
-  static showCurrentPlaylist() {
-    var items   = $('.player .items');
-    var sneak   = items.find('.sneak-peek');
-    var list    = items.find('ul');
-    var service = this.record.service;
-    var medias  = this.playlist.items;
+  static showCurrentSet() {
+    var items = $('.player .items');
+    var sneak = items.find('.sneak-peek');
+    var list  = items.find('ul');
+    var set   = this.record.set;
 
-    $('.current-playlist').show();
+    $('.current-set').show();
 
-    if (this.playlist.album)
-      $('.current-playlist .glyphicon').removeClass('glyphicon-list')
-                                       .addClass('glyphicon-cd');
+    if (set instanceof Album)
+      $('.current-set .glyphicon').removeClass('glyphicon-list')
+                                  .addClass('glyphicon-cd');
     else
-      $('.current-playlist .glyphicon').removeClass('glyphicon-cd')
-                                       .addClass('glyphicon-list');
+      $('.current-set .glyphicon').removeClass('glyphicon-cd')
+                                  .addClass('glyphicon-list');
 
-    sneak.find('.playlist-title').html(this.playlist.title);
-    sneak.find('.playlist-count').html(medias.length + " items");
+    sneak.find('.set-title').html(set.title);
+    sneak.find('.set-count').html(set.items.length + " items");
 
     list.empty();
-    items.attr('data-id', this.playlist.id);
+    items.attr('data-id', set.id);
 
-    medias.forEach((track) => {
-      list.append(Handlebars.helpers.playlist_item(track).string);
+    set.items.forEach((item) => {
+      list.append(Handlebars.helpers.playlist_item(item).string);
     });
   }
 
   /**
-   * Hides the current playlist icon and clears the current
-   * playlist collection.
+   * Hides the current set's icon and clears its items.
    *
    * @return {null}
    */
-  static hideCurrentPlaylist() {
-    $('.current-playlist').hide();
+  static hideCurrentSet() {
+    $('.current-set').hide();
     $('.player .items ul').empty();
   }
 
@@ -438,18 +424,18 @@ module.exports = class Player {
   }
 
   /**
-   * Toggles the playing mode for the current playlist.
+   * Toggles the playing mode for the current set.
    *
    * @return {null}
    */
-  static togglePlaylistMode(mode) {
+  static toggleSetMode(mode) {
     if (Queue.mode)
-      $('.playlist-switches .glyphicon').removeClass('soundcloud youtube local');
+      $('.set-switches .glyphicon').removeClass('soundcloud youtube local');
 
     if (Queue.mode != 'loop' && mode == 'loop')
-      $('.playlist-switches .glyphicon-repeat').addClass(this.record.service);
+      $('.set-switches .glyphicon-repeat').addClass(this.record.service);
     else if (Queue.mode != 'random' && mode == 'random')
-      $('.playlist-switches .glyphicon-random').addClass(this.record.service);
+      $('.set-switches .glyphicon-random').addClass(this.record.service);
 
     Queue.mode == mode ? Queue.setMode(null) : Queue.setMode(mode);
   }

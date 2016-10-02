@@ -95,19 +95,18 @@ $('.information').on('click', '.icon.video', function() {
 });
 
 // ----------------------------------------------------------
-// >> Current playlist
+// >> Current set
 //
-//
-// Change the playing mode for the current playlist
-$('.playlist-switches .glyphicon-repeat').on('click', function() {
-  Player.togglePlaylistMode('loop');
+// Change the playing mode for the current set.
+$('.set-switches .glyphicon-repeat').on('click', function() {
+  Player.toggleSetMode('loop');
 });
 
-$('.playlist-switches .glyphicon-random').on('click', function() {
-  Player.togglePlaylistMode('random');
+$('.set-switches .glyphicon-random').on('click', function() {
+  Player.toggleSetMode('random');
 });
 
-// Display the current playlist if there's one
-$('.current-playlist').on('click', function() {
+// Display the current set if there's one.
+$('.current-set').on('click', function() {
   $('.player .items').fadeToggle(200);
 });
