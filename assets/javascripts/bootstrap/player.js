@@ -34,7 +34,7 @@ $('.duration .progression').on('click', function(e) {
 
 // Handle the dragging of the range input.
 $('.duration .circle').on('input', function(e) {
-  var value = e.currentTarget.value;
+  var value = parseInt(e.currentTarget.value);
 
   Player.auto_progression = false;
 
