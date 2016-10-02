@@ -36,7 +36,7 @@ $('.duration .progression').on('click', function(e) {
 // Handle the dragging of the range input.
 $('.duration .circle').on('input', function(e) {
   Player.auto_progression = false;
-  Player.updateProgressBar(e.currentTarget.value);
+  Ui.Player.progression(e.currentTarget.value, true);
 });
 
 // ----------------------------------------------------------
@@ -99,11 +99,11 @@ $('.information').on('click', '.icon.video', function() {
 //
 // Change the playing mode for the current set.
 $('.set-switches .glyphicon-repeat').on('click', function() {
-  Player.toggleSetMode('loop');
+  Player.currentSetMode('loop');
 });
 
 $('.set-switches .glyphicon-random').on('click', function() {
-  Player.toggleSetMode('random');
+  Player.currentSetMode('random');
 });
 
 // Display the current set if there's one.

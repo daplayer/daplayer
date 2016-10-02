@@ -21,9 +21,6 @@ module.exports = class MetaPlayer {
 
     this.stop();
 
-    if (service != 'local')
-      Player.showLoader();
-
     if (service == 'soundcloud')
       player = SoundCloudPlayer;
     else if (service == 'youtube')
@@ -61,7 +58,7 @@ module.exports = class MetaPlayer {
     this.audio.src = '';
     this.video.src = '';
 
-    Player.reset();
+    Ui.Player.reset();
   }
 
   static goTo(seconds) {

@@ -10,7 +10,7 @@ module.exports = class LocalPlayer {
    */
   static callbacks(media) {
     media.ontimeupdate = function() {
-      Player.progression(this.currentTime);
+      Ui.Player.progression(this.currentTime);
     };
 
     media.onended = function() {
@@ -18,11 +18,11 @@ module.exports = class LocalPlayer {
     }
 
     media.onplay = function() {
-      Player.startEqualizer();
+      Ui.Player.startEqualizer();
     }
 
     media.oncanplay = function() {
-      Player.updateBufferBar(this.duration);
+      Ui.Player.buffered(this.duration);
     }
   }
 

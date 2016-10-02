@@ -4,6 +4,20 @@ const clipboard = require('electron').clipboard;
 const Player    = require('./player');
 
 module.exports = class Ui {
+  static get Player() {
+    if (!this._Player)
+      this._Player = new Proxy(require('./ui/player'), {
+        get: function(player, element) {
+          if (player[element])
+            return player[element];
+          else
+            return player.el[element];
+        }
+      });
+
+    return this._Player;
+  }
+
   /**
    * Displays a loader on the page.
    *

@@ -12,7 +12,7 @@ module.exports = class YouTubePlayer {
    */
   static callbacks(media) {
     media.ontimeupdate = function() {
-      Player.progression(this.currentTime);
+      Ui.Player.progression(this.currentTime);
 
       // 10 seconds before the end of the current video, we
       // calculate the next video's URL. The buffered attribute
@@ -41,20 +41,20 @@ module.exports = class YouTubePlayer {
     }
 
     media.onplay = function() {
-      Player.startEqualizer();
+      Ui.Player.startEqualizer();
     }
 
     media.onprogress = function() {
       if (this.buffered.length > 0)
-        Player.updateBufferBar(this.buffered.end(this.buffered.length - 1));
+        Ui.Player.buffered(this.buffered.end(this.buffered.length - 1));
     }
 
     media.oncanplaythrough = function() {
-      Player.hideLoader();
+      Ui.Player.hideLoader();
     }
 
     media.onwaiting = function() {
-      Player.showLoader();
+      Ui.Player.showLoader();
     }
   }
 
