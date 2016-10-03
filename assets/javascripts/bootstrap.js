@@ -4,7 +4,6 @@ require('./app/initializer.js');
 
 const ipcRenderer = require('electron').ipcRenderer;
 const Player      = require('./app/player');
-const Queue       = require('./app/queue');
 
 $(document).ready(function() {
   // Initialize the cache and its properties

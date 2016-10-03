@@ -26,6 +26,7 @@ global.FilePicker   = require('./file_picker');
 global.Formatter    = require('./formatter');
 global.Html         = require('./html');
 global.Paths        = require('./paths');
+global.Queue        = require('./queue');
 global.Router       = require('./router');
 global.Translation  = require('./translation');
 global.Ui           = require('./ui');

@@ -1,7 +1,5 @@
 'use strict';
 
-const Queue = require('../app/queue');
-
 module.exports = class YouTubePlayer {
   /**
    * Sets the value of the different callbacks for a video

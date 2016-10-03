@@ -1,7 +1,6 @@
 'use strict';
 
 const MetaPlayer = require('../meta/player');
-const Queue      = require('./queue');
 
 module.exports = class Player {
   /**
