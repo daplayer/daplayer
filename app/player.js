@@ -78,6 +78,9 @@ module.exports = class Player {
   static start(media) {
     this.record = media;
 
+    if (media.service != 'local')
+      Ui.Player.showLoader();
+
     if (!media.set)
       Ui.Player.hideCurrentSet();
     else if (media.set)

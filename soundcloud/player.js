@@ -22,16 +22,28 @@ module.exports = class SoundCloudPlayer {
     }
 
     media.onprogress = function() {
-      if (this.buffered.length > 0)
-        Ui.Player.buffered(this.buffered.end(this.buffered.length - 1));
+      if (this.buffered.length > 0) {
+        var time = this.buffered.end(this.buffered.length - 1);
+
+        Ui.Player.buffered(time);
+
+        // Pretty hacky but if the audio's stalled and the loader
+        // is present, we can try to see if there's enough data
+        // loaded to play the audio.
+        if (time - this.currentTime > 1) {
+          Ui.Player.hideLoader();
+          Ui.Player.startEqualizer();
+        }
+      }
     }
 
     media.oncanplaythrough = function() {
       Ui.Player.hideLoader();
     }
 
-    media.onwaiting = function() {
+    media.onstalled = function() {
       Ui.Player.showLoader();
+      Ui.Player.pauseEqualizer();
     }
   }
 
