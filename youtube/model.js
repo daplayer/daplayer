@@ -150,9 +150,11 @@ module.exports = class YouTubeModel {
    * @return {Promise}
    */
   static addToPlaylist(id, record) {
-    if (Cache.youtube.playlist_items[id])
-      Cache.youtube.playlist_items[id].then((cached) => {
-        cached.items.push(record);
+    if (Cache.youtube.items[id])
+      Cache.youtube.playlists.then((cached) => {
+        var playlist = cached.collection.find(playlist => playlist.id == id);
+
+        playlist.items.push(record);
       });
 
     return YT.insert(id, record.id);
