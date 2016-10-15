@@ -32,7 +32,7 @@ module.exports = class MetaPlayer {
       if (record.isYouTube())
         YouTubeModel.addToHistory(record);
 
-      if (record.media == 'video')
+      if (record.kind == 'video')
         this.is_video = true;
       else
         this.is_video = false;

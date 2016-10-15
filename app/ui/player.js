@@ -117,7 +117,7 @@ module.exports = class UiPlayer {
 
     this.current_icon.show();
     this.current_icon.removeClass('music video')
-                     .addClass(this.record.media);
+                     .addClass(this.record.kind);
 
     this.current_artist.html(this.record.artist);
     this.current_artist.attr('title', this.record.artist);
