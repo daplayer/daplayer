@@ -1,18 +1,6 @@
 // --------------------------------------------------------
 // > Sidebar interface
 //
-// When clicking on a title, the sub-menu (i.e. the underlying
-// `ul`), should be showed/hidden and the arrow's direction
-// should change as well.
-$('.sidebar').on('click', 'h3', function() {
-  $(this).next().animate({
-    height: 'toggle'
-  }, 150);
-
-  $(this).find('.right span').toggleClass('glyphicon-chevron-down')
-                             .toggleClass('glyphicon-chevron-right');
-});
-
 // Display the search bar clicking on the magnify icon
 $('.sidebar').on('click', '.search_icon', function() {
   Ui.toggleSearchBar();
