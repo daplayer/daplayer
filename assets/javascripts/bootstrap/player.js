@@ -100,7 +100,7 @@ $('.information').on('mouseleave', '.icon.video', function() {
 });
 
 $('.information').on('click', '.icon.video', function() {
-  Ui.showVideoPlayer();
+  Ui.VideoPlayer.show();
 });
 
 // ----------------------------------------------------------

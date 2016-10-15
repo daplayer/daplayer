@@ -8,7 +8,7 @@ $('video').on('click', function() {
 
 // Toggle full-screen double-clicking on the video.
 $('video').on('dblclick', function() {
-  Ui.toggleFullScreen();
+  Ui.VideoPlayer.toggleFullScreen();
 });
 
 var hide;
@@ -17,23 +17,23 @@ var hide;
 // the video's area. The controls are automatically hidden
 // after two seconds of "inactivity".
 $('.player_frame').on('mousemove', function() {
-  Ui.showVideoControls();
+  Ui.VideoPlayer.showControls();
 
   if (hide)
     clearTimeout(hide);
 
   hide = setTimeout(function() {
-    Ui.hideVideoControls();
+    Ui.VideoPlayer.hideControls();
   }, 2000);
 }).on('mouseleave', () => {
   clearTimeout(hide);
 
-  Ui.hideVideoControls();
+  Ui.VideoPlayer.hideControls();
 });
 
 // Manage clicks on the different video controls.
 $('.player_frame').on('click', '.fullscreen-switch', function() {
-  Ui.toggleFullScreen();
+  Ui.VideoPlayer.toggleFullScreen();
 });
 
 // Make sure to correctly set-up the user interface if the user
@@ -41,5 +41,5 @@ $('.player_frame').on('click', '.fullscreen-switch', function() {
 // the `Ui#exitFullScreen` function would not be called.
 $(document).on('webkitfullscreenchange', function() {
   if (!document.webkitIsFullScreen)
-    Ui.exitFullScreen();
+    Ui.VideoPlayer.exitFullScreen();
 });
