@@ -6,10 +6,10 @@
     "connect_sub_message": "Connect your SoundCloud account to have access to your whole music library.",
     "disconnect": "Disconnect SoundCloud",
     "activities": {
-      "track-repost":    "resposted a track",
-      "playlist-repost": "resposted a playlist",
-      "track":           "posted a track",
-      "playlist":        "posted a playlist"
+      "track-repost":    "%{user} resposted a track",
+      "playlist-repost": "%{user} resposted a playlist",
+      "track":           "%{user} posted a track",
+      "playlist":        "%{user} posted a playlist"
     },
     "sidebar": {
       "stream": "Stream",

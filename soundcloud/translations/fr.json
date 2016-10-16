@@ -6,10 +6,10 @@
     "connect_sub_message": "Connectez votre compte SoundCloud pour profiter de toute votre musique.",
     "disconnect": "Déconnecter SoundCloud",
     "activities": {
-      "track-repost":    "a resposté un titre",
-      "playlist-repost": "a reposté une playlist",
-      "track":           "a publié un nouveau titre",
-      "playlist":        "a publié une nouvelle playlist"
+      "track-repost":    "%{user} a resposté un titre",
+      "playlist-repost": "%{user} a reposté une playlist",
+      "track":           "%{user} a publié un nouveau titre",
+      "playlist":        "%{user} a publié une nouvelle playlist"
     },
     "sidebar": {
       "stream": "Flux",
