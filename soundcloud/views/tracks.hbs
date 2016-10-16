@@ -13,4 +13,6 @@
   {{#each tracks.collection}}
     {{media_box this}}
   {{/each}}
+{{else}}
+  <div class="message">{{t 'sc.feedback.no_tracks'}}</div>
 {{/if}}

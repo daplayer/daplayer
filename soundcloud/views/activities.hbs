@@ -9,24 +9,25 @@
   </div>
 {{/unless}}
 
-<div class="timeline">
-  {{#if activities.collection.length}}
-    {{#each activities.collection}}
-      <div class="activity">
-        <div class="icon">
-          {{soundcloud_activity_icon type}}
-        </div>
 
-        <div class="description">
-          {{soundcloud_activity_desc origin type}}
-        </div>
+<div class="timeline">
+  {{#each activities.collection}}
+    <div class="activity">
+      <div class="icon">
+        {{soundcloud_activity_icon type}}
       </div>
 
-      {{#if this.hasTrack}}
-        {{soundcloud_music_bar this.item}}
-      {{else}}
-        {{set_box this.item}}
-      {{/if}}
-    {{/each}}
-  {{/if}}
+      <div class="description">
+        {{soundcloud_activity_desc origin type}}
+      </div>
+    </div>
+
+    {{#if this.hasTrack}}
+      {{soundcloud_music_bar this.item}}
+    {{else}}
+      {{set_box this.item}}
+    {{/if}}
+  {{else}}
+    <div class="message">{{t 'sc.feedback.no_activities'}}</div>
+  {{/each}}
 </div>

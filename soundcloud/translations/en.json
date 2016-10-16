@@ -26,6 +26,13 @@
     },
     "configuration": {
       "download": "SoundCloud downloads"
+    },
+    "feedback": {
+      "no_likes":           "You don't have any liked tracks in your collection.",
+      "no_tracks":          "You don't own any tracks.",
+      "no_activities":      "There are no new activities.",
+      "no_liked_playlists": "You don't have any liked playlists in your collection.",
+      "no_owned_playlists": "You don't have any owned playlists in your collection."
     }
   }
 }

@@ -9,8 +9,8 @@
   </div>
 {{/unless}}
 
-<div class="clearer"></div>
-
 {{#each liked_playlists.collection}}
   {{set_box this}}
+{{else}}
+  <div class="message">{{t 'sc.feedback.no_liked_playlists'}}</div>
 {{/each}}

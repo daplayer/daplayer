@@ -26,6 +26,13 @@
     },
     "configuration": {
       "download": "Téléchargements SoundCloud"
+    },
+    "feedback": {
+      "no_likes":           "Vous n'avez encore aimé aucune musique.",
+      "no_tracks":          "Vous ne possédez aucune musique.",
+      "no_activities":      "Il n'y a aucune nouvelle dans votre flux.",
+      "no_liked_playlists": "Vous n'avez encore aimé aucune playlist.",
+      "no_owned_playlists": "Vous n'avez pas encore créé de playlist."
     }
   }
 }
