@@ -1,6 +1,9 @@
 'use strict';
 
-const MetaPlayer = require('../meta/player');
+const SoundCloudPlayer = require('../soundcloud/player');
+const YouTubePlayer    = require('../youtube/player');
+const YouTubeModel     = require('../youtube/model');
+const LocalPlayer      = require('../local/player');
 
 module.exports = class Player {
   /**
@@ -13,8 +16,11 @@ module.exports = class Player {
     this.context  = new AudioContext();
     this.analyser = this.context.createAnalyser();
 
-    this.video_source = this.context.createMediaElementSource(MetaPlayer.video);
-    this.audio_source = this.context.createMediaElementSource(MetaPlayer.audio);
+    this.audio = new Audio();
+    this.video = document.querySelector('video');
+
+    this.audio_source = this.context.createMediaElementSource(this.audio);
+    this.video_source = this.context.createMediaElementSource(this.video);
 
     this.video_source.connect(this.analyser);
     this.audio_source.connect(this.analyser);
@@ -71,30 +77,55 @@ module.exports = class Player {
   /**
    * Starts the player for a given record.
    *
-   * @param  {Media} media - The record to play.
+   * @param  {Media|Activity} record - The record to play.
    * @return {null}
    */
-  static start(media) {
-    if (media instanceof Activity)
-      media = media.item;
+  static start(record) {
+    if (record instanceof Activity)
+      record = record.item;
 
-    this.record = media;
+    this.stop();
+    this.record = record;
 
-    if (media.service != 'local')
+    if (record.service != 'local')
       Ui.Player.showLoader();
 
-    if (!media.set)
+    if (!record.set)
       Ui.Player.hideCurrentSet();
-    else if (media.set)
+    else if (record.set)
       Ui.Player.showCurrentSet();
 
     // Display as soon as possible the correct interface to
     // tell the user that its media is processed.
     Ui.Player.setupInterface();
 
-    MetaPlayer.start(media).then(() => {
+    if (record.service == 'soundcloud')
+      var player = SoundCloudPlayer;
+    else if (record.service == 'youtube')
+      var player = YouTubePlayer;
+    else if (record.service == 'local')
+      var player = LocalPlayer;
+
+    player.load(record.id).then((url) => {
+      if (record.isYouTube())
+        YouTubeModel.addToHistory(record);
+
+      this.media.src = url;
+      this.media.load();
+
+      player.callbacks(this.media);
+
       this.play();
     });
+  }
+
+  static stop() {
+    this.pause();
+
+    this.audio.src = '';
+    this.video.src = '';
+
+    Ui.Player.reset();
   }
 
   /**
@@ -105,7 +136,10 @@ module.exports = class Player {
    * @return {null}
    */
   static play() {
-    MetaPlayer.play();
+    if (!this.record)
+      return;
+
+    this.media.play();
 
     Ui.Player.pauseButton();
   }
@@ -136,14 +170,12 @@ module.exports = class Player {
    * @return {null}
    */
   static playPrevious() {
-    MetaPlayer.currentTime().then((current_time) => {
-      if (current_time > 5)
-        this.goTo(0);
-      else
-        Queue.pop().then((set) => {
-          this.start(set[0], set[1]);
-        });
-    })
+    if (this.media.currentTime > 5)
+      this.goTo(0);
+    else
+      Queue.pop().then((set) => {
+        this.start(set[0], set[1]);
+      });
   }
 
   /**
@@ -152,7 +184,10 @@ module.exports = class Player {
    * @return {null}
    */
   static pause() {
-    MetaPlayer.pause();
+    if (!this.record)
+      return;
+
+    this.media.pause();
 
     Ui.Player.pauseEqualizer();
     Ui.Player.playButton();
@@ -166,9 +201,10 @@ module.exports = class Player {
    * @return {null}
    */
   static goTo(seconds) {
-    this.auto_progression = true;
+    this.auto_progression  = true;
+    this.media.currentTime = seconds;
+
     Ui.Player.progression(seconds);
-    MetaPlayer.goTo(seconds);
   }
 
   /**
@@ -184,7 +220,7 @@ module.exports = class Player {
   static setVolume(volume, skip_config) {
     Ui.Player.setVolume(volume);
 
-    MetaPlayer.setVolume(volume);
+    this.media.volume = volume;
 
     if (!skip_config)
       Config.store(this.record.service, 'volume', volume);
@@ -206,15 +242,6 @@ module.exports = class Player {
       this.setVolume(volume, true);
       circle.val(1 - volume);
     }
-  }
-
-  /**
-   * Returns whether the player is paused or not.
-   *
-   * @return {Boolean}
-   */
-  static get paused() {
-    return MetaPlayer.isPaused();
   }
 
   /**
@@ -254,5 +281,21 @@ module.exports = class Player {
     this.analyser.getByteFrequencyData(dataArray);
 
     return dataArray[Math.floor(Math.random() * (dataArray.length / 2))] / 256;
+  }
+
+  /**
+   * Returns whether the player is paused or not.
+   *
+   * @return {Boolean}
+   */
+  static get paused() {
+    return this.media.paused;
+  }
+
+  static get media() {
+    if (this.record.kind == 'video')
+      return this.video;
+    else
+      return this.audio;
   }
 }
