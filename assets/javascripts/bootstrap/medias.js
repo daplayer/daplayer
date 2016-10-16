@@ -1,16 +1,11 @@
-$('.content').on('click', '.music.box img, .video.box img', function() {
-  Player.preload($(this).parents('.box').data('id'));
-});
+$('.content').on('click', '.music, .video', function(e) {
+  var self   = $(this);
+  var target = $(e.target);
 
-$('.content').on('click', '.music.box .title', '.video.box .title', function() {
-  Player.preload($(this).parents('.box').data('id'));
-});
-
-$('.content').on('click', 'li.music, li.video', function(e) {
-  var classname = e.target.className;
-
-  if (!classname.includes('option') && !classname.includes('glyphicon'))
-    Player.preload($(this).data('id'), $(this).parents('.set'));
+  if (self.is('li') && !target.hasClass('options') && !target.hasClass('glyphicon'))
+    Player.preload(self.data('id'), self.parents('.set'));
+  else if (target.is('img') || target.hasClass('title'))
+    Player.preload(self.data('id'));
 });
 
 $('.items').on('click', 'li.music, li.video', function() {
