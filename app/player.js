@@ -75,6 +75,9 @@ module.exports = class Player {
    * @return {null}
    */
   static start(media) {
+    if (media instanceof Activity)
+      media = media.item;
+
     this.record = media;
 
     if (media.service != 'local')
