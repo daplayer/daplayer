@@ -1,17 +1,16 @@
 {{dashboard_menu 'configuration'}}
 
-<div class="box configuration">
-  <form>
-    {{!-- General configuration --}}
+<form>
+  <div class="box configuration">
     <h2>{{t 'meta.configuration.general'}}</h2>
 
     <h3>{{t 'meta.configuration.locale'}}</h3>
 
     {{radio 'fr' 'locale' 'Français' 'meta'}}
     {{radio 'en' 'locale' 'English'  'meta'}}
+  </div>
 
-
-    {{!-- SoundCloud configuration --}}
+  <div class="box configuration">
     <h2>{{t 'sc.name'}}</h2>
 
     <h3>{{t 'sc.configuration.download'}}</h3>
@@ -28,9 +27,10 @@
         {{g 'remove'}} {{t 'sc.disconnect'}}
       </a>
     {{/unless}}
+  </div>
 
 
-    {{!-- YouTube configuration --}}
+  <div class="box configuration">
     <h2>{{t 'yt.name'}}</h2>
 
     <h3>{{t 'yt.configuration.download'}}</h3>
@@ -52,17 +52,20 @@
         {{g 'remove'}} {{t 'yt.disconnect'}}
       </a>
     {{/unless}}
+  </div>
 
-
-    {{!-- Local configuration --}}
+  <div class="box configuration">
     <h2>{{t 'local.name'}}</h2>
 
     <h3>{{t 'local.configuration.path'}}</h3>
+    {{input 'path' 'local' true}}<br>
+
     {{checkbox 'local' 'lock_download'}}
     <label for="lock_download">{{t 'meta.configuration.lock_download_folder'}}</label>
 
-    {{input 'path' 'local' true}}
+  </div>
 
+  <div class="box configuration">
     <input type="submit" value="{{t 'meta.configuration.save'}}" class="button">
-  </form>
-</div>
+  </div>
+</form>
