@@ -1,19 +1,6 @@
 // --------------------------------------------------------
 // Configuration interface
 //
-// Manage the different actions interacting with the
-// configuration form.
-
-// Display a file selector clicking on the tiny buttons next
-// to the location/download fields.
-$('.content').on('click', '.configuration .tiny_button', function() {
-  var field = $(this).data('field');
-
-  FilePicker.open('directory', function(chosen) {
-    $(`#${field}`).attr('value', chosen);
-  });
-});
-
 // Handle save of the configuration.
 $('.content').on('submit', 'form.configuration', function(e) {
   e.preventDefault();
@@ -62,4 +49,19 @@ $('.content').on('click', '.add', function() {
 
   // Display the new item
   $(html).hide().prependTo('.records').slideDown(150);
+});
+
+// --------------------------------------------------------
+// Display a file selector clicking on file picker buttons.
+$('body').on('click', '.flat_button, .tiny_button', function(e) {
+  var button = $(this);
+  var field  = button.data('field');
+  var picker = button.data('picker');
+
+  FilePicker.open(picker, function(chosen) {
+    $(`#${field}`).attr('value', chosen);
+
+    if (picker == 'picture')
+      button.parent().find('img').attr('src', chosen);
+  });
 });

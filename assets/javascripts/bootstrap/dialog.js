@@ -45,14 +45,6 @@ $('.dialog').on('click', '.tag.button', function(e) {
   });
 });
 
-// Handle click on the button to change the cover picture
-$('.dialog').on('click', '.picture.flat_button', function(e) {
-  FilePicker.open('picture', function(chosen) {
-    $('.dialog input[name="picture"]').attr('value', chosen);
-    $('.dialog img').attr('src', chosen);
-  });
-});
-
 // --------------------------------------------------------
 // > "Add to playlist" dialogs
 //
