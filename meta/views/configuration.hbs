@@ -1,7 +1,7 @@
 {{dashboard_menu 'configuration'}}
 
-<form>
-  <div class="box configuration">
+<form class="configuration">
+  <div class="box">
     <h2>{{t 'meta.configuration.general'}}</h2>
 
     <h3>{{t 'meta.configuration.locale'}}</h3>
@@ -10,7 +10,7 @@
     {{radio 'en' 'locale' 'English'  'meta'}}
   </div>
 
-  <div class="box configuration">
+  <div class="box">
     <h2>{{t 'sc.name'}}</h2>
 
     <h3>{{t 'sc.configuration.download'}}</h3>
@@ -30,7 +30,7 @@
   </div>
 
 
-  <div class="box configuration">
+  <div class="box">
     <h2>{{t 'yt.name'}}</h2>
 
     <h3>{{t 'yt.configuration.download'}}</h3>
@@ -54,7 +54,7 @@
     {{/unless}}
   </div>
 
-  <div class="box configuration">
+  <div class="box">
     <h2>{{t 'local.name'}}</h2>
 
     <h3>{{t 'local.configuration.path'}}</h3>
@@ -65,7 +65,7 @@
 
   </div>
 
-  <div class="box configuration">
+  <div class="box">
     <input type="submit" value="{{t 'meta.configuration.save'}}" class="button">
   </div>
 </form>

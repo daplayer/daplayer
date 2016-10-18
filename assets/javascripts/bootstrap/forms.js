@@ -47,7 +47,7 @@ $('.content').on('click', '.configuration .tiny_button', function() {
 });
 
 // Handle save of the configuration.
-$('.content').on('submit', '.configuration form', function(e) {
+$('.content').on('submit', 'form.configuration', function(e) {
   e.preventDefault();
 
   var original_locale = Config.meta.locale;
