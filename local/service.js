@@ -15,9 +15,10 @@ module.exports = class LocalService {
     if (hash.artist)
       body += ' - ' + hash.artist;
 
-    new Notification(Translation.t('meta.actions.tagged'), {
-      body: body,
-      icon: hash.image
+    Notification.show({
+      action: Translation.t('meta.actions.tagged'),
+      title:  body,
+      icon:   hash.image
     });
 
     var element = $(`.music[data-id="${hash.id.replace('"', "\\\"")}"]`);

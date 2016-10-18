@@ -25,6 +25,7 @@ global.Downloads    = require('./downloads');
 global.FilePicker   = require('./file_picker');
 global.Formatter    = require('./formatter');
 global.Html         = require('./html');
+global.Notification = require('./notification');
 global.Paths        = require('./paths');
 global.Queue        = require('./queue');
 global.Router       = require('./router');

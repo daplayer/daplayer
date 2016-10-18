@@ -51,6 +51,19 @@ $(document).ready(function() {
   });
 
   // --------------------------------------------------------
+  // > Handle clicks on notifications
+  $('.notifications').on('click', '.notification', function(e) {
+    var notification = $(this);
+
+    notification.find('.box').animate({
+      right: '-300px',
+      opacity: 0
+    }, 500, function() {
+      notification.remove();
+    });
+  });
+
+  // --------------------------------------------------------
   // > Handle clicks on musics or videos items
   require('./assets/javascripts/bootstrap/medias');
 
@@ -81,6 +94,12 @@ $(document).ready(function() {
   // --------------------------------------------------------
   // > Forms (create playlists, etc.)
   require('./assets/javascripts/bootstrap/forms');
+
+  // --------------------------------------------------------
+  // > Focus state of the main window.
+  ipcRenderer.on('focus', function(event, emmited) {
+    Cache.focus = emmited;
+  });
 
   // --------------------------------------------------------
   // > Manage shortcuts

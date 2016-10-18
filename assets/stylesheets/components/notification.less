@@ -1,0 +1,53 @@
+.notifications {
+  overflow: hidden;
+  position: absolute;
+  right: 20px;
+  top: 0;
+  width: 300px;
+  z-index: 500;
+
+  .notification {
+    cursor: pointer;
+    height: 65px;
+    margin-top: 10px;
+
+    .box {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 3px;
+      box-sizing: border-box;
+      height: 60px;
+      width: 300px;
+      margin: 0;
+      opacity: 0;
+      padding: 0;
+      position: absolute;
+      right: -300px;
+
+      .text {
+        font-size: 14px;
+        margin: 11px 0 0 10px;
+        width: 210px;
+
+        .action, .title {
+          display: block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .action { font-weight: bold; }
+      }
+
+      .icon {
+        float: right;
+        height: 58px;
+        width: 58px;
+
+        img {
+          cursor: default;
+          width: 100%;
+        }
+      }
+    }
+  }
+}

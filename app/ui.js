@@ -164,9 +164,10 @@ module.exports = class Ui {
     Record.from(element).then((record) => {
       clipboard.writeText(record.url);
 
-      new Notification(Translation.t('meta.actions.url_copied'), {
-        body: record.title,
-        icon: record.icon
+      Notification.show({
+        action: Translation.t('meta.actions.url_copied'),
+        title:  record.title,
+        icon:   record.icon
       });
     });
   }
@@ -200,9 +201,10 @@ module.exports = class Ui {
    * @return {null}
    */
   static downloadStart(hash) {
-    new Notification(Translation.t('meta.actions.download_started'), {
-      body: hash.title + ' - ' + hash.artist,
-      icon: hash.icon
+    Notification.show({
+      action: Translation.t('meta.actions.download_started'),
+      title:  hash.title + ' - ' + hash.artist,
+      icon:   hash.icon
     });
 
     $('.sidebar .main .download_bar').show();
@@ -217,9 +219,10 @@ module.exports = class Ui {
    * @return {null}
    */
   static downloadEnd(hash) {
-    new Notification(Translation.t('meta.actions.download_finished'), {
-      body: hash.title + ' - ' + hash.artist,
-      icon: hash.icon
+    Notification.show({
+      action: Translation.t('meta.actions.download_finished'),
+      title:  hash.title + ' - ' + hash.artist,
+      icon:   hash.icon
     });
 
     if (Downloads.progression == Downloads.size)
