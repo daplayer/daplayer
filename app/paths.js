@@ -93,22 +93,26 @@ module.exports = class Paths {
   }
 
   /**
-   * Check whether a given path exist or not. We are just
-   * refering to the name of the getter in this object,
-   * we are not giving an actual path.
+   * Check whether a given path exists or not.
    *
    * `Paths.exists('user')` will return true only if
    * `Paths.user` exists on the file system.
    *
-   * @param  {String} name - The getter to call.
+   * `Paths.exists('/home/jacky/foo.mp3')` will return true
+   * if the file exists on system.
+   *
+   * @param  {String} location - The getter to call or a
+   *                             full path.
    * @return {Boolean}
    */
-  static exists(name) {
+  static exists(location) {
+    location = path.isAbsolute(location) ? location : this[location];
+
     // Swallowing an error can be pretty expensive but this
     // allows us to block the event loop and do check in-line
     // instead of passing a callback.
     try {
-      fs.accessSync(this[name], fs.F_OK);
+      fs.accessSync(location, fs.F_OK);
       return true;
     } catch (e) {
       return false;

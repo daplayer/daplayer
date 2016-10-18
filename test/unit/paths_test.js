@@ -17,6 +17,12 @@ describe('Paths', () => {
     });
   });
 
+  describe('#exists', () => {
+    it('should return true if a full path exists on the file system', () => {
+      assert(Paths.exists(__dirname));
+    });
+  });
+
   describe('getters', () => {
     var key, value;
 
