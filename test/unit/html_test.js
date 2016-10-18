@@ -32,7 +32,13 @@ describe('Html', () => {
       var output = Html.tag('input', {checked: false});
 
       assert.equal(output, '<input>');
-    })
+    });
+
+    it('should set the class attribute if a string is given', () => {
+      var output = Html.tag('div', 'box', ' ');
+
+      assert.equal(output, '<div class="box"> </div>');
+    });
   });
 
   describe('#options', () => {

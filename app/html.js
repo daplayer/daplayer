@@ -4,9 +4,12 @@ module.exports = class Html {
   static tag(name, attributes, content) {
     var html = `<${name}`;
 
-    for (var key in attributes)
-      if (attributes[key] != false)
-        html = html.concat(` ${key}="${attributes[key]}"`);
+    if (typeof attributes == 'string')
+      html = html.concat(` class="${attributes}"`);
+    else
+      for (var key in attributes)
+        if (attributes[key] != false)
+          html = html.concat(` ${key}="${attributes[key]}"`);
 
     if (!content)
       html = html.concat('>');
