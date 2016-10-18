@@ -4,45 +4,15 @@
 // Manage the different actions interacting with the
 // configuration form.
 
-// Enable/disable download path fields when downloads are
-// place in the same folder as local musics.
-$('.content').on('change', '#lock_download', function() {
-  if ($(this).is(':checked')) {
-    $('#soundcloud_download').prop('disabled', true);
-    $('#youtube_download').prop('disabled', true);
-    $('#local_path').change();
-  } else {
-    $('#soundcloud_download').prop('disabled', false);
-    $('#youtube_download').prop('disabled', false);
-  }
-});
-
-// Change the value of the downloads fields on the fly if
-// downloads are stored in the same folder as the local musics.
-$('.container').on('change keyup', '#local_path', function() {
-  if ($('#lock_download').is(':checked')) {
-    var root = $(this).val();
-        root = root.last() == '/' ? root.slice(0, -1) : root;
-
-    $('#soundcloud_download').attr('value', root + '/SoundCloud');
-    $('#youtube_download').attr('value', root + '/YouTube');
-  }
-});
-
 // Display a file selector clicking on the tiny buttons next
 // to the location/download fields.
 $('.content').on('click', '.configuration .tiny_button', function() {
   var field = $(this).data('field');
 
-  // Early return if the download folders are locked for
-  // SoundCloud and YouTube.
-  if (field != 'local' && $('#lock_download').is(':checked'))
-      return;
-
   FilePicker.open('directory', function(chosen) {
     var suffix = field == 'local' ? '_path' : '_download';
 
-    $('#' + field + suffix).attr('value', chosen).change();
+    $('#' + field + suffix).attr('value', chosen);
   });
 });
 
@@ -59,14 +29,12 @@ $('.content').on('submit', 'form.configuration', function(e) {
   var soundcloud_download = $('#soundcloud_download').val();
   var youtube_download    = $('#youtube_download').val();
 
-  var lock_download = $('#lock_download').is(':checked');
 
   Config.store('meta', 'locale', locale);
   Config.store('soundcloud', 'download', soundcloud_download);
   Config.store('youtube', 'download', youtube_download);
   Config.store('youtube', 'quality', quality);
   Config.store('local', 'path', local_path);
-  Config.store('local', 'lock_download', lock_download);
 
   // Reload the contents if the locale has been changed
   if (locale != original_locale) {

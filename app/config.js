@@ -10,10 +10,9 @@ module.exports = class Config {
 
   static get local() {
     return {
-      path:          this.read('local', 'path'),
-      lock_download: this.read('local', 'lock_download'),
-      volume:        this.read('local', 'volume'),
-      files_view:    this.read('local', 'files_view')
+      path:       this.read('local', 'path'),
+      volume:     this.read('local', 'volume'),
+      files_view: this.read('local', 'files_view')
     }
   }
 
@@ -56,7 +55,6 @@ module.exports = class Config {
       },
       local: {
         path: 'foo',
-        lock_download: true,
         volume: 1,
         files_view: 'single_files'
       },

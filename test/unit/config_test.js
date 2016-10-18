@@ -29,7 +29,6 @@ describe('Config', () => {
 
     it('should have proper default values for the local section', () => {
       assert.equal('foo', Config.default.local.path);
-      assert.equal(true, Config.default.local.lock_download);
       assert.equal(1, Config.default.local.volume);
       assert.equal('single_files', Config.default.local.files_view);
     });

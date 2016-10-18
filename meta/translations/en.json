@@ -3,7 +3,6 @@
     "configuration": {
       "general": "General configuration",
       "locale": "Locale",
-      "lock_download_folder": "Put SoundCloud and YouTube downloads in this folder",
       "save": "Save configuration"
     },
     "actions": {
