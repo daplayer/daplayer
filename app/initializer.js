@@ -18,6 +18,11 @@ global.$          = require('jquery');
 global.Handlebars = require('handlebars');
 
 // ----------------------------------------------
+// Keep a copy of the native Notification object
+// as we are redefining it but need it.
+global.NativeNotification = Notification;
+
+// ----------------------------------------------
 // Internal components
 global.Cache        = require('./cache');
 global.Config       = require('./config');

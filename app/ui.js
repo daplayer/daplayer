@@ -223,7 +223,7 @@ module.exports = class Ui {
       action: Translation.t('meta.actions.download_finished'),
       title:  hash.title + ' - ' + hash.artist,
       icon:   hash.icon
-    });
+    }, true);
 
     if (Downloads.progression == Downloads.size)
       $('.sidebar .main .download_bar').fadeOut(200);

@@ -15,6 +15,10 @@ module.exports = class Cache {
     this.playing        = {}; // Playing scope
     this.search_results = {}; // Search results
 
+    // By default we assume that the player's window
+    // is the focused one.
+    this.focus = true;
+
     // Keep track of YouTube records.
     //
     // Special case YouTube playlists' items

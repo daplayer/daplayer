@@ -73,6 +73,16 @@ app.on('ready', function() {
     mainWindow.webContents.send('controls', 'next');
   });
 
+  // --------------------------------------------------------
+  // Update the focus state of the main window.
+  mainWindow.on('blur', function() {
+    mainWindow.webContents.send('focus', false);
+  });
+
+  mainWindow.on('focus', function() {
+    mainWindow.webContents.send('focus', true);
+  });
+
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
     // Dereference the window object, usually you would store windows
