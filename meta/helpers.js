@@ -55,7 +55,7 @@ Handlebars.registerHelper('input', function(id, section, path_selector) {
   if (path_selector)
     html = html.concat(Html.tag('div', {
       class: 'tiny_button',
-      'data-field': section
+      'data-field': name
     }, Html.glyphicon('folder-open')));
 
   return new Handlebars.SafeString(html);

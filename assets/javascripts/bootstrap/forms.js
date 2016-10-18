@@ -10,9 +10,7 @@ $('.content').on('click', '.configuration .tiny_button', function() {
   var field = $(this).data('field');
 
   FilePicker.open('directory', function(chosen) {
-    var suffix = field == 'local' ? '_path' : '_download';
-
-    $('#' + field + suffix).attr('value', chosen);
+    $(`#${field}`).attr('value', chosen);
   });
 });
 
