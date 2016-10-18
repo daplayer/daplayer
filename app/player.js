@@ -34,14 +34,16 @@ module.exports = class Player {
    * Finds the record to play in the cache. Once the record
    * is found, delegates to the `start` method.
    *
-   * @param  {String}     id          - The record to play's id.
+   * @param  {$}          element     - The element to play.
    * @param  {$=|Record=} playlist    - Optionally the current
    *                                    playlist.
    * @param  {Boolean=}   keep_action - Whether to keep the
    *                                    playing action or not.
    * @return {null}
    */
-  static preload(id, playlist, keep_action) {
+  static preload(element, playlist, keep_action) {
+    var id = element.data('id');
+
     // Pause the player if the user clicked on
     // the currently playing item, resume if
     // the player is paused.
@@ -56,13 +58,9 @@ module.exports = class Player {
     if ($('.sidebar .search-form').is(':visible'))
       Ui.toggleSearchBar();
 
-    var module = Cache.current.module;
-    var action = Cache.current.action;
-
-    MetaModel.findById(id, module, action, playlist).then((record) => {
+    Record.from(element, playlist).then((record) => {
       if (!keep_action) {
-        Cache.playing.module = module;
-        Cache.playing.action = action;
+        Cache.playing = Cache.current;
 
         // Reset the current queue's mode
         Queue.setMode(null);

@@ -3,13 +3,13 @@ $('.content').on('click', '.music, .video', function(e) {
   var target = $(e.target);
 
   if (self.is('li') && !target.hasClass('options') && !target.hasClass('glyphicon'))
-    Player.preload(self.data('id'), self.parents('.set'));
+    Player.preload(self, self.parents('.set'));
   else if (target.is('img') || target.hasClass('title'))
-    Player.preload(self.data('id'));
+    Player.preload(self);
 });
 
 $('.items').on('click', 'li.music, li.video', function() {
-  Player.preload($(this).data('id'), Player.record.set, true);
+  Player.preload($(this), Player.record.set, true);
 });
 
 $('.content').on('mouseenter', 'li.music, li.video', function() {

@@ -161,11 +161,7 @@ module.exports = class Ui {
    * @return {null}
    */
   static share(element, playlist) {
-    var id      = element.data('id');
-    var module  = Cache.current.module;
-    var section = Cache.current.action;
-
-    MetaModel.findById(id, module, section, playlist).then((record) => {
+    Record.from(element).then((record) => {
       clipboard.writeText(record.url);
 
       new Notification(Translation.t('meta.actions.url_copied'), {
@@ -186,10 +182,7 @@ module.exports = class Ui {
    * @return {null}
    */
   static tag(element, playlist) {
-    var module  = Cache.current.module;
-    var section = Cache.current.action;
-
-    MetaModel.findById(element.data('id'), module, section, playlist).then((record) => {
+    Record.from(element).then((record) => {
       $('.dialog').html(View.compile(`${record.service}/partials/tag`)(record));
       $('.dialog').removeClass('add_to_playlist')
                   .addClass('tag').addClass(record.service);

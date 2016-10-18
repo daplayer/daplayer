@@ -26,4 +26,11 @@ module.exports = class Record {
     record.previous = (index == 0) ? null : array[index - 1];
     record.next     = (index == array.length - 1) ? null : array[index + 1];
   }
+
+  static from(element, playlist) {
+    var module = Cache.current.module;
+    var action = Cache.current.action;
+
+    return MetaModel.findById(element.data('id'), module, action, playlist);
+  }
 }
