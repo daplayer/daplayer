@@ -17,12 +17,19 @@ module.exports = class Media extends Record {
     return this.isYouTube() ? 'video' : 'music';
   }
 
+  get url() {
+    if (this.isSoundCloud())
+      return this._url;
+    else if (this.isYouTube())
+      return `https://www.youtube.com/watch?v=${this.id}`;
+  }
+
   static soundcloud(hash, set) {
     var media = new Media(hash.id, 'soundcloud');
 
     media.title        = hash.title;
     media.genre        = hash.genre;
-    media.url          = hash.permalink_url;
+    media._url         = hash.permalink_url;
     media.tags         = hash.tag_list;
     media.waveform_url = hash.waveform_url;
     media.duration     = hash.duration * Math.pow(10, -3);

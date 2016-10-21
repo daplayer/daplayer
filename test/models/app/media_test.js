@@ -37,6 +37,21 @@ describe('Media', () => {
     });
   });
 
+  describe('#url', () => {
+    it('should return the `_url` attribute for a SoundCloud media', () => {
+      var media      = new Media(null, 'soundcloud');
+          media._url = 'foo';
+
+      assert.equal(media.url, 'foo');
+    });
+
+    it('should compute the URL for a YouTube media based on its id', () => {
+      var media = new Media('bar', 'youtube');
+
+      assert.equal(media.url, 'https://www.youtube.com/watch?v=bar');
+    });
+  });
+
   describe('#soundcloud', () => {
     var hash = {
       title: 'Faut qu\'on rentre bosser',
@@ -56,7 +71,7 @@ describe('Media', () => {
       assert.equal(media.title,  hash.title);
       assert.equal(media.artist, hash.user.username);
       assert.equal(media.tags,   hash.tag_list);
-      assert.equal(media.url,    hash.permalink_url);
+      assert.equal(media._url,   hash.permalink_url);
       assert.equal(media.genre,  hash.genre);
     });
 
