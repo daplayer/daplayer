@@ -88,37 +88,28 @@ module.exports = class SoundCloudService {
    * parameters are only specified to display a notification
    * when the download begins/ends and for tagging purposes.
    *
-   * @param  {String} id     - The song's id.
-   * @param  {String} title  - The song's title.
-   * @param  {String} artist - The song's artist.
-   * @param  {String} genre  - The song's genre.
-   * @param  {String} icon   - The song's icon.
+   * @param  {Object} tags        - The tags to associate.
+   * @param  {Number} tags.id     - The song's id.
+   * @param  {String} tags.title  - The song's title.
+   * @param  {String} tags.artist - The song's artist.
+   * @param  {String} tags.genre  - The song's genre.
+   * @param  {String} tags.icon   - The song's icon.
    * @return {null}
    */
-  static download(id, title, artist, genre, icon) {
-    var hash = {
-      id:     id,
-      title:  title,
-      artist: artist,
-      icon:   icon
-    };
+  static download(tags) {
+    Downloads.enqueue(tags);
+    Ui.downloadStart(tags);
 
-    Downloads.enqueue(hash);
-    Ui.downloadStart(hash);
+    this.stream_url(tags.id).then((url) => {
+      var location = Formatter.path(tags.title, tags.artist, 'soundcloud');
 
-    this.stream_url(id).then((url) => {
-      var location = Formatter.path(title, artist, 'soundcloud');
+      MetaService.download(url, location, tags.id, () => {
+        Ui.downloadEnd(Downloads.dequeue(tags.id));
 
-      MetaService.download(url, location, id, () => {
-        Ui.downloadEnd(Downloads.dequeue(id));
+        MetaService.downloadImage(tags.icon, tags.title, tags.artist, (icon_path) => {
+          tags.icon = icon_path;
 
-        MetaService.downloadImage(icon, title, artist, (icon_path) => {
-          LocalService.tag(location, {
-            title:  title,
-            artist: artist,
-            genre:  genre,
-            icon:   icon_path
-          });
+          LocalService.tag(location, tags);
         });
       });
     });

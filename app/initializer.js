@@ -17,6 +17,8 @@ require('./core_ext');
 global.$          = require('jquery');
 global.Handlebars = require('handlebars');
 
+require('./jquery_ext');
+
 // ----------------------------------------------
 // Keep a copy of the native Notification object
 // as we are redefining it but need it.

@@ -3,21 +3,13 @@
 $('.dialog').on('click', '.download.button', function(e) {
   e.preventDefault();
 
-  var form  = $(this).parents('form');
-  var id    = form.find('input[name="id"]').val();
-  var title = form.find('input[name="title"]').val();
-  var icon  = form.find('img').attr('src');
+  var form = $(this).parents('form');
+  var tags = form.extractFields();
 
-  if (form.data('service') == 'soundcloud') {
-    var artist = form.find('input[name="artist"]').val();
-    var genre  = form.find('input[name="genre"]').val();
-
-    SoundCloudService.download(id, title, artist, genre, icon);
-  } else if (form.data('service') == 'youtube') {
-    var format = form.find('input[name="format"]:checked').val();
-
-    YouTubeService.download(id, title, icon, format);
-  }
+  if (form.data('service') == 'soundcloud')
+    SoundCloudService.download(tags);
+  else if (form.data('service') == 'youtube')
+    YouTubeService.download(tags);
 
   Ui.hideShadow();
 });
@@ -28,15 +20,9 @@ $('.dialog').on('click', '.tag.button', function(e) {
   e.preventDefault();
 
   var form = $(this).parents('form');
+  var tags = form.extractFields();
 
-  LocalService.tag(form.find('input[name="id"]').val(), {
-    id:     form.find('input[name="id"]').val(),
-    title:  form.find('input[name="title"]').val(),
-    artist: form.find('input[name="artist"]').val(),
-    album:  form.find('input[name="album"]').val(),
-    genre:  form.find('input[name="genre"]').val(),
-    image:  form.find('img').attr('src')
-  });
+  LocalService.tag(form.find('input[name="id"]').val(), tags);
 
   Ui.hideShadow();
 });

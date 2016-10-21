@@ -365,18 +365,19 @@ module.exports = class YouTubeService {
   /**
    * Dispatches to the associated's format download function.
    *
-   * @param  {String} id     - The video's id.
-   * @param  {String} title  - The video's title.
-   * @param  {String} icon   - The video's icon.
-   * @param  {String} format - The format to download the
-   *                           media in.
+   * @param  {Object} tags        - The tags to associate.
+   * @param  {String} tags.id     - The video's id.
+   * @param  {String} tags.title  - The media's title.
+   * @param  {String} tags.icon   - The media's icon.
+   * @param  {String} tags.format - The format to download the
+   *                                media in.
    * @return {null}
    */
-  static download(id, title, icon, format) {
-    if (format == 'mp3')
-      this.downloadMP3(id, title, icon);
+  static download(tags) {
+    if (tags.format == 'mp3')
+      this.downloadMP3(tags);
     else
-      this.downloadVideo(id, title, icon);
+      this.downloadVideo(tags);
   }
 
   /**
@@ -385,29 +386,24 @@ module.exports = class YouTubeService {
    * a nofication when the download starts/ends or for
    * tagging the file.
    *
-   * @param  {String} id     - The video's id.
-   * @param  {String} title  - The media's title.
-   * @param  {String} icon   - The media's icon.
+   * @param  {Object} tags        - The tags to associate.
+   * @param  {String} tags.id     - The video's id.
+   * @param  {String} tags.title  - The song's title.
+   * @param  {String} tags.icon   - The song's icon.
    * @return {null}
    */
-  static downloadMP3(id, title, icon) {
-    var hash = {
-      id:    id,
-      title: title,
-      icon:  icon
-    };
+  static downloadMP3(tags) {
+    Downloads.enqueue(tags);
+    Ui.downloadStart(tags);
 
-    Downloads.enqueue(hash);
-    Ui.downloadStart(hash);
+    var location = Formatter.path(tags.title, null, 'youtube');
 
-    var location = Formatter.path(title, null, 'youtube');
-
-    this.mp3URL(id).then((url) => {
-      MetaService.download(url, location, id, (request) => {
-        Ui.downloadEnd(Downloads.dequeue(id));
+    this.mp3URL(tags.id).then((url) => {
+      MetaService.download(url, location, tags.id, (request) => {
+        Ui.downloadEnd(Downloads.dequeue(tags.id));
 
         LocalService.tag(location, {
-          title: title
+          title: tags.title
         });
       });
     });
@@ -424,7 +420,7 @@ module.exports = class YouTubeService {
    * @return {null}
    * @deprecated
    */
-  static downloadVideo(id, title, icon) {
+  static downloadVideo(tags) {
     var hash = {
       id:    id,
       title: title,
