@@ -25,6 +25,13 @@ module.exports = class Ui {
     return this._VideoPlayer;
   }
 
+  static get Dialog() {
+    if (!this._Dialog)
+      this._Dialog = require('./ui/dialog');
+
+    return this._Dialog;
+  }
+
   /**
    * Displays a loader on the page.
    *
@@ -187,12 +194,8 @@ module.exports = class Ui {
    */
   static tag(element, playlist) {
     Record.from(element).then((record) => {
-      $('.dialog').html(View.compile(`${record.service}/partials/tag`)(record));
-      $('.dialog').removeClass('add_to_playlist')
-                  .addClass('tag').addClass(record.service);
+      this.Dialog.tag(record);
     });
-
-    this.showDialog();
   }
 
   /**
@@ -249,22 +252,6 @@ module.exports = class Ui {
   }
 
   /**
-   * Shows the dialog box and the black transparent
-   * shadow as well. Hides the video player if it is
-   * already open.
-   *
-   * @return {null}
-   */
-  static showDialog() {
-    if ($('.video.player').is(':visible'))
-      $('.video.player').hide();
-    else
-      $('.shadow.main').show();
-
-    $('.dialog').show();
-  }
-
-  /**
    * Hide the black transparent shadow and its inner element
    * (i.e. the video player or the dialog box).
    *
@@ -286,26 +273,21 @@ module.exports = class Ui {
    * @return {null}
    */
   static addToPlaylist(element) {
-    var module, action = Cache.current.action;
-
     if (element.hasClass('soundcloud'))
-      module = 'soundcloud';
+      var module = 'soundcloud';
     else if (element.hasClass('youtube'))
-      module = 'youtube';
+      var module = 'youtube';
     else if (element.hasClass('local'))
-      module = 'local';
+      var module = 'local';
 
     Playlist.all(module).then((playlists) => {
-      $('.dialog').html(View.compile('meta/partials/add_to_playlist')({
+      this.Dialog.addToPlaylist({
         id:         element.data('id'),
         soundcloud: module == 'soundcloud',
         youtube:    module == 'youtube',
         playlists:  playlists,
-      }));
+      });
     })
-
-    $('.shadow.main').show();
-    $('.dialog').show().removeClass('tag').addClass('add_to_playlist');
   }
 
   /**
