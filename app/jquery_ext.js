@@ -25,3 +25,38 @@ $.fn.extractFields = function() {
 
   return hash;
 };
+
+/**
+ * Function that changes the different DOM attributes to
+ * reflect a modification of an element's artist.
+ *
+ * @param  {String} value - The artist's name.
+ * @return {jQuery}
+ */
+$.fn.artist = function(value) {
+  var artist = this.find('.artist');
+
+  artist.html(value);
+  artist.attr('title', value);
+  artist.data('id', value);
+
+  return this;
+}
+
+/**
+ * Function that changes the different DOM attributes to
+ * reflect a modification of an element's title.
+ *
+ * @param  {String} value - The new title.
+ * @return {jQuery}
+ */
+$.fn.title = function(value) {
+  var title = this.find('.title');
+
+  title.html(value);
+  title.attr('title', value);
+
+  return this;
+}
+
+

@@ -24,8 +24,7 @@ module.exports = class UiPlayer {
 
         current_icon:   $('.information .icon'),
         loading_shadow: $('.information .shadow.loading'),
-        current_title:  $('.information .current .title'),
-        current_artist: $('.information .current .artist'),
+        current_info:   $('.information .current'),
 
         current_set:          $('.current-set'),
         current_set_icon:     $('.current-set .glyphicon'),
@@ -119,10 +118,9 @@ module.exports = class UiPlayer {
     this.current_icon.removeClass('music video')
                      .addClass(this.record.kind);
 
-    this.current_artist.html(this.record.artist);
-    this.current_artist.attr('title', this.record.artist);
-    this.current_title.html(this.record.title);
-    this.current_title.attr('title', this.record.title);
+    this.current_info.title(this.record.title);
+    this.current_info.artist(this.record.artist);
+
     this.current_icon.find('img').attr('src', this.record.icon);
   }
 
