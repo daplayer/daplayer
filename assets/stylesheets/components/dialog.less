@@ -7,7 +7,7 @@
   max-height: ~"calc(90% - 65px)";
   width: 50%;
   overflow-y: scroll;
-  padding-top: 5px;
+  padding: 10px;
   position: relative;
   top: 50%;
   transform: translateY(-50%);
@@ -16,6 +16,11 @@
     margin-top: 0px;
     border-bottom: 1px solid @light-purple;
     color: @dark-grey;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid @light-purple;
   }
 
   label {
@@ -38,6 +43,7 @@
   }
 
   input[type="submit"] {
+    float: right;
     margin-top: 0.5em;
     margin-left: 0.5em;
   }
@@ -84,7 +90,8 @@
     }
 
     .flat_button {
-      margin-top: 25px;
+      margin-top: 15px;
+      margin-bottom: 15px;
     }
   }
 
