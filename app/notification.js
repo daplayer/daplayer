@@ -15,12 +15,15 @@ module.exports = class Notification {
     var html = Html.tag('div', 'notification', () => {
       return Html.tag('div', 'box', () => {
         var icon = Html.tag('div', 'icon', () => {
-          return Html.tag('img', { src: hash.icon });
+          if (hash.icon)
+            return Html.tag('img', { src: hash.icon });
+          else
+            return Html.glyphicon(hash.glyphicon);
         });
 
         var text = Html.tag('div', 'text', () => {
           return Html.tag('span', 'action', hash.action) +
-                 Html.tag('span', 'title', hash.title);
+                 Html.tag('span', 'title', hash.title || ' ');
         });
 
         return icon + text;

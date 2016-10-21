@@ -6,11 +6,12 @@
       "save": "Save configuration"
     },
     "actions": {
-      "playlist_created":  "Playlist created",
-      "download_started":  "Downloading...",
-      "download_finished": "Download complete",
-      "url_copied":        "URL copied in your clipboard",
-      "tagged":            "Music tagged"
+      "playlist_created":    "Playlist created",
+      "download_started":    "Downloading...",
+      "download_finished":   "Download complete",
+      "url_copied":          "URL copied in your clipboard",
+      "tagged":              "Music tagged",
+      "configuration_saved": "Configuration successfully saved"
     },
     "dashboard": {
       "configuration": "Configuration",

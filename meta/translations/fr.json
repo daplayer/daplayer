@@ -6,11 +6,12 @@
       "save": "Sauvegarder"
     },
     "actions": {
-      "playlist_created":  "Nouvelle playlist créée",
-      "download_started":  "Téléchargement...",
-      "download_finished": "Téléchargement terminé",
-      "url_copied":        "URL copiée",
-      "tagged":            "Musique tagguée"
+      "playlist_created":    "Nouvelle playlist créée",
+      "download_started":    "Téléchargement...",
+      "download_finished":   "Téléchargement terminé",
+      "url_copied":          "URL copiée",
+      "tagged":              "Musique tagguée",
+      "configuration_saved": "Configuration sauvegardée"
     },
     "dashboard": {
       "configuration": "Configuration",

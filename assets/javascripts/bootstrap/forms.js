@@ -21,6 +21,15 @@ $('.content').on('submit', 'form.configuration', function(e) {
   Config.store('youtube', 'quality', quality);
   Config.store('local', 'path', local_path);
 
+  $('.container').animate({
+    scrollTop: 0
+  }, 200);
+
+  Notification.show({
+    action:    Translation.t('meta.actions.configuration_saved'),
+    glyphicon: 'cog'
+  });
+
   // Reload the contents if the locale has been changed
   if (locale != original_locale) {
     Translation.load();
