@@ -16,15 +16,16 @@ module.exports = class LocalService {
    * Searches dispatching to the model's methods depending
    * on the syntax used by the user.
    *
-   * @param  {String} value - The value to look for.
    * @return {Promise}
    */
-  static search(value) {
-    if (value.startsWith('#'))
-      return LocalModel.findBy('genre', value.slice(1));
-    else if (value.startsWith('@'))
-      return LocalModel.findBy('artist', value.slice(1));
+  static search() {
+    var query = Cache.search.query;
+
+    if (query.startsWith('#'))
+      return LocalModel.findBy('genre', query.slice(1));
+    else if (query.startsWith('@'))
+      return LocalModel.findBy('artist', query.slice(1));
     else
-      return LocalModel.findBy('title', value);
+      return LocalModel.findBy('title', query);
   }
 }

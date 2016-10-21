@@ -40,10 +40,8 @@ module.exports = class YouTubeController {
   }
 
   static searchResults() {
-    return new Promise((resolve, reject) => {
-      this.render('youtube/search_results', Cache.search_results);
-
-      resolve(true);
+    return Service.for('youtube').search().then((results) => {
+      this.render('youtube/search_results', results);
     });
   }
 

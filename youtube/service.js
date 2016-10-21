@@ -450,17 +450,18 @@ module.exports = class YouTubeService extends NetService {
    * not reliable (e.g. BMTHOfficialVEVO -> Bring Me The
    * Horizon).
    *
-   * @param  {String} value - The value to search for.
    * @return {Promise}
    */
-  static search(value, source) {
-    if (['@', '#'].includes(value[0]))
-      value = value.slice(1);
+  static search() {
+    var {query, source} = Cache.search;
+
+    if (['@', '#'].includes(query[0]))
+      query = query.slice(1);
 
     if (source == 'internet')
-      return YouTubeModel.netSearch(value);
+      return YouTubeModel.netSearch(query);
 
-    var query = new RegExp(value, 'i');
+    query = new RegExp(query, 'i');
 
     return YouTubeModel.playlists().then((playlists) => {
       return {

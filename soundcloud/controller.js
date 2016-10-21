@@ -49,10 +49,8 @@ module.exports = class SoundCloudController {
   }
 
   static searchResults() {
-    return new Promise((resolve, reject) => {
-      this.render('soundcloud/search_results', Cache.search_results);
-
-      resolve(true);
+    return Service.for('soundcloud').search().then((results) => {
+      this.render('soundcloud/search_results', results);
     });
   }
 

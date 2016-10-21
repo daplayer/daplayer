@@ -1,9 +1,9 @@
-{{#if youtube.items}}
-  {{#each youtube.items}}
-    {{#if ../youtube.net}}
-      {{media_box this}}
-    {{else}}
-      {{youtube_playlist_thumbnail this}}
-    {{/if}}
-  {{/each}}
-{{/if}}
+{{search_results_menu 'youtube'}}
+
+{{#each collection}}
+  {{#if ../net}}
+    {{media_box this}}
+  {{else}}
+    {{youtube_playlist_thumbnail this}}
+  {{/if}}
+{{/each}}

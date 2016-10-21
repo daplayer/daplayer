@@ -137,11 +137,11 @@ module.exports = class SoundCloudService extends NetService {
    * directly on SoundCloud (mostly matching the behavior of
    * the SoundCloud's search bar).
    *
-   * @param  {String} query  - The value to look for.
-   * @param  {String} source - The source to look in.
    * @return {Promise}
    */
-  static search(query, source) {
+  static search() {
+    var {query, source} = Cache.search;
+
     if (source == 'internet')
       return SoundCloudModel.netSearch(query);
 

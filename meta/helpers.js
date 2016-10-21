@@ -80,7 +80,7 @@ Handlebars.registerHelper('media_box', function(media) {
   return View.partial('meta/partials/media_box', media);
 });
 
-Handlebars.registerHelper('search_results_menu', function(search_results, active) {
+Handlebars.registerHelper('search_results_menu', function(active) {
   var icons = {
     soundcloud: 'cloud',
     youtube:    'film',
@@ -91,18 +91,15 @@ Handlebars.registerHelper('search_results_menu', function(search_results, active
     var output = '';
 
     ['soundcloud', 'youtube', 'local'].forEach((module) => {
-      if (search_results[module]) {
-        if (module == active)
-          var attrs = { href: '#', class: 'active' };
-        else
-          var attrs = { href: `${module}/search_results` };
+      if (module == active)
+        var attrs = { href: '#', class: 'active' };
+      else
+        var attrs = { href: `${module}/search_results` };
 
-
-        output = output.concat(Html.tag('a', attrs, () => {
-          return Html.glyphicon(icons[module]) +
-                 Translation.t(module.concat('.name'));
-        }));
-      }
+      output = output.concat(Html.tag('a', attrs, () => {
+        return Html.glyphicon(icons[module]) +
+               Translation.t(module.concat('.name'));
+      }));
     });
 
     return output;

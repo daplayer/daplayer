@@ -83,18 +83,14 @@ describe('Meta helpers', () => {
     });
 
     it('should generate a div with a "navbar" class', () => {
-      var output = Handlebars.helpers.search_results_menu({}, '');
+      var output = Handlebars.helpers.search_results_menu('');
 
       assert(output instanceof Handlebars.SafeString);
       assert.include(output, '<div class="navbar">');
     });
 
-    it('should generate a link for each present module', () => {
-      var output = Handlebars.helpers.search_results_menu({
-        soundcloud: true,
-        youtube:    true,
-        local:      true
-      }, '');
+    it('should generate a link for each module', () => {
+      var output = Handlebars.helpers.search_results_menu('');
 
       assert.include(output, '<a href="soundcloud/search_results">');
       assert.include(output, '<a href="youtube/search_results">');
@@ -106,13 +102,11 @@ describe('Meta helpers', () => {
     });
 
     it('should set the active class for the given module', () => {
-      var output = Handlebars.helpers.search_results_menu({
-        soundcloud: true,
-        youtube:    true
-      }, 'youtube');
+      var output = Handlebars.helpers.search_results_menu('youtube');
 
       assert.include(output, '<a href="soundcloud/search_results">');
       assert.include(output, '<a href="#" class="active">');
+      assert.include(output, '<a href="local/search_results">');
     });
   });
 });

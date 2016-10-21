@@ -13,7 +13,6 @@ describe('Cache', () => {
       assert.deepEqual(Cache.local, {});
       assert.deepEqual(Cache.soundcloud, {});
       assert.deepEqual(Cache.templates, {});
-      assert.deepEqual(Cache.search_results, {});
     });
 
     it('should set deeper fields for YouTube', () => {

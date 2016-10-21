@@ -50,10 +50,8 @@ module.exports = class LocalController {
   }
 
   static searchResults() {
-    return new Promise((resolve, reject) => {
-      View.render('local/search_results', Cache.search_results);
-
-      resolve(true);
+    return Service.for('local').search().then((results) => {
+      View.render('local/search_results', results);
     });
   }
 }

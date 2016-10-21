@@ -29,58 +29,17 @@ $('.sidebar').on('keyup', '.search input', function(e) {
   if (e.keyCode == 27) {
     Ui.toggleSearchBar();
   } else if (e.keyCode == 13) {
-    var modules = [];
-    var source  = $('input[name="source"]:checked').val();
+    var source = $('input[name="source"]:checked').val();
+    var module = Cache.current.module;
 
-    if ($('input[name="soundcloud"]').val() == 1)
-      modules.push('soundcloud');
-    if ($('input[name="youtube"]').val() == 1)
-      modules.push('youtube');
-    if ($('input[name="local"]').val() == 1)
-      modules.push('local');
+    if (module = 'meta')
+      return;
 
-    if (modules.empty())
-      modules.push(Cache.current.module);
+    Cache.search = {
+      query:  $(this).val(),
+      source: source
+    };
 
-    if (!(modules.empty() && Cache.current.module != 'meta'))
-      MetaController.render('meta', 'search', [$(this).val(), source, modules]);
-  }
-});
-
-$('.sidebar').on('click', '.switch-border, .switch', function() {
-  var container = $(this).parent();
-  var on        = container.find('.on');
-  var off       = container.find('.off');
-  var border    = container.find('.switch-border');
-  var field     = container.find('input[type="hidden"]');
-
-  if (field.val() == 1) {
-    field.val(0);
-
-    on.animate({ left: '45px' }, 200);
-    border.animate({ left: '40px' }, 200);
-    off.animate({ left: 0 }, 200);
-
-    border.css({
-      'background': '#949BC0',
-      'border-top-left-radius': '0px',
-      'border-bottom-left-radius': '0px',
-      'border-top-right-radius': '2px',
-      'border-bottom-right-radius': '2px'
-    });
-  } else {
-    field.val(1);
-
-    off.animate({ left: '-45px' }, 200);
-    border.animate({ left: 0 }, 200);
-    on.animate({ left: '5px' }, 200);
-
-    border.css({
-      'background': '#0277DB',
-      'border-top-left-radius': '2px',
-      'border-bottom-left-radius': '2px',
-      'border-top-right-radius': '0px',
-      'border-bottom-right-radius': '0px'
-    });
+    MetaController.render(module, 'search_results');
   }
 });

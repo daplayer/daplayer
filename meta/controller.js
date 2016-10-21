@@ -39,12 +39,6 @@ module.exports = class MetaController {
     })
   }
 
-  static search(query, source, modules) {
-    return MetaService.search(query, source, modules).then(() => {
-      MetaController.render(modules.first(), 'search_results');
-    });
-  }
-
   /**
    * Delegates to the given module's controller and action.
    *
@@ -55,10 +49,10 @@ module.exports = class MetaController {
    * We also render a special connection view if we try to
    * access a service that is not yet connected.
    *
-   * @param  {String}         module - The module's name.
-   * @param  {String}         action - The action's name.
-   * @param  {Object=|Array=} params - Eventual extra param(s)
-   *                                   to pass to the method.
+   * @param  {String}  module - The module's name.
+   * @param  {String}  action - The action's name.
+   * @param  {Object=} params - Eventual extra param(s)
+   *                            to pass to the method.
    * @return {null}
    */
   static render(module, action, params) {

@@ -58,7 +58,6 @@ global.Activity = require('./models/activity');
 global.SoundCloudService = require('../soundcloud/service');
 global.YouTubeService    = require('../youtube/service');
 global.LocalService      = require('../local/service');
-global.MetaService       = require('../meta/service');
 
 global.MetaController = require('../meta/controller');
 

@@ -1,19 +1,19 @@
-{{search_results_menu this 'local'}}
+{{search_results_menu 'local'}}
 
-{{#if local.albums}}
+{{#if albums}}
   <h1>{{t 'local.files_menus.albums'}}</h1>
 
-  {{#each local.albums}}
+  {{#each albums}}
     {{set_box this}}
   {{/each}}
 
   <div class="clearer"></div>
 {{/if}}
 
-{{#if local.singles}}
+{{#if singles}}
   <h1>{{t 'local.files_menus.singles'}}</h1>
 
-  {{#each local.singles}}
+  {{#each singles}}
     {{media_box this}}
   {{/each}}
 {{/if}}

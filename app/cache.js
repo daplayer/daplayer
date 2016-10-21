@@ -9,11 +9,11 @@ module.exports = class Cache {
    * @return {null}
    */
   static initialize() {
-    this.templates      = {}; // Compiled templates
-    this.soundcloud     = {}; // SoundCloud records
-    this.local          = {}; // Local record
-    this.playing        = {}; // Playing scope
-    this.search_results = {}; // Search results
+    this.templates  = {}; // Compiled templates
+    this.soundcloud = {}; // SoundCloud records
+    this.local      = {}; // Local record
+    this.playing    = {}; // Playing scope
+    this.search     = {}; // Searching scope
 
     // By default we assume that the player's window
     // is the focused one.
