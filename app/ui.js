@@ -98,8 +98,11 @@ module.exports = class Ui {
       return;
 
     // Handle function calls from links
-    if (href.startsWith("#"))
-      return MetaService.dispatch(href);
+    if (href.startsWith('#')) {
+      var [module, method] = href.slice(1).split(':');
+
+      return Service.for(module)[method]();
+    }
 
     var module = href.split("/")[0];
     var action = href.split("/")[1];
