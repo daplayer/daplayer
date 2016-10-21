@@ -12,7 +12,9 @@ module.exports = class Notification {
         icon: hash.icon
       });
 
-    var html = Html.tag('div', 'notification', () => {
+    var id = Formatter.currentTimestamp();
+
+    var html = Html.tag('div', {class: 'notification', id: id}, () => {
       return Html.tag('div', 'box', () => {
         var icon = Html.tag('div', 'icon', () => {
           if (hash.icon)
@@ -31,9 +33,12 @@ module.exports = class Notification {
     });
 
     $('.notifications').append(html);
-    $('.notifications .box').last().animate({
+    $(`#${id} .box`).last().animate({
       right:   0,
       opacity: 1
     }, 500);
+
+    // Remove the notification after 3 seconds.
+    setTimeout(() => $(`#${id}`).slideOut(), 3000);
   }
 }

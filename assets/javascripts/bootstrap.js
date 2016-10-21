@@ -53,14 +53,7 @@ $(document).ready(function() {
   // --------------------------------------------------------
   // > Handle clicks on notifications
   $('.notifications').on('click', '.notification', function(e) {
-    var notification = $(this);
-
-    notification.find('.box').animate({
-      right: '-300px',
-      opacity: 0
-    }, 500, function() {
-      notification.remove();
-    });
+    $(this).slideOut();
   });
 
   // --------------------------------------------------------

@@ -59,4 +59,19 @@ $.fn.title = function(value) {
   return this;
 }
 
+/**
+ * Function that slides out a notification and remove it from.
+ * the DOM.
+ *
+ * @return {null}
+ */
+$.fn.slideOut = function() {
+  var self = this;
 
+  self.find('.box').animate({
+    right: '-300px',
+    opacity: 0
+  }, 500, function() {
+    self.remove();
+  });
+}
