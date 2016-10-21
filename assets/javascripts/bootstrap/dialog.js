@@ -19,9 +19,7 @@ $('.dialog').on('click', '.download.button', function(e) {
     YouTubeService.download(id, title, icon, format);
   }
 
-  $('.dialog').fadeOut(200, function() {
-    $('.shadow.main').hide();
-  });
+  Ui.hideShadow();
 });
 
 // --------------------------------------------------------
@@ -40,9 +38,7 @@ $('.dialog').on('click', '.tag.button', function(e) {
     image:  form.find('img').attr('src')
   });
 
-  $('.dialog').fadeOut(200, function() {
-    $('.shadow.main').hide();
-  });
+  Ui.hideShadow();
 });
 
 // --------------------------------------------------------
@@ -67,9 +63,7 @@ $('.dialog').on('click', '.add_to_playlist.button', function(e) {
     });
   });
 
-  $('.dialog').fadeOut(200, function() {
-    $('.shadow.main').hide();
-  });
+  Ui.hideShadow();
 });
 
 // Handle clicks on the filter links
