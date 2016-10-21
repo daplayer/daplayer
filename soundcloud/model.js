@@ -43,18 +43,6 @@ module.exports = class SoundCloudModel {
   }
 
   /**
-   * Facility to access to the cached search results that
-   * are normally under the `meta` section of the cache.
-   *
-   * @return {Promise}
-   */
-  static searchResults() {
-    return MetaModel.searchResults().then((hash) => {
-      return hash.soundcloud;
-    });
-  }
-
-  /**
    * Adds an element to a playlist given its id and updates
    * the cache accordingly.
    *

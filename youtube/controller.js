@@ -40,8 +40,10 @@ module.exports = class YouTubeController {
   }
 
   static searchResults() {
-    return MetaModel.searchResults().then((results) => {
-      this.render('youtube/search_results', results);
+    return new Promise((resolve, reject) => {
+      this.render('youtube/search_results', Cache.search_results);
+
+      resolve(true);
     });
   }
 

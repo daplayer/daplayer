@@ -9,13 +9,7 @@ module.exports = class LocalModelPlaylists {
   }
 
   static listenLaterTo(address) {
-    MetaModel.resolve(address).then((record) => {
-      this.addToPlaylist(1, record).then(() => {
-        Ui.addListenLaterRecord(record);
-      }).catch((e) => {
-        console.log(e);
-      });
-    });
+    return null;
   }
 
   static playlists() {

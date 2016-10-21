@@ -3,7 +3,6 @@
 const SoundCloudController = require('../soundcloud/controller');
 const YouTubeController    = require('../youtube/controller');
 const LocalController      = require('../local/controller');
-const MetaModel            = require('./model');
 
 module.exports = class MetaController {
   static index() {

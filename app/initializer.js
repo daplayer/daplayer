@@ -60,9 +60,6 @@ global.YouTubeService    = require('../youtube/service');
 global.LocalService      = require('../local/service');
 global.MetaService       = require('../meta/service');
 
-// ----------------------------------------------
-// Meta stack for the models and the controllers
-global.MetaModel      = require('../meta/model');
 global.MetaController = require('../meta/controller');
 
 // ----------------------------------------------

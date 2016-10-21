@@ -81,12 +81,6 @@ module.exports = class YouTubeModel {
     });
   }
 
-  static searchResults() {
-    return MetaModel.searchResults().then((hash) => {
-      return hash.youtube;
-    });
-  }
-
   static findById(id, section, playlist) {
     if (playlist instanceof $)
       return this.findPlaylist(playlist.data('id')).then((playlist) => {

@@ -50,8 +50,10 @@ module.exports = class LocalController {
   }
 
   static searchResults() {
-    return MetaModel.searchResults().then((results) => {
-      View.render('local/search_results', results);
+    return new Promise((resolve, reject) => {
+      View.render('local/search_results', Cache.search_results);
+
+      resolve(true);
     });
   }
 }
