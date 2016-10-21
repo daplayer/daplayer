@@ -6,38 +6,6 @@ const Tagging    = require('daplayer-tagging');
 module.exports = class LocalService {
   static tag(location, hash) {
     Tagging.set(location, hash);
-
-    if (Cache.current.module != 'local')
-      return;
-
-    var body = hash.title;
-
-    if (hash.artist)
-      body += ' - ' + hash.artist;
-
-    Notification.show({
-      action: Translation.t('meta.actions.tagged'),
-      title:  body,
-      icon:   hash.image
-    });
-
-    var element = $(`.music[data-id="${hash.id.replace('"', "\\\"")}"]`);
-
-    var title_span  = element.find('.title');
-    var artist_link = element.find('.artist');
-
-    title_span.html(hash.title);
-    title_span.attr('title', hash.title);
-
-    artist_link.html(hash.artist);
-    artist_link.attr('title', hash.artist);
-    artist_link.data('id', hash.artist);
-
-    LocalModel.findRecord(hash.id, Cache.current.action).then((record) => {
-      record.title  = hash.title;
-      record.artist = hash.artist;
-      record.genre  = hash.genre;
-    });
   }
 
   static tags(location) {

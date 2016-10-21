@@ -24,6 +24,35 @@ $('.dialog').on('click', '.tag.button', function(e) {
 
   LocalService.tag(form.find('input[name="id"]').val(), tags);
 
+  var body = tags.title;
+
+  if (tags.artist)
+    body += ' - ' + hash.artist;
+
+  Notification.show({
+    action: Translation.t('meta.actions.tagged'),
+    title:  body,
+    icon:   tags.icon
+  });
+
+  var element = $(`.music[data-id="${tags.id.replace('"', "\\\"")}"]`);
+
+  var title_span  = element.find('.title');
+  var artist_link = element.find('.artist');
+
+  title_span.html(tags.title);
+  title_span.attr('title', tags.title);
+
+  artist_link.html(tags.artist);
+  artist_link.attr('title', tags.artist);
+  artist_link.data('id', tags.artist);
+
+  Model.for('local').findRecord(tags.id, Cache.current.action).then((record) => {
+    record.title  = tags.title;
+    record.artist = tags.artist;
+    record.genre  = tags.genre;
+  });
+
   Ui.hideShadow();
 });
 
