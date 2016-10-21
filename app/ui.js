@@ -292,14 +292,11 @@ module.exports = class Ui {
     else if (element.hasClass('local'))
       module = 'local';
 
-    MetaModel.playlists(module).then((playlists) => {
+    Playlist.all(module).then((playlists) => {
       $('.dialog').html(View.compile('meta/partials/add_to_playlist')({
-        module:     module,
-        action:     action,
         id:         element.data('id'),
         soundcloud: module == 'soundcloud',
         youtube:    module == 'youtube',
-        local:      module == 'local',
         playlists:  playlists,
       }));
     })

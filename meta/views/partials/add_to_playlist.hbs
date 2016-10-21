@@ -7,36 +7,27 @@
     <a href="#" class="active" data-service="youtube">{{g 'film'}}  {{t 'yt.name'}}</a>
   {{/if}}
 
-  {{#if local}}
+  {{#unless playlists.remote}}
     <a href="#" class="active" data-service="local">{{g 'music'}} {{t 'local.name'}}</a>
   {{else}}
     <a href="#" data-service="local">{{g 'music'}} {{t 'local.name'}}</a>
-  {{/if}}
+  {{/unless}}
 </nav>
 
 <form>
   <div class="items">
-    {{#if soundcloud}}
+    {{#if playlists.remote}}
       <ul>
-        {{#each playlists.soundcloud.collection}}
+        {{#each playlists.remote.collection}}
           {{playlist_option this}}
         {{/each}}
       </ul>
-    {{/if}}
 
-    {{#if youtube}}
-      <ul>
-        {{#each playlists.youtube.items}}
-          {{playlist_option this}}
-        {{/each}}
-      </ul>
-    {{/if}}
-
-    {{#if local}}
-      <ul>
-    {{else}}
       <ul class="hidden">
+    {{else}}
+      <ul>
     {{/if}}
+
       {{#each playlists.local}}
         {{playlist_option this}}
       {{/each}}

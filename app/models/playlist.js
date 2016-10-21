@@ -58,4 +58,17 @@ module.exports = class Playlist extends Record {
 
     return playlist;
   }
+
+  static all(service) {
+    if (service == 'local')
+      return Model.for('local').playlists().then((playlists) => {
+        return { local: playlists }
+      });
+    else
+      return Model.for('local').playlists().then((local) => {
+        return Model.for(service).playlists().then((remote) => {
+          return { local:  local, remote: remote };
+        });
+      });
+  }
 };
