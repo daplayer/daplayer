@@ -1,13 +1,15 @@
 'use strict';
 
 const SoundCloudModel = require('./model');
+const NetService      = require('../app/services/net');
 const Credentials     = require('../app/credentials');
 const SubWindow       = require('../app/sub_window');
 const querystring     = require('querystring');
 const request         = require('request');
 const SC              = require('./client');
 
-module.exports = class SoundCloudService {
+
+module.exports = class SoundCloudService extends NetService {
   /**
    * Shorthand to check whether the user account is connected.
    *
@@ -103,10 +105,10 @@ module.exports = class SoundCloudService {
     this.stream_url(tags.id).then((url) => {
       var location = Formatter.path(tags.title, tags.artist, 'soundcloud');
 
-      MetaService.download(url, location, tags.id, () => {
+      this.downloadURL(url, location, tags.id, () => {
         Ui.downloadEnd(Downloads.dequeue(tags.id));
 
-        MetaService.downloadImage(tags.icon, tags.title, tags.artist, (icon_path) => {
+        this.downloadImage(tags.icon, tags.title, tags.artist, (icon_path) => {
           tags.icon = icon_path;
 
           LocalService.tag(location, tags);

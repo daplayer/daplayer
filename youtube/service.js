@@ -1,13 +1,14 @@
 'use strict';
 
 const YouTubeModel = require('./model');
+const NetService   = require('../app/services/net');
 const Credentials  = require('../app/credentials');
 const SubWindow    = require('../app/sub_window');
 const querystring  = require('querystring');
 const request      = require('request');
 const YT           = require('./client');
 
-module.exports = class YouTubeService {
+module.exports = class YouTubeService extends NetService {
   /**
    * Checks whether the access token is still valid and the user
    * can reach oAuth URLs to fetch data.
@@ -399,7 +400,7 @@ module.exports = class YouTubeService {
     var location = Formatter.path(tags.title, null, 'youtube');
 
     this.mp3URL(tags.id).then((url) => {
-      MetaService.download(url, location, tags.id, (request) => {
+      this.downloadURL(url, location, tags.id, (request) => {
         Ui.downloadEnd(Downloads.dequeue(tags.id));
 
         LocalService.tag(location, {
@@ -434,7 +435,7 @@ module.exports = class YouTubeService {
       var extension = '.' + url.type.split(';')[0].split('/')[1];
       var location  = Formatter.path(title, null, 'youtube', extension);
 
-      MetaService.download(url.url, location, id, (request) => {
+      this.downloadURL(url.url, location, id, (request) => {
         Ui.downloadEnd(Downloads.dequeue(id));
       });
     });

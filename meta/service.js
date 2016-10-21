@@ -1,9 +1,5 @@
 'use strict';
 
-const fs      = require('fs');
-const path    = require('path');
-const request = require('request');
-
 module.exports = class MetaService {
   static dispatch(set) {
     var set    = set.split(/#|:/).slice(-2);
@@ -51,43 +47,6 @@ module.exports = class MetaService {
           Cache.search_results = hash;
 
         return hash;
-    });
-  }
-
-  static downloadImage(url, artist, title, callback) {
-    var location = Formatter.cover_path(url, artist, title);
-
-    this.download(url, location, false, () => {
-      callback(location);
-    });
-  }
-
-  static download(url, location, id, callback) {
-    request.head(url, (err, res, body) => {
-      var req = request(url);
-      var size, remaining;
-
-      req.pipe(fs.createWriteStream(location));
-
-      if (id) {
-        req.on('response', (response) => {
-          size      = response.headers['content-length'];
-          remaining = size;
-
-          Downloads.grow(size);
-        });
-
-        req.on('data', (chunck) => {
-          remaining = remaining - chunck.length;
-
-          Downloads.progress(chunck.length);
-          Ui.downloadProgress(id, (size - remaining) / size * 100);
-        });
-      }
-
-      req.on('end', () => {
-        callback();
-      });
     });
   }
 }
