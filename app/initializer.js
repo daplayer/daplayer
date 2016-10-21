@@ -39,6 +39,11 @@ global.Ui           = require('./ui');
 global.View         = require('./view');
 
 // ----------------------------------------------
+// Mappers to use the proper class based on a
+// given service.
+require('./mappers');
+
+// ----------------------------------------------
 // Models stack
 global.Record   = require('./models/record');
 global.Playlist = require('./models/playlist');

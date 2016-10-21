@@ -31,6 +31,6 @@ module.exports = class Record {
     var module = Cache.current.module;
     var action = Cache.current.action;
 
-    return MetaModel.findById(element.data('id'), module, action, playlist);
+    return Model.for(module).findById(element.data('id'), action, playlist);
   }
 }

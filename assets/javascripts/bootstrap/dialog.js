@@ -59,9 +59,11 @@ $('.dialog').on('click', '.add_to_playlist.button', function(e) {
   var action     = Cache.current.action;
 
   checkboxes.each(function() {
-    MetaModel.addToPlaylist(module, action, id, {
-      id:      $(this).val(),
-      service: $(this).data('service')
+    var service = $(this).data('service');
+    var id      = $(this).val();
+
+    Model.for(module).findById(id, action).then((record) => {
+      Model.for(service).addToPlaylist(id, record);
     });
   });
 
@@ -96,7 +98,7 @@ $('.dialog').on('keydown', '#new_playlist', function(e) {
     var service = $('.dialog .navbar a.active').data('service');
     var title   = $(this).val();
 
-    MetaModel.createPlaylist(title, service).then((playlist) => {
+    Model.for(service).createPlaylist(title).then((playlist) => {
       $(this).val('');
 
       // Create the new option

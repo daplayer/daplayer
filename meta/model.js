@@ -9,15 +9,6 @@ module.exports = class MetaModel {
     return Promise.resolve(Cache.search_results);
   }
 
-  static findById(id, module, section, playlist) {
-    if (module == 'soundcloud')
-      return SoundCloudModel.findById(id, section, playlist);
-    else if (module == 'youtube')
-      return YouTubeModel.findById(id, section, playlist);
-    else if (module == 'local')
-      return LocalModel.findById(id, section, playlist);
-  }
-
   static resolve(url_or_record) {
     if (url_or_record.startsWith("https://soundcloud"))
       return SoundCloudModel.resolve(url_or_record);
@@ -46,29 +37,5 @@ module.exports = class MetaModel {
           local: local_playlists
         }
     });
-  }
-
-  static addToPlaylist(module, action, id, playlist) {
-    this.findById(id, module, action).then((record) => {
-      if (playlist.service == 'soundcloud')
-        var model = SoundCloudModel;
-      else if (playlist.service == 'youtube')
-        var model = YouTubeModel;
-      else
-        var model = LocalModel;
-
-      return model.addToPlaylist(playlist.id, record);
-    });
-  }
-
-  static createPlaylist(title, service) {
-    if (service == 'soundcloud')
-      var model = SoundCloudModel;
-    else if (service == 'youtube')
-      var model = YouTubeModel;
-    else if (service == 'local')
-      var model = LocalModel;
-
-    return model.createPlaylist(title);
   }
 }
