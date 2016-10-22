@@ -14,14 +14,14 @@ describe('Config', () => {
     });
 
     it('should have proper default values for SoundCloud', () => {
-      assert.equal(Config.default.soundcloud.download,       'bar');
+      assert.equal(Config.default.soundcloud.download,       '');
       assert.equal(Config.default.soundcloud.volume,         1);
       assert.equal(Config.default.soundcloud.stream_view,    'activities');
       assert.equal(Config.default.soundcloud.playlists_view, 'liked_playlists');
     });
 
     it('should have proper default values for YouTube', () => {
-      assert.equal(Config.default.youtube.download, 'baz');
+      assert.equal(Config.default.youtube.download, '');
       assert.equal(Config.default.youtube.quality,  'medium');
       assert.equal(Config.default.youtube.volume,   1);
 
@@ -29,7 +29,7 @@ describe('Config', () => {
     });
 
     it('should have proper default values for the local section', () => {
-      assert.equal(Config.default.local.path,       'foo');
+      assert.equal(Config.default.local.path,       Paths.music_folder);
       assert.equal(Config.default.local.volume,     1);
       assert.equal(Config.default.local.files_view, 'single_files');
     });

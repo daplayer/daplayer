@@ -37,14 +37,40 @@ module.exports = class Paths {
   }
 
   /**
+   * Path to the user's folder.
+   *
+   * @return {String}
+   */
+  static get home() {
+    if (process.platform == 'win32')
+      return process.env['USERPROFILE'];
+    else
+      return process.env['HOME'];
+  }
+
+  /**
+   * Inferred path containing the user's musics.
+   *
+   * @return {String}
+   */
+  static get music_folder() {
+    if (this.exists(path.join(this.home, 'My Music')))
+      return path.join(this.home, 'My Music');
+    else if (this.exists(path.join(this.home, 'Music')))
+      return path.join(this.home, 'Music');
+    else if (this.exists(path.join(this.home, 'Musique')))
+      return path.join(this.home, 'Musique');
+    else
+      return '';
+  }
+
+  /**
    * Path to the user's data folder (e.g. "/home/john/.daplayer").
    *
    * @return {String}
    */
   static get user() {
-    var home = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
-
-    return path.join(home, '.daplayer');
+    return path.join(this.home, '.daplayer');
   }
 
   /**

@@ -37,6 +37,10 @@ describe('Paths', () => {
       process.env[key] = value;
     });
 
+    it('should have the proper value for `home`', () => {
+      assert.equal(Paths.home, 'foo');
+    });
+
     it('should have the proper value for `user`', () => {
       assert.equal(Paths.user, 'foo/.daplayer');
     });

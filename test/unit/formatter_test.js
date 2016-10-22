@@ -43,11 +43,19 @@ describe('Formatter', () => {
   });
 
   describe('#path', () => {
+    before(() => {
+      Config.store('soundcloud', 'download', '/home/jacky');
+    });
+
+    after(() => {
+      Config.store('soundcloud', 'download', '');
+    });
+
     it('should include the artist and the title in the file name', () => {
       assert(Formatter.path('Maliblue', 'Darius', 'soundcloud').endsWith("/Darius - Maliblue.mp3"));
     });
 
-    it('should include once the artist name', () => {
+    it('should include the artist name only once', () => {
       assert(Formatter.path('Darius - Maliblue', 'Darius', 'soundcloud').endsWith("/Darius - Maliblue.mp3"));
     });
 

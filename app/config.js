@@ -42,19 +42,19 @@ module.exports = class Config {
         dashboard_view: 'configuration'
       },
       soundcloud: {
-        download: 'bar',
+        download: '',
         volume: 1,
         stream_view: 'activities',
         playlists_view: 'liked_playlists'
       },
       youtube: {
-        download: 'baz',
+        download: '',
         quality: 'medium',
         related_playlists: {},
         volume: 1
       },
       local: {
-        path: 'foo',
+        path: Paths.music_folder,
         volume: 1,
         files_view: 'single_files'
       },
