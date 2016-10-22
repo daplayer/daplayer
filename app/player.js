@@ -117,6 +117,12 @@ module.exports = class Player {
     });
   }
 
+  /**
+   * Short-hand to pause the current playing media and reset
+   * the player interface.
+   *
+   * @return {null}
+   */
   static stop() {
     this.pause();
 
@@ -290,6 +296,12 @@ module.exports = class Player {
     return this.media.paused;
   }
 
+  /**
+   * Sorthand to access the current playing media based
+   * upon the record's kind.
+   *
+   * @return {HTMLAudioElement|HTMLVideoElement}
+   */
   static get media() {
     if (this.record.kind == 'video')
       return this.video;

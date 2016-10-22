@@ -63,6 +63,13 @@ module.exports = class Formatter {
     return hours + minutes + seconds;
   }
 
+  /**
+   * Returns a human readable sentence to represent the
+   * elapsed time since the given timestamp.
+   *
+   * @param  {Number} timestamp
+   * @return {String}
+   */
   static relativeTime(timestamp) {
     var diff = this.currentTimestamp() - timestamp;
 
@@ -98,14 +105,20 @@ module.exports = class Formatter {
   }
 
   /**
-   * Returns artist name managing edge cases and
-   * extracting the account from the title when the
-   * passed account refers to a label/record (this
-   * is pretty hard to guess so we have a mapping
-   * for those that we know).
+   * Returns artist name based upon the media's title
+   * and associated account.
+   *
+   *   artist('Maliblue', 'Darius')
+   *   // => 'Darius'
+   *   artist('Kartell - Aura',: 'RocheMusique')
+   *   // => 'Kartell'
+   *   artist('Talk Talk (Moon Boots Remix)', 'future classic')
+   *   // => 'Moon Boots'
+   *   artist('Take Care of You', 'Cherokee (Official)')
+   *   // => 'Cherokee'
    *
    * @param  {String} title   - The media's title.
-   * @param  {String} account - The media's account.
+   * @param  {String} account - The associated account.
    * @return {String}
    */
   static artist(title, account) {

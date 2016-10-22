@@ -6,7 +6,8 @@
  * and that returns a hash based on the fields' value.
  * For instance:
  *
- *    form.extractFields(); # => {title: 'Oshan - French Vanilla'}
+ *    form.extractFields();
+ *    // => {title: 'Oshan - French Vanilla'}
  *
  * @return {Object}
  */
@@ -60,7 +61,7 @@ $.fn.title = function(value) {
 }
 
 /**
- * Function that slides out a notification and remove it from.
+ * Function that slides out a notification and remove it from
  * the DOM.
  *
  * @return {null}

@@ -42,7 +42,6 @@ module.exports = class Credentials {
     }
   }
 
-
   static store(service, credentials) {
     if (typeof credentials !== 'string')
       credentials = JSON.stringify(credentials);

@@ -27,6 +27,7 @@ module.exports = class Router {
     //
     // * meta/dashboard
     //     - meta/configuration
+    //     - meta/downloads
     // * soundcloud/stream
     //     - soundcloud/activities
     //     - soundcloud/tracks
