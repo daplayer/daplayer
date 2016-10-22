@@ -19,6 +19,9 @@
         "small": "Small"
       },
       "download": "YouTube download"
+    },
+    "feedback": {
+      "invalid_path": "The specified path to put YouTube downloads in isn't valid. Please choose another one:"
     }
   }
 }

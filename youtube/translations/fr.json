@@ -19,6 +19,9 @@
         "small": "Faible"
       },
       "download": "Téléchargements YouTube"
+    },
+    "feedback": {
+      "invalid_path": "Le chemin spécifié pour placer les téléchargements YouTube n'est pas valide. Veuillez en choisir un autre :"
     }
   }
 }

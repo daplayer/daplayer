@@ -32,7 +32,8 @@
       "no_tracks":          "Vous ne possédez aucune musique.",
       "no_activities":      "Il n'y a aucune nouvelle dans votre flux.",
       "no_liked_playlists": "Vous n'avez encore aimé aucune playlist.",
-      "no_owned_playlists": "Vous n'avez pas encore créé de playlist."
+      "no_owned_playlists": "Vous n'avez pas encore créé de playlist.",
+      "invalid_path":       "Le chemin spécifié pour placer les téléchargements SoundCloud n'est pas valide. Veuillez en choisir un autre :"
     }
   }
 }

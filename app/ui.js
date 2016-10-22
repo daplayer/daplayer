@@ -194,7 +194,18 @@ module.exports = class Ui {
    */
   static tag(element, playlist) {
     Record.from(element).then((record) => {
-      this.Dialog.tag(record);
+      var service = record.service;
+
+      this.Dialog.tag(record).then((tags) => {
+        if (service == 'local') {
+          element.title(tags.title);
+          element.artist(tags.artist);
+
+          Service.for(service).tag(record, tags);
+        } else {
+          Service.for(service).download(tags);
+        }
+      });
     });
   }
 

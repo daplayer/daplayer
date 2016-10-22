@@ -35,6 +35,10 @@
     "format": "Format",
     "pick_picture": "Choisir une autre image",
     "history": "Historique",
+    "error": "Erreur",
+    "errors": {
+      "invalid_path": "Chemin non valide."
+    },
     "search": {
       "on": "Rechercher sur :",
       "source": "Source :",
