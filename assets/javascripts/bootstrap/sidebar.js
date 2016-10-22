@@ -32,7 +32,7 @@ $('.sidebar').on('keyup', '.search input', function(e) {
     var source = $('input[name="source"]:checked').val();
     var module = Cache.current.module;
 
-    if (module = 'meta')
+    if (module == 'meta')
       return;
 
     Cache.search = {

@@ -9,40 +9,41 @@ describe('Config', () => {
 
   describe('#default', () => {
     it('should have proper default values for the meta section', () => {
-      assert.equal('en', Config.default.meta.locale);
-      assert.equal('configuration', Config.default.meta.dashboard_view);
+      assert.equal(Config.default.meta.locale, 'en');
+      assert.equal(Config.default.meta.dashboard_view, 'configuration');
     });
 
     it('should have proper default values for SoundCloud', () => {
-      assert.equal('bar', Config.default.soundcloud.download);
-      assert.equal(1, Config.default.soundcloud.volume);
-      assert.equal('activities', Config.default.soundcloud.stream_view);
-      assert.equal('liked_playlists', Config.default.soundcloud.playlists_view);
+      assert.equal(Config.default.soundcloud.download,       'bar');
+      assert.equal(Config.default.soundcloud.volume,         1);
+      assert.equal(Config.default.soundcloud.stream_view,    'activities');
+      assert.equal(Config.default.soundcloud.playlists_view, 'liked_playlists');
     });
 
     it('should have proper default values for YouTube', () => {
-      assert.equal('baz', Config.default.youtube.download);
-      assert.equal('medium', Config.default.youtube.quality);
-      assert.equal(1, Config.default.youtube.volume);
-      assert.deepEqual({}, Config.default.youtube.related_playlists);
+      assert.equal(Config.default.youtube.download, 'baz');
+      assert.equal(Config.default.youtube.quality,  'medium');
+      assert.equal(Config.default.youtube.volume,   1);
+
+      assert.deepEqual(Config.default.youtube.related_playlists, {});
     });
 
     it('should have proper default values for the local section', () => {
-      assert.equal('foo', Config.default.local.path);
-      assert.equal(1, Config.default.local.volume);
-      assert.equal('single_files', Config.default.local.files_view);
+      assert.equal(Config.default.local.path,       'foo');
+      assert.equal(Config.default.local.volume,     1);
+      assert.equal(Config.default.local.files_view, 'single_files');
     });
   });
 
   describe('#read', () => {
     it('should read default values', () => {
-      assert.equal('en', Config.read('meta', 'locale'));
+      assert.equal(Config.read('meta', 'locale'), 'en');
     });
 
     it('should return the values set by the user', () => {
-      assert.equal('en', Config.read('meta', 'locale'));
+      assert.equal(Config.read('meta', 'locale'), 'en');
       Config.store('meta', 'locale', 'fr');
-      assert.equal('fr', Config.read('meta', 'locale'));
+      assert.equal(Config.read('meta', 'locale'), 'fr');
     });
   });
 
@@ -50,7 +51,7 @@ describe('Config', () => {
     it('should add a `_config` suffix', () => {
       Config.store('local', 'path', 'bar');
 
-      assert.equal('bar', JSON.parse(localStorage.getItem('local_config')).path);
+      assert.equal(JSON.parse(localStorage.getItem('local_config')).path, 'bar');
     });
 
     it('should not erase the existing keys', () => {
@@ -59,8 +60,8 @@ describe('Config', () => {
 
       var values = JSON.parse(localStorage.getItem('local_config'));
 
-      assert.equal('bar', values.path);
-      assert.equal(0.5, values.volume);
+      assert.equal(values.path,   'bar');
+      assert.equal(values.volume, 0.5);
     });
   });
 });
