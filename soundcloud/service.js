@@ -111,7 +111,7 @@ module.exports = class SoundCloudService extends NetService {
         this.downloadImage(tags.icon, tags.title, tags.artist, (icon_path) => {
           tags.icon = icon_path;
 
-          LocalService.tag(location, tags);
+          Service.for('local').tag(location, tags);
         });
       });
     });

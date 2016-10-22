@@ -98,7 +98,7 @@ module.exports = class YouTubeService extends NetService {
     // token with this code and close the window.
     auth_window.on('redirect', (event, old_url, new_url) => {
       if (new_url.match(/code=/)) {
-        YouTubeService.requestToken(new_url);
+        this.requestToken(new_url);
         auth_window.close();
       }
     });
@@ -122,7 +122,7 @@ module.exports = class YouTubeService extends NetService {
     };
 
     request.post(YT.url.token, { form: params }, (e, r, body) => {
-      YouTubeService.storeCredentials(body, false);
+      this.storeCredentials(body, false);
     });
   }
 
@@ -272,36 +272,37 @@ module.exports = class YouTubeService extends NetService {
             reject(error);
 
           var fname = jscode.match(/\.set\("signature",(.*?)\(/)[1];
-          var fbody = "";
           var pos   = jscode.indexOf(fname + "=function");
+          var fbody = '', protoype = '';
 
-          // Copy the very beginning of the function
-          // (i.e. untile the '{').
-          for (; jscode[pos-1] != '{'; pos++)
-            fbody += jscode[pos];
+          // Skip the function definition.
+          for (; jscode[pos-1] != '('; pos++);
 
-          // Copy the function's body
-          for (var braces = 1; braces > 0; pos++) {
-            fbody += jscode[pos];
+          // Copy the function's protoype to extract parameters
+          // from it.
+          for (; jscode[pos] != ')'; pos++)
+            protoype += jscode[pos];
 
+          // Copy the function's body. We need to skip the
+          // last brace and first curly-brace entering the loop.
+          for (var braces = 1, pos = pos + 2; braces > 0; pos++) {
             if (jscode[pos] == '{')
               braces++;
             else if (jscode[pos] == '}')
               braces--;
+
+            if (braces != 0)
+              fbody += jscode[pos];
           }
 
-          var parameters = fbody.split("function")[1].match(/\((\w+|,)+\)/)[0];
-              parameters = parameters.slice(1, -1).split(",");
-          var inner_obj  = fbody.match(/\w+\.\w+/g);
+          var parameters = protoype.split(/,\s?/);
+              parameters = new RegExp('^' + parameters.join('\\.|') + '\\.');
+
+          var inner_obj = fbody.match(/\w+\.\w+/g).find(e => !e.match(parameters));
+              inner_obj = inner_obj.split('.').first();
 
           // Copy the code of the inner object.
           if (inner_obj) {
-            inner_obj = inner_obj.filter((e) => {
-              return parameters.indexOf(e[0]) == -1;
-            });
-
-            inner_obj = inner_obj[0].split(".")[0];
-
             var match_str = `var ${inner_obj}=`, code = "{";
             var position  = jscode.indexOf(match_str) + match_str.length + 1;
 
@@ -314,16 +315,16 @@ module.exports = class YouTubeService extends NetService {
                 braces--;
             }
 
-            fbody = fbody.replace(new RegExp(inner_obj + "\\.", "g"), "YouTubeService.inner_obj.");
+            eval("Cache.inner_object = " + code);
 
-            eval('YouTubeService.inner_obj = ' + code);
+            var decrypt = new Function('a', inner_obj, fbody);
+
+            resolve(decrypt(signature, Cache.inner_object));
+          } else {
+            var decrypt = new Function('a', fbody);
+
+            resolve(decrypt(signature));
           }
-
-          // Pretty hacky but we don't have any better
-          // solution for now.
-          eval('YouTubeService.youtube_decrypt = ' + fbody.split(fname + "=")[1]);
-
-          resolve(YouTubeService.youtube_decrypt(signature));
         });
       });
     });
@@ -403,7 +404,7 @@ module.exports = class YouTubeService extends NetService {
       this.downloadURL(url, location, tags.id, (request) => {
         Ui.downloadEnd(Downloads.dequeue(tags.id));
 
-        LocalService.tag(location, {
+        Service.for('local').tag(location, {
           title: tags.title
         });
       });

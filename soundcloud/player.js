@@ -54,6 +54,6 @@ module.exports = class SoundCloudPlayer {
    * @return {Promise}
    */
   static load(id) {
-    return SoundCloudService.stream_url(id);
+    return Service.for('soundcloud').stream_url(id);
   }
 }

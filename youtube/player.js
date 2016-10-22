@@ -29,7 +29,7 @@ module.exports = class YouTubePlayer {
 
           if (!this.buffering_next_url && !next_url) {
             this.buffering_next_url = true;
-            YouTubeService.videoURL(next_id);
+            Service.for('youtube').videoURL(next_id);
           }
         });
     }
@@ -75,7 +75,7 @@ module.exports = class YouTubePlayer {
    * @return {Promise}
    */
   static load(id) {
-    return YouTubeService.videoURL(id).then((hash) => {
+    return Service.for('youtube').videoURL(id).then((hash) => {
       return hash.url;
     });
   }

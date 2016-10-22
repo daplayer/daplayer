@@ -17,10 +17,10 @@ module.exports = class MetaController {
     return new Promise((resolve, reject) => {
       View.render('meta/configuration', {
         soundcloud: {
-          connected: SoundCloudService.isConnected()
+          connected: Service.for('soundcloud').isConnected()
         },
         youtube: {
-          connected: YouTubeService.isConnected()
+          connected: Service.for('youtube').isConnected()
         }
       });
 
@@ -71,9 +71,9 @@ module.exports = class MetaController {
 
     // Early return if we try to hit a service that is not
     // yet connected.
-    if (module == 'soundcloud' && !SoundCloudService.isConnected())
+    if (module == 'soundcloud' && !Service.for('soundcloud').isConnected())
       return View.render('soundcloud/connection');
-    else if (module == 'youtube' && !YouTubeService.isConnected())
+    else if (module == 'youtube' && !Service.for('youtube').isConnected())
       return View.render('youtube/connection');
 
     Ui.showLoader(params);

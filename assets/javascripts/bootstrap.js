@@ -11,7 +11,7 @@ $(document).ready(function() {
   Player.initialize();
 
   // Connect to the different services
-  YouTubeService.connect();
+  Service.for('youtube').connect();
 
   // --------------------------------------------------------
   // Load the different partials (sidebar, etc.)

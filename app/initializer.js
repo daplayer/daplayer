@@ -53,12 +53,6 @@ global.Media    = require('./models/media');
 global.Album    = require('./models/album');
 global.Activity = require('./models/activity');
 
-// ----------------------------------------------
-// Services stack
-global.SoundCloudService = require('../soundcloud/service');
-global.YouTubeService    = require('../youtube/service');
-global.LocalService      = require('../local/service');
-
 global.MetaController = require('../meta/controller');
 
 // ----------------------------------------------

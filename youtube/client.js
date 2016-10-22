@@ -33,7 +33,7 @@ module.exports = class YT {
   static fetch(resource, options, callback) {
     // Refresh the token whenever we try to hit the API but
     // the current access token is no longer valid.
-    YouTubeService.connect();
+    Service.for('youtube').connect();
 
     // Mapping between resource and options
     var mapping = {
