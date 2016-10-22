@@ -7,7 +7,7 @@ module.exports = class NetService {
   static downloadImage(url, artist, title, callback) {
     var location = Formatter.cover_path(url, artist, title);
 
-    this.download(url, location, false, () => {
+    this.downloadURL(url, location, false, () => {
       callback(location);
     });
   }
