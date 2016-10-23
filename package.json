@@ -1,11 +1,11 @@
 {
   "dependencies": {
-    "electron-prebuilt": "^1.4.0",
-    "handlebars":        "^4.0.5",
-    "jquery":            "^2.2.0",
-    "glob":              "^7.0.3",
-    "less":              "^2.7.1",
-    "daplayer-tagging":  "git://github.com/daplayer/tagging.git#master"
+    "electron":         "^1.4.3",
+    "handlebars":       "^4.0.5",
+    "jquery":           "^2.2.0",
+    "glob":             "^7.1.1",
+    "less":             "^2.7.1",
+    "daplayer-tagging": "git://github.com/daplayer/tagging.git#master"
   },
   "devDependencies": {
     "electron-rebuild": "^1.2.0",
