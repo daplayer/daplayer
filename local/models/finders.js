@@ -71,6 +71,18 @@ module.exports = class LocalModelFinders {
   }
 
   static findRecord(id, section) {
+    // If we are hitting this method, it means that the user
+    // tries to play a single.
+    //
+    // As for artists, we know that we are looking for a single
+    // for sure but on the search results page, it could be a
+    // single extracted from an album so we need to look into
+    // all the files.
+    if (section == 'artist')
+      section = 'singles';
+    if (section == 'search_results')
+      section = 'files';
+
     return this[section.camel()]().then((cached) => {
       // If we are trying to find a record on the search page
       // and we are hitting these lines, it's because no playlists
