@@ -26,8 +26,10 @@ global.NativeNotification = Notification;
 
 // ----------------------------------------------
 // Internal components
+global.Analytics    = require('./analytics');
 global.Cache        = require('./cache');
 global.Config       = require('./config');
+global.Database     = require('./database');
 global.Downloads    = require('./downloads');
 global.FilePicker   = require('./file_picker');
 global.Formatter    = require('./formatter');

@@ -108,6 +108,8 @@ module.exports = class Player {
       if (record.isYouTube())
         YouTubeModel.addToHistory(record);
 
+      Analytics.increase(this.record);
+
       this.media.src = url;
       this.media.load();
 
@@ -157,6 +159,7 @@ module.exports = class Player {
    */
   static playNext() {
     if (this.repeat) {
+      Analytics.increase(this.record);
       this.goTo(0);
       this.play();
     } else {
