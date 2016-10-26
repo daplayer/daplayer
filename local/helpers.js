@@ -7,14 +7,13 @@ Handlebars.registerHelper('listen_later', function(item) {
 Handlebars.registerHelper('local_files_menu', function(active) {
   var icons = {
     singles: 'music',
-    albums:  'cd',
     artists: 'user'
   };
 
   var html = Html.tag('div', {class: 'navbar'}, () => {
     var output = '';
 
-    ['singles', 'albums', 'artists'].forEach((entry) => {
+    ['singles', 'artists'].forEach((entry) => {
       if (entry == active)
         var attrs = {href: '#', class: 'active'};
       else

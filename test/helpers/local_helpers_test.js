@@ -18,11 +18,9 @@ describe('Local helpers', () => {
       var output = Handlebars.helpers.local_files_menu();
 
       assert.include(output, '<a href="local/singles">');
-      assert.include(output, '<a href="local/albums">');
       assert.include(output, '<a href="local/artists">');
 
       assert.include(output, Translation.t('local.files_menus.singles'));
-      assert.include(output, Translation.t('local.files_menus.albums'));
       assert.include(output, Translation.t('local.files_menus.artists'));
     });
 
@@ -30,7 +28,6 @@ describe('Local helpers', () => {
       var output = Handlebars.helpers.local_files_menu('singles');
 
       assert.include(output, '<a href="#" class="active">');
-      assert.include(output, '<a href="local/albums">');
       assert.include(output, '<a href="local/artists">');
     })
   });

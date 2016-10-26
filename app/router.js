@@ -11,7 +11,6 @@ module.exports = class Router {
       liked_playlists: 'playlists_view',
       user_playlists:  'playlists_view',
       singles:         'files_view',
-      albums:          'files_view',
       artists:         'files_view'
     }
 
@@ -36,7 +35,6 @@ module.exports = class Router {
     //     - soundcloud/user_playlists
     // * local/files
     //     - local/single_files
-    //     - local/albums
     //     - local/artists
     if (href == 'meta/dashboard')
       return Config.meta.dashboard_view;
@@ -55,17 +53,17 @@ module.exports = class Router {
     // just special cased to make sure that the equalizer is shown
     // at the right place:
     //
-    // * meta/{configuration,downloads}         => meta/dashboard
-    // * soundcloud/{activities,tracks}         => soundcloud/stream
-    // * soundcloud/{liked,user}_playlists      => soundcloud/playlists
-    // * local/{singles,albums,artists, artist} => local/files
+    // * meta/{configuration,downloads}     => meta/dashboard
+    // * soundcloud/{activities,tracks}     => soundcloud/stream
+    // * soundcloud/{liked,user}_playlists  => soundcloud/playlists
+    // * local/{singles,artists, artist}    => local/files
     if (module == 'meta' && ['configuration', 'downloads'].includes(action))
       return 'meta/dashboard';
     else if (module == 'soundcloud' && ['activities', 'tracks'].includes(action))
       return 'soundcloud/stream';
     else if (module == 'soundcloud' && ['liked_playlists', 'user_playlists'].includes(action))
       return 'soundcloud/playlists';
-    else if (module == 'local' && ['singles', 'albums', 'artists', 'artist', 'search_results'].includes(action))
+    else if (module == 'local' && ['singles', 'artists', 'artist', 'search_results'].includes(action))
       return 'local/files';
     else
       return [module, action].join("/");

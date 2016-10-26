@@ -11,14 +11,6 @@ module.exports = class LocalController {
     });
   }
 
-  static albums() {
-    return LocalModel.albums().then((albums) => {
-      View.render('local/albums', {
-        albums: albums
-      })
-    });
-  }
-
   static artists() {
     return LocalModel.artists().then((artists) => {
       View.render('local/artists', {

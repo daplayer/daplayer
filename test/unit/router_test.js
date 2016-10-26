@@ -36,9 +36,6 @@ describe('Router', () => {
       Config.store('local', 'files_view',    'singles');
       assert.equal(Router.to('local/files'), 'singles');
 
-      Config.store('local', 'files_view',    'albums');
-      assert.equal(Router.to('local/files'), 'albums');
-
       Config.store('local', 'files_view',    'artists');
       assert.equal(Router.to('local/files'), 'artists');
     });
@@ -68,7 +65,6 @@ describe('Router', () => {
 
     it('should map singles, albums or artists to local `files`', () => {
       assert.equal(Router.from('local', 'singles'), 'local/files');
-      assert.equal(Router.from('local', 'albums'),  'local/files');
       assert.equal(Router.from('local', 'artists'), 'local/files');
       assert.equal(Router.from('local', 'artist'),  'local/files');
     });
