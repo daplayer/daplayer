@@ -45,6 +45,22 @@ Array.prototype.unique = function() {
 };
 
 /**
+ * Sorts array's elements by the given field name.
+ *
+ * @param  {String} field - The field to sort by.
+ * @return {Array}
+ */
+Array.prototype.sortBy = function(field) {
+  return this.sort((a, b) => {
+    if (a[field] > b[field])
+      return 1;
+    else if (a[field] < b[field])
+      return -1;
+
+    return 0;
+  })
+}
+/**
  * Only for SoundCloud `artwork_url` fields:
  *
  * Substitute the actual size of the image with the specified

@@ -33,6 +33,14 @@ describe('core extensions', () => {
         assert.deepEqual(array.unique(), [1, 2, 3]);
       });
     });
+
+    describe('#sortBy', () => {
+      it('should sort elements by their given field', () => {
+        var array = [{v: 3}, {v: 1}, {v: 2}].sortBy('v');
+
+        assert.deepEqual(array, [{v:1}, {v: 2}, {v: 3}]);
+      });
+    })
   });
 
   describe('String', () => {
