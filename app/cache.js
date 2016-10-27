@@ -72,7 +72,7 @@ module.exports = class Cache {
           // Sometimes the SoundCloud API gives a `next_href` that
           // will return an empty collection, in this case we can't
           // concatenate so let's return the existing one as is.
-          if (data.collection.empty()) {
+          if (data.collection && data.collection.empty()) {
             existing.next_token = null;
             resolve(existing);
           }
