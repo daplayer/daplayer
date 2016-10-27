@@ -8,15 +8,15 @@ describe('LocalModel::Finders', () => {
       Cache.initialize();
 
       Cache.add('local', 'singles', [
-        {id: 'foo', genre: 'Metal'},
-        {id: 'bar', genre: 'Core'},
-        {id: 'baz', genre: 'Hardcore'}
+        Media.local({id: 'foo', genre: 'Metal'}),
+        Media.local({id: 'bar', genre: 'Core'}),
+        Media.local({id: 'baz', genre: 'Hardcore'})
       ]);
 
-      Cache.add('local', 'albums', [
-        new Album({title: 'foo', album: true, items: [{genre: 'Electro Jazz'}]}),
-        new Album({title: 'bar', album: true, items: [{genre: 'House'}]}),
-        new Album({title: 'baz', album: true, items: [{genre: 'French House'}]})
+      Cache.add('local', 'artists', [
+        new Artist('', {foo: [{title: '', genre: 'Electro Jazz'}]}),
+        new Artist('', {bar: [{title: '', genre: 'House'}]}),
+        new Artist('', {baz: [{title: '', genre: 'French House'}]})
       ]);
     });
 
@@ -62,9 +62,9 @@ describe('LocalModel::Finders', () => {
         {id: 'bar', artist: 'Bring Me The Horizon'}
       ]);
 
-      Cache.add('local', 'albums', [
-        new Album({title: 'foo', album: true, items: [{artist: 'Kaytranda'}]}),
-        new Album({title: 'bar', album: true, items: [{artist: 'Darius'}]})
+      Cache.add('local', 'artists', [
+        new Artist('Darius', {foo: [{title: '', genre: 'Electro Jazz'}]}),
+        new Artist('', {bar: [{title: '', genre: 'House'}]}),
       ]);
     });
 

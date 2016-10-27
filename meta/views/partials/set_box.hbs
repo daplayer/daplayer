@@ -1,4 +1,9 @@
-<div class="set {{ service }}" data-id="{{ id }}" data-album="{{ album }}">
+{{#if album}}
+  <div class="set {{ service }}" data-id="{{ id }}"
+     data-album="{{ album }}" data-artist="{{ artist.name }}">
+{{else}}
+  <div class="set {{ service }}" data-id="{{ id }}">
+{{/if}}
   {{#unless isYouTube}}
     <div class="cover">
       <img src="{{ icon }}">
@@ -26,7 +31,7 @@
         {{#if isSoundCloud}}
           {{ artist }}
         {{else if album}}
-          {{ artist }} - {{ items.length }} {{t 'meta.tracks'}}
+          {{ artist.name }} - {{ items.length }} {{t 'meta.tracks'}}
         {{else}}
           {{ items.length }} {{t 'meta.items'}}
         {{/if}}

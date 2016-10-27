@@ -127,7 +127,10 @@ module.exports = class Ui {
    * @return {null}
    */
   static fileProcessProgress(processed) {
-    $('.loader-text').html(Translation.t('local.feedback.progress', processed));
+    $('.loader-text').html(Translation.t('local.feedback.progress', {
+      current: processed[0],
+      total:   processed[1]
+    }));
   }
 
   /**

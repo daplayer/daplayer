@@ -1,7 +1,9 @@
 'use strict';
 
+const Paths      = require('../app/paths');
 const LocalModel = require('./model');
 const Tagging    = require('daplayer-tagging');
+const glob       = require('glob');
 
 module.exports = class LocalService {
   static tag(location_or_media, hash) {
@@ -23,8 +25,17 @@ module.exports = class LocalService {
     }
   }
 
-  static tags(location) {
-    return Tagging.get(location, Paths.covers);
+  static tags(location, callback) {
+    var pattern = Paths.join(location, '**/*.{mp3,ogg,m4a}');
+
+    return new Promise((resolve, reject) => {
+      glob(pattern, (err, files) => {
+        if (err)
+          reject(err);
+
+        resolve(Tagging.get(files, Paths.covers, callback));
+      })
+    });
   }
 
   /**

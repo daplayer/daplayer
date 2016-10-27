@@ -1,16 +1,21 @@
 'use strict';
 
 module.exports = class Album extends Playlist {
-  constructor(hash) {
-    super(hash.title.dasherize(), 'local');
+  constructor(title, artist, items) {
+    super(title.dasherize(), 'local');
 
     this.album  = true;
-    this.title  = hash.title;
-    this.items  = hash.items;
-    this.artist = this.items.first().artist;
-    this.genre  = this.items.first().genre;
+    this.title  = title;
+    this.artist = artist;
+
+    this.items  = items.map((item) => {
+      return Media.local(item);
+    });
+
+    this.genre = this.items.first().genre;
 
     this.items.sort((a, b) => a.track - b.track);
     this.items.forEach(item => item.set = this);
+    this.items.forEach(Record.link);
   }
 }

@@ -54,6 +54,7 @@ global.Playlist = require('./models/playlist');
 global.Media    = require('./models/media');
 global.Album    = require('./models/album');
 global.Activity = require('./models/activity');
+global.Artist   = require('./models/artist');
 
 global.MetaController = require('../meta/controller');
 

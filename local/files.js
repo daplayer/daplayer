@@ -7,10 +7,9 @@
 
 require('../app/core_ext');
 
-global.Paths        = require('../app/paths');
-global.LocalService = require('./service');
-
-require('./models/files').readFiles(process.argv[2]).then((files) => {
+require('./service').tags(process.argv[2], (current, total) => {
+  process.send([current, total]);
+}).then((files) => {
   process.send(files);
 }).catch((e) => {
   console.log(e);

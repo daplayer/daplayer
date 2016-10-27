@@ -1,25 +1,21 @@
 'use strict';
 
-const glob = require('glob');
-
 module.exports = class LocalModelFiles {
-  static files() {
-    if (Cache.local.files)
-      return Cache.local.files;
+  static files(section) {
+    if (Cache.local[section])
+      return Cache.local[section];
 
     return new Promise((resolve, reject) => {
       const cp    = require('child_process');
       const child = cp.fork(`${__dirname}/../files.js`, [Config.local.path]);
 
       child.on('message', (message) => {
-        if (message instanceof Array) {
-          var records = message.map(file => Media.local(file));
+        if (message instanceof Array)
+          return Ui.fileProcessProgress(message);
 
-          Cache.add('local', 'files', records);
-
-          resolve(records);
-        } else
-          Ui.fileProcessProgress(message);
+        this.processFiles(message).then((collection) => {
+          resolve(collection[section]);
+        });
       });
 
       child.on('error', (error) => {
@@ -27,139 +23,68 @@ module.exports = class LocalModelFiles {
       });
     });
   }
+
   /**
-   * Lists all files that are under the user's specified
-   * music folder and create a new `Record` object for
-   * each file reading its eventual MP3 tags.
+   * Properly instantiates records based on the given hash.
+   * The hash values are just plain objects but we want to
+   * be able to deal with instances of `Album`, `Artist` and
+   * `Media`.
    *
-   * @param  {String} folder - The folder to look for audio
-   *                           files.
+   * @param  {Object} hash - The hash returned by the tagging
+   *                         library.
    * @return {Promise}
    */
-  static readFiles(folder) {
-    var pattern = Paths.join(folder, "**/*.{mp3,wav,ogg,m4a}");
-
+  static processFiles(hash) {
     return new Promise((resolve, reject) => {
-      glob(pattern, (error, files) => {
-        if (error)
-          console.log(error);
-
-        resolve(files.map((file, i) => {
-          process.send({
-            current: i+1,
-            total:   files.length
-          });
-
-          return LocalService.tags(file);
-        }));
+      var singles = hash.singles.map((single) => {
+        return Media.local(single);
       });
+
+      var artists = Object.keys(hash.artists).map((name) => {
+        var raw_hash = hash.artists[name]
+        var artist   = new Artist(raw_hash.name, raw_hash.albums);
+
+        artist.singles = raw_hash.singles.map(i => singles[i]);
+
+        return artist;
+      });
+
+      Cache.add('local', 'singles', singles);
+      Cache.add('local', 'artists', artists);
+
+      resolve({ singles: singles, artists: artists });
     });
   }
 
   /**
-   * Picks all files returned by the `files` methods that
-   * don't have any album attached to them.
+   * Returns all the singles stored inside the user's music
+   * folder.
    *
    * @return {Promise}
    */
   static singles() {
-    if (Cache.local.singles)
-      return Cache.local.singles;
-
-    return this.files().then((records) => {
-      return records.filter(record => !record.album);
-    }).then((singles) => {
-      return Cache.add('local', 'singles', singles);
-    });
+    return this.files('singles');
   }
 
   /**
-   * Returns all albums with their attached tracks from
-   * the files returned by the `files` method.
+   * Returns all the artists stored inside the user's music
+   * folder with all their know albums and singles attached.
    *
    * @return {Promise}
    */
-  static albums() {
-    if (Cache.local.albums)
-      return Cache.local.albums;
-
-    return this.files().then((files) => {
-      var albums = files.filter(record => record.album)
-                        .map(record => record.album)
-                        .unique();
-
-      return albums.map((album) => {
-        return new Album({
-          title: album,
-          items: files.filter((f) => f.album == album)
-        });
-      });
-    }).then((albums) => {
-      return Cache.add('local', 'albums', albums);
-    });
-  }
-
   static artists() {
-    return this.files().then((files) => {
-      var artists = files.filter(file => file.artist)
-                         .map(file => file.artist);
-
-      // We need to compare artists case-insensitively
-      // as musics may be tagged with the same artist
-      // name but with a different case (e.g. Rage Against
-      // *the* Machine vs. Rage Against *The* Machine).
-      var skipped     = 0;
-      var lower_cased = artists.map(artist => artist.toLowerCase())
-                               .unique();
-
-      // The array should be in the same order and the
-      // indexes are just not matching by the number
-      // of elements that we have skipped (i.e. the
-      // artists that are already in the array but that
-      // are not matching because they don't have the
-      // same case).
-      return artists.filter((artist, index) => {
-        if (lower_cased.indexOf(artist.toLowerCase()) + skipped == index)
-          return artist;
-        else
-          skipped++;
-      })
-    }).then((artists) => {
-      return this.albums().then((albums) => {
-        return artists.map((artist) => {
-          return {
-            name: artist,
-            album_count: albums.filter((album) => {
-              return album.artist.toLowerCase() == artist.toLowerCase();
-            }).length
-          };
-        }).sort((a, b) => {
-          if (a.name < b.name)
-            return -1;
-          if (a.name > b.name)
-            return 1;
-
-          return 0;
-        });
-      });
-    }).then((artists) => {
-      Cache.add('local', 'artists', artists);
-
-      return artists;
-    });
+    return this.files('artists');
   }
 
+  /**
+   * Returns an artist given their name.
+   *
+   * @param  {String} name - The artist's name.
+   * @return {Promise}
+   */
   static artist(name) {
-    return this.albums().then((albums) => {
-      return albums.filter((album) => album.artist.toLowerCase() == name.toLowerCase());
-    }).then((albums) => {
-      return this.singles().then((singles) => {
-        return {
-          name:    name,
-          albums:  albums,
-          singles: singles.filter((single) => single.artist.toLowerCase() == name.toLowerCase())
-        }
-      })
+    return this.artists().then((artists) => {
+      return artists.find(artist => artist.name == name);
     });
   }
 }

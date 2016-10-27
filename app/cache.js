@@ -64,8 +64,6 @@ module.exports = class Cache {
         data.collection.forEach(Record.link);
       else if (data.items)
         data.items.forEach(Record.link);
-      else
-        data.forEach(Record.link);
 
       return this[module][section] = Promise.resolve(data);
     } else {

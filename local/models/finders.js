@@ -16,26 +16,35 @@ module.exports = class LocalModelFinders {
    */
   static findBy(field, query) {
     if (field == 'genre')
-      var match = (value) => { return value.toLowerCase() == query.toLowerCase() };
+      var match = (record) => { return record[field].toLowerCase() == query.toLowerCase() };
     else
-      var match = (value) => { return value.match(new RegExp(query, 'i')) };
+      var match = (record) => { return record[field].match(new RegExp(query, 'i')) };
 
-    // When we are searching by title, we may have eponymous musics
-    // (e.g. 'All Hope Is Gone') so we want to look for every files
-    // *and* albums. But when we are searching by artist or genre,
-    // we don't want musics coming from albums.
-    var source = field == 'title' ? this.files() : this.singles();
+    return Promise.resolve({}).then((results) => {
+      return this.singles().then((singles) => {
+        results.singles = singles.filter(match);
 
-    return source.then((singles) => {
-      return singles.filter(record => match(record[field]));
-    }).then((singles) => {
-      return this.albums().then((albums) => {
-        return albums.filter(album => match(album[field]));
-      }).then((albums) => {
-        return {
-          albums:  albums,
-          singles: singles
-        }
+        return results;
+      }).then((results) => {
+        this.artists().then((artists) => {
+          results.albums = [];
+
+          artists.forEach((artist) => {
+            artist.albums.forEach((album) => {
+              if (match(album))
+                results.albums.push(album);
+
+              // There may be eponymous musics (e.g. 'All Hope Is Gone')
+              // so we want to look for every files *and* albums. But when
+              // we are searching by artist or genre, we want the album as
+              // a whole, not every single music.
+              if (field == 'title')
+                results.singles = results.singles.concat(album.items.filter(match));
+            });
+          });
+        });
+
+        return results;
       });
     });
   }
@@ -53,10 +62,8 @@ module.exports = class LocalModelFinders {
 
   static findPlaylist(element) {
     if (element.data('album'))
-      return this.albums().then((albums) => {
-        return albums.find((album) => {
-          return album.id == element.data('id');
-        });
+      return this.artist(element.data('artist')).then((artist) => {
+        return artist.albums.find(album => album.id == element.data('id'));
       });
     else
       return this.playlists().then((playlists) => {
