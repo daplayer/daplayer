@@ -92,6 +92,15 @@ module.exports = class Paths {
   }
 
   /**
+   * Path to the folder containing artist images.
+   *
+   * @return {String}
+   */
+  static get artists() {
+    return path.join(this.user, 'artists');
+  }
+
+  /**
    * Path to the folder containing playlists.
    *
    * @return {String}

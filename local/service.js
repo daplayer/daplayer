@@ -1,6 +1,7 @@
 'use strict';
 
 const LocalModel = require('./model');
+const glob       = require('glob');
 
 module.exports = class LocalService {
   /**
@@ -23,6 +24,21 @@ module.exports = class LocalService {
       title:  tags.artist ? (tags.title + ' - ' + tags.artist) : tags.title,
       icon:   tags.icon
     });
+  }
+
+  /**
+   * Returns a list of the images stored inside the artist
+   * arts folder.
+   *
+   * @return {Promise}
+   */
+  static artistArts() {
+    if (!Cache.local.artist_arts) {
+      var pattern = Paths.join(Paths.artists, '*.{jpeg,jpg,png}');
+      Cache.local.artist_arts = glob.sync(pattern);
+    }
+
+    return Cache.local.artist_arts;
   }
 
   /**

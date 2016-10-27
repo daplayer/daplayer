@@ -3,7 +3,11 @@
 {{#each artists}}
   <a href="local/artist" class="artist-thumbnail" data-id="{{ name }}">
     <div class="thumbnail">
-      {{g 'user'}}
+      {{#if picture}}
+        <img src="{{ picture }}">
+      {{else}}
+        {{g 'user'}}
+      {{/if}}
     </div>
 
     <span class="title">{{ name }}</span>

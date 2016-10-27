@@ -1,19 +1,27 @@
 <div class="banner">
+  {{#if picture}}
+    <div class="background" style="background-image: url('{{ picture }}')"></div>
+  {{else}}
+    <div class="background"></div>
+  {{/if}}
   <div class="showcase">
     <div class="artist-thumbnail">
       <div class="thumbnail">
-        {{g 'user'}}
+        {{#if picture}}
+          <img src="{{ picture }}">
+        {{else}}
+          {{g 'user'}}
+        {{/if}}
       </div>
+    </div>
 
-      <span class="title">{{ name }}</span>
+    <div class="information">
+      <h2>{{ name }}</h2>
+      <h3>{{ albums.length }} albums / {{ singles.length }} singles</h3>
     </div>
   </div>
 
   <div class="clearer"></div>
-
-  <div class="navbar">
-    <a href="#" class="active">{{g 'music'}} Fichiers Locaux</a>
-  </div>
 </div>
 
 {{#if albums}}

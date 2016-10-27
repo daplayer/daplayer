@@ -35,6 +35,13 @@ global.Album    = require('../app/models/album');
 global.Activity = require('../app/models/activity');
 global.Artist   = require('../app/models/artist');
 
+global.Service = class {
+  static for(service) {
+    if (service == 'local')
+      return require('../local/service');
+  }
+}
+
 // Add the `assert.include` helper
 assert.include = function(str, sub_string) {
   if (str instanceof Handlebars.SafeString)

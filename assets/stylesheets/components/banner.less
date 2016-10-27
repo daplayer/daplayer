@@ -1,23 +1,34 @@
 .banner {
   .basic-box();
-  .navbar {
-    border: none;
-    box-shadow: none;
+  height: 220px;
+  position: relative;
+
+  .background, .showcase {
+    height: 100%;
+    width: 100%;
     margin: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  .background {
+    background-size: 100%;
+    filter: blur(20px);
+    opacity: 0.8;
+    z-index: 300;
   }
 
   .showcase {
-    background: linear-gradient(135deg, @pink 0%, @smooth-purple 51%, @dark-purple 100%);
-    box-shadow: 0 1px 1px fade(@darkest-purple, 20%);
-    height: 250px;
-    margin-bottom: 0;
-    position: relative;
+    z-index: 400;
 
     .artist-thumbnail {
-      height: 220px;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
+      height: 180px;
+      margin-top: 20px;
+    }
+
+    .information {
+      margin-top: 70px;
     }
   }
 }

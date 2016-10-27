@@ -1,6 +1,11 @@
 require('../../test_helper');
 
 describe('Artist', () => {
+  before(() => {
+    Cache.initialize();
+    Cache.local.artist_arts = ['path/to/Trivium.jpeg'];
+  });
+
   describe('constructor', () => {
     it('should properly set the name', () => {
       var artist = new Artist('Daft Punk', {});
@@ -19,6 +24,12 @@ describe('Artist', () => {
 
       assert.equal(artist.albums.first().title, '99.9%');
       assert.equal(artist.albums.first().artist.name, artist.name);
+    });
+
+    it('should infer any existing art for that artist', () => {
+      var artist = new Artist('Trivium', {});
+
+      assert.equal(artist.picture, 'path/to/Trivium.jpeg');
     });
   });
 })
