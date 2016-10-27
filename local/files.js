@@ -5,9 +5,7 @@
  * since huge folders may take several seconds to load.
  */
 
-require('../app/core_ext');
-
-require('./service').tags(process.argv[2], (current, total) => {
+require('../app/services/tagging').extract(process.argv[2], (current, total) => {
   process.send([current, total]);
 }).then((files) => {
   process.send(files);

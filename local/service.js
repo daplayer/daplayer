@@ -1,40 +1,27 @@
 'use strict';
 
-const Paths      = require('../app/paths');
 const LocalModel = require('./model');
-const Tagging    = require('daplayer-tagging');
-const glob       = require('glob');
 
 module.exports = class LocalService {
-  static tag(location_or_media, hash) {
-    if (location_or_media instanceof Media) {
-      // Update the record in cache.
-      location_or_media.title  = hash.title;
-      location_or_media.artist = hash.artist;
-      location_or_media.genre  = hash.genre;
+  /**
+   * Delegates to `TaggingService#define` and properly
+   * updates the record in the cache.
+   *
+   * @param  {Media}  media
+   * @param  {Object} tags
+   * @return {null}
+   */
+  static tag(media, tags) {
+    media.title  = tags.title;
+    media.artist = tags.artist;
+    media.genre  = tags.genre;
 
-      Tagging.set(hash.id, hash);
+    require('../app/services/tagging').define(tags.id, tags);
 
-      Notification.show({
-        action: Translation.t('meta.actions.tagged'),
-        title:  hash.artist ? (hash.title + ' - ' + hash.artist) : hash.title,
-        icon:   hash.icon
-      });
-    } else {
-      Tagging.set(location_or_media, hash);
-    }
-  }
-
-  static tags(location, callback) {
-    var pattern = Paths.join(location, '**/*.{mp3,ogg,m4a}');
-
-    return new Promise((resolve, reject) => {
-      glob(pattern, (err, files) => {
-        if (err)
-          reject(err);
-
-        resolve(Tagging.get(files, Paths.covers, callback));
-      })
+    Notification.show({
+      action: Translation.t('meta.actions.tagged'),
+      title:  tags.artist ? (tags.title + ' - ' + tags.artist) : tags.title,
+      icon:   tags.icon
     });
   }
 

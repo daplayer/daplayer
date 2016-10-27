@@ -1,6 +1,7 @@
 'use strict';
 
 const SoundCloudModel = require('./model');
+const TaggingService  = require('../app/services/tagging');
 const NetService      = require('../app/services/net');
 const Credentials     = require('../app/credentials');
 const SubWindow       = require('../app/sub_window');
@@ -111,7 +112,7 @@ module.exports = class SoundCloudService extends NetService {
         this.downloadImage(tags.icon, tags.title, tags.artist, (icon_path) => {
           tags.icon = icon_path;
 
-          Service.for('local').tag(location, tags);
+          TaggingService.define(location, tags);
         });
       });
     });

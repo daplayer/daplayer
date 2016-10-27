@@ -1,12 +1,13 @@
 'use strict';
 
-const YouTubeModel = require('./model');
-const NetService   = require('../app/services/net');
-const Credentials  = require('../app/credentials');
-const SubWindow    = require('../app/sub_window');
-const querystring  = require('querystring');
-const request      = require('request');
-const YT           = require('./client');
+const YouTubeModel   = require('./model');
+const TaggingService = require('../app/services/tagging');
+const NetService     = require('../app/services/net');
+const Credentials    = require('../app/credentials');
+const SubWindow      = require('../app/sub_window');
+const querystring    = require('querystring');
+const request        = require('request');
+const YT             = require('./client');
 
 module.exports = class YouTubeService extends NetService {
   /**
@@ -404,7 +405,7 @@ module.exports = class YouTubeService extends NetService {
       this.downloadURL(url, location, tags.id, (request) => {
         Ui.downloadEnd(Downloads.dequeue(tags.id));
 
-        Service.for('local').tag(location, {
+        TaggingService.define(location, {
           title: tags.title
         });
       });
