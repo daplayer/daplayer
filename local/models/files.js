@@ -49,8 +49,8 @@ module.exports = class LocalModelFiles {
         return artist;
       });
 
-      Cache.add('local', 'singles', singles);
-      Cache.add('local', 'artists', artists);
+      Cache.add('local', 'singles', singles.sortBy('title'));
+      Cache.add('local', 'artists', artists.sortBy('name'));
 
       resolve({ singles: singles, artists: artists });
     });
