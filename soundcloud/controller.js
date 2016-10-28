@@ -2,7 +2,7 @@
 
 const SoundCloudModel = require('./model');
 
-module.exports = class SoundCloudController {
+module.exports = class SoundCloudController extends BaseController {
   static activities(token) {
     return SoundCloudModel.activities(token).then((activities) => {
       this.render('soundcloud/activities', {
@@ -54,10 +54,11 @@ module.exports = class SoundCloudController {
     });
   }
 
-  static render(view, context) {
-    var token = context.token;
-    var meth  = token ? 'append' : 'render';
+  static connection() {
+    return this.render('soundcloud/connection');
+  }
 
-    View[meth](view, context);
+  static get service() {
+    return Service.for('soundcloud');
   }
 }

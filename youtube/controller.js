@@ -2,7 +2,7 @@
 
 const YouTubeModel = require('./model');
 
-module.exports = class YouTubeController {
+module.exports = class YouTubeController extends BaseController {
   static playlists(token) {
     return YouTubeModel.playlists(token).then((page) => {
       this.render('youtube/playlists', {
@@ -43,13 +43,6 @@ module.exports = class YouTubeController {
     return Service.for('youtube').search().then((results) => {
       this.render('youtube/search_results', results);
     });
-  }
-
-  static render(view, context) {
-    var token = context.token;
-    var meth  = token ? 'append' : 'render';
-
-    View[meth](view, context);
   }
 
   static loadNextRecords() {

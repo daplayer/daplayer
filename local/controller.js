@@ -2,10 +2,10 @@
 
 const LocalModel = require('./model');
 
-module.exports = class LocalController {
+module.exports = class LocalController extends BaseController {
   static singles() {
     return LocalModel.singles().then((singles) => {
-      View.render('local/singles', {
+      return this.render('local/singles', {
         singles: singles,
       });
     });
@@ -13,7 +13,7 @@ module.exports = class LocalController {
 
   static artists() {
     return LocalModel.artists().then((artists) => {
-      View.render('local/artists', {
+      return this.render('local/artists', {
         artists: artists
       })
     });
@@ -21,13 +21,13 @@ module.exports = class LocalController {
 
   static artist(name) {
     return LocalModel.artist(name).then((artist) => {
-      View.render('local/artist', artist);
+      return this.render('local/artist', artist);
     });
   }
 
   static listenLater() {
     return LocalModel.listenLater().then((playlist) => {
-      View.render('local/listen_later', {
+      return this.render('local/listen_later', {
         records: playlist.items
       });
     })
@@ -35,7 +35,7 @@ module.exports = class LocalController {
 
   static playlists() {
     return LocalModel.playlists().then((playlists) => {
-      View.render('local/playlists', {
+      return this.render('local/playlists', {
         playlists: playlists
       });
     });
@@ -43,7 +43,7 @@ module.exports = class LocalController {
 
   static searchResults() {
     return Service.for('local').search().then((results) => {
-      View.render('local/search_results', results);
+      return this.render('local/search_results', results);
     });
   }
 }

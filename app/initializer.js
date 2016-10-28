@@ -43,6 +43,10 @@ global.Ui           = require('./ui');
 global.View         = require('./view');
 
 // ----------------------------------------------
+// Base stack
+global.BaseController = require('./base/controller');
+
+// ----------------------------------------------
 // Mappers to use the proper class based on a
 // given service.
 require('./mappers');
@@ -55,8 +59,6 @@ global.Media    = require('./models/media');
 global.Album    = require('./models/album');
 global.Activity = require('./models/activity');
 global.Artist   = require('./models/artist');
-
-global.MetaController = require('../meta/controller');
 
 // ----------------------------------------------
 // Helpers stack

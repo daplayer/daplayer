@@ -34,7 +34,7 @@ $('.content').on('submit', 'form.configuration', function(e) {
   if (locale != original_locale) {
     Translation.load();
     Ui.loadPartials(true);
-    Ui.refresh();
+    Ui.render('meta/configuration');
   }
 });
 

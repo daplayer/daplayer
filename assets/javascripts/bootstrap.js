@@ -19,7 +19,7 @@ $(document).ready(function() {
 
   // --------------------------------------------------------
   // Load the index page
-  MetaController.index();
+  Controller.for('meta').index();
 
   // --------------------------------------------------------
   // Handle clicks on links

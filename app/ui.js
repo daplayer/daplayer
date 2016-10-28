@@ -78,24 +78,35 @@ module.exports = class Ui {
   }
 
   /**
-   * Renders content given an URL.
+   * Renders content or calls a method given an URI.
+   * There are two possible URI schemes:
    *
-   * Links aren't h-referencing any HTML page but rather a
-   * controller/action set or the name of a function (starting
-   * with a sharp).
+   * - "controller/action": Controller rendering.
+   * - "#service/method": Call to a specific service.
    *
-   * Thus, we just extract the controller and action from
-   * the given path and call the associated method through
-   * the mapping in case of a controller/action set.
+   * == Controller rendering
    *
-   * In case of a function, we just call it extracting the
-   * passed parameters. If only a name is given, then the
-   * function is called on this object (i.e. Ui), otherwise
-   * if there's a service/method set separated with a colon,
-   * then the method is called on the given service.
+   * If a link is referencing a controller/action set, then
+   * this function will extract the controller name from the
+   * h-ref and call the appropriate method on the controller
+   * class.
+   *
+   * Before rendering any action, the function first checks
+   * whether the controller is associated to any specific
+   * service and whether the latter is connected or not.
+   *
+   * It also don't barely call the specified action; the h-ref
+   * is first given to `Router.to` to match user's preferences.
+   *
+   * == Call to a specific service
+   *
+   * If the h-ref starts with a sharp (#) then it is considered
+   * as a call to a specific service class so just like for
+   * controller rendering, the service name and method are
+   * extracted from the h-ref and properly delegated.
    *
    * @param  {String}  href  - The controller/action set
-   *                           or a function call.
+   *                           or the service/method one.
    * @param  {Object=} param - An eventual extra param.
    * @return {null}
    */
@@ -110,7 +121,17 @@ module.exports = class Ui {
     if (href.startsWith('#'))
       return Service.for(module.slice(1))[action]();
 
-    MetaController.render(module, action, param);
+    var controller = Controller.for(module);
+
+    // Early return if we try to access a service that
+    // the user isn't yet connected to.
+    if (controller.service && !controller.service.isConnected())
+      return controller.connection();
+
+    // From now, we know that the user tries to load a
+    // controller action.
+    this.showLoader(param);
+    controller[Router.to(href)](param);
   }
 
   /**
@@ -155,9 +176,11 @@ module.exports = class Ui {
     if (!Cache[module][action])
       return;
 
+    Ui.showLoader(true);
+
     Cache[module][action].then((result) => {
       if (result.next_token)
-        MetaController.render(module, action, result.next_token);
+        Controller.for(module)[action](result.next_token);
     });
   }
 
