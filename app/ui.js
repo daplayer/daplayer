@@ -112,7 +112,7 @@ module.exports = class Ui {
     // controller action.
     $('.loading-shadow').show();
 
-    return controller[Router.to(href)](param).then(() => {
+    return controller[Router.to(href).camel()](param).then(() => {
       // Hide the loader once the action is rendered.
       $('.loading-shadow').hide();
       $('.loader-text').html('');
