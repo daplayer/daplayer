@@ -19,11 +19,11 @@
     <div class="clearer"></div>
 
     {{#unless soundcloud.connected}}
-      <a href="#soundcloud:signin" class="soundcloud">
+      <a href="#soundcloud/signin" class="soundcloud">
         <img src="assets/images/icons/soundcloud.svg"> {{t 'sc.connect'}}
       </a>
     {{else}}
-      <a href="#soundcloud:signout" class="button tiny">
+      <a href="#soundcloud/signout" class="button tiny">
         {{g 'remove'}} {{t 'sc.disconnect'}}
       </a>
     {{/unless}}
@@ -44,11 +44,11 @@
     {{radio 'small'  'quality' 'quality.small'  'youtube'}}
 
     {{#unless youtube.connected}}
-      <a href="#youtube:signin" class="youtube">
+      <a href="#youtube/signin" class="youtube">
         <img src="assets/images/icons/youtube.svg"> {{t 'yt.connect'}}
       </a>
     {{else}}
-      <a href="#youtube:signout" class="button tiny">
+      <a href="#youtube/signout" class="button tiny">
         {{g 'remove'}} {{t 'yt.disconnect'}}
       </a>
     {{/unless}}

@@ -104,15 +104,11 @@ module.exports = class Ui {
     if (href == "#")
       return;
 
-    // Handle function calls from links
-    if (href.startsWith('#')) {
-      var [module, method] = href.slice(1).split(':');
+    var [module, action] = href.split('/');
 
-      return Service.for(module)[method]();
-    }
-
-    var module = href.split("/")[0];
-    var action = href.split("/")[1];
+    // Handle function calls to services from links
+    if (href.startsWith('#'))
+      return Service.for(module.slice(1))[action]();
 
     MetaController.render(module, action, param);
   }
