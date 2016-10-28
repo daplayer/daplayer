@@ -42,6 +42,22 @@ describe('Playlist', () => {
     });
   });
 
+  describe('#item_count', () => {
+    it('should pick the `_item_count` attribute if present', () => {
+      var playlist = new Playlist();
+          playlist._item_count = 10;
+
+      assert.equal(playlist.item_count, 10);
+    });
+
+    it('should return the `items` length otherwise', () => {
+      var playlist = new Playlist();
+          playlist.items = [];
+
+      assert.equal(playlist.item_count, 0);
+    });
+  });
+
   describe('#soundcloud', () => {
     var hash = {
       artwork_url: 'path/to/artwork-large',
@@ -87,7 +103,7 @@ describe('Playlist', () => {
 
     it('should map YouTube fields with our own ones', () => {
       assert.equal(playlist.title,       hash.snippet.title);
-      assert.equal(playlist.items_count, hash.contentDetails.itemCount);
+      assert.equal(playlist._item_count, hash.contentDetails.itemCount);
       assert.equal(playlist._icon,       hash.snippet.thumbnails.medium.url);
     });
 

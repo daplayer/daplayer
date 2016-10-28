@@ -33,31 +33,6 @@ module.exports = class Ui {
   }
 
   /**
-   * Displays a loader on the page.
-   *
-   * @param  {Boolean} next - Whether we are loading the
-   *                          next set of data or not.
-   * @return {null}
-   */
-  static showLoader(next) {
-    if (!next)
-      $('.content').html('');
-
-    $('.loading-shadow').show();
-  }
-
-  /**
-   * Hides the loader on the page and clear the eventual
-   * attached text.
-   *
-   * @return {null}
-   */
-  static hideLoader() {
-    $('.loading-shadow').hide();
-    $('.loader-text').html('');
-  }
-
-  /**
    * Loads the different partials. The skeleton has some
    * placeholders that are waiting some contents to be
    * loaded (e.g. sidebar).
@@ -108,7 +83,7 @@ module.exports = class Ui {
    * @param  {String}  href  - The controller/action set
    *                           or the service/method one.
    * @param  {Object=} param - An eventual extra param.
-   * @return {null}
+   * @return {Promise}
    */
   static render(href, param) {
     // Links h-referencing just "#" are skipped
@@ -128,10 +103,24 @@ module.exports = class Ui {
     if (controller.service && !controller.service.isConnected())
       return controller.connection();
 
+    // Clear out the content if we are trying to render
+    // a new page.
+    if (!param)
+      $('.content').html('');
+
     // From now, we know that the user tries to load a
     // controller action.
-    this.showLoader(param);
-    controller[Router.to(href)](param);
+    $('.loading-shadow').show();
+
+    return controller[Router.to(href)](param).then(() => {
+      // Hide the loader once the action is rendered.
+      $('.loading-shadow').hide();
+      $('.loader-text').html('');
+
+      // Scroll to the current playing element
+      if (module == Cache.playing.module && action == Cache.playing.action && !param)
+        Ui.scrollToPlayingElement();
+    });
   }
 
   /**
@@ -151,36 +140,21 @@ module.exports = class Ui {
   }
 
   /**
-   * Refreshes the current action
-   *
-   * @return {null}
-   */
-  static refresh() {
-    MetaController.refresh();
-  }
-
-  /**
    * Function that loads new records once we hit the bottom
    * of the page.
    *
    * @return {null}
    */
   static loadNextRecords() {
-    var action = Cache.current.action,
-        module = Cache.current.module;
+    var {module,action} = Cache.current;
 
-    if (module == 'local' || module == 'meta')
+    if (module == 'local' || module == 'meta' ||
+        action == 'playlist_items' || !Cache[module][action])
       return;
-    if (['configuration', 'playlist_items'].includes(action))
-      return;
-    if (!Cache[module][action])
-      return;
-
-    Ui.showLoader(true);
 
     Cache[module][action].then((result) => {
       if (result.next_token)
-        Controller.for(module)[action](result.next_token);
+        Ui.render([module, action].join('/'), result.next_token);
     });
   }
 
@@ -387,22 +361,5 @@ module.exports = class Ui {
     }, 250, () => {
       this.animateHeight(element);
     });
-  }
-
-  /**
-   * Displays with an animation a div containing the
-   * information on a record that has just been added
-   * to the "Listen later" playlist.
-   *
-   * @param  {Object} record - The record to display.
-   * @return {null}
-   */
-  static addListenLaterRecord(record) {
-    var element = $(Handlebars.helpers.listen_later(record).string);
-        element.hide();
-
-    $('.search-bar').after(element);
-
-    element.show(500);
   }
 }

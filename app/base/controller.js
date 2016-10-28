@@ -21,12 +21,6 @@ module.exports = class BaseController {
       var token = context.token;
       var meth  = token ? 'append' : 'render';
 
-      Ui.hideLoader();
-
-      // Scroll to the current playing element
-      if (module == Cache.playing.module && action == Cache.playing.action && !params.first())
-        Ui.scrollToPlayingElement();
-
       resolve(View[meth](view, context));
     });
   }

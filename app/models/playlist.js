@@ -19,6 +19,10 @@ module.exports = class Playlist extends Record {
       return Paths.default_artwork;
   }
 
+  get item_count() {
+    return this._item_count || this.items.length;
+  }
+
   static soundcloud(hash) {
     var playlist = new Playlist(hash.id, 'soundcloud');
 
@@ -44,8 +48,9 @@ module.exports = class Playlist extends Record {
     var playlist = new Playlist(hash.id, 'youtube');
 
     playlist.title       = hash.snippet.title;
-    playlist.items_count = hash.contentDetails.itemCount;
+    playlist._item_count = hash.contentDetails.itemCount;
     playlist._icon       = hash.snippet.thumbnails.medium.url;
+    playlist.items       = [];
 
     return playlist;
   }

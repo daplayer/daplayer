@@ -1,9 +1,3 @@
-Handlebars.registerHelper('listen_later', function(item) {
-  var template = View.compile('local/partials/listen_later');
-
-  return new Handlebars.SafeString(template((item)));
-});
-
 Handlebars.registerHelper('local_files_menu', function(active) {
   var icons = {
     singles: 'music',

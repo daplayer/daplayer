@@ -4,14 +4,6 @@ const fs   = require('fs');
 const glob = require('glob');
 
 module.exports = class LocalModelPlaylists {
-  static listenLater() {
-    return this.loadPlaylist(Paths.listen_later);
-  }
-
-  static listenLaterTo(address) {
-    return null;
-  }
-
   static playlists() {
     if (Cache.local.playlists)
       return Cache.local.playlists;
@@ -21,7 +13,7 @@ module.exports = class LocalModelPlaylists {
         if (err)
           reject(err);
 
-        var jspf_files = files.filter((file) => ![Paths.listen_later, Paths.youtube_history].includes(file));
+        var jspf_files = files.filter(file => Paths.youtube_history != file);
         var playlists  = jspf_files.map((file) => this.loadPlaylist(file));
 
         Promise.all(playlists).then((playlists) => {
