@@ -25,17 +25,19 @@ $('.content').on('submit', 'form.configuration', function(e) {
     scrollTop: 0
   }, 200);
 
+  // Reload the contents if the locale has been changed
+  if (locale != original_locale) {
+    Translation.load(locale);
+
+    // Refresh the partials and the current page.
+    Ui.loadPartials(true);
+    Ui.render('meta/configuration');
+  }
+
   Notification.show({
     action:    Translation.t('meta.actions.configuration_saved'),
     glyphicon: 'cog'
   });
-
-  // Reload the contents if the locale has been changed
-  if (locale != original_locale) {
-    Translation.load();
-    Ui.loadPartials(true);
-    Ui.render('meta/configuration');
-  }
 });
 
 // --------------------------------------------------------
