@@ -44,7 +44,7 @@ module.exports = class LocalModelFiles {
         var raw_hash = hash.artists[name]
         var artist   = new Artist(raw_hash.name, raw_hash.albums);
 
-        artist.singles = raw_hash.singles.map(i => singles[i]);
+        artist.singles = singles.filter(s => s.artist.toLowerCase() == name);
 
         return artist;
       });
