@@ -40,6 +40,6 @@ $('.sidebar').on('keyup', '.search input', function(e) {
       source: source
     };
 
-    MetaController.render(module, 'search_results');
+    Controller.for(module).searchResults();
   }
 });
