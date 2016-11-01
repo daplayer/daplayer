@@ -13,7 +13,9 @@ Handlebars.registerHelper('menu', function(module, section, active) {
     var output = '';
 
     Object.keys(icons[section]).forEach((action) => {
-      if (action == active)
+      if (action == active && action == 'artists')
+        var attrs = {href: 'local/artists', class: 'active'};
+      else if (action == active)
         var attrs = { href: '#', class: 'active'};
       else if (section == 'search_results')
         var attrs = { href: `${action}/search_results`};

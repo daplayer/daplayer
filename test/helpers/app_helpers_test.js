@@ -88,6 +88,13 @@ describe('App helpers', () => {
         assert.include(output, '<a href="#" class="active">');
         assert.include(output, '<a href="local/artists">');
       });
+
+      it('should link if the active action is "artist"', () => {
+        var output = Handlebars.helpers.menu('local', 'files', 'artists');
+
+        assert.include(output, '<a href="local/singles">');
+        assert.include(output, '<a href="local/artists" class="active">');
+      });
     });
 
     describe('for search_results', () => {
