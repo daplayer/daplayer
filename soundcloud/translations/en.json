@@ -16,13 +16,13 @@
       "likes": "Likes",
       "playlists": "Playlists"
     },
-    "stream_menus": {
-      "home": "Home",
+    "stream": {
+      "activities": "Home",
       "tracks": "Your music"
     },
-    "playlist_menus": {
-      "liked": "Liked playlists",
-      "yours": "Your playlists"
+    "playlists": {
+      "liked_playlists": "Liked playlists",
+      "user_playlists": "Your playlists"
     },
     "configuration": {
       "download": "SoundCloud downloads"

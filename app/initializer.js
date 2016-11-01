@@ -64,8 +64,8 @@ global.Artist   = require('./models/artist');
 // Helpers stack
 require('../soundcloud/helpers');
 require('../youtube/helpers');
-require('../local/helpers');
 require('../meta/helpers');
+require('../app/helpers');
 
 // ----------------------------------------------
 // Display the application's menu

@@ -1,12 +1,5 @@
 {{#unless token}}
-  <div class="navbar">
-    <a href="#" class="active">
-      {{g 'heart'}} {{t 'sc.playlist_menus.liked'}}
-    </a>
-    <a href="soundcloud/user_playlists">
-      {{g 'user'}} {{t 'sc.playlist_menus.yours'}}
-    </a>
-  </div>
+  {{menu 'soundcloud' 'playlists' 'liked_playlists'}}
 {{/unless}}
 
 {{#each liked_playlists.collection}}

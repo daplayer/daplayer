@@ -1,14 +1,6 @@
 {{#unless token}}
-  <div class="navbar">
-    <a href="#" class="active">
-      {{g 'headphones'}} {{t 'sc.stream_menus.home'}}
-    </a>
-    <a href="soundcloud/tracks">
-      {{g 'music'}} {{t 'sc.stream_menus.tracks'}}
-    </a>
-  </div>
+  {{menu 'soundcloud' 'stream' 'activities'}}
 {{/unless}}
-
 
 <div class="timeline">
   {{#each activities.collection}}

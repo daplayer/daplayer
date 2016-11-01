@@ -16,13 +16,13 @@
       "likes": "Aimées",
       "playlists": "Playlists"
     },
-    "stream_menus": {
-      "home": "Acceuil",
+    "stream": {
+      "activities": "Acceuil",
       "tracks": "Vos musiques"
     },
-    "playlist_menus": {
-      "liked": "Playlists aimées",
-      "yours": "Vos playlists"
+    "playlists": {
+      "liked_playlists": "Playlists aimées",
+      "user_playlists": "Vos playlists"
     },
     "configuration": {
       "download": "Téléchargements SoundCloud"

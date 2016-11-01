@@ -76,37 +76,4 @@ describe('Meta helpers', () => {
       assert.include(output, 'value="en"');
     });
   });
-
-  describe('#search_results_menu', () => {
-    before(() => {
-      Translation.load('en');
-    });
-
-    it('should generate a div with a "navbar" class', () => {
-      var output = Handlebars.helpers.search_results_menu('');
-
-      assert(output instanceof Handlebars.SafeString);
-      assert.include(output, '<div class="navbar">');
-    });
-
-    it('should generate a link for each module', () => {
-      var output = Handlebars.helpers.search_results_menu('');
-
-      assert.include(output, '<a href="soundcloud/search_results">');
-      assert.include(output, '<a href="youtube/search_results">');
-      assert.include(output, '<a href="local/search_results">');
-
-      assert.include(output, Translation.t('sc.name'));
-      assert.include(output, Translation.t('yt.name'));
-      assert.include(output, Translation.t('local.name'));
-    });
-
-    it('should set the active class for the given module', () => {
-      var output = Handlebars.helpers.search_results_menu('youtube');
-
-      assert.include(output, '<a href="soundcloud/search_results">');
-      assert.include(output, '<a href="#" class="active">');
-      assert.include(output, '<a href="local/search_results">');
-    });
-  });
 });
