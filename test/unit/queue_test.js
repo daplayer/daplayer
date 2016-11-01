@@ -115,32 +115,20 @@ describe('Queue', () => {
 
         first  = new Record(1);
         second = new Record(2);
-        third  = new Record(3);
-        fourth = new Record(4);
 
-        [first, second, third, fourth].forEach((r, i, t) => {
-          r.previous = (i == 0) ? null : t[i-1];
-          r.next     = (i > t.length) ? null : t[i+1];
-        });
-
-        playlist        = new Record(null);
+        playlist       = new Record(null);
         playlist.items = [new Record('foo'), new Record('bar'), new Record('baz')];
-      });
 
-      it('should return a random track in the linked list if there is no playlist', () => {
-        Queue.start(first);
-
-        return Queue.next().then((set) => {
-          assert([2, 3, 4].indexOf(set[0].id) != -1);
-        });
+        [first, second].forEach(Record.link);
+        [first, second].forEach(e => e.set = playlist);
       });
 
       it('should return a random track from the playlist', () => {
         Queue.start(second, playlist);
 
-        return Queue.next().then((set) => {
-          assert(['foo', 'bar', 'baz'].indexOf(set[0].id) != -1);
-          assert([1, 2, 3, 4].indexOf(set[0].id) == -1);
+        return Queue.next().then((record) => {
+          assert(['foo', 'bar', 'baz'].includes(record.id));
+          assert.equal([1, 2, 3, 4].includes(record.id), false);
         });
       });
     });
@@ -230,34 +218,14 @@ describe('Queue', () => {
     });
 
     describe('in random mode', () => {
-      var first, second, third, fourth, playlist;
-
       beforeEach(() => {
         Queue.setMode('random');
-
-        first  = new Record(1);
-        second = new Record(2);
-        third  = new Record(3);
-        fourth = new Record(4);
-
-        [first, second, third, fourth].forEach((r, i, t) => {
-          r.previous = (i == 0) ? null : t[i-1];
-          r.next     = (i > t.length) ? null : t[i+1];
-        });
-
-        playlist        = new Record(null);
-        playlist.items = [new Record('foo'), new Record('bar'), new Record('baz')];
+        Queue.history.push(new Record('foo'));
       });
 
-      it('should return a random track from the playlist', () => {
-        Queue.start(first, playlist);
-
-        return Queue.shift().then((next_set) => {
-          assert.notEqual(next_set[0].id, first.id);
-
-          return Queue.previous().then((previous_set) => {
-            return assert.equal(previous_set[0].id, first.id);
-          });
+      it('should return the last track from history', () => {
+        return Queue.previous().then((record) => {
+          assert.equal(record.id, 'foo');
         });
       });
     });

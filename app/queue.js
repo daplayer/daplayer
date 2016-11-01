@@ -8,7 +8,7 @@ module.exports = class Queue {
 
   static setMode(mode) {
     if (this.mode == 'random')
-      this.next_random = null;
+      this.sampled = null;
 
     this.mode = mode;
   }
@@ -34,32 +34,13 @@ module.exports = class Queue {
         // got since we may call `next()` several times just to
         // know which media will be played next without actually
         // playing it; it will be cleared calling `shift()`.
-        if (!this.next_random) {
-          if (this.playlist) {
-            var index = Math.floor(Math.random() * this.playlist.items.length);
+        if (!this.sampled && set) {
+          var index    = this.random(set.items.length);
+          this.sampled = set.items[index];
 
-            this.next_random = this.playlist.items[index];
-
-            resolve([this.next_random, this.playlist]);
-          } else {
-            this.next_random = this.current;
-
-            for (var i = 0; i < 10; i++) {
-              do {
-                var field = ['previous', 'next'][Math.floor(Math.random() * 2)];
-                var temp = this.next_random[field];
-
-                if (temp)
-                  this.next_random = temp;
-              } while (temp == null);
-
-              if (this.next_random.id == this.current.id)
-                i--;
-
-              if (i == 9)
-                resolve([this.next_random, this.playlist]);
-            }
-          }
+          resolve(this.sampled);
+        } else {
+          resolve(this.sampled);
         }
       }
     });
@@ -92,12 +73,12 @@ module.exports = class Queue {
 
   static shift() {
     return this.next().then((record) => {
+      this.current = record;
+
       if (this.mode == 'random') {
         this.history.push(this.current);
-        this.next_random = null;
+        this.sampled = null;
       }
-
-      this.current = record;
 
       return record;
     });
@@ -105,12 +86,16 @@ module.exports = class Queue {
 
   static pop() {
     return this.previous().then((record) => {
+      this.current = record;
+
       if (this.mode == 'random')
         this.history.pop();
 
-      this.current = record;
-
       return record;
     });
+  }
+
+  static random(max) {
+    return Math.floor(Math.random() * max);
   }
 }
