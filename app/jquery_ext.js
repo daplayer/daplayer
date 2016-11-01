@@ -31,13 +31,21 @@ $.fn.extractFields = function() {
  * Function that changes the different DOM attributes to
  * reflect a modification of an element's artist.
  *
- * @param  {String} value - The artist's name.
+ * @param  {String}  value - The artist's name.
+ * @param  {Boolean} link  - Whether to create a link or not.
  * @return {jQuery}
  */
-$.fn.artist = function(value) {
+$.fn.artist = function(value, link) {
   var artist = this.find('.artist');
 
-  artist.html(value);
+  if (link)
+    artist.html(Html.tag('a', {
+      href: `local/artist`,
+      'data-id': value
+    }, value));
+  else
+    artist.html(value);
+
   artist.attr('title', value);
   artist.data('id', value);
 

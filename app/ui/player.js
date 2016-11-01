@@ -119,7 +119,7 @@ module.exports = class UiPlayer {
                      .addClass(this.record.kind);
 
     this.current_info.title(this.record.title);
-    this.current_info.artist(this.record.artist);
+    this.current_info.artist(this.record.artist, this.record.isLocal());
 
     this.current_icon.find('img').attr('src', this.record.icon);
   }
