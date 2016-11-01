@@ -1,9 +1,10 @@
 .banner {
   .basic-box();
-  height: 220px;
+  height: 160px;
   position: relative;
+  margin-top: 0;
 
-  .background, .showcase {
+  .background, .showcase, .black-shadow {
     height: 100%;
     width: 100%;
     margin: 0;
@@ -14,8 +15,13 @@
 
   .background {
     background-size: 100%;
-    filter: blur(20px);
-    opacity: 0.8;
+    filter: blur(5px);
+    z-index: 200;
+    margin: 0;
+  }
+
+  .black-shadow {
+    background: rgba(0, 0, 0, 0.3);
     z-index: 300;
   }
 
@@ -23,12 +29,28 @@
     z-index: 400;
 
     .artist-thumbnail {
-      height: 180px;
-      margin-top: 20px;
+      margin: 15px 15px 0 15px;
+
+      .thumbnail { font-size: 46px;   }
+      .glyphicon { line-height: 250%; }
+    }
+
+    .artist-thumbnail, .artist-thumbnail .thumbnail {
+      height: 130px;
+      width: 130px;
+    }
+
+    img {
+      height: 100%;
     }
 
     .information {
-      margin-top: 70px;
+      color: white;
+      padding-top: 48px;
+
+      h2 { margin-bottom: 0; }
+      h2, h3 { margin-top: 0; }
     }
   }
+
 }
