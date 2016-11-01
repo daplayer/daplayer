@@ -7,8 +7,7 @@ describe('Queue', () => {
     it('should fill the `current` and `playlist` fields', () => {
       Queue.start('foo', 'bar');
 
-      assert.equal(Queue.current,  'foo');
-      assert.equal(Queue.playlist, 'bar');
+      assert.equal(Queue.current, 'foo');
     });
 
     it('should not set any mode', () => {
@@ -39,7 +38,8 @@ describe('Queue', () => {
         next_playlist = new Record(null);
 
         next_playlist.items = [new Record('bar')];
-        playlist.next        = next_playlist;
+        playlist.next       = next_playlist;
+        current.set         = playlist;
       });
 
       it('should return the next record if it is present', () => {
@@ -48,8 +48,8 @@ describe('Queue', () => {
 
         assert.equal(current.next.id, next.id);
 
-        return Queue.next().then((set) => {
-          assert.equal(set[0].id, next.id);
+        return Queue.next().then((record) => {
+          assert.equal(record.id, next.id);
         });
       });
 
@@ -58,18 +58,16 @@ describe('Queue', () => {
 
         assert.equal(current.next, null);
 
-        return Queue.next().then((set) => {
-          assert.equal(set[0].id, next_playlist.items[0].id);
+        return Queue.next().then((record) => {
+          assert.equal(record.id, next_playlist.items.first().id);
         });
       });
 
       it('should return an empty set with no neighbors nor playlist', () => {
         Queue.start(next);
 
-        assert.equal(Queue.playlist, null);
-
-        return Queue.next().then((set) => {
-          assert.equal(set.empty(), true);
+        return Queue.next().then((record) => {
+          assert.equal(record, null);
         });
       });
     });
@@ -86,23 +84,25 @@ describe('Queue', () => {
         first.next      = second;
         second.previous = first;
 
-        playlist = new Record(null);
+        playlist       = new Record(null);
         playlist.items = [first, second];
+        first.set      = playlist;
+        second.set     = playlist;
       });
 
       it('should return the next record if it is present', () => {
         Queue.start(first, playlist);
 
-        return Queue.next().then((set) => {
-          assert.equal(set[0].id, second.id);
+        return Queue.next().then((record) => {
+          assert.equal(record.id, second.id);
         });
       });
 
       it('should return the first track of the playlist otherwise', () => {
         Queue.start(second, playlist);
 
-        return Queue.next().then((set) => {
-          assert.equal(set[0].id, first.id);
+        return Queue.next().then((record) => {
+          assert.equal(record.id, first.id);
         });
       });
     });
@@ -160,6 +160,7 @@ describe('Queue', () => {
 
         previous_playlist.items = [new Record('bar')];
         playlist.previous       = previous_playlist;
+        current.set             = playlist;
       });
 
       it('should return the previous record if it is present', () => {
@@ -168,8 +169,8 @@ describe('Queue', () => {
 
         assert.equal(current.previous.id, previous.id);
 
-        return Queue.previous().then((set) => {
-          assert.equal(set[0].id, next.id);
+        return Queue.previous().then((record) => {
+          assert.equal(record.id, next.id);
         });
       });
 
@@ -178,18 +179,16 @@ describe('Queue', () => {
 
         assert.equal(current.previous, null);
 
-        return Queue.previous().then((set) => {
-          assert.equal(set[0].id, previous_playlist.items[0].id);
+        return Queue.previous().then((record) => {
+          assert.equal(record.id, previous_playlist.items[0].id);
         });
       });
 
       it('should return an empty set with no neighbors nor playlist', () => {
         Queue.start(previous);
 
-        assert.equal(Queue.playlist, null);
-
-        return Queue.previous().then((set) => {
-          assert.equal(set.empty(), true);
+        return Queue.previous().then((record) => {
+          assert.equal(record, null);
         });
       });
     });
@@ -202,27 +201,30 @@ describe('Queue', () => {
 
         first  = new Record('first');
         second = new Record('second');
+        third  = new Record('third');
 
-        first.next      = second;
         second.previous = first;
+        third.previous  = second;
 
-        playlist = new Record(null);
-        playlist.items = [first, second];
+        playlist       = new Record(null);
+        playlist.items = [first, second, third];
+        first.set      = playlist;
+        second.set     = playlist;
       });
 
       it('should return the previous record if it is present', () => {
-        Queue.start(first, playlist);
+        Queue.start(second);
 
-        return Queue.previous().then((set) => {
-          assert.equal(set[0].id, second.id);
+        return Queue.previous().then((record) => {
+          assert.equal(record.id, first.id);
         });
       });
 
       it('should return the last track of the playlist otherwise', () => {
-        Queue.start(first, playlist);
+        Queue.start(first);
 
-        return Queue.previous().then((set) => {
-          assert.equal(set[0].id, second.id);
+        return Queue.previous().then((record) => {
+          assert.equal(record.id, third.id);
         });
       });
     });

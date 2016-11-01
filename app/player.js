@@ -66,8 +66,6 @@ module.exports = class Player {
         Queue.setMode(null);
       }
 
-      // Start the playing queue and the media itself.
-      Queue.start(record, record.set);
       this.start(record);
     });
   }
@@ -84,6 +82,9 @@ module.exports = class Player {
 
     this.stop();
     this.record = record;
+
+    // Properly initialize the queue
+    Queue.start(record);
 
     if (record.service != 'local')
       Ui.Player.showLoader();
@@ -163,9 +164,7 @@ module.exports = class Player {
       this.goTo(0);
       this.play();
     } else {
-      Queue.shift().then((set) => {
-        this.start(set[0], set[1]);
-      });
+      Queue.shift().then(record => this.start(record));
     }
   }
 
@@ -180,9 +179,7 @@ module.exports = class Player {
     if (this.media.currentTime > 5)
       this.goTo(0);
     else
-      Queue.pop().then((set) => {
-        this.start(set[0], set[1]);
-      });
+      Queue.pop().then(record => this.start(record));
   }
 
   /**

@@ -1,10 +1,9 @@
 'use strict';
 
 module.exports = class Queue {
-  static start(current, playlist) {
-    this.current  = current;
-    this.playlist = playlist;
-    this.history  = [];
+  static start(current) {
+    this.current = current;
+    this.history = [];
   }
 
   static setMode(mode) {
@@ -16,18 +15,20 @@ module.exports = class Queue {
 
   static next() {
     return new Promise((resolve, reject) => {
+      var set = this.current.set;
+
       if (!this.mode) {
         if (this.current.next)
-          resolve([this.current.next, this.playlist]);
-        else if (this.playlist && this.playlist.next)
-          resolve([this.playlist.next.items[0], this.playlist.next]);
+          resolve(this.current.next);
+        else if (set && set.next)
+          resolve(set.next.items.first());
         else
-          resolve([]);
+          resolve(null);
       } else if (this.mode == 'loop') {
-        if (this.current == this.playlist.items.last())
-          resolve([this.playlist.items[0], this.playlist]);
+        if (this.current == set.items.last())
+          resolve(set.items.first());
         else
-          resolve([this.current.next, this.playlist]);
+          resolve(this.current.next);
       } else if (this.mode == 'random') {
         // We need to keep in memory the random that we have
         // got since we may call `next()` several times just to
@@ -66,48 +67,50 @@ module.exports = class Queue {
 
   static previous() {
     return new Promise((resolve, reject) => {
+      var set = this.current.set;
+
       if (!this.mode) {
         if (this.current.previous)
-          resolve([this.current.previous, this.playlist]);
-        else if (this.playlist && this.playlist.previous)
-          resolve([this.playlist.previous.items.last(), this.playlist.previous]);
+          resolve(this.current.previous);
+        else if (set && set.previous)
+          resolve(set.previous.items.last());
         else
-          resolve([]);
+          resolve(null);
       } else if (this.mode == 'loop') {
-        if (this.current == this.playlist.items[0])
-          resolve([this.playlist.items.last(), this.playlist]);
+        if (this.current == set.items.first())
+          resolve(set.items.last());
         else
-          resolve([this.current.next, this.playlist]);
+          resolve(this.current.previous);
       } else if (this.mode == 'random') {
         if (this.history.length)
-          resolve([this.history.last(), this.playlist]);
+          resolve(this.history.last());
+        else
+          resolve(null);
       }
     });
   }
 
   static shift() {
-    return this.next().then((set) => {
+    return this.next().then((record) => {
       if (this.mode == 'random') {
         this.history.push(this.current);
         this.next_random = null;
       }
 
-      this.current  = set[0];
-      this.playlist = set[1];
+      this.current = record;
 
-      return set;
+      return record;
     });
   }
 
   static pop() {
-    return this.previous().then((set) => {
+    return this.previous().then((record) => {
       if (this.mode == 'random')
         this.history.pop();
 
-      this.current  = set[0];
-      this.playlist = set[1];
+      this.current = record;
 
-      return set;
+      return record;
     });
   }
 }

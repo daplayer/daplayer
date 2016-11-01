@@ -79,20 +79,20 @@ module.exports = class UiPlayer {
   static setupInterface() {
     this.showEqualizer();
 
-    Queue.previous().then((set) => {
-      if (set.first()) {
+    Queue.previous().then((record) => {
+      if (record) {
         this.previous.removeClass('disabled');
-        this.previous.attr('title', set.first().title);
+        this.previous.attr('title', record.title);
       } else {
         this.previous.addClass('disabled');
         this.previous.attr('title', '');
       }
     });
 
-    Queue.next().then((set) => {
-      if (set.first()) {
+    Queue.next().then((record) => {
+      if (record) {
         this.next.removeClass('disabled');
-        this.next.attr('title', set.first().title);
+        this.next.attr('title', record.title);
       } else {
         this.next.addClass('disabled');
         this.next.attr('title', '');
