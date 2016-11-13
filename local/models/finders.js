@@ -86,16 +86,14 @@ module.exports = class LocalModelFinders {
     // single extracted from an album so we need to look into
     // all the files.
     if (section == 'artist')
-      section = 'singles';
+      section = 'artists';
     if (section == 'search_results')
       section = 'files';
 
     return this[section.camel()]().then((cached) => {
-      // If we are trying to find a record on the search page
-      // and we are hitting these lines, it's because no playlists
-      // were given so we are just looking for a single.
-      if (section == 'search_results')
-        return cached.singles.find(record => record.id == id);
+      if (section == 'artists')
+        return cached.find(artist => artist.name == Cache.current.id).singles
+                     .find(single => single.id == id);
       else
         return cached.find(record => record.id == id);
     });

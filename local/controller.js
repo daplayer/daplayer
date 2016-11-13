@@ -21,7 +21,7 @@ module.exports = class LocalController extends BaseController {
 
   static artist(name) {
     return LocalModel.artist(name).then((artist) => {
-      return this.render('local/artist', artist);
+      return this.render('local/artist', artist, name);
     });
   }
 
