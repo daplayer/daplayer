@@ -6,15 +6,17 @@ module.exports = class BaseController {
    *
    * @param  {String}  view    - The view's path.
    * @param  {Object}  context - The view's context.
+   * @param  {Object=} id      - An eventual attached id.
    * @return {Promise}
    */
-  static render(view, context) {
+  static render(view, context, id) {
     var [module, action] = view.split('/');
 
     // Define the current scope.
     Cache.current = {
       module: module,
-      action: action
+      action: action,
+      id:     id
     };
 
     return new Promise((resolve, reject) => {
