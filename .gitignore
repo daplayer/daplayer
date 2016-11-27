@@ -7,5 +7,8 @@ node_modules
 # Optional npm cache directory
 .npm
 
+# Ingore the Yarn lock file
+yarn.lock
+
 # Ignrore the compiled CSS file
 assets/stylesheets/default_theme.css

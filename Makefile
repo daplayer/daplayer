@@ -16,3 +16,7 @@ css:
 
 test:
 	npm run mocha test/{unit,models,helpers}/**/*_test.js
+
+install:
+	yarn install
+	yarn run rebuild

@@ -7,14 +7,14 @@ YouTube library easily while managing your local musics.
 
 ## Living on the edge
 
-If you want to run an un-released version of DaPlayer, you are done with:
+If you want to run an un-released version of DaPlayer, make sure that you
+have [Yarn](https://yarnpkg.com/) installed and then, you are done with:
 
 ~~~
 $ git clone https://github.com/daplayer/daplayer
 $ cd daplayer
-$ npm install
-$ npm run rebuild
-$ npm start
+$ make install
+$ yarn start
 ~~~
 
 ## License
