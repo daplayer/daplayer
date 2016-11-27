@@ -111,7 +111,8 @@ module.exports = class Player {
 
       Analytics.increase(this.record);
 
-      this.media.src = url;
+      this.media.loop = false;
+      this.media.src  = url;
       this.media.load();
 
       player.callbacks(this.media);
@@ -152,20 +153,12 @@ module.exports = class Player {
   }
 
   /**
-   * Plays the next media unless the repeat mode is enabled;
-   * in this case, just go to the beginning of the current
-   * media.
+   * Plays the next media.
    *
    * @return {null}
    */
   static playNext() {
-    if (this.repeat) {
-      Analytics.increase(this.record);
-      this.goTo(0);
-      this.play();
-    } else {
-      Queue.shift().then(record => this.start(record));
-    }
+    Queue.shift().then(record => this.start(record));
   }
 
   /**
@@ -256,7 +249,7 @@ module.exports = class Player {
   static toggleRepeat() {
     Ui.Player.toggleRepeat();
 
-    this.repeat = !this.repeat;
+    this.media.loop = !this.media.loop;
   }
 
   /**
