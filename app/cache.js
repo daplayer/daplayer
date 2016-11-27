@@ -60,11 +60,6 @@ module.exports = class Cache {
       return this.youtube.video_urls[data.id] = Promise.resolve(data);
 
     if (!this[module][section]) {
-      if (data.collection)
-        data.collection.forEach(Record.link);
-      else if (data.items)
-        data.items.forEach(Record.link);
-
       return this[module][section] = Promise.resolve(data);
     } else {
       return this[module][section].then((existing) => {

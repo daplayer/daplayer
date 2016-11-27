@@ -68,6 +68,8 @@ module.exports = class SoundCloudModelFetch {
         return result;
       }
     }).then((result) => {
+      result.collection.forEach(Record.link);
+
       // Add the computed result to cache; we can safely do this
       // call here as the method would've early returned if no
       // h-ref was provided.
