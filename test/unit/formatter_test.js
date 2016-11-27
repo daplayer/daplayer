@@ -90,5 +90,11 @@ describe('Formatter', () => {
       assert(first_path.endsWith('Gojira - To Sirius.png'));
       assert(first_path.endsWith('Gojira - To Sirius.png'));
     });
+
+    it('should work with extensions with 4 letters', () => {
+      var location = Formatter.cover_path('foo.jpeg', 'Spliknot', 'Wait and Bleed');
+
+      assert(location.endsWith('Slipknot - Wait and Bleed.jpeg'));
+    });
   });
 });

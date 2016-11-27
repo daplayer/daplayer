@@ -176,7 +176,7 @@ module.exports = class Formatter {
    * @return {String}
    */
   static cover_path(url, artist, title, album) {
-    var extension = url.substr(-4, 4);
+    var extension = url.substr(url.lastIndexOf('.'));
     var location  = artist + " - ";
 
     if (album && album != '')
