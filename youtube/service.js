@@ -417,28 +417,23 @@ module.exports = class YouTubeService extends NetService {
    * icon parameters are specified to display a notication
    * when the download starts/ends.
    *
-   * @param  {String} id     - The video's id.
-   * @param  {String} title  - The video's title.
-   * @param  {String} icon   - The video's icon.
+   * @param  {Object} tags        - The tags to associate.
+   * @param  {String} tags.id     - The video's id.
+   * @param  {String} tags.title  - The song's title.
+   * @param  {String} tags.icon   - The song's icon.
    * @return {null}
    * @deprecated
    */
   static downloadVideo(tags) {
-    var hash = {
-      id:    id,
-      title: title,
-      icon:  icon
-    };
+    Downloads.enqueue(tags);
+    Ui.downloadStart(tags);
 
-    Downloads.enqueue(hash);
-    Ui.downloadStart(hash);
-
-    this.videoURL(id).then((url) => {
+    this.videoURL(tags.id).then((url) => {
       var extension = '.' + url.type.split(';')[0].split('/')[1];
-      var location  = Formatter.path(title, null, 'youtube', extension);
+      var location  = Formatter.path(tags.title, null, 'youtube', extension);
 
-      this.downloadURL(url.url, location, id, (request) => {
-        Ui.downloadEnd(Downloads.dequeue(id));
+      this.downloadURL(url.url, location, tags.id, (request) => {
+        Ui.downloadEnd(Downloads.dequeue(tags.id));
       });
     });
   }
