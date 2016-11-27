@@ -158,7 +158,12 @@ module.exports = class Player {
    * @return {null}
    */
   static playNext() {
-    Queue.shift().then(record => this.start(record));
+    Queue.shift().then(record => {
+      if (record)
+        this.start(record)
+      else
+        Ui.Player.playButton();
+    });
   }
 
   /**
@@ -172,7 +177,10 @@ module.exports = class Player {
     if (this.media.currentTime > 5)
       this.goTo(0);
     else
-      Queue.pop().then(record => this.start(record));
+      Queue.pop().then(record => {
+        if (record)
+          this.start(record)
+      });
   }
 
   /**
