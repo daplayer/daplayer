@@ -38,7 +38,7 @@ module.exports = class LocalModelFiles {
     return new Promise((resolve, reject) => {
       var singles = hash.singles.map((single) => {
         return Media.local(single);
-      });
+      }).sortBy('title');
 
       singles.forEach(Record.link);
 
@@ -47,10 +47,10 @@ module.exports = class LocalModelFiles {
         var artist   = new Artist(raw_hash.name, raw_hash.albums, raw_hash.singles);
 
         return artist;
-      });
+      }).sortBy('name');
 
-      Cache.add('local', 'singles', singles.sortBy('title'));
-      Cache.add('local', 'artists', artists.sortBy('name'));
+      Cache.add('local', 'singles', singles);
+      Cache.add('local', 'artists', artists);
 
       resolve({ singles: singles, artists: artists });
     });
