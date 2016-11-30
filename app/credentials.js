@@ -3,8 +3,8 @@
 module.exports = class Credentials {
   static get soundcloud() {
     return {
-      client_id: '02gUJC0hH2ct1EGOcYXQIzRFU91c72Ea',
-      app_id:    1470305918
+      client_id: 'fDoItMDbsbZz8dY16ZzARCZmzgHBPotA',
+      app_id:    1480418710
     };
   }
 
