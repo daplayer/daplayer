@@ -15,6 +15,9 @@ module.exports = class Queue {
 
   static next() {
     return new Promise((resolve, reject) => {
+      if (!this.current)
+        resolve(null);
+
       var set = this.current.set;
 
       if (!this.mode) {
@@ -48,6 +51,9 @@ module.exports = class Queue {
 
   static previous() {
     return new Promise((resolve, reject) => {
+      if (!this.current)
+        resolve(null);
+
       var set = this.current.set;
 
       if (!this.mode) {
