@@ -1,0 +1,91 @@
+.playing {
+  display: none;
+  font-size: 14px;
+  line-height: normal;
+  margin: 8px 10px 0 0;
+  text-align: left;
+  width: 330px;
+
+  .thumbnail {
+    position: relative;
+    transition: all 0.5s ease;
+
+    .loader {
+      height: 100%;
+      width: 100%;
+      margin: 30px 1px;
+
+      & > div {
+        background: white;
+        height: 25px;
+        width: 2px;
+        margin-right: 2px;
+      }
+    }
+  }
+
+  .set-icon {
+    display: none;
+    float: right;
+    line-height: 55px;
+    margin-right: 0px;
+  }
+
+  .set {
+    background: @darkest-purple;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    display: none;
+    width: 340px;
+    padding: 5px 5px 0 0;
+    position: absolute;
+    bottom: 65px;
+    right: 10px;
+    z-index: 400;
+
+    .details {
+      height: 40px;
+      width: 100%;
+      padding: 5px 0 5px 5px;
+
+      .title, .count {
+        margin-left: 10px;
+      }
+
+      .count {
+        display: block;
+        color: silver;
+      }
+
+      .switches {
+        .right();
+        word-spacing: 10px;
+        margin: 5px 15px 0 0;
+      }
+
+      .switches .glyphicon {
+        cursor: pointer;
+
+        &.soundcloud { color: @soundcloud; }
+        &.youtube    { color: @youtube; }
+        &.local      { color: @local; }
+      }
+    }
+
+    .items {
+      margin: 0;
+      max-height: 170px;
+      width: 325px;
+      overflow-y: scroll;
+      padding-left: 15px;
+
+      .scroll-bar(@white, @darkest-purple);
+      &::-webkit-scrollbar { width: 7px; }
+
+      .media-details {
+        cursor: pointer;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

@@ -22,17 +22,18 @@ module.exports = class UiPlayer {
 
         repeat: $('.repeat'),
 
-        current_icon:   $('.information .icon'),
-        loading_shadow: $('.information .shadow.loading'),
-        current_info:   $('.information .current'),
+        playing_section: $('.playing'),
+        playing_details: $('.playing .media-details'),
+        playing_icon:    $('.playing .media-details .thumbnail'),
+        loading_shadow:  $('.playing .shadow.loading'),
 
-        current_set:          $('.current-set'),
-        current_set_icon:     $('.current-set .glyphicon'),
-        current_set_items:    $('.player .items ul'),
-        current_set_switches: $('.set-switches .glyphicon'),
-        current_set_repeat:   $('.set-switches .glyphicon-repeat'),
-        current_set_random:   $('.set-switches .glyphicon-random'),
-        sneak_peek:           $('.player .items .sneak-peek')
+        playing_set_icon:     $('.playing .set-icon'),
+        playing_set_glyph:    $('.playing .set-icon .glyphicon'),
+        playing_set_items:    $('.playing .set .items'),
+        playing_set_details:  $('.playing .set .details'),
+        playing_set_switches: $('.playing .switches .glyphicon'),
+        playing_set_repeat:   $('.playing .switches .glyphicon-repeat'),
+        playing_set_random:   $('.playing .switches .glyphicon-random'),
       };
 
     return this.elements;
@@ -114,14 +115,17 @@ module.exports = class UiPlayer {
 
     this.repeat.removeClass('soundcloud youtube local');
 
-    this.current_icon.show();
-    this.current_icon.removeClass('music video')
-                     .addClass(this.record.kind);
+    this.playing_section.show();
 
-    this.current_info.title(this.record.title);
-    this.current_info.artist(this.record.artist, this.record.isLocal());
+    this.playing_details.removeClass('music video')
+                        .addClass(this.record.kind);
 
-    this.current_icon.find('img').attr('src', this.record.icon);
+    this.playing_icon.removeClass('music video')
+                     .addClass(this.record.kind)
+                     .find('img').attr('src', this.record.icon);
+
+    this.playing_details.title(this.record.title);
+    this.playing_details.artist(this.record.artist, this.record.isLocal());
   }
 
   /**
@@ -201,22 +205,22 @@ module.exports = class UiPlayer {
   static showCurrentSet() {
     var set = this.record.set;
 
-    this.current_set.show();
+    this.playing_set_icon.show();
 
     if (set instanceof Album)
-      this.current_set_icon.removeClass('glyphicon-list')
+      this.playing_set_glyph.removeClass('glyphicon-list')
                            .addClass('glyphicon-cd');
     else
-      this.current_set_icon.removeClass('glyphicon-cd')
+      this.playing_set_glyph.removeClass('glyphicon-cd')
                            .addClass('glyphicon-list');
 
-    this.sneak_peek.find('.set-title').html(set.title);
-    this.sneak_peek.find('.set-count').html(set.items.length + " items");
+    this.playing_set_details.find('.title').html(set.title);
+    this.playing_set_details.find('.count').html(set.items.length + " items");
 
-    this.current_set_items.empty();
+    this.playing_set_items.html('');
 
     set.items.forEach((item) => {
-      this.current_set_items.append(Handlebars.helpers.set_item(item).string);
+      this.playing_set_items.append(Handlebars.helpers.media_details(item).string);
     });
   }
 
@@ -226,8 +230,8 @@ module.exports = class UiPlayer {
    * @return {null}
    */
   static hideCurrentSet() {
-    this.current_set.hide();
-    this.current_set_items.empty();
+    this.playing_set_icon.hide();
+    this.playing_set_items.find('.media-details').remove();
   }
 
   /**
@@ -237,12 +241,12 @@ module.exports = class UiPlayer {
    */
   static currentSetMode(previous, wanted) {
     if (previous)
-      this.current_set_switches.removeClass('soundcloud youtube local');
+      this.playing_set_switches.removeClass('soundcloud youtube local');
 
     if (previous != 'loop' && wanted == 'loop')
-      this.current_set_repeat.addClass(this.record.service);
+      this.playing_set_repeat.addClass(this.record.service);
     else if (previous != 'random' && wanted == 'random')
-      this.current_set_random.addClass(this.record.service);
+      this.playing_set_random.addClass(this.record.service);
   }
 
   /**

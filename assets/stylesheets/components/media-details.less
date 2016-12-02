@@ -1,0 +1,22 @@
+.media-details {
+  .media-fields();
+  height: 50px;
+  width: 300px;
+  clear: left;
+
+  .thumbnail {
+    border: 1px solid @thiner-grey-blue;
+    border-radius: 1px;
+    float: left;
+    height: 46px;
+    margin-right: 10px;
+
+    img { width: 100%; }
+  }
+
+  &.music .title { width: 200px; }
+  &.video .title { width: 170px; }
+
+  &.music .thumbnail { width: 46px; }
+  &.video .thumbnail { width: 82px; }
+}

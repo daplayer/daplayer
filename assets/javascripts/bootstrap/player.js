@@ -90,16 +90,16 @@ $('.repeat').on('click', function() {
 // display the video with a bigger solid-background and
 // display the latter, clicking on the icon or the fullscreen
 // video, double-clicking on it.
-$('.information').on('mouseenter', '.icon.video', function() {
+$('.playing').on('mouseenter', '.video .thumbnail', function() {
   if (!$('.shadow.main').is(':visible'))
     $('.shadow.small.video').fadeIn(200);
 });
 
-$('.information').on('mouseleave', '.icon.video', function() {
+$('.playing').on('mouseleave', '.video .thumbnail', function() {
   $('.shadow.small.video').fadeOut(200);
 });
 
-$('.information').on('click', '.icon.video', function() {
+$('.playing').on('click', '.video .thumbnail', function() {
   Ui.VideoPlayer.show();
 });
 
@@ -107,15 +107,15 @@ $('.information').on('click', '.icon.video', function() {
 // >> Current set
 //
 // Change the playing mode for the current set.
-$('.set-switches .glyphicon-repeat').on('click', function() {
+$('.playing .set .switches .glyphicon-repeat').on('click', function() {
   Player.currentSetMode('loop');
 });
 
-$('.set-switches .glyphicon-random').on('click', function() {
+$('.playing .set .switches .glyphicon-random').on('click', function() {
   Player.currentSetMode('random');
 });
 
 // Display the current set if there's one.
-$('.current-set').on('click', function() {
-  $('.player .items').fadeToggle(200);
+$('.playing .set-icon').on('click', function() {
+  $('.playing .set').fadeToggle(200);
 });

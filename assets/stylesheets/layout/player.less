@@ -3,8 +3,6 @@
 // +-------------------+
 .player {
   .duration {
-    cursor: pointer;
-    float: left;
     height: 100%;
     overflow: hidden;
     position: relative;
@@ -86,15 +84,14 @@
   color: white;
   height: 65px;
   width: 100%;
-  margin-top: 20px;
   position: fixed;
   left: 0;
   bottom: 0;
   z-index: 400;
 
   .playpause, .previous, .next,
-  .volume, .repeat, .current-set,
-  .timing, .duration, .information {
+  .volume, .repeat, .playing .set-icon,
+  .timing, .duration, .playing {
     display: block;
     float: left;
     height: 65px;
@@ -103,6 +100,12 @@
     margin-right: 20px;
     white-space: nowrap;
     text-align: center;
+  }
+
+  .playpause, .previous, .next,
+  .volume, .repeat, .playing .set-icon {
+    cursor: pointer;
+    font-size: 20px;
   }
 
   .duration {
@@ -119,6 +122,7 @@
 
   .repeat {
     cursor: pointer;
+    font-size: 16px;
 
     &.soundcloud .glyphicon { color: @soundcloud; }
     &.youtube    .glyphicon { color: @youtube; }
@@ -126,7 +130,7 @@
   }
 
   @import "player/controls.less";
-  @import "player/information.less";
+  @import "player/playing.less";
   @import "player/volume.less";
 }
 

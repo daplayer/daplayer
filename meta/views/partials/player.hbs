@@ -1,4 +1,4 @@
-<div class="controls" style="position: relative;">
+<div class="controls">
   <div class="previous">{{g 'backward'}}</div>
   <div class="playpause">{{g 'play'}}</div>
   <div class="next">{{g 'forward'}}</div>
@@ -26,34 +26,36 @@
   {{g 'repeat'}}
 </div>
 
-<div class="information">
-  <div class="current-set">
+<div class="playing">
+  <div class="set-icon">
     {{g 'list'}}
   </div>
 
-  <div class="icon">
-    <img src="">
+  <div class="media-details">
+    <div class="thumbnail">
+      <img src="">
 
-    <div class="shadow small video">{{g 'resize-full'}}</div>
-    <div class="shadow small loading"></div>
-  </div>
+      <div class="shadow small video">{{g 'resize-full'}}</div>
+      <div class="shadow small loading"></div>
+    </div>
 
-  <div class="current">
     <span class="title"></span>
     <span class="artist"></span>
   </div>
 
-  <div class="items">
-    <div class="sneak-peek">
-      <div class="set-switches">
+  <div class="set">
+    <div class="details">
+      <div class="switches">
         {{g 'repeat'}}
         {{g 'random'}}
       </div>
 
-      <span class="set-title"></span>
-      <span class="set-count"></span>
+      <span class="title"></span>
+      <span class="count"></span>
     </div>
 
-    <ul></ul>
+    <div class="clearer"></div>
+
+    <div class="items"></div>
   </div>
 </div>

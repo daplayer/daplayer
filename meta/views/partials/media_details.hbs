@@ -1,0 +1,18 @@
+<div class="media-details {{ kind }} {{ service }}" data-id="{{ id }}">
+  <div class="right">
+    {{ human_time }}
+  </div>
+
+  <div class="thumbnail">
+  {{#if isSoundCloud}}
+    <img src="{{size icon 'badge'}}">
+  {{else}}
+    <img src="{{ icon }}">
+  {{/if}}
+  </div>
+
+  <span class="title" title="{{ title }}">{{ title }}</span>
+  <span class="artist" title="{{ artist }}">{{ artist }}</span>
+</div>
+
+<div class="clearer"></div>
