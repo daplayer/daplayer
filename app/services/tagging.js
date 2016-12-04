@@ -37,46 +37,44 @@ module.exports = class TaggingService {
    * @return {Promise}
    */
   static extract(location, callback) {
+    this.location = location;
+
     var pattern = Paths.join(location, '**/*.{mp3,ogg,m4a}');
-    var hash    = crypto.createHash('sha1').update(location).digest('hex');
 
     return new Promise((resolve, reject) => {
       glob(pattern, (err, files) => {
         if (err)
           reject(err);
 
-        var library_file = Paths.join(Paths.user, hash + "-lib.json");
-        var file_names   = Paths.join(Paths.user, hash + "-files.json");
+        if (!Paths.exists(this.library_file) || !Paths.exists(this.file_names)) {
+          var library = new Tagging.Library();
 
-        if (!Paths.exists(library_file) || !Paths.exists(file_names)) {
-          var library = Tagging.get(files, Paths.covers, callback);
+          library.get(files, Paths.covers, callback);
 
-          fs.writeFile(library_file, JSON.stringify(library));
-          fs.writeFile(file_names, JSON.stringify(files));
+          fs.writeFile(this.library_file, JSON.stringify(library));
+          fs.writeFile(this.file_names, JSON.stringify(files));
 
           resolve(library);
         } else {
-          fs.readFile(file_names, 'utf-8', (err, content) => {
-            var processed = JSON.parse(content);
+          this.loadLibrary().then((existing) => {
+            var library = new Tagging.Library(existing.library);
 
-            var new_files     = files.filter(f => processed.indexOf(f) == -1);
-            var removed_files = processed.filter(f => files.indexOf(f) == -1);
+            var new_files     = files.filter(f => existing.files.indexOf(f) == -1);
+            var removed_files = existing.files.filter(f => files.indexOf(f) == -1);
 
-            fs.readFile(library_file, (err, content) => {
-              var library = JSON.parse(content);
+            if (new_files.length)
+              library.get(new_files, Paths.covers, callback);
+            if (removed_files.length)
+              library.remove(removed_files);
 
-              if (new_files.length)
-                Tagging.get(new_files, Paths.covers, library, callback);
-              if (removed_files.length)
-                this.remove(removed_files, library);
+            if (new_files.length || removed_files.length) {
+              fs.writeFile(this.library_file, JSON.stringify(library));
+              fs.writeFile(this.file_names, JSON.stringify(files));
+            }
 
-              if (new_files.length || removed_files.length) {
-                fs.writeFile(library_file, JSON.stringify(library));
-                fs.writeFile(file_names, JSON.stringify(files));
-              }
-
-              resolve(library);
-            });
+            resolve(library);
+          }).catch((e) => {
+            console.log(e);
           });
         }
       })
@@ -84,46 +82,69 @@ module.exports = class TaggingService {
   }
 
   /**
-   * Remove all the given files from the given library
-   * by first looking inside the different singles and
-   * then inside each album's track.
+   * Loads the library files (i.e. the hash and the files array).
+   * It relies on the `file_names` and `library_file` getters to
+   * determine which files should be read.
    *
-   * This is terribly inefficient.
-   *
-   * @param  {Array}  files
-   * @param  {Object} library
-   * @return {null}
+   * @return {Promise}
    */
-  static remove(files, library) {
-    // The most-likely scenario is that a single has been
-    // removed from the music folder. We should still check
-    // if a track hasn't been removed from the album but
-    // this should be fairly rare.
-    files.forEach((file) => {
-      var index = library.singles.findIndex(single => single.id == file);
+  static loadLibrary() {
+    return new Promise((resolve, reject) => {
+      fs.readFile(this.file_names, 'utf-8', (err, content) => {
+        if (err)
+          reject(err);
 
-      if (index != -1)
-        return library.singles.splice(index, 1);
+        var files = JSON.parse(content);
 
-      // If we haven't find any single, let's look into each
-      // album.
-      Object.keys(library.artists).some((name) => {
-        var artist = library.artists[name];
+        fs.readFile(this.library_file, (err, content) => {
+          if (err)
+            reject(err);
 
-        if (!artist.albums)
-          return false;
+          var library = JSON.parse(content);
 
-        return Object.keys(artist.albums).find((title) => {
-          var album = artist.albums[title];
-
-          return album.find((track, i) => {
-            if (track.id == file)
-              return album.splice(i, 1);
-            else
-              return false;
+          resolve({
+            files:   files,
+            library: library
           });
         });
       });
     });
+  }
+
+  /**
+   * Returns a SHA-1 version of the user's music folder path.
+   *
+   * This is handy as it always generate the same output with
+   * the same string and we don't have to handle OS specific
+   * disparities (like slash on *nix and and back-slash on
+   * Windows).
+   *
+   * @return {String}
+   */
+  static get hash() {
+    if (!this._hash)
+      this._hash = crypto.createHash('sha1').update(this.location).digest('hex');
+
+    return this._hash;
+  }
+
+  /**
+   * Returns the absolute path to the JSON file containing
+   * the already-computed music library.
+   *
+   * @return {String}
+   */
+  static get library_file() {
+    return Paths.join(Paths.user, this.hash + "-lib.json");
+  }
+
+  /**
+   * Returns the absolute path to the JSON file containing
+   * the already-computed music files.
+   *
+   * @return {String}
+   */
+  static get file_names() {
+    return Paths.join(Paths.user, this.hash + "-files.json");
   }
 }
