@@ -16,23 +16,21 @@
         background: #BBC;
         height: 2px;
         width: 100%;
-        z-index: 300;
+        z-index: 500;
       }
 
-      .buffered {
-        background: white;
-        height: 2px;
-        width: 0%;
-        position: relative;
-      }
-
-      .progression {
+      .progression, .buffered {
         height: 2px;
         width: 0%;
         position: absolute;
         top: 0;
-        z-index: 500;
+      }
 
+      .buffered {
+        background: white;
+      }
+
+      .progression {
         &.soundcloud { background: @soundcloud; }
         &.youtube    { background: @youtube; }
         &.local      { background: @local; }
