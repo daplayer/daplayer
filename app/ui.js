@@ -197,6 +197,9 @@ module.exports = class Ui {
           element.title(tags.title);
           element.artist(tags.artist);
 
+          if (tags.icon)
+            element.find('img').attr('src', tags.icon);
+
           Service.for(service).tag(record, tags);
         } else {
           Service.for(service).download(tags);
@@ -254,7 +257,7 @@ module.exports = class Ui {
 
     $('.sidebar .main .download_bar .progression').css({width: total + '%'});
 
-    if (Cache.current.action = 'downloads')
+    if (Cache.current.action == 'downloads')
       $(`div[data-id="${id}"] .progression`).css({width: percentage + '%'});
   }
 
