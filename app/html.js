@@ -48,8 +48,7 @@ module.exports = class Html {
    */
   static options(service, skip_text) {
     if (service == 'local')
-      var mapping = [['time', 'local.sidebar.listen_later',   'listenLater'],
-                     ['tags', 'meta.options.tag',             'tag'],
+      var mapping = [['tags', 'meta.options.tag',             'tag'],
                      ['list', 'meta.options.add_to_playlist', 'addToPlaylist']];
     else
       var mapping = [['share-alt',    'meta.options.share',           'share'],

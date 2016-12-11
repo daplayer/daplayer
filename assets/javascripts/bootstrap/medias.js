@@ -13,11 +13,11 @@ $('.playing .items').on('click', '.media-details', function() {
 });
 
 $('.content').on('mouseenter', 'li.music, li.video', function() {
-  $(this).find('.glyphicon').fadeIn(200);
+  $(this).find('.options').fadeIn(200);
 });
 
 $('.content').on('mouseleave', 'li.music, li.video', function() {
-  $(this).find('.glyphicon').hide();
+  $(this).find('.options').hide();
 });
 
 $('.content').on('click', 'div.box .options-toggler', function() {
@@ -30,23 +30,17 @@ $('.content').on('click', 'div.box .options-toggler', function() {
   box.find('.options').slideToggle();
 });
 
-$('.content').on('click', 'li .options-toggler', function() {
-  var item    = $(this).parents('li');
-  var options = item.find('.options');
-
-  if (!options.length)
-    item.find('.right').prepend(Html.options(Cache.current.module, true));
-  else
-    options.fadeToggle(200);
-});
-
 $('.content').on('click', '.options li', function() {
   var options = $(this).parents('.options');
-      options.slideToggle();
   var media   = options.parents('.music, .video');
 
-  if (media.prop('tagName') == 'LI')
+  if (media.prop('tagName') == 'LI') {
+    options.fadeOut(200);
+
     Ui[$(this).data('function')](media, media.parents('.playlist'));
-  else
+  } else {
+    options.slideOut();
+
     Ui[$(this).data('function')](media);
+  }
 });
