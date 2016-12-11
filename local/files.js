@@ -7,8 +7,8 @@
 
 require('../app/services/tagging').extract(process.argv[2], (current, total) => {
   process.send([current, total]);
-}).then((files) => {
-  process.send(files);
+}).then((library) => {
+  process.send(library);
 }).catch((e) => {
   console.log(e);
 });
