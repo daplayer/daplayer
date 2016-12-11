@@ -123,7 +123,8 @@ module.exports = class Formatter {
    */
   static artist(title, account) {
     if (title.match(/remix/i))
-      var artist = title.split(/(\(|remix\))/i)[2];
+      var artist = title.match(/\((\w|\s)+ remix\)/i)[0]
+                        .split(/\(|remix\)/i)[1];
     else if (title.indexOf("-") != -1)
       var artist = title.split(" - ")[0];
     else

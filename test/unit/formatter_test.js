@@ -39,6 +39,7 @@ describe('Formatter', () => {
 
     it('should pick the artist who did the remix if it is one', () => {
       assert.equal(Formatter.artist('Alina Baraz & Galimatias - Fantasy (Pomo Remix)'), 'Pomo');
+      assert.equal(Formatter.artist('Darius - Helios (Feat. Wayne Snow) (Myd Remix)'), 'Myd');
     });
   });
 
