@@ -47,6 +47,7 @@ app.on('ready', function() {
     title: 'DaPlayer',
     autoHideMenuBar: true,
     webgl: false,
+    titleBarStyle: 'hidden-inset'
   });
 
   // and load the index.html of the app.

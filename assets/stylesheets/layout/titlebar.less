@@ -1,0 +1,77 @@
+.titlebar {
+  .navbar();
+
+  height: 43px;
+  width: ~"calc(100% - 250px)";
+  margin-left: 250px;
+  background: white;
+  overflow: hidden;
+  border-bottom: 1px solid fade(@dark-purple, 20%);
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+
+  nav, a, input {
+    -webkit-app-region: no-drag;
+  }
+
+  a:first-child {
+    float: left;
+  }
+
+  .download_bar {
+    background: white;
+    border: 1px solid @dark-grey;
+    border-radius: 5px;
+    display: none;
+    height: 2px;
+    width: 35px;
+    margin-top: 2px;
+    position: absolute;
+    left: 10px;
+    top: 30px;
+
+    .progression {
+      background: @light-blue;
+      height: 100%;
+      width: 30%;
+    }
+  }
+
+  nav {
+    float: left;
+
+    a .glyphicon { letter-spacing: 12px; }
+  }
+
+  .search-form {
+    background: @light-grey;
+    border: 1px solid darken(@light-grey, 10%);
+    border-radius: 2px;
+    float: left;
+    height: 25px;
+    width: 200px;
+    padding: 2px 5px;
+    margin: 5px 10px;
+
+    .glyphicon {
+      color: @light-purple-grey;
+      float: left;
+      margin: 4px 7px 0 0;
+    }
+
+    input[type="text"] {
+      background: @light-grey;
+      color: darken(@light-purple-grey, 10%);
+      display: block;
+      height: 100%;
+      width: 170px;
+      border: 0;
+      padding: 0;
+      margin: 0;
+
+      &::-webkit-input-placeholder {
+        color: @light-purple-grey;
+      }
+    }
+  }
+}

@@ -1,7 +1,3 @@
-{{#unless token}}
-  {{menu 'soundcloud' 'playlists' 'user_playlists'}}
-{{/unless}}
-
 {{#each user_playlists.collection}}
   {{set_box this}}
 {{else}}

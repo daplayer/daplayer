@@ -33,15 +33,12 @@ $(document).ready(function() {
 
     // Clicking a link on the sidebar should remove the active
     // class of the previous link and add it to the current one.
-    if (parent.hasClass('nav') || parent.hasClass('icon')) {
-      if (!$(this).hasClass('search_icon'))
-        $('.sidebar a.active').removeClass('active');
+    if (parent.hasClass('nav') || parent.hasClass('titlebar') || parent.hasClass('right'))
+      $('a.active').removeClass('active');
 
-      if (!parent.hasClass('icon'))
-        $(this).addClass('active');
-    }
+    $(this).addClass('active');
 
-    if ($(this).parent().hasClass('navbar') && href != '#')
+    if (parent.parent().hasClass('titlebar') && href != '#')
       Router.setFavoriteRouteFor(href);
 
     if ($(this).data('id'))
@@ -54,6 +51,26 @@ $(document).ready(function() {
   // > Handle clicks on notifications
   $('.notifications').on('click', '.notification', function(e) {
     $(this).slideOut();
+  });
+
+  // --------------------------------------------------------
+  // > Search feature
+  $('.titlebar').on('keyup', '.search input', function(e) {
+    // 13: 'Enter' key
+
+    if (e.keyCode == 13) {
+      var module = Cache.current.module;
+
+      if (module == 'meta')
+        return;
+
+      Cache.search = {
+        query:  $(this).val(),
+        source: source
+      };
+
+      Controller.for(module).searchResults();
+    }
   });
 
   // --------------------------------------------------------
@@ -75,10 +92,6 @@ $(document).ready(function() {
   // --------------------------------------------------------
   // > Shadow-related event handlers
   require('./assets/javascripts/bootstrap/shadow');
-
-  // --------------------------------------------------------
-  // > Sidebar interface (toggling menu, search bar, etc.)
-  require('./assets/javascripts/bootstrap/sidebar');
 
   // --------------------------------------------------------
   // > Container (option toggler, scrolling, etc.)

@@ -19,6 +19,8 @@ module.exports = class BaseController {
       id:     id
     };
 
+    Ui.Menu.define(module, action);
+
     return new Promise((resolve, reject) => {
       var token = context.token;
       var meth  = token ? 'append' : 'render';

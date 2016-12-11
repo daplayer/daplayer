@@ -52,12 +52,6 @@ module.exports = class Player {
     else if (this.record && id == this.record.id && this.paused)
       return this.play();
 
-    // Pretty special feature (TM); hides the search bar when the
-    // user starts a new media and the search bar is visible. We
-    // assume that they found what they want.
-    if ($('.sidebar .search-form').is(':visible'))
-      Ui.toggleSearchBar();
-
     Record.from(element, playlist).then((record) => {
       if (!keep_action) {
         Cache.playing = Cache.current;

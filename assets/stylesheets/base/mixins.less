@@ -23,3 +23,20 @@
     color: silver;
   }
 }
+
+.navbar() {
+  a {
+    color: @dark-grey;
+    cursor: pointer;
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    padding: 0px 20px;
+    position: relative;
+
+    &.active, &:hover {
+      border-bottom: 3px solid @smooth-purple;
+      color: @smooth-purple;
+    }
+  }
+}

@@ -32,6 +32,13 @@ module.exports = class Ui {
     return this._Dialog;
   }
 
+  static get Menu() {
+    if (!this._Menu)
+      this._Menu = require('./ui/menu');
+
+    return this._Menu;
+  }
+
   /**
    * Loads the different partials. The skeleton has some
    * placeholders that are waiting some contents to be
@@ -42,13 +49,13 @@ module.exports = class Ui {
    * @return {null}
    */
   static loadPartials(only_sidebar) {
-    $('.sidebar').html(View.compile('meta/partials/sidebar')());
-    $('.search').html(View.compile('meta/partials/search')());
+    $('.sidebar').html(View.compile('app/sidebar')());
 
     if (!only_sidebar) {
-      $('.main.player').html(View.compile('meta/partials/player')());
-      $('.video.player .controls').html(View.compile('meta/partials/video_controls')());
-      $('.player .duration').html(View.compile('meta/partials/duration')());
+      $('.titlebar').html(View.compile('app/titlebar'));
+      $('.main.player').html(View.compile('app/player')());
+      $('.video.player .controls').html(View.compile('app/video_controls')());
+      $('.player .duration').html(View.compile('app/duration')());
     }
   }
 
@@ -223,7 +230,7 @@ module.exports = class Ui {
       icon:   hash.icon
     });
 
-    $('.sidebar .main .download_bar').show();
+    $('.titlebar .download_bar').show();
   }
 
   /**
@@ -242,7 +249,7 @@ module.exports = class Ui {
     }, true);
 
     if (Downloads.progression == Downloads.size)
-      $('.sidebar .main .download_bar').fadeOut(200);
+      $('.titlebar .download_bar').fadeOut(200);
   }
 
   /**
@@ -255,7 +262,7 @@ module.exports = class Ui {
   static downloadProgress(id, percentage) {
     var total = (Downloads.progression / Downloads.size) * 100;
 
-    $('.sidebar .main .download_bar .progression').css({width: total + '%'});
+    $('.titlebar .download_bar .progression').css({width: total + '%'});
 
     if (Cache.current.action == 'downloads')
       $(`div[data-id="${id}"] .progression`).css({width: percentage + '%'});
@@ -298,28 +305,6 @@ module.exports = class Ui {
         playlists:  playlists,
       });
     })
-  }
-
-  /**
-   * Displays or hides the search bar.
-   *
-   * @return {null}
-   */
-  static toggleSearchBar() {
-    if ($('.sidebar .search-form').is(':visible')) {
-      $('.search-options').slideUp(200, function() {
-        $('.sidebar .main .nav_items').animate({ left: 0 });
-        $('.sidebar .search-form').animate({ left: '250px' }, 400, function() {
-          $('.sidebar .search-form').hide();
-        });
-      });
-    } else {
-      $('.sidebar .search-form').show();
-      $('.sidebar .main .nav_items').animate({ left: '-250px'});
-      $('.sidebar .search-form').animate({ left: 0 }, 400, function() {
-        $('.sidebar input').focus();
-      });
-    }
   }
 
   /**

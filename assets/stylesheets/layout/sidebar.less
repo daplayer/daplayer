@@ -3,6 +3,8 @@
 
   background: linear-gradient(135deg, @pink 0%, @smooth-purple 51%, @dark-purple 100%);
   color: white;
+  border-right: 1px solid fade(@dark-purple, 20%);
+  text-shadow: 1px 1px fade(@dark-purple, 20%);
   float: left;
   height: 100%;
   width: 250px;
@@ -25,61 +27,22 @@
     padding-left: 40px;
   }
 
+  .empty {
+    height: 43px;
+    width: 100%;
+    -webkit-app-region: drag;
+  }
+
   nav {
-    &.main {
-      position: relative;
-      min-height: 35px;
+    margin-bottom: 0px;
 
-      .nav_items {
-        padding: 0 0 0 55px;
-        position: absolute;
-        left: 0;
-
-        .icon {
-          float: left;
-          height: 35px;
-          width: 20px;
-          margin-right: 40px;
-          padding-top: 10px;
-          position: relative;
-
-          a {
-            height: 100%;
-            .glyphicon { font-size: 20px; }
-          }
-
-          .download_bar {
-            background: white;
-            border: 1px solid @dark-flat-purple;
-            border-radius: 5px;
-            display: none;
-            height: 2px;
-            width: 150%;
-            margin-top: 2px;
-            position: absolute;
-            left: -25%;
-
-            .progression {
-              background: @light-blue;
-              height: 100%;
-              width: 0%;
-            }
-          }
-        }
-      }
+    a {
+      max-width: 100%;
+      overflow: hidden;
+      padding: 12px 0 12px 20px;
     }
 
-    &:not(.main) {
-      margin-bottom: 0px;
-
-      a {
-        max-width: 100%;
-        overflow: hidden;
-        padding: 10px 0 10px 20px;
-      }
-
-      &:last-child { margin-bottom: 65px; }
-    }
+    &:last-child { margin-bottom: 65px; }
 
     .glyphicon {
       font-size: 10px;
@@ -106,8 +69,9 @@
   }
 
   hr {
-    border-bottom: 1px solid fade(white, 20%);
+    border: 0;
     border-top: 1px solid fade(@dark-purple, 20%);
+    margin-top: 0;
   }
 
   &::-webkit-scrollbar {
