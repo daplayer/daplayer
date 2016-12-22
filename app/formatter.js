@@ -74,23 +74,23 @@ module.exports = class Formatter {
     var diff = this.currentTimestamp() - timestamp;
 
     if (diff < 60)
-      return Translation.t('meta.timing.seconds_ago', {
+      return I18n.t('meta.timing.seconds_ago', {
         number: diff
       });
     else if (diff >= 60 && diff < 3600)
-      return Translation.t('meta.timing.minutes_ago', {
+      return I18n.t('meta.timing.minutes_ago', {
         number: Math.trunc(diff / 60)
       });
     else if (diff >= 3600 && diff < (3600 * 24))
-      return Translation.t('meta.timing.hours_ago', {
+      return I18n.t('meta.timing.hours_ago', {
         number: Math.trunc(diff / 3600)
       });
     else if (diff >= (3600 * 24) && diff < (3600 * 24 * 30))
-      return Translation.t('meta.timing.days_ago', {
+      return I18n.t('meta.timing.days_ago', {
         number: Math.trunc(diff / (3600 * 24))
       });
     else
-      return Translation.t('meta.timing.months_ago', {
+      return I18n.t('meta.timing.months_ago', {
         number: Math.trunc(diff / (3600 * 24 * 30))
       });
   }

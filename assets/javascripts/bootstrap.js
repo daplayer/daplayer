@@ -10,6 +10,12 @@ $(document).ready(function() {
   Cache.initialize();
   Player.initialize();
 
+  I18n.load(Config.meta.locale);
+
+  // --------------------------------------------------------
+  // Display the application's menu
+  require('./app/menu.js');
+
   // Connect to the different services
   Service.for('youtube').connect();
 

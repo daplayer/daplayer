@@ -64,8 +64,8 @@ module.exports = class UiDialog {
 
       if (!Paths.exists(location))
         return Notification.show({
-          action:    Translation.t('meta.error'),
-          title:     Translation.t('meta.errors.invalid_path'),
+          action:    I18n.t('meta.error'),
+          title:     I18n.t('meta.errors.invalid_path'),
           glyphicon: 'alert'
         });
 

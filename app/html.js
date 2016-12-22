@@ -64,7 +64,7 @@ module.exports = class Html {
             if (skip_text)
               return Html.glyphicon(set.first());
             else
-              return Html.glyphicon(set.first()) + Translation.t(set[1]);
+              return Html.glyphicon(set.first()) + I18n.t(set[1]);
           }));
         });
 

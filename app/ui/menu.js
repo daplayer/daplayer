@@ -38,9 +38,9 @@ module.exports = class UiMenu {
 
       output = output.concat(Html.tag('a', attrs, () => {
         if (section == 'search_results')
-          var translation = Translation.t([action, 'name'].join('.'));
+          var translation = I18n.t([action, 'name'].join('.'));
         else
-          var translation = Translation.t([module, key, action].join('.'));
+          var translation = I18n.t([module, key, action].join('.'));
 
         return Html.glyphicon(icons[key][action]) + translation;
       }));

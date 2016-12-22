@@ -16,6 +16,7 @@ require('./core_ext');
 // Libraries
 global.$          = require('jquery');
 global.Handlebars = require('handlebars');
+global.I18n       = require('daplayer-i18n');
 
 require('./jquery_ext');
 
@@ -38,7 +39,6 @@ global.Notification = require('./notification');
 global.Paths        = require('./paths');
 global.Queue        = require('./queue');
 global.Router       = require('./router');
-global.Translation  = require('./translation');
 global.Ui           = require('./ui');
 global.View         = require('./view');
 
@@ -66,7 +66,3 @@ require('../soundcloud/helpers');
 require('../youtube/helpers');
 require('../meta/helpers');
 require('../app/helpers');
-
-// ----------------------------------------------
-// Display the application's menu
-require('./menu');

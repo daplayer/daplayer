@@ -1,42 +1,42 @@
 // File that manages the application's menu
 const template = [
   {
-    label: Translation.t('meta.menu.edit.name'),
+    label: I18n.t('meta.menu.edit.name'),
     submenu: [
       {
-        label: Translation.t('meta.menu.edit.cut'),
+        label: I18n.t('meta.menu.edit.cut'),
         accelerator: 'CmdOrCtrl+X',
         role: 'cut'
       },
       {
-        label: Translation.t('meta.menu.edit.copy'),
+        label: I18n.t('meta.menu.edit.copy'),
         accelerator: 'CmdOrCtrl+C',
         role: 'copy'
       },
       {
-        label: Translation.t('meta.menu.edit.paste'),
+        label: I18n.t('meta.menu.edit.paste'),
         accelerator: 'CmdOrCtrl+V',
         role: 'paste'
       },
       {
-        label: Translation.t('meta.menu.edit.selectall'),
+        label: I18n.t('meta.menu.edit.selectall'),
         accelerator: 'CmdOrCtrl+A',
         role: 'selectall'
       }
     ]
   },
   {
-    label: Translation.t('meta.menu.view.name'),
+    label: I18n.t('meta.menu.view.name'),
     submenu: [
       {
-        label: Translation.t('meta.menu.view.reload'),
+        label: I18n.t('meta.menu.view.reload'),
         accelerator: 'CmdOrCtrl+R',
         click(item, focusedWindow) {
           if (focusedWindow) focusedWindow.reload();
         }
       },
       {
-        label: Translation.t('meta.menu.view.full_screen'),
+        label: I18n.t('meta.menu.view.full_screen'),
         accelerator: process.platform === 'darwin' ? 'Ctrl+Command+F' : 'F11',
         click(item, focusedWindow) {
           if (focusedWindow)
@@ -44,7 +44,7 @@ const template = [
         }
       },
       {
-        label: Translation.t('meta.menu.view.developer_tools'),
+        label: I18n.t('meta.menu.view.developer_tools'),
         accelerator: process.platform === 'darwin' ? 'Alt+Command+I' : 'Ctrl+Shift+I',
         click(item, focusedWindow) {
           if (focusedWindow)
@@ -54,27 +54,27 @@ const template = [
     ]
   },
   {
-    label: Translation.t('meta.menu.window.name'),
+    label: I18n.t('meta.menu.window.name'),
     role: 'window',
     submenu: [
       {
-        label: Translation.t('meta.menu.window.minimize'),
+        label: I18n.t('meta.menu.window.minimize'),
         accelerator: 'CmdOrCtrl+M',
         role: 'minimize'
       },
       {
-        label: Translation.t('meta.menu.window.close'),
+        label: I18n.t('meta.menu.window.close'),
         accelerator: 'CmdOrCtrl+W',
         role: 'close'
       },
     ]
   },
   {
-    label: Translation.t('meta.menu.help.name'),
+    label: I18n.t('meta.menu.help.name'),
     role: 'help',
     submenu: [
       {
-        label: Translation.t('meta.menu.help.learn_more'),
+        label: I18n.t('meta.menu.help.learn_more'),
         click() { require('electron').shell.openExternal('http://electron.atom.io'); }
       },
     ]

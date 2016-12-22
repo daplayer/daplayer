@@ -13,7 +13,7 @@ describe('Meta helpers', () => {
 
   describe('#t', () => {
     it('should delegate to the translation module', () => {
-      Translation.load('en');
+      I18n.load('en');
 
       var output = Handlebars.helpers.t('meta.history');
 
@@ -39,7 +39,7 @@ describe('Meta helpers', () => {
     });
 
     it('should look for a translation key based on the given label', () => {
-      Translation.cache = {meta: {configuration: {foo: 'bar'}}};
+      I18n.cache = {meta: {configuration: {foo: 'bar'}}};
 
       var output = Handlebars.helpers.radio('', '', 'foo', 'meta');
 

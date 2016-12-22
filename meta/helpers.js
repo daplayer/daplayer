@@ -5,7 +5,7 @@ Handlebars.registerHelper('g', function(name) {
 });
 
 Handlebars.registerHelper('t', function(string_path) {
-  return Translation.t(string_path);
+  return I18n.t(string_path);
 });
 
 Handlebars.registerHelper('a', function(title, account) {
@@ -24,7 +24,7 @@ Handlebars.registerHelper('r', function(timestamp) {
 // Form helpers
 Handlebars.registerHelper('radio', function(id, name, label, section) {
   var i18npath = `${section}.configuration.${label}`;
-  var label    = Translation.t(i18npath) || label;
+  var label    = I18n.t(i18npath) || label;
 
   var input = Html.tag('input', {
     type:    'radio',

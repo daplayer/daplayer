@@ -26,7 +26,7 @@ $('.content').on('submit', 'form.configuration', function(e) {
 
   // Reload the contents if the locale has been changed
   if (locale != original_locale) {
-    Translation.load(locale);
+    I18n.load(locale);
 
     // Refresh the partials and the current page.
     Ui.loadPartials(true);
@@ -34,7 +34,7 @@ $('.content').on('submit', 'form.configuration', function(e) {
   }
 
   Notification.show({
-    action:    Translation.t('meta.actions.configuration_saved'),
+    action:    I18n.t('meta.actions.configuration_saved'),
     glyphicon: 'cog'
   });
 });

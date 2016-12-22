@@ -43,7 +43,7 @@ describe('Html', () => {
 
   describe('#options', () => {
     beforeEach(() => {
-      Translation.load('en');
+      I18n.load('en');
     });
 
     it('should add the adequate options for local files', () => {
@@ -53,9 +53,9 @@ describe('Html', () => {
       assert.include(output, '<li data-function="tag">');
       assert.include(output, '<li data-function="addToPlaylist">');
 
-      assert.include(output, Translation.t('local.sidebar.listen_later'));
-      assert.include(output, Translation.t('meta.options.tag'));
-      assert.include(output, Translation.t('meta.options.add_to_playlist'));
+      assert.include(output, I18n.t('local.sidebar.listen_later'));
+      assert.include(output, I18n.t('meta.options.tag'));
+      assert.include(output, I18n.t('meta.options.add_to_playlist'));
     });
 
     it('should add the adequate options for SoundCloud and YouTube records', () => {
@@ -68,26 +68,26 @@ describe('Html', () => {
       assert.include(sc_output, '<li data-function="tag">');
       assert.include(sc_output, '<li data-function="addToPlaylist">');
 
-      assert.include(sc_output, Translation.t('meta.options.share'));
-      assert.include(sc_output, Translation.t('meta.options.download'));
-      assert.include(sc_output, Translation.t('meta.options.add_to_playlist'));
+      assert.include(sc_output, I18n.t('meta.options.share'));
+      assert.include(sc_output, I18n.t('meta.options.download'));
+      assert.include(sc_output, I18n.t('meta.options.add_to_playlist'));
     });
 
     it('should not include labels when `skip_text` is true', () => {
       var local_output = Html.options('local', true);
 
-      assert.exclude(local_output, Translation.t('local.sidebar.listen_later'));
-      assert.exclude(local_output, Translation.t('meta.options.tag'));
-      assert.exclude(local_output, Translation.t('meta.options.add_to_playlist'));
+      assert.exclude(local_output, I18n.t('local.sidebar.listen_later'));
+      assert.exclude(local_output, I18n.t('meta.options.tag'));
+      assert.exclude(local_output, I18n.t('meta.options.add_to_playlist'));
 
       var sc_output = Html.options('soundcloud', true);
       var yt_output = Html.options('youtube', true);
 
       assert.equal(sc_output, yt_output);
 
-      assert.exclude(sc_output, Translation.t('meta.options.share'));
-      assert.exclude(sc_output, Translation.t('meta.options.download'));
-      assert.exclude(sc_output, Translation.t('meta.options.add_to_playlist'));
+      assert.exclude(sc_output, I18n.t('meta.options.share'));
+      assert.exclude(sc_output, I18n.t('meta.options.download'));
+      assert.exclude(sc_output, I18n.t('meta.options.add_to_playlist'));
     });
   });
 

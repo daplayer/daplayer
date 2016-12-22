@@ -19,7 +19,7 @@ Handlebars.registerHelper('soundcloud_activity_icon', function(type) {
 
 Handlebars.registerHelper('soundcloud_activity_desc', function(origin, type) {
   var img  = Html.tag('img', {src: origin.avatar_url.size('tiny')});
-  var desc = Translation.t('sc.activities.' + type, {
+  var desc = I18n.t('sc.activities.' + type, {
     user: origin.username
   });
 

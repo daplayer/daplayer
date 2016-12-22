@@ -21,12 +21,13 @@ global.fs         = require('fs');
 global.path       = require('path');
 global.Handlebars = require('handlebars');
 
-global.Config      = require('../app/config');
-global.Cache       = require('../app/cache');
-global.Html        = require('../app/html');
-global.Formatter   = require('../app/formatter');
-global.Paths       = require('../app/paths');
-global.Translation = require('../app/translation');
+global.I18n = require('daplayer-i18n');
+
+global.Config    = require('../app/config');
+global.Cache     = require('../app/cache');
+global.Html      = require('../app/html');
+global.Formatter = require('../app/formatter');
+global.Paths     = require('../app/paths');
 
 global.Record   = require('../app/models/record');
 global.Playlist = require('../app/models/playlist');
@@ -61,19 +62,3 @@ assert.exclude = function(str, sub_string) {
 
   assert(!str.includes(sub_string), message);
 };
-
-global.keys = (object, scope, array) => {
-  if (!scope) {
-    scope = "";
-    array = [];
-  }
-
-  for (var key in object) {
-    if (typeof object[key] == 'object')
-      keys(object[key], scope + "." + key, array);
-    else
-      array.push(scope + "." + key);
-  }
-
-  return array;
-}

@@ -140,7 +140,7 @@ module.exports = class Ui {
    * @return {null}
    */
   static fileProcessProgress(processed) {
-    $('.loader-text').html(Translation.t('local.feedback.progress', {
+    $('.loader-text').html(I18n.t('local.feedback.progress', {
       current: processed[0],
       total:   processed[1]
     }));
@@ -178,7 +178,7 @@ module.exports = class Ui {
       clipboard.writeText(record.url);
 
       Notification.show({
-        action: Translation.t('meta.actions.url_copied'),
+        action: I18n.t('meta.actions.url_copied'),
         title:  record.title,
         icon:   record.icon
       });
@@ -225,7 +225,7 @@ module.exports = class Ui {
    */
   static downloadStart(hash) {
     Notification.show({
-      action: Translation.t('meta.actions.download_started'),
+      action: I18n.t('meta.actions.download_started'),
       title:  hash.title + ' - ' + hash.artist,
       icon:   hash.icon
     });
@@ -243,7 +243,7 @@ module.exports = class Ui {
    */
   static downloadEnd(hash) {
     Notification.show({
-      action: Translation.t('meta.actions.download_finished'),
+      action: I18n.t('meta.actions.download_finished'),
       title:  hash.title + ' - ' + hash.artist,
       icon:   hash.icon
     }, true);

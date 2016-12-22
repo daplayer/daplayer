@@ -5,6 +5,7 @@
     "jquery":           "^2.2.0",
     "glob":             "^7.1.1",
     "less":             "^2.7.1",
+    "daplayer-i18n":    "git://github.com/daplayer/i18n.git#master",
     "daplayer-tagging": "git://github.com/daplayer/tagging.git#master"
   },
   "devDependencies": {
