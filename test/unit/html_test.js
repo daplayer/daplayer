@@ -49,11 +49,9 @@ describe('Html', () => {
     it('should add the adequate options for local files', () => {
       var output = Html.options('local');
 
-      assert.include(output, '<li data-function="listenLater">');
       assert.include(output, '<li data-function="tag">');
       assert.include(output, '<li data-function="addToPlaylist">');
 
-      assert.include(output, I18n.t('local.sidebar.listen_later'));
       assert.include(output, I18n.t('meta.options.tag'));
       assert.include(output, I18n.t('meta.options.add_to_playlist'));
     });
@@ -76,7 +74,6 @@ describe('Html', () => {
     it('should not include labels when `skip_text` is true', () => {
       var local_output = Html.options('local', true);
 
-      assert.exclude(local_output, I18n.t('local.sidebar.listen_later'));
       assert.exclude(local_output, I18n.t('meta.options.tag'));
       assert.exclude(local_output, I18n.t('meta.options.add_to_playlist'));
 
