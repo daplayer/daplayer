@@ -12,7 +12,7 @@
 
     <div class="information">
       <h2>{{ name }}</h2>
-      <h3>{{ albums.length }} albums / {{ singles.length }} singles</h3>
+      <h3>{{pluralize albums.length 'album'}} / {{pluralize singles.length 'single'}}</h3>
     </div>
   </div>
 
@@ -20,7 +20,7 @@
 </div>
 
 {{#if albums}}
-  <h1>{{t 'local.files.albums'}}</h2>
+  <h1>{{ titleize ( pluralize 'album') }}</h1>
 
   {{#each albums}}
     {{set_box this}}
@@ -28,7 +28,7 @@
 {{/if}}
 
 {{#if singles}}
-  <h1>{{t 'local.files.singles'}}</h1>
+  <h1>{{ titleize (pluralize 'single') }}</h1>
 
   {{#each singles}}
     {{media_box this}}
