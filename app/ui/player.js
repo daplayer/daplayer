@@ -191,7 +191,7 @@ module.exports = class UiPlayer {
    * @return {null}
    */
   static toggleRepeat() {
-    if (Player.repeat)
+    if (Player.media.loop)
       this.repeat.removeClass('soundcloud youtube local');
     else
       this.repeat.addClass(this.record.service);
