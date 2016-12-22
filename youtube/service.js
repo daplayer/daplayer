@@ -450,22 +450,11 @@ module.exports = class YouTubeService extends NetService {
    * @return {Promise}
    */
   static search() {
-    var {query, source} = Cache.search;
+    var {query} = Cache.search;
 
     if (['@', '#'].includes(query[0]))
       query = query.slice(1);
 
-    if (source == 'internet')
-      return YouTubeModel.netSearch(query);
-
-    query = new RegExp(query, 'i');
-
-    return YouTubeModel.playlists().then((playlists) => {
-      return {
-        items: playlists.items.filter((playlist) => {
-          return playlist.title.match(query);
-        })
-      }
-    });
+    return YouTubeModel.netSearch(query);
   }
 }

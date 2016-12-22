@@ -128,29 +128,17 @@ module.exports = class SoundCloudService extends NetService {
   }
 
   /**
-   * Searches dispatching to the model's methods depending
-   * on the syntax used by the user.
-   *
-   * If the source is 'local', then it will look for the
-   * user's likes.
-   *
-   * If the source is 'internet', then it will look for records
-   * directly on SoundCloud (mostly matching the behavior of
-   * the SoundCloud's search bar).
+   * Performs a search on SoundCloud add caches it.
    *
    * @return {Promise}
    */
   static search() {
-    var {query, source} = Cache.search;
+    var {query} = Cache.search;
 
-    if (source == 'internet')
-      return SoundCloudModel.netSearch(query);
+    return SoundCloudModel.netSearch(query).then((results) => {
+      Cache.add('soundcloud', 'search_results', results);
 
-    if (query.startsWith('#'))
-      return SoundCloudModel.findBy('tags', query.slice(1), source);
-    else if (query.startsWith('@'))
-      return SoundCloudModel.findBy('artist', query.slice(1), source);
-    else
-      return SoundCloudModel.findBy('title', query, source);
+      return results;
+    });
   }
 }

@@ -125,14 +125,27 @@ module.exports = class YouTubeModel {
         var ids = results.items.map(item => item.id.videoId);
 
         return YT.fetch('videos', { id: ids.join(",") }, (data) => {
-          resolve({
+          var hash = {
             collection: data.items.map(result => Media.youtube(result)),
             next_token: results.next_token,
             net:        true
-          });
+          };
+
+          Cache.add('youtube', 'search_results', hash);
+
+          resolve(hash);
         });
       });
     });
+  }
+
+  /**
+   * Short hand to access to the cached search results.
+   *
+   * @return {Promise}
+   */
+  static searchResults() {
+    return Cache.youtube.search_results;
   }
 
   /**

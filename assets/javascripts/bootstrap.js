@@ -61,7 +61,7 @@ $(document).ready(function() {
 
   // --------------------------------------------------------
   // > Search feature
-  $('.titlebar').on('keyup', '.search input', function(e) {
+  $('.titlebar').on('keyup', '.search-form input', function(e) {
     // 13: 'Enter' key
 
     if (e.keyCode == 13) {
@@ -70,11 +70,7 @@ $(document).ready(function() {
       if (module == 'meta')
         return;
 
-      Cache.search = {
-        query:  $(this).val(),
-        source: source
-      };
-
+      Cache.search = { query: $(this).val() };
       Controller.for(module).searchResults();
     }
   });

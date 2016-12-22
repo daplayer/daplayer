@@ -27,22 +27,4 @@ module.exports = class SoundCloudModelFinders {
       return cache.collection.find(record => record.id == id);
     });
   }
-
-  /**
-   * Finds all liked records given a field and a query.
-   *
-   * @param  {String} field - The record's field to do the
-   *                          search against.
-   * @param  {String} query - The value to look for.
-   * @return {Promise}
-   */
-  static findBy(field, query) {
-    var match = value => value.match(new RegExp(query, 'i'));
-
-    return this.likes().then((likes) => {
-      return {
-        collection: likes.collection.filter(record => match(record[field]))
-      };
-    });
-  }
 }

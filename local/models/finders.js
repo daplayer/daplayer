@@ -27,9 +27,13 @@ module.exports = class LocalModelFinders {
         return results;
       }).then((results) => {
         this.artists().then((artists) => {
-          results.albums = [];
+          results.artists = []
+          results.albums  = [];
 
           artists.forEach((artist) => {
+            if (artist.name.match(new RegExp(query, 'i')))
+              results.artists.push(artist);
+
             artist.albums.forEach((album) => {
               if (match(album))
                 results.albums.push(album);
@@ -43,6 +47,8 @@ module.exports = class LocalModelFinders {
             });
           });
         });
+
+        Cache.add('local', 'search_results', results);
 
         return results;
       });
@@ -78,22 +84,21 @@ module.exports = class LocalModelFinders {
   }
 
   static findRecord(id, section) {
-    // If we are hitting this method, it means that the user
-    // tries to play a single.
-    //
-    // As for artists, we know that we are looking for a single
-    // for sure but on the search results page, it could be a
-    // single extracted from an album so we need to look into
-    // all the files.
+    // If we are hitting these lines, we know for sure that
+    // the user wants to play a single because otherwise,
+    // the record would've been found by the `findById` method.
+
+    // If the user is on an artist page, we just need to look
+    // first inside all the artists to find the current one.
     if (section == 'artist')
       section = 'artists';
-    if (section == 'search_results')
-      section = 'files';
 
     return this[section.camel()]().then((cached) => {
       if (section == 'artists')
         return cached.find(artist => artist.name == Cache.current.id).singles
                      .find(single => single.id == id);
+      else if (section == 'search_results')
+        return cached.singles.find(record => record.id == id);
       else
         return cached.find(record => record.id == id);
     });

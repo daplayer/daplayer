@@ -1,11 +1,5 @@
-{{menu 'soundcloud' 'search_results' 'soundcloud'}}
-
 {{#if collection}}
   {{#each collection}}
-    {{#if ../net}}
-      {{soundcloud_music_bar this}}
-    {{else}}
-      {{media_box this}}
-    {{/if}}
+    {{soundcloud_music_bar this}}
   {{/each}}
 {{/if}}

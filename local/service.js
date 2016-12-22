@@ -52,8 +52,6 @@ module.exports = class LocalService {
 
     if (query.startsWith('#'))
       return LocalModel.findBy('genre', query.slice(1));
-    else if (query.startsWith('@'))
-      return LocalModel.findBy('artist', query.slice(1));
     else
       return LocalModel.findBy('title', query);
   }

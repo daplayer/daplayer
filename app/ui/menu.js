@@ -9,7 +9,8 @@ module.exports = class UiMenu {
       activities:      'stream',
       tracks:          'stream',
       liked_playlists: 'playlists',
-      user_playlists:  'playlists'
+      user_playlists:  'playlists',
+      search_results:  'search_results'
     };
 
     var key = keys[section];
@@ -29,7 +30,7 @@ module.exports = class UiMenu {
     Object.keys(icons[key]).forEach((action) => {
       if (section == 'artist' && action == 'artists')
         var attrs = { href: 'local/artists', class: 'active' }
-      else if (action == section)
+      else if (action == section || action == module)
         var attrs = { href: '#', class: 'active'};
       else if (section == 'search_results')
         var attrs = { href: `${action}/search_results`};

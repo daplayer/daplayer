@@ -14,9 +14,9 @@ describe('LocalModel::Finders', () => {
       ]);
 
       Cache.add('local', 'artists', [
-        new Artist('', {foo: [{title: '', genre: 'Electro Jazz'}]}),
-        new Artist('', {bar: [{title: '', genre: 'House'}]}),
-        new Artist('', {baz: [{title: '', genre: 'French House'}]})
+        new Artist('', {foo: [{title: '', genre: 'Electro Jazz'}]}, []),
+        new Artist('', {bar: [{title: '', genre: 'House'}]}, []),
+        new Artist('', {baz: [{title: '', genre: 'French House'}]}, [])
       ]);
     });
 
@@ -51,38 +51,6 @@ describe('LocalModel::Finders', () => {
       return LocalModel.findBy('genre', 'House', (results) => {
         assert.equal(results.albums.length, 1);
         assert.equal(results.albums.first().id, 'bar');
-      });
-    });
-  });
-
-  describe('#findBy for "artist"', () => {
-    beforeEach(() => {
-      Cache.add('local', 'singles', [
-        {id: 'foo', artist: 'Rage Against The Machine'},
-        {id: 'bar', artist: 'Bring Me The Horizon'}
-      ]);
-
-      Cache.add('local', 'artists', [
-        new Artist('Darius', {foo: [{title: '', genre: 'Electro Jazz'}]}),
-        new Artist('', {bar: [{title: '', genre: 'House'}]}),
-      ]);
-    });
-
-    afterEach(() => {
-      Cache.initialize();
-    })
-
-    it('should check by inclusion for singles', () => {
-      return LocalModel.findBy('artist', 'rage against').then((results) => {
-        assert.equal(results.singles.length, 1);
-        assert.equal(results.singles.first().id, 'foo');
-      });
-    });
-
-    it('should check by inclusion for albums', () => {
-      return LocalModel.findBy('artist', 'kaytra').then((results) => {
-        assert.equal(results.albums.length, 1);
-        assert.equal(results.albums.first().id, 'foo');
       });
     });
   });
