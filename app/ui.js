@@ -329,8 +329,8 @@ module.exports = class Ui {
    * @return {null}
    */
   static scrollToPlayingElement() {
-    if (Player.playlist)
-      var id = Player.playlist.id;
+    if (Player.record.set)
+      var id = Player.record.set.id;
     else
       var id = Player.record.id;
 
