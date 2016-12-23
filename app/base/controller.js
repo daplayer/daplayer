@@ -25,7 +25,9 @@ module.exports = class BaseController {
       var token = context.token;
       var meth  = token ? 'append' : 'render';
 
-      resolve(View[meth](view, context));
+      View[meth](view, context);
+
+      resolve(context);
     });
   }
 }

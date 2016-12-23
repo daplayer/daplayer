@@ -5,7 +5,7 @@ const SoundCloudModel = require('./model');
 module.exports = class SoundCloudController extends BaseController {
   static activities(token) {
     return SoundCloudModel.activities(token).then((activities) => {
-      this.render('soundcloud/activities', {
+      return this.render('soundcloud/activities', {
         activities: activities,
         token: token
       });
@@ -14,7 +14,7 @@ module.exports = class SoundCloudController extends BaseController {
 
   static tracks(token) {
     return SoundCloudModel.tracks(token).then((tracks) => {
-      this.render('soundcloud/tracks', {
+      return this.render('soundcloud/tracks', {
         tracks: tracks,
         token: token
       });
@@ -23,7 +23,7 @@ module.exports = class SoundCloudController extends BaseController {
 
   static likes(token) {
     return SoundCloudModel.likes(token).then((likes) => {
-      this.render('soundcloud/likes', {
+      return this.render('soundcloud/likes', {
         likes: likes,
         token: token
       })
@@ -32,7 +32,7 @@ module.exports = class SoundCloudController extends BaseController {
 
   static userPlaylists(token) {
     return SoundCloudModel.userPlaylists(token).then((user_playlists) => {
-      this.render('soundcloud/user_playlists', {
+      return this.render('soundcloud/user_playlists', {
         user_playlists: user_playlists,
         token: token
       });
@@ -41,7 +41,7 @@ module.exports = class SoundCloudController extends BaseController {
 
   static likedPlaylists(token) {
     return SoundCloudModel.likedPlaylists(token).then((liked_playlists) => {
-      this.render('soundcloud/liked_playlists', {
+      return this.render('soundcloud/liked_playlists', {
         liked_playlists: liked_playlists,
         token: token
       });
@@ -50,7 +50,7 @@ module.exports = class SoundCloudController extends BaseController {
 
   static searchResults() {
     return Service.for('soundcloud').search().then((results) => {
-      this.render('soundcloud/search_results', results);
+      return this.render('soundcloud/search_results', results);
     });
   }
 

@@ -119,14 +119,19 @@ module.exports = class Ui {
     // controller action.
     $('.loading-shadow').show();
 
-    return controller[Router.to(href).camel()](param).then(() => {
+    return controller[Router.to(href).camel()](param).then((context) => {
       // Hide the loader once the action is rendered.
       $('.loading-shadow').hide();
       $('.loader-text').html('');
 
-      // Scroll to the current playing element
-      if (module == Cache.playing.module && action == Cache.playing.action && !param)
-        Ui.scrollToPlayingElement();
+      if (!context.token) {
+        // Reset the current scroll
+        $('.container').scrollTop(0);
+
+        // Scroll to the current playing element
+        if (module == Cache.playing.module && action == Cache.playing.action)
+          Ui.scrollToPlayingElement();
+      }
     });
   }
 
@@ -331,7 +336,7 @@ module.exports = class Ui {
 
     if ($(`[data-id="${id}"]`).length)
       $('.container').animate({
-        scrollTop: $(`[data-id="${id}"]`).offset().top - 10
+        scrollTop: $(`[data-id="${id}"]`).offset().top - 50
       }, 300);
   }
 
