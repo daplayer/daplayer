@@ -15,8 +15,10 @@ module.exports = class Context {
           else
             this.collection = this.collection.concat(el);
         });
-      } else if (hash[key]) {
-        this.collection = this.collection.concat(hash[key]);
+      } else if (hash[key] && hash[key] instanceof Array) {
+        hash[key].forEach((e) => {
+          this.collection = this.collection.concat(e.flatten ? e.flatten() : e);
+        });
       }
     });
   }
