@@ -8,15 +8,6 @@ module.exports = class SoundCloudModel {
     include(SoundCloudModel, '../soundcloud/models/fetch');
   }
 
-  static resolve(url) {
-    return SC.get('/resolve', {
-      url: url,
-      client_id: Credentials.soundcloud.client_id
-    }).then((result) => {
-      return Record.soundcloud(result);
-    });
-  }
-
   static activities(token) {
     return this.fetch('activities', token);
   }
