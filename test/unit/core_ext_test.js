@@ -40,7 +40,17 @@ describe('core extensions', () => {
 
         assert.deepEqual(array, [{v:1}, {v: 2}, {v: 3}]);
       });
-    })
+    });
+
+    describe('#shuffle', () => {
+      it('should randomly change the positions', () => {
+        var array = [1, 2, 3, 4, 5, 6];
+        var copy  = array.slice();
+
+        array.shuffle();
+        assert.notEqual(copy, array);
+      });
+    });
   });
 
   describe('String', () => {

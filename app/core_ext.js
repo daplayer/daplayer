@@ -60,6 +60,23 @@ Array.prototype.sortBy = function(field) {
     return 0;
   })
 }
+
+/**
+ * Shuffles an array, randomly moving its values.
+ * It modifies the array in place and doesn't create
+ * any copy of it.
+ *
+ * @return {null}
+ */
+Array.prototype.shuffle = function() {
+  this.forEach(function(value, index, array) {
+    let new_index = Math.floor(Math.random() * index);
+
+    array[index]     = array[new_index];
+    array[new_index] = value;
+  });
+};
+
 /**
  * Only for SoundCloud `artwork_url` fields:
  *
