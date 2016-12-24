@@ -81,33 +81,9 @@ module.exports = class YouTubeModel {
     });
   }
 
-  static findById(id, section, playlist) {
-    if (playlist instanceof $)
-      return this.findPlaylist(playlist.data('id')).then((playlist) => {
-        return this.findInPlaylist(id, section, playlist);
-      });
-    else if (playlist instanceof Playlist)
-      return this.findInPlaylist(id, section, playlist);
-    else
-      return this.findRecord(id, section);
-  }
-
   static findPlaylist(id) {
     return this.playlists().then((playlists) => {
       return playlists.collection.find(item => item.id == id);
-    });
-  }
-
-  static findInPlaylist(id, section, playlist) {
-    return Promise.resolve(playlist.items.find(item => item.id == id));
-  }
-
-  static findRecord(id, section) {
-    return this[section.camel()]().then((cache) => {
-      if (section == 'history')
-        return cache.items.find(record => record.id == id);
-      else
-        return cache.collection.find(record => record.id == id);
     });
   }
 
@@ -131,21 +107,10 @@ module.exports = class YouTubeModel {
             net:        true
           };
 
-          Cache.add('youtube', 'search_results', hash);
-
           resolve(hash);
         });
       });
     });
-  }
-
-  /**
-   * Short hand to access to the cached search results.
-   *
-   * @return {Promise}
-   */
-  static searchResults() {
-    return Cache.youtube.search_results;
   }
 
   /**

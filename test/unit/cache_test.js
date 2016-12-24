@@ -27,17 +27,6 @@ describe('Cache', () => {
   });
 
   describe('#add', () => {
-    var original_code;
-
-    before(() => {
-      original_code = Record.link;
-      Record.link   = function() {};
-    });
-
-    after(() => {
-      Record.link = original_code;
-    });
-
     it('should add records to the given section', () => {
       Cache.add('local', 'files', ['foo', 'bar']);
 

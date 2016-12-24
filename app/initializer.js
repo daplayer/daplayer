@@ -59,6 +59,7 @@ global.Media    = require('./models/media');
 global.Album    = require('./models/album');
 global.Activity = require('./models/activity');
 global.Artist   = require('./models/artist');
+global.Context  = require('./models/context');
 
 // ----------------------------------------------
 // Helpers stack

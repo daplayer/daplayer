@@ -3,9 +3,9 @@ $('.content').on('click', '.music, .video', function(e) {
   var target = $(e.target);
 
   if (self.is('li') && !target.hasClass('options') && !target.hasClass('glyphicon'))
-    Player.preload(self, self.parents('.set'));
+    Player.preload(self.data('id'), self.parents('.set').data('id'));
   else if (target.is('img') || target.hasClass('title'))
-    Player.preload(self);
+    Player.preload(self.data('id'));
 });
 
 $('.playing .items').on('click', '.media-details', function() {

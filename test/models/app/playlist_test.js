@@ -58,6 +58,26 @@ describe('Playlist', () => {
     });
   });
 
+  describe('#findById', () => {
+    it('should find the item by its given id', () => {
+      var playlist = new Playlist();
+
+      playlist.items = [{id: 'foo', title: 'bar'}];
+
+      assert.deepEqual(playlist.findById('foo'), {id: 'foo', title: 'bar'});
+    });
+  });
+
+  describe('#flatten', () => {
+    it('should return the items', () => {
+      var playlist = new Playlist();
+
+      playlist.items = [{id: 'foo', title: 'bar'}];
+
+      assert.deepEqual(playlist.flatten(), playlist.items);
+    });
+  });
+
   describe('#soundcloud', () => {
     var hash = {
       artwork_url: 'path/to/artwork-large',

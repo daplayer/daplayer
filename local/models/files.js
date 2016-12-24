@@ -40,8 +40,6 @@ module.exports = class LocalModelFiles {
         return Media.local(single);
       }).sortBy('title');
 
-      singles.forEach(Record.link);
-
       var artists = Object.keys(hash.artists).map((name) => {
         var raw_hash = hash.artists[name]
         var artist   = new Artist(raw_hash.name, raw_hash.albums, raw_hash.singles);

@@ -74,10 +74,6 @@ module.exports = class Cache {
 
           var new_collection = existing.collection.concat(data.collection);
 
-          // Make sure that our doubly-linked list has
-          // the proper links between new elements.
-          new_collection.forEach(Record.link);
-
           resolve({
             next_token: data.next_token,
             collection: new_collection

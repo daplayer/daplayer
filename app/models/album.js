@@ -16,6 +16,5 @@ module.exports = class Album extends Playlist {
 
     this.items.sort((a, b) => a.track - b.track);
     this.items.forEach(item => item.set = this);
-    this.items.forEach(Record.link);
   }
 }

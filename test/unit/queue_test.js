@@ -3,15 +3,29 @@ require('../test_helper');
 const Queue = require('../../app/queue');
 
 describe('Queue', () => {
+  beforeEach(() => {
+    Cache.initialize();
+
+    Cache.playing.context = {
+      collection: [{id: 'foo'}, {id: 'bar'}, {id: 'baz'}]
+    }
+  });
+
   describe('#start', () => {
-    it('should fill the `current` and `playlist` fields', () => {
-      Queue.start('foo', 'bar');
+    it('should fill the `current` field', () => {
+      Queue.start('foo');
 
       assert.equal(Queue.current, 'foo');
     });
 
+    it('should automatically fill the `queue` attribute', () => {
+      Queue.start();
+
+      assert.deepEqual(Queue.queue, Cache.playing.context.collection);
+    });
+
     it('should not set any mode', () => {
-      Queue.start('foo', 'bar');
+      Queue.start();
 
       assert.equal(Queue.mode, undefined);
     });
@@ -19,52 +33,28 @@ describe('Queue', () => {
 
   describe('#setMode', () => {
     it('should change the current mode', () => {
-      Queue.setMode('random');
+      Queue.setMode('loop');
 
-      assert.equal(Queue.mode, 'random');
+      assert.equal(Queue.mode, 'loop');
     });
   });
 
   describe('#next', () => {
-    var current, playlist;
-
     describe('in normal mode', () => {
       beforeEach(() => {
         Queue.setMode();
-
-        current       = new Record(null);
-        next          = new Record('foo');
-        playlist      = new Record(null);
-        next_playlist = new Record(null);
-
-        next_playlist.items = [new Record('bar')];
-        playlist.next       = next_playlist;
-        current.set         = playlist;
       });
 
-      it('should return the next record if it is present', () => {
-        current.next = next;
-        Queue.start(current, playlist);
-
-        assert.equal(current.next.id, next.id);
+      it('should return the next record in the queue', () => {
+        Queue.start({id: 'bar'});
 
         return Queue.next().then((record) => {
-          assert.equal(record.id, next.id);
+          assert.equal(record.id, 'baz');
         });
       });
 
-      it('should return the first record of the next playlist', () => {
-        Queue.start(current, playlist);
-
-        assert.equal(current.next, null);
-
-        return Queue.next().then((record) => {
-          assert.equal(record.id, next_playlist.items.first().id);
-        });
-      });
-
-      it('should return an empty set with no neighbors nor playlist', () => {
-        Queue.start(next);
+      it('should return null if we are at the end of the queue', () => {
+        Queue.start({id: 'baz'});
 
         return Queue.next().then((record) => {
           assert.equal(record, null);
@@ -73,107 +63,54 @@ describe('Queue', () => {
     });
 
     describe('in loop mode', () => {
-      var first, second, playlist;
+      var first, last;
 
       beforeEach(() => {
         Queue.setMode('loop');
 
-        first  = new Record('first');
-        second = new Record('second');
+        var set = {items: [{id: 'foo'}, {id: 'bar'}, {id: 'baz'}]};
 
-        first.next      = second;
-        second.previous = first;
+        first = new Record('foo');
+        last  = new Record('baz');
 
-        playlist       = new Record(null);
-        playlist.items = [first, second];
-        first.set      = playlist;
-        second.set     = playlist;
+        first.set = set;
+        last.set  = set;
       });
 
       it('should return the next record if it is present', () => {
-        Queue.start(first, playlist);
+        Queue.start(first);
 
         return Queue.next().then((record) => {
-          assert.equal(record.id, second.id);
+          assert.equal(record.id, 'bar');
         });
       });
 
       it('should return the first track of the playlist otherwise', () => {
-        Queue.start(second, playlist);
+        Queue.start(last);
 
         return Queue.next().then((record) => {
           assert.equal(record.id, first.id);
         });
       });
     });
-
-    describe('in random mode', () => {
-      var first, second, third, fourth, playlist;
-
-      beforeEach(() => {
-        Queue.setMode('random');
-
-        first  = new Record(1);
-        second = new Record(2);
-
-        playlist       = new Record(null);
-        playlist.items = [new Record('foo'), new Record('bar'), new Record('baz')];
-
-        [first, second].forEach(Record.link);
-        [first, second].forEach(e => e.set = playlist);
-      });
-
-      it('should return a random track from the playlist', () => {
-        Queue.start(second, playlist);
-
-        return Queue.next().then((record) => {
-          assert(['foo', 'bar', 'baz'].includes(record.id));
-          assert.equal([1, 2, 3, 4].includes(record.id), false);
-        });
-      });
-    });
   });
 
   describe('#previous', () => {
-    var current, playlist;
-
     describe('in normal mode', () => {
       beforeEach(() => {
         Queue.setMode();
-
-        current           = new Record(null);
-        previous          = new Record('foo');
-        playlist          = new Record(null);
-        previous_playlist = new Record(null);
-
-        previous_playlist.items = [new Record('bar')];
-        playlist.previous       = previous_playlist;
-        current.set             = playlist;
       });
 
       it('should return the previous record if it is present', () => {
-        current.previous = previous;
-        Queue.start(current, playlist);
-
-        assert.equal(current.previous.id, previous.id);
+        Queue.start({id: 'bar'});
 
         return Queue.previous().then((record) => {
-          assert.equal(record.id, next.id);
+          assert.equal(record.id, 'foo');
         });
       });
 
-      it('should return the first record of the previous playlist', () => {
-        Queue.start(current, playlist);
-
-        assert.equal(current.previous, null);
-
-        return Queue.previous().then((record) => {
-          assert.equal(record.id, previous_playlist.items[0].id);
-        });
-      });
-
-      it('should return an empty set with no neighbors nor playlist', () => {
-        Queue.start(previous);
+      it('should return null if we are at the beginning of the queue', () => {
+        Queue.start({id: 'foo'});
 
         return Queue.previous().then((record) => {
           assert.equal(record, null);
@@ -182,22 +119,18 @@ describe('Queue', () => {
     });
 
     describe('in loop mode', () => {
-      var first, second, playlist;
+      var first, second;
 
       beforeEach(() => {
         Queue.setMode('loop');
 
-        first  = new Record('first');
-        second = new Record('second');
-        third  = new Record('third');
+        var set = {items: [{id: 'foo'}, {id: 'bar'}, {id: 'baz'}]};
 
-        second.previous = first;
-        third.previous  = second;
+        first  = new Record('foo');
+        second = new Record('bar');
 
-        playlist       = new Record(null);
-        playlist.items = [first, second, third];
-        first.set      = playlist;
-        second.set     = playlist;
+        first.set  = set;
+        second.set = set;
       });
 
       it('should return the previous record if it is present', () => {
@@ -212,7 +145,7 @@ describe('Queue', () => {
         Queue.start(first);
 
         return Queue.previous().then((record) => {
-          assert.equal(record.id, third.id);
+          assert.equal(record.id, 'baz');
         });
       });
     });

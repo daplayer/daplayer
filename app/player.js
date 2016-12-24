@@ -34,16 +34,14 @@ module.exports = class Player {
    * Finds the record to play in the cache. Once the record
    * is found, delegates to the `start` method.
    *
-   * @param  {$}          element     - The element to play.
-   * @param  {$=|Record=} playlist    - Optionally the current
-   *                                    playlist.
-   * @param  {Boolean=}   keep_action - Whether to keep the
-   *                                    playing action or not.
+   * @param  {Number|String} id          - The element to play's id.
+   * @param  {Number|String} playlist    - Optionally the current
+   *                                       playlist.
+   * @param  {Boolean=}      keep_action - Whether to keep the
+   *                                       playing action or not.
    * @return {null}
    */
-  static preload(element, playlist, keep_action) {
-    var id = element.data('id');
-
+  static preload(id, playlist, keep_action) {
     // Pause the player if the user clicked on
     // the currently playing item, resume if
     // the player is paused.
@@ -52,16 +50,14 @@ module.exports = class Player {
     else if (this.record && id == this.record.id && this.paused)
       return this.play();
 
-    Record.from(element, playlist).then((record) => {
-      if (!keep_action) {
-        Cache.playing = Cache.current;
+    if (!keep_action) {
+      Cache.playing = Cache.current;
 
-        // Reset the current queue's mode
-        Queue.setMode(null);
-      }
+      // Reset the current queue's mode
+      Queue.setMode(null);
+    }
 
-      this.start(record);
-    });
+    this.start(Record.from(id, playlist));
   }
 
   /**

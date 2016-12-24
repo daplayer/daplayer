@@ -5,7 +5,6 @@ const SC          = require('./client');
 
 module.exports = class SoundCloudModel {
   static mixins() {
-    include(SoundCloudModel, '../soundcloud/models/finders');
     include(SoundCloudModel, '../soundcloud/models/fetch');
   }
 

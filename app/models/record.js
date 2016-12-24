@@ -22,15 +22,14 @@ module.exports = class Record {
     return Formatter.time(this.duration);
   }
 
-  static link(record, index, array) {
-    record.previous = (index == 0) ? null : array[index - 1];
-    record.next     = (index == array.length - 1) ? null : array[index + 1];
-  }
+  static from(id, playlist) {
+    var context = Cache.current.context;
 
-  static from(element, playlist) {
-    var module = Cache.current.module;
-    var action = Cache.current.action;
-
-    return Model.for(module).findById(element.data('id'), action, playlist);
+    if (context.findById)
+      return context.findById(id, playlist);
+    else if (context.collection)
+      return context.collection.find(r => r.id == id);
+    else
+      return context.find(r => r.id == id);
   }
 }

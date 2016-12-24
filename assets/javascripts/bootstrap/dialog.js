@@ -8,16 +8,13 @@ $('.dialog').on('click', '.add_to_playlist.button', function(e) {
   var form       = $(this).parents('form');
   var checkboxes = form.find('input[type="checkbox"]:checked');
   var id         = form.find('input[name="record-id"]').val();
-  var module     = Cache.current.module;
-  var action     = Cache.current.action;
+  var record     = Record.from(id);
 
   checkboxes.each(function() {
-    var service = $(this).data('service');
-    var id      = $(this).val();
+    var service     = $(this).data('service');
+    var playlist_id = $(this).val();
 
-    Model.for(module).findById(id, action).then((record) => {
-      Model.for(service).addToPlaylist(id, record);
-    });
+    Model.for(service).addToPlaylist(playlist_id, record);
   });
 
   Ui.hideShadow();

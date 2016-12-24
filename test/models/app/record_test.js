@@ -41,31 +41,4 @@ describe('Record', () => {
       assert.equal('5:40', record.human_time);
     });
   });
-
-  describe('#link', () => {
-    it('should set the `previous` and `next` attributes of the given record', () => {
-      var record = {};
-
-      Record.link(record, 1, [1, null, 2]);
-
-      assert.equal(record.previous, 1);
-      assert.equal(record.next, 2);
-    });
-
-    it('should not set the `previous` field for the first record', () => {
-      var record = {};
-
-      Record.link(record, 0, [record]);
-
-      assert.equal(record.previous, null);
-    });
-
-    it('should not set the `next` field for the last record', () => {
-      var record = {};
-
-      Record.link(record, 0, [record]);
-
-      assert.equal(record.next, null);
-    });
-  });
 });

@@ -12,11 +12,18 @@ module.exports = class BaseController {
   static render(view, context, id) {
     var [module, action] = view.split('/');
 
+    if (!(context instanceof Artist) && !(context instanceof Array)
+        && !(context instanceof Playlist) && !context.collection)
+      var cached_context = new Context(context);
+    else
+      var cached_context = context;
+
     // Define the current scope.
     Cache.current = {
-      module: module,
-      action: action,
-      id:     id
+      context: cached_context,
+      module:  module,
+      action:  action,
+      id:      id
     };
 
     Ui.Menu.define(module, action);

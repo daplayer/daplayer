@@ -23,6 +23,14 @@ module.exports = class Playlist extends Record {
     return this._item_count || this.items.length;
   }
 
+  findById(id) {
+    return this.items.find(i => i.id == id);
+  }
+
+  flatten() {
+    return this.items;
+  }
+
   static soundcloud(hash) {
     var playlist = new Playlist(hash.id, 'soundcloud');
 

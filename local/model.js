@@ -6,10 +6,6 @@ module.exports = class LocalModel {
     include(LocalModel, '../local/models/finders');
     include(LocalModel, '../local/models/playlists');
   }
-
-  static searchResults() {
-    return Cache.local.search_results;
-  }
 }
 
 module.exports.mixins();
