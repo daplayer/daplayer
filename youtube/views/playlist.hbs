@@ -1,0 +1,18 @@
+<div class="set youtube" data-id="{{ id }}">
+  <div class="information">
+    <img src="{{ icon }}">
+
+    <div class="legend">
+      <h2>{{ title }}</h2>
+      <h3>{{ items_count }} {{t 'meta.videos'}}</h3>
+    </div>
+  </div>
+
+  <div class="items">
+    <ul>
+      {{#each items}}
+        {{set_item this}}
+      {{/each}}
+    </ul>
+  </div>
+</div>

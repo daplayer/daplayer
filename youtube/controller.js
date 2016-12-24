@@ -35,9 +35,7 @@ module.exports = class YouTubeController extends BaseController {
 
   static playlistItems(id) {
     return YouTubeModel.playlistItems(id).then((playlist) => {
-      this.render('meta/partials/set_box', playlist);
-
-      Cache.current = {module: 'youtube', action: 'playlists'}
+      return this.render('youtube/playlist', playlist, id);
     });
   }
 
