@@ -5,6 +5,11 @@ module.exports = class Context {
     if (!hash)
       return;
 
+    if (hash instanceof Array) {
+      this.collection = hash;
+      return this;
+    }
+
     this.collection = [];
 
     Object.keys(hash).forEach((key) => {
