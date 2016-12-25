@@ -199,12 +199,12 @@ module.exports = class Ui {
    * @return {null}
    */
   static tag(id, set) {
-    var record  = Record.from(element.data('id'), set);
+    var record  = Record.from(id, set);
     var service = record.service;
 
     this.Dialog.tag(record).then((tags) => {
       if (service == 'local') {
-        var matching = $(`[data-id="${element.data('id')}"]`);
+        var matching = $(`[data-id="${id}"]`);
 
         matching.title(tags.title);
         matching.artist(tags.artist);
