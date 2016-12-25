@@ -45,9 +45,6 @@ module.exports = class SC {
     else
       url = this.url.me + endpoint;
 
-    if (endpoint == 'playlists')
-      url = url.replace('api-v2', 'api');
-
     var options = {
       url: url,
       qs: {

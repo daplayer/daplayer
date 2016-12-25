@@ -17,26 +17,21 @@ module.exports = class SoundCloudModelFetch {
     return SC.fetch(action, offset, limit).then((response) => {
       var collection;
 
-      // Here, we are either dealing with a normal V2 API result
+      // Here, we are either dealing with a normal API result
       // (i.e. with a `collection` and `next_href` field) or either
-      // fetching a liked playlist (from V2 as well) which has a
-      // `tracks` field or finally, with a V1 API call for the user's
-      // playlists.
+      // fetching a playlist's items response which has a `tracks`
+      // field.
       if (response.collection)
         collection = response.collection.slice();
-      else if (response.tracks)
-        collection = response.tracks;
       else
-        collection = response;
+        collection = response.tracks;
 
       return {
         next_token: response.next_href,
         collection: collection.map((record) => {
           if (action == 'activities')
             return new Activity(record);
-          else if (cache_key == 'user_playlists')
-            return Playlist.soundcloud(record);
-          else if (cache_key == 'liked_playlists' && record.type == 'playlist-like')
+          else if (cache_key == 'playlists')
             return Playlist.soundcloud(record.playlist);
           else if (record.track)
             return Media.soundcloud(record.track);
@@ -45,10 +40,10 @@ module.exports = class SoundCloudModelFetch {
         }).filter(record => record)
       };
     }).then((result) => {
-      // If we are fetching liked playlists, SoundCloud is only
-      // giving us the URI to fetch their items so we need to do
-      // some extra work to get them.
-      if (cache_key == 'liked_playlists') {
+      // If we are fetching playlists, SoundCloud is only giving
+      // us the URI to fetch their items so we need to do some
+      // extra work to get them.
+      if (cache_key == 'playlists') {
         var collections = result.collection.map((playlist) => {
           return this.fetch(playlist.uri).then(items => items.collection);
         });

@@ -30,19 +30,10 @@ module.exports = class SoundCloudController extends BaseController {
     });
   }
 
-  static userPlaylists(token) {
-    return SoundCloudModel.userPlaylists(token).then((user_playlists) => {
-      return this.render('soundcloud/user_playlists', {
-        user_playlists: user_playlists,
-        token: token
-      });
-    });
-  }
-
-  static likedPlaylists(token) {
-    return SoundCloudModel.likedPlaylists(token).then((liked_playlists) => {
-      return this.render('soundcloud/liked_playlists', {
-        liked_playlists: liked_playlists,
+  static playlists(token) {
+    return SoundCloudModel.playlists(token).then((playlists) => {
+      return this.render('soundcloud/playlists', {
+        playlists: playlists,
         token: token
       });
     })

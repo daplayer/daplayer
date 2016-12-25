@@ -20,8 +20,7 @@ module.exports = class Config {
     return {
       download:       this.read('soundcloud', 'download'),
       volume:         this.read('soundcloud', 'volume'),
-      stream_view:    this.read('soundcloud', 'stream_view'),
-      playlists_view: this.read('soundcloud', 'playlists_view')
+      stream_view:    this.read('soundcloud', 'stream_view')
     }
   }
 
@@ -44,8 +43,7 @@ module.exports = class Config {
       soundcloud: {
         download: '',
         volume: 1,
-        stream_view: 'activities',
-        playlists_view: 'liked_playlists'
+        stream_view: 'activities'
       },
       youtube: {
         download: '',

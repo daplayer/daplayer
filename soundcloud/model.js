@@ -20,16 +20,8 @@ module.exports = class SoundCloudModel {
     return this.fetch('likes', token, 20);
   }
 
-  static userPlaylists(token) {
-    return this.fetch('playlists', token, 5, 'user_playlists');
-  }
-
   static playlists(token) {
-    return this.userPlaylists(token);
-  }
-
-  static likedPlaylists(token) {
-    return this.fetch('playlists/liked_and_owned', token, 5, 'liked_playlists');
+    return this.fetch('playlists/liked_and_owned', token, 5, 'playlists');
   }
 
   /**

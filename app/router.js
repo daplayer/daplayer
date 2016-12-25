@@ -4,14 +4,12 @@ module.exports = class Router {
   static setFavoriteRouteFor(href) {
     var parts   = href.split('/');
     var mapping = {
-      configuration:   'dashboard_view',
-      downloads:       'dashboard_view',
-      activities:      'stream_view',
-      tracks:          'stream_view',
-      liked_playlists: 'playlists_view',
-      user_playlists:  'playlists_view',
-      singles:         'files_view',
-      artists:         'files_view'
+      configuration: 'dashboard_view',
+      downloads:     'dashboard_view',
+      activities:    'stream_view',
+      tracks:        'stream_view',
+      singles:       'files_view',
+      artists:       'files_view'
     }
 
     parts.splice(1, 0, mapping[parts[1]]);
@@ -30,9 +28,6 @@ module.exports = class Router {
     // * soundcloud/stream
     //     - soundcloud/activities
     //     - soundcloud/tracks
-    // * soundcloud/playlists
-    //     - soundcloud/liked_playlists
-    //     - soundcloud/user_playlists
     // * local/files
     //     - local/single_files
     //     - local/artists
@@ -40,8 +35,6 @@ module.exports = class Router {
       return Config.meta.dashboard_view;
     else if (href == 'soundcloud/stream')
       return Config.soundcloud.stream_view;
-    else if (href == 'soundcloud/playlists')
-      return Config.soundcloud.playlists_view;
     else if (href == 'local/files')
       return Config.local.files_view;
     else
@@ -61,8 +54,6 @@ module.exports = class Router {
       return 'meta/dashboard';
     else if (module == 'soundcloud' && ['activities', 'tracks'].includes(action))
       return 'soundcloud/stream';
-    else if (module == 'soundcloud' && ['liked_playlists', 'user_playlists'].includes(action))
-      return 'soundcloud/playlists';
     else if (module == 'local' && ['singles', 'artists', 'artist', 'search_results'].includes(action))
       return 'local/files';
     else

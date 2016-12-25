@@ -14,10 +14,9 @@ describe('Config', () => {
     });
 
     it('should have proper default values for SoundCloud', () => {
-      assert.equal(Config.default.soundcloud.download,       '');
-      assert.equal(Config.default.soundcloud.volume,         1);
-      assert.equal(Config.default.soundcloud.stream_view,    'activities');
-      assert.equal(Config.default.soundcloud.playlists_view, 'liked_playlists');
+      assert.equal(Config.default.soundcloud.download,    '');
+      assert.equal(Config.default.soundcloud.volume,      1);
+      assert.equal(Config.default.soundcloud.stream_view, 'activities');
     });
 
     it('should have proper default values for YouTube', () => {

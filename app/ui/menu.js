@@ -8,8 +8,6 @@ module.exports = class UiMenu {
       artist:          'files',
       activities:      'stream',
       tracks:          'stream',
-      liked_playlists: 'playlists',
-      user_playlists:  'playlists',
       search_results:  'search_results'
     };
 
@@ -20,7 +18,6 @@ module.exports = class UiMenu {
 
     var icons = {
       stream:         { activities: 'headphones', tracks: 'music'},
-      playlists:      { liked_playlists: 'heart', user_playlists: 'user' },
       files:          { singles: 'music', artists: 'user' },
       search_results: { soundcloud: 'cloud', youtube: 'film', local: 'music'}
     };
