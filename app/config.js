@@ -10,9 +10,8 @@ module.exports = class Config {
 
   static get local() {
     return {
-      path:       this.read('local', 'path'),
-      volume:     this.read('local', 'volume'),
-      files_view: this.read('local', 'files_view')
+      path:   this.read('local', 'path'),
+      volume: this.read('local', 'volume')
     }
   }
 
@@ -53,8 +52,7 @@ module.exports = class Config {
       },
       local: {
         path: Paths.music_folder,
-        volume: 1,
-        files_view: 'single_files'
+        volume: 1
       },
     }
   }

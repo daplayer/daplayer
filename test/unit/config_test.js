@@ -28,9 +28,8 @@ describe('Config', () => {
     });
 
     it('should have proper default values for the local section', () => {
-      assert.equal(Config.default.local.path,       Paths.music_folder);
-      assert.equal(Config.default.local.volume,     1);
-      assert.equal(Config.default.local.files_view, 'single_files');
+      assert.equal(Config.default.local.path,   Paths.music_folder);
+      assert.equal(Config.default.local.volume, 1);
     });
   });
 

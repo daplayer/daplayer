@@ -23,13 +23,8 @@ module.exports = class Router {
     // * soundcloud/stream
     //     - soundcloud/activities
     //     - soundcloud/tracks
-    // * local/files
-    //     - local/single_files
-    //     - local/artists
     if (href == 'soundcloud/stream')
       return Config.soundcloud.stream_view;
-    else if (href == 'local/files')
-      return Config.local.files_view;
     else
       return href.split("/").last();
   }
@@ -40,11 +35,11 @@ module.exports = class Router {
     // at the right place:
     //
     // * soundcloud/{activities,tracks} => soundcloud/stream
-    // * local/{singles,artists,artist} => local/files
+    // * local/artist                   => local/artists
     if (module == 'soundcloud' && ['activities', 'tracks'].includes(action))
       return 'soundcloud/stream';
-    else if (module == 'local' && ['singles', 'artists', 'artist', 'search_results'].includes(action))
-      return 'local/files';
+    else if (module == 'local' && action == 'artist')
+      return 'local/artists';
     else
       return [module, action].join("/");
   }
