@@ -8,14 +8,6 @@ describe('Router', () => {
       localStorage.clear();
     });
 
-    it('should map dashboard to configuration or downloads', () => {
-      Config.store('meta', 'dashboard_view', 'configuration');
-      assert.equal(Router.to('meta/dashboard'), 'configuration');
-
-      Config.store('meta', 'dashboard_view', 'downloads');
-      assert.equal(Router.to('meta/dashboard'), 'downloads');
-    });
-
     it('should map SoundCloud stream to activities or tracks', () => {
       Config.store('soundcloud', 'stream_view',    'activities');
       assert.equal(Router.to('soundcloud/stream'), 'activities');
@@ -40,11 +32,6 @@ describe('Router', () => {
   });
 
   describe('#from', () => {
-    it('should map configration or downloads to dashboard', () => {
-      assert.equal(Router.from('meta', 'configuration'), 'meta/dashboard');
-      assert.equal(Router.from('meta', 'downloads'), 'meta/dashboard');
-    });
-
     it('should map SoundCloud activites or tracks to `stream`', () => {
       assert.equal(Router.from('soundcloud', 'activities'), 'soundcloud/stream');
       assert.equal(Router.from('soundcloud', 'tracks'),     'soundcloud/stream');
