@@ -14,6 +14,15 @@ describe('Context', () => {
       assert.deepEqual(context.collection, [1, 2, 3]);
     });
 
+    it('should generate a collection from a playlist', () => {
+      var playlist   = new Playlist();
+      playlist.items = [1, 2, 3];
+
+      var context = new Context(playlist);
+
+      assert.deepEqual(context.collection, playlist.items);
+    });
+
     it('should generate a collection from a collection of playlists', () => {
       var playlist1 = new Playlist();
       var playlist2 = new Playlist();

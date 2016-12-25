@@ -19,6 +19,8 @@ module.exports = class Context {
         hash[key].forEach((e) => {
           this.collection = this.collection.concat(e.flatten ? e.flatten() : e);
         });
+      } else if (hash[key]) {
+        this.collection = this.collection.concat(hash[key].items);
       }
     });
   }
