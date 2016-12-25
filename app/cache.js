@@ -11,7 +11,7 @@ module.exports = class Cache {
   static initialize() {
     this.templates  = {}; // Compiled templates
     this.soundcloud = {}; // SoundCloud records
-    this.local      = {}; // Local record
+    this.local      = {}; // Local records
     this.playing    = {}; // Playing scope
     this.search     = {}; // Searching scope
 
@@ -59,7 +59,14 @@ module.exports = class Cache {
     if (section == 'video_urls')
       return this.youtube.video_urls[data.id] = Promise.resolve(data);
 
-    if (!this[module][section]) {
+    // If the section is empty, we just create a brand new
+    // promise with the given data.
+    //
+    // As for local sections, as nothing is paginated, the
+    // check will always pass anyway but the `module` check
+    // is to ensure that we erase existing data as we may
+    // update the local library tagging some elements.
+    if (!this[module][section] || module == 'local') {
       return this[module][section] = Promise.resolve(data);
     } else {
       return this[module][section].then((existing) => {

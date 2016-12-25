@@ -57,7 +57,7 @@ module.exports = class TaggingService {
           resolve(library);
         } else {
           this.loadLibrary().then((existing) => {
-            var library = new Tagging.Library(existing.library);
+            var library = existing.library;
 
             var new_files     = files.filter(f => existing.files.indexOf(f) == -1);
             var removed_files = existing.files.filter(f => files.indexOf(f) == -1);
@@ -104,7 +104,7 @@ module.exports = class TaggingService {
 
           resolve({
             files:   files,
-            library: library
+            library: new Tagging.Library(library)
           });
         });
       });
@@ -122,8 +122,14 @@ module.exports = class TaggingService {
    * @return {String}
    */
   static get hash() {
-    if (!this._hash)
-      this._hash = crypto.createHash('sha1').update(this.location).digest('hex');
+    if (!this._hash) {
+      if (typeof Config !== 'undefined')
+        var location = Config.local.path;
+      else
+        var location = this.location;
+
+      this._hash = crypto.createHash('sha1').update(location).digest('hex');
+    }
 
     return this._hash;
   }

@@ -37,10 +37,10 @@ $('.content').on('click', '.options li', function() {
   if (media.prop('tagName') == 'LI') {
     options.fadeOut(200);
 
-    Ui[$(this).data('function')](media, media.parents('.playlist'));
+    Ui[$(this).data('function')](media.data('id'), media.parents('.set').data('id'));
   } else {
     options.slideOut();
 
-    Ui[$(this).data('function')](media);
+    Ui[$(this).data('function')](media.data('id'));
   }
 });

@@ -173,20 +173,19 @@ module.exports = class Ui {
   /**
    * Puts the media's URL in the clipboard.
    *
-   * @param  {$}  element  - The HTML node that represents
-   *                         the media we want to share.
-   * @param  {$=} playlist - The playlist the element is in.
+   * @param  {Number|String}   id  - The media's id.
+   * @param  {Number=|String=} set - The eventual media's set.
    * @return {null}
    */
-  static share(element, playlist) {
-    Record.from(element).then((record) => {
-      clipboard.writeText(record.url);
+  static share(id, set) {
+    var record = Record.from(id, set);
 
-      Notification.show({
-        action: I18n.t('meta.actions.url_copied'),
-        title:  record.title,
-        icon:   record.icon
-      });
+    clipboard.writeText(record.url);
+
+    Notification.show({
+      action: I18n.t('meta.actions.url_copied'),
+      title:  record.title,
+      icon:   record.icon
     });
   }
 
@@ -195,28 +194,28 @@ module.exports = class Ui {
    * to download for SoundCloud and YouTube or to change
    * them for a local file.
    *
-   * @param  {$}  element  - The HTML node that represents
-   *                         the media we want to download/tag.
-   * @param  {$=} playlist - The playlist the element is in.
+   * @param  {Number|String}   id  - The media's id.
+   * @param  {Number=|String=} set - The eventual media's set.
    * @return {null}
    */
-  static tag(element, playlist) {
-    Record.from(element).then((record) => {
-      var service = record.service;
+  static tag(id, set) {
+    var record  = Record.from(element.data('id'), set);
+    var service = record.service;
 
-      this.Dialog.tag(record).then((tags) => {
-        if (service == 'local') {
-          element.title(tags.title);
-          element.artist(tags.artist);
+    this.Dialog.tag(record).then((tags) => {
+      if (service == 'local') {
+        var matching = $(`[data-id="${element.data('id')}"]`);
 
-          if (tags.icon)
-            element.find('img').attr('src', tags.icon);
+        matching.title(tags.title);
+        matching.artist(tags.artist);
 
-          Service.for(service).tag(record, tags);
-        } else {
-          Service.for(service).download(tags);
-        }
-      });
+        if (tags.icon)
+          matching.find('img').attr('src', tags.icon);
+
+        Service.for(service).tag(record, tags);
+      } else {
+        Service.for(service).download(tags);
+      }
     });
   }
 

@@ -2,6 +2,7 @@
 
 const LocalModel = require('./model');
 const glob       = require('glob');
+const fs         = require('fs');
 
 module.exports = class LocalService {
   /**
@@ -13,14 +14,33 @@ module.exports = class LocalService {
    * @return {null}
    */
   static tag(media, tags) {
-    media.title  = tags.title;
-    media.artist = tags.artist;
-    media.genre  = tags.genre;
+    // We require the file from inside the function
+    // since requiring it from the top of the file
+    // would produce errors running test as the library
+    // would be built against the wrong Chromium version.
+    const TaggingService = require('../app/services/tagging');
 
-    require('../app/services/tagging').define(tags.id, tags);
+    TaggingService.loadLibrary().then((existing) => {
+      // We remove any occurence of the previous media
+      // from the library.
+      existing.library.remove([media.id]);
+
+      // Then we change its tags on disk
+      TaggingService.define(media.id, tags);
+
+      // Then read its tags from disk so the library
+      // will properly creates a new artist if needed, etc.
+      existing.library.get([media.id], Paths.covers);
+
+      // Then we bust the cache.
+      Model.for('local').processFiles(existing.library);
+
+      // Finally, we save the new library to disk.
+      fs.writeFile(TaggingService.library_file, JSON.stringify(existing.library));
+    });
 
     Notification.show({
-      action: Translation.t('meta.actions.tagged'),
+      action: I18n.t('meta.actions.tagged'),
       title:  tags.artist ? (tags.title + ' - ' + tags.artist) : tags.title,
       icon:   tags.icon
     });

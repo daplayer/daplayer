@@ -36,6 +36,15 @@ describe('Cache', () => {
       });
     });
 
+    it('should always erase existing data for the local sections', () => {
+      Cache.add('local', 'singles', ['foo', 'bar']);
+      Cache.add('local', 'singles', ['baz', 'quux']);
+
+      return Cache.local.singles.then((cached) => {
+        assert.deepEqual(cached, ['baz', 'quux']);
+      });
+    });
+
     it('should concatenate previous collection with the given one', () => {
       var first  = { collection: ['foo'] };
       var second = { collection: ['bar'] };
