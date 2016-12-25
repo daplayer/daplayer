@@ -9,7 +9,7 @@ $('.content').on('click', '.music, .video', function(e) {
 });
 
 $('.playing .items').on('click', '.media-details', function() {
-  Player.preload($(this), Player.record.set, true);
+  Player.preload($(this).data('id'), Player.record.set, true);
 });
 
 $('.content').on('mouseenter', 'li.music, li.video', function() {
