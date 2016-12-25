@@ -110,15 +110,6 @@ module.exports = class Paths {
   }
 
   /**
-   * Path to the "Listen later" playlist file.
-   *
-   * @return {String}
-   */
-  static get listen_later() {
-    return path.join(this.playlists, 'listen-later.jspf');
-  }
-
-  /**
    * Path to the "YouTube History" playlist file
    *
    * @return {String}

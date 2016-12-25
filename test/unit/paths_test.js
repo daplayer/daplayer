@@ -57,10 +57,6 @@ describe('Paths', () => {
       assert.equal(Paths.playlists, 'foo/.daplayer/playlists');
     });
 
-    it('should have the proper value for `listen_later`', () => {
-      assert.equal(Paths.listen_later, 'foo/.daplayer/playlists/listen-later.jspf');
-    });
-
     it('should have the proper value for `youtube_history`', () => {
       assert.equal(Paths.youtube_history, 'foo/.daplayer/playlists/youtube-history.jspf');
     });

@@ -25,14 +25,6 @@ module.exports = class LocalController extends BaseController {
     });
   }
 
-  static listenLater() {
-    return LocalModel.listenLater().then((playlist) => {
-      return this.render('local/listen_later', {
-        records: playlist.items
-      });
-    })
-  }
-
   static playlists() {
     return LocalModel.playlists().then((playlists) => {
       return this.render('local/playlists', {
