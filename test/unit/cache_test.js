@@ -29,46 +29,36 @@ describe('Cache', () => {
 
   describe('#add', () => {
     it('should add records to the given section', () => {
-      Cache.add('local', 'files', ['foo', 'bar']);
+      Cache.add('local', 'singles', ['foo', 'bar']);
 
-      return Cache.local.files.then((cached) => {
-        assert.deepEqual(cached, ['foo', 'bar']);
-      });
+      assert.deepEqual(Cache.local.singles, ['foo', 'bar']);
     });
 
     it('should always erase existing data for the local sections', () => {
       Cache.add('local', 'singles', ['foo', 'bar']);
       Cache.add('local', 'singles', ['baz', 'quux']);
 
-      return Cache.local.singles.then((cached) => {
-        assert.deepEqual(cached, ['baz', 'quux']);
-      });
+      assert.deepEqual(Cache.local.singles, ['baz', 'quux']);
     });
 
     it('should concatenate previous collection with the given one', () => {
       var first  = { collection: ['foo'] };
       var second = { collection: ['bar'] };
 
-      return Cache.add('soundcloud', 'likes', first).then(() => {
-        return Cache.add('soundcloud', 'likes', second);
-      }).then(() => {
-        return Cache.soundcloud.likes.then((cached) => {
-          return assert.deepEqual(cached.collection, ['foo', 'bar']);
-        });
-      });
+      Cache.add('soundcloud', 'likes', first);
+      Cache.add('soundcloud', 'likes', second);
+
+      assert.deepEqual(Cache.soundcloud.likes.collection, ['foo', 'bar']);
     });
 
     it('should erase the previous token with the new one', () => {
       var first =  {collection: ['foo'], next_token: '123'};
       var second = {collection: ['foo'], next_token: '456'};
 
-      return Cache.add('soundcloud', 'likes', first).then(() => {
-        return Cache.add('soundcloud', 'likes', second);
-      }).then(() => {
-        return Cache.soundcloud.likes.then((cached) => {
-          return assert.equal(cached.next_token, '456');
-        });
-      });
+      Cache.add('soundcloud', 'likes', first);
+      Cache.add('soundcloud', 'likes', second);
+
+      assert.equal(Cache.soundcloud.likes.next_token, '456');
     });
 
     it('should store YouTube video ids', () => {
@@ -77,6 +67,16 @@ describe('Cache', () => {
       return Cache.youtube.video_urls.bar.then((cached) => {
         assert.deepEqual(cached, {id: 'bar'});
       })
+    });
+  });
+
+  describe('#fetch', () => {
+    it('should wrap the given cache section within a Promise', () => {
+      Cache.add('youtube', 'likes', [1, 2, 3]);
+
+      return Cache.fetch('youtube', 'likes').then((cached) => {
+        assert.deepEqual(cached, [1, 2, 3]);
+      });
     });
   });
 })

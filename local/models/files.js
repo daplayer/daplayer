@@ -3,7 +3,7 @@
 module.exports = class LocalModelFiles {
   static files(section) {
     if (Cache.local[section])
-      return Cache.local[section];
+      return Cache.fetch('local', section);
 
     return new Promise((resolve, reject) => {
       const cp    = require('child_process');

@@ -12,6 +12,7 @@ module.exports = class Cache {
     this.templates  = {}; // Compiled templates
     this.soundcloud = {}; // SoundCloud records
     this.local      = {}; // Local records
+    this.meta       = {}; // Meta records
     this.playing    = {}; // Playing scope
     this.search     = {}; // Searching scope
 
@@ -40,8 +41,7 @@ module.exports = class Cache {
   /**
    * Facility to add elements to a specific cache section.
    *
-   * When the section is empty, just store the result inside
-   * a Promise.
+   * When the section is empty, the given data is roughly stored.
    *
    * When the section is already filled, the existing collection
    * will be concatenated with the given one and the cursor to
@@ -51,7 +51,7 @@ module.exports = class Cache {
    *                            the root section.
    * @param  {String} section - The section to fill.
    * @param  {Object} data    - The data to store.
-   * @return {Promise}
+   * @return {Object}
    */
   static add(module, section, data) {
     // Early return for `video_urls` since we have a higher
@@ -67,26 +67,26 @@ module.exports = class Cache {
     // is to ensure that we erase existing data as we may
     // update the local library tagging some elements.
     if (!this[module][section] || module == 'local') {
-      return this[module][section] = Promise.resolve(data);
+      return this[module][section] = data;
     } else {
-      return this[module][section].then((existing) => {
-        return this[module][section] = new Promise((resolve) => {
-          // Sometimes the SoundCloud API gives a `next_href` that
-          // will return an empty collection, in this case we can't
-          // concatenate so let's return the existing one as is.
-          if (data.collection && data.collection.empty()) {
-            existing.next_token = null;
-            resolve(existing);
-          }
+      var existing       = this[module][section];
+      var new_collection = existing.collection.concat(data.collection);
 
-          var new_collection = existing.collection.concat(data.collection);
-
-          resolve({
-            next_token: data.next_token,
-            collection: new_collection
-          });
-        });
-      });
+      return this[module][section] = {
+        next_token: data.next_token,
+        collection: new_collection
+      };
     }
+  }
+
+  /**
+   * Wraps cache sections within a Promise object. This
+   * is a facility to return data inside a Promise since
+   * model methods return such kind of objects.
+   *
+   * @return {Promise}
+   */
+  static fetch(module, section) {
+    return Promise.resolve(this[module][section]);
   }
 };

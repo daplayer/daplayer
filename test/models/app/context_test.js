@@ -34,5 +34,11 @@ describe('Context', () => {
 
       assert.deepEqual(context.collection, [1, 2, 3, 4, 5, 6]);
     });
+
+    it('should ignore the `next_token` key', () => {
+      var context = new Context({next_token: undefined});
+
+      assert.deepEqual(context.collection, []);
+    });
   });
 });

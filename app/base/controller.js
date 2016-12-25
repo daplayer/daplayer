@@ -12,11 +12,11 @@ module.exports = class BaseController {
   static render(view, context, id) {
     var [module, action] = view.split('/');
 
-    if (!(context instanceof Artist) && !(context instanceof Array)
-        && !(context instanceof Playlist) && !context.collection)
-      var cached_context = new Context(context);
-    else
+    if (context instanceof Artist   || context instanceof Array ||
+        context instanceof Playlist || context.collection)
       var cached_context = context;
+    else
+      var cached_context = new Context(Cache[module][action]);
 
     // Define the current scope.
     Cache.current = {

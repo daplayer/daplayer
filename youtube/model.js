@@ -6,7 +6,7 @@ const LocalModel = require('../local/models/playlists');
 module.exports = class YouTubeModel {
   static history() {
     if (Cache.youtube.history)
-      return Cache.youtube.history;
+      return Cache.fetch('youtube', 'history');
 
     return LocalModel.loadPlaylist(Paths.youtube_history).then((history) => {
       return Cache.add('youtube', 'history', history);
@@ -45,7 +45,7 @@ module.exports = class YouTubeModel {
     if (action == 'items' && Cache.youtube.items.includes(token_or_id))
       return this.findPlaylist(token_or_id);
     else if (Cache.youtube[action] && !token_or_id)
-      return Cache.youtube[action];
+      return Cache.fetch('youtube', 'action');
 
     return YT[action](token_or_id, full).then((set) => {
       return {
@@ -123,7 +123,7 @@ module.exports = class YouTubeModel {
    */
   static addToPlaylist(id, record) {
     if (Cache.youtube.items[id])
-      Cache.youtube.playlists.then((cached) => {
+      Cache.fetch('youtube', 'playlists').then((cached) => {
         var playlist = cached.collection.find(playlist => playlist.id == id);
 
         playlist.items.push(record);

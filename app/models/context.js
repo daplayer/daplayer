@@ -8,6 +8,9 @@ module.exports = class Context {
     this.collection = [];
 
     Object.keys(hash).forEach((key) => {
+      if (key == 'next_token')
+        return;
+
       if (hash[key] && hash[key].collection) {
         hash[key].collection.forEach((el) => {
           if (el.items)

@@ -164,10 +164,10 @@ module.exports = class Ui {
         action == 'playlist_items' || !Cache[module][action])
       return;
 
-    Cache[module][action].then((result) => {
-      if (result.next_token)
-        Ui.render([module, action].join('/'), result.next_token);
-    });
+    var cached = Cache[module][action];
+
+    if (cached.next_token)
+      Ui.render([module, action].join('/'), cached.next_token);
   }
 
   /**

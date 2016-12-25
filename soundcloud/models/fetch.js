@@ -5,7 +5,7 @@ const SC = require('../client');
 module.exports = class SoundCloudModelFetch {
   static fetch(action, href, limit, cache_key) {
     if (Cache.soundcloud[cache_key || action] && !href)
-      return Cache.soundcloud[cache_key || action];
+      return Cache.fetch('soundcloud', (cache_key || action));
 
     if (href && action == 'activities')
       var offset = href;
