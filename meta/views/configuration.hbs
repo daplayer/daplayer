@@ -36,10 +36,9 @@
 
     <h3>{{t 'yt.configuration.quality.title' }}</h3>
 
-    {{radio '720p'   'quality' 'quality.720p'   'youtube'}}
-    {{radio 'high'   'quality' 'quality.high'   'youtube'}}
-    {{radio 'medium' 'quality' 'quality.medium' 'youtube'}}
-    {{radio 'small'  'quality' 'quality.small'  'youtube'}}
+    {{radio '720' 'quality' 'quality.hd'       'youtube'}}
+    {{radio '480' 'quality' 'quality.medium'   'youtube'}}
+    {{radio '360' 'quality' 'quality.low'      'youtube'}}
 
     {{#unless youtube.connected}}
       <a href="#youtube/signin" class="youtube">

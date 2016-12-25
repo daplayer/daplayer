@@ -22,7 +22,7 @@ describe('Config', () => {
 
     it('should have proper default values for YouTube', () => {
       assert.equal(Config.default.youtube.download, '');
-      assert.equal(Config.default.youtube.quality,  'medium');
+      assert.equal(Config.default.youtube.quality,  360);
       assert.equal(Config.default.youtube.volume,   1);
 
       assert.deepEqual(Config.default.youtube.related_playlists, {});

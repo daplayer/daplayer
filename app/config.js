@@ -49,7 +49,7 @@ module.exports = class Config {
       },
       youtube: {
         download: '',
-        quality: 'medium',
+        quality: 360,
         related_playlists: {},
         volume: 1
       },

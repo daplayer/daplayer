@@ -205,12 +205,13 @@ module.exports = class YouTubeService extends NetService {
 
         var video_info = querystring.parse(body);
         var streams = String(video_info.url_encoded_fmt_stream_map).split(',');
+        var urls    = streams.map(stream => querystring.parse(stream));
 
-        streams.forEach((stream, index) => {
-          streams[index] = querystring.parse(stream);
-        });
+        // Map the correct quality itag with its real value.
+        urls.forEach(url => url.quality = this.qualities[url.itag]);
+        urls = urls.sortBy('quality').reverse();
 
-        var stream = streams[0];
+        var stream = urls.find(e => e.quality <= Config.youtube.quality);
         var url    = stream.url.replace(/%2C/g, ",");
         var type   = stream.type;
 
@@ -456,5 +457,18 @@ module.exports = class YouTubeService extends NetService {
       query = query.slice(1);
 
     return YouTubeModel.netSearch(query);
+  }
+
+  static get qualities() {
+    if (!this._qualitites)
+      this._qualitites = {
+        18: 360,
+        22: 720,
+        43: 360,
+        44: 480,
+        45: 720,
+      };
+
+    return this._qualitites;
   }
 }
