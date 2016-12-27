@@ -1,20 +1,25 @@
-.container .set {
-  .basic-box();
-  border-radius: 0px;
+.set.box {
   margin: 20px 20px 20px 28px;
 
   &:first-child {
     margin-top: 0;
   }
 
+  .count {
+    color: lighten(@base-color, 10%);
+    font-weight: 200;
+  }
+
   &.soundcloud, &.local {
     height: 300px;
   }
 
+  &.local, &.soundcloud {
+    .music img { width: @li-music-height!important; }
+  }
+
   &.local {
-    .music img, .video img {
-      width: 32px!important;
-    }
+    .video img { width: @li-music-height!important; }
 
     .video {
       height: 30px;
@@ -44,11 +49,8 @@
     margin: auto;
   }
 
-  h2 .glyphicon {
-    display: none;
-    font-size: 14px;
-    letter-spacing: 10px;
-    text-align: right;
+  h2 {
+    margin-top: 2px;
   }
 
   h3 { margin-bottom: 12px; }
