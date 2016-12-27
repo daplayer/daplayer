@@ -9,12 +9,12 @@
     <h3>
       {{#if isSoundCloud}}
         {{ artist }} &middot;
-        <span class="count">{{ items.length }} {{t 'meta.items'}}</span>
+        <span class="count">{{ pluralize items.length 'item' }}</span>
       {{else if album}}
         {{ artist.name }} &middot;
-        <span class="count">{{ items.length }} {{t 'meta.tracks'}}</span>
+        <span class="count">{{ pluralize items.length 'track' }}</span>
       {{else}}
-        <span class="count">{{ items.length }} {{t 'meta.items'}}</span>
+        <span class="count">{{ pluralize items.length 'item' }}</span>
       {{/if}}
     </h3>
 
