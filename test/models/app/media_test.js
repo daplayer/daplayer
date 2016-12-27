@@ -52,6 +52,21 @@ describe('Media', () => {
     });
   });
 
+  describe('#album', () => {
+    it('should return the album title if present', () => {
+      var media = new Media('Imagine');
+      media.set = {title: 'American Spirit'};
+
+      assert.equal(media.album, 'American Spirit');
+    });
+
+    it('should return an empty string for singles', () => {
+      var media = new Media("Don't Matter");
+
+      assert.equal(media.album, '');
+    });
+  });
+
   describe('#soundcloud', () => {
     var hash = {
       title: 'Faut qu\'on rentre bosser',
@@ -136,7 +151,6 @@ describe('Media', () => {
       title: 'Maliblue',
       artist: 'Darius',
       genre: 'French House',
-      album: 'Velour',
       track: 4,
       duration: 259
     };

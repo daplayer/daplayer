@@ -24,6 +24,13 @@ module.exports = class Media extends Record {
       return `https://www.youtube.com/watch?v=${this.id}`;
   }
 
+  get album() {
+    if (this.set)
+      return this.set.title;
+    else
+      return "";
+  }
+
   static soundcloud(hash, set) {
     var media = new Media(hash.id, 'soundcloud');
 
