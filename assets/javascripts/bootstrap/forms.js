@@ -47,7 +47,7 @@ $('body').on('click', '.flat_button, .tiny_button', function(e) {
   var picker = button.data('picker');
 
   FilePicker.open(picker, function(chosen) {
-    $(`#${field}`).attr('value', chosen);
+    $(`input[name="${field}"]`).attr('value', chosen);
 
     if (picker == 'picture')
       button.parent().find('img').attr('src', chosen);
