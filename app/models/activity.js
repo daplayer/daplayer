@@ -11,4 +11,8 @@ module.exports = class Activity {
     this.origin   = hash.user;
     this.type     = hash.type;
   }
+
+  get id() {
+    return this.item.id;
+  }
 }
