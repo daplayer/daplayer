@@ -82,11 +82,14 @@ module.exports = class SoundCloudModelFetch {
    */
   static netSearch(value) {
     return SC.search(value).then((results) => {
-      return {
+      var hash = {
         collection: results.collection.map(record => Media.soundcloud(record)),
-        next_token: results.next_href,
-        net:        true
-      }
+        next_token: results.next_href
+      };
+
+      Cache.add('soundcloud', 'search_results', hash);
+
+      return hash;
     });
   }
 }

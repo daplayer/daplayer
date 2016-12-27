@@ -107,6 +107,8 @@ module.exports = class YouTubeModel {
             net:        true
           };
 
+          Cache.add('youtube', 'search_results', hash);
+
           resolve(hash);
         });
       });

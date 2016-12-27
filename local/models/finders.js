@@ -26,7 +26,7 @@ module.exports = class LocalModelFinders {
 
         return results;
       }).then((results) => {
-        this.artists().then((artists) => {
+        return this.artists().then((artists) => {
           results.artists = []
           results.albums  = [];
 
@@ -46,9 +46,11 @@ module.exports = class LocalModelFinders {
                 results.singles = results.singles.concat(album.items.filter(match));
             });
           });
-        });
 
-        return results;
+          Cache.add('local', 'search_results', results);
+
+          return results;
+        });
       });
     });
   }
