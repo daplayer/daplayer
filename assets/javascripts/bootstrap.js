@@ -119,10 +119,16 @@ Application.boot(function() {
 
   // >> In-app shortcuts
   $(document).on('keypress', function(e) {
+    if (e.target.tagName == 'INPUT')
+      return;
+
+    e.preventDefault();
+
+    // 32: 'space' key
     // 115: 's' key
-    if (e.target.tagName != 'INPUT' && e.keyCode == 115) {
-      e.preventDefault();
+    if (e.keyCode == 115)
       $('.search-form input').focus();
-    }
+    else if (e.keyCode == 32)
+      Player.paused ? Player.play() : Player.pause();
   });
 });
