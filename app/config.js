@@ -3,8 +3,7 @@
 module.exports = class Config {
   static get meta() {
     return {
-      locale:         this.read('meta', 'locale'),
-      dashboard_view: this.read('meta', 'dashboard_view')
+      locale: this.read('meta', 'locale'),
     }
   }
 
