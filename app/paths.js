@@ -115,7 +115,41 @@ module.exports = class Paths {
    * @return {String}
    */
   static get youtube_history() {
-    return path.join(this.playlists, 'youtube-history.jspf');
+    return path.join(this.youtube, 'history.jspf');
+  }
+
+  /* Local path to the SoundCloud-related data.
+   *
+   * @return {String}
+   */
+  static get soundcloud() {
+    return path.join(this.user, 'soundcloud');
+  }
+
+  /* Local path to the YouTube-related data.
+   *
+   * @return {String}
+   */
+  static get youtube() {
+    return path.join(this.user, 'youtube');
+  }
+
+  /* Local path to the local-related data.
+   *
+   * @return {String}
+   */
+  static get local() {
+    return path.join(this.user, 'local');
+  }
+
+  /**
+   * List of paths to ensure are created when the application
+   * boots up as we may try to access to them.
+   *
+   * @return {Array}
+   */
+  static get to_make() {
+    return ['user', 'covers', 'playlists', 'soundcloud', 'local', 'youtube'];
   }
 
   /**
@@ -164,7 +198,7 @@ module.exports = class Paths {
   }
 
   /**
-   * Touches the JSPF file for a given playlist path.
+   * Touches the JSPF file for the YouTube history.
    *
    * We are not relying on the `LocalModel#savePlaylist` method
    * as this would do extra computation to guess the file name
@@ -174,9 +208,9 @@ module.exports = class Paths {
    *
    * @return {null}
    */
-  static touchPlaylistFile(location_id) {
-    fs.writeFileSync(this[location_id], JSON.stringify({
-      title: location_id,
+  static touchYouTubeHistory() {
+    fs.writeFileSync(this.youtube_history, JSON.stringify({
+      title: 'history',
       track: []
     }));
   }

@@ -58,7 +58,7 @@ describe('Paths', () => {
     });
 
     it('should have the proper value for `youtube_history`', () => {
-      assert.equal(Paths.youtube_history, 'foo/.daplayer/playlists/youtube-history.jspf');
+      assert.equal(Paths.youtube_history, 'foo/.daplayer/youtube/history.jspf');
     });
   });
 });

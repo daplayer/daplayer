@@ -13,8 +13,7 @@ module.exports = class LocalModelPlaylists {
         if (err)
           reject(err);
 
-        var jspf_files = files.filter(file => Paths.youtube_history != file);
-        var playlists  = jspf_files.map((file) => this.loadPlaylist(file));
+        var playlists = files.map(file => this.loadPlaylist(file));
 
         Promise.all(playlists).then((playlists) => {
           Cache.add('local', 'playlists', playlists);

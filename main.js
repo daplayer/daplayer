@@ -6,14 +6,14 @@
 const Paths = require('./app/paths');
 
 // > For folders.
-['user', 'covers', 'playlists'].forEach((folder) => {
+Paths.to_make.forEach((folder) => {
   if (!Paths.exists(folder))
     Paths.mkdir(folder);
 });
 
 // > For the "YouTube History" playlist files.
 if (!Paths.exists('youtube_history'))
-  Paths.touchPlaylistFile('youtube_history');
+  Paths.touchYouTubeHistory();
 
 // Start the Electron "popote".
 const electron       = require('electron');

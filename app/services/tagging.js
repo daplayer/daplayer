@@ -141,7 +141,7 @@ module.exports = class TaggingService {
    * @return {String}
    */
   static get library_file() {
-    return Paths.join(Paths.user, this.hash + "-lib.json");
+    return Paths.join(Paths.local, this.hash + "-lib.json");
   }
 
   /**
@@ -151,6 +151,6 @@ module.exports = class TaggingService {
    * @return {String}
    */
   static get file_names() {
-    return Paths.join(Paths.user, this.hash + "-files.json");
+    return Paths.join(Paths.local, this.hash + "-files.json");
   }
 }
