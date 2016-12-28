@@ -27,6 +27,7 @@ global.NativeNotification = Notification;
 
 // ----------------------------------------------
 // Internal components
+global.Application  = require('./application');
 global.Analytics    = require('./analytics');
 global.Cache        = require('./cache');
 global.Config       = require('./config');
@@ -37,6 +38,7 @@ global.Formatter    = require('./formatter');
 global.Html         = require('./html');
 global.Notification = require('./notification');
 global.Paths        = require('./paths');
+global.Player       = require('./player');
 global.Queue        = require('./queue');
 global.Router       = require('./router');
 global.Ui           = require('./ui');

@@ -3,21 +3,11 @@
 require('./app/initializer.js');
 
 const ipcRenderer = require('electron').ipcRenderer;
-const Player      = require('./app/player');
 
-$(document).ready(function() {
-  // Initialize the cache and its properties
-  Cache.initialize();
-  Player.initialize();
-
-  I18n.load(Config.meta.locale);
-
+Application.boot(function() {
   // --------------------------------------------------------
   // Display the application's menu
   require('./app/menu.js');
-
-  // Connect to the different services
-  Service.for('youtube').connect();
 
   // --------------------------------------------------------
   // Load the different partials (sidebar, etc.)
