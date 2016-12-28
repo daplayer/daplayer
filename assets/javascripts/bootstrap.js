@@ -120,7 +120,9 @@ Application.boot(function() {
   // >> In-app shortcuts
   $(document).on('keypress', function(e) {
     // 115: 's' key
-    if (e.target.tagName != 'INPUT' && e.keyCode == 115)
-      Ui.toggleSearchBar();
+    if (e.target.tagName != 'INPUT' && e.keyCode == 115) {
+      e.preventDefault();
+      $('.search-form input').focus();
+    }
   });
 });
