@@ -18,7 +18,7 @@ describe('Cache', () => {
 
     it('should set deeper fields for YouTube', () => {
       assert.deepEqual(Cache.youtube.items, []);
-      assert.deepEqual(Cache.youtube.video_urls, {});
+      assert.deepEqual(Cache.youtube.video_urls, []);
     });
 
     it('should set default scope', () => {
@@ -64,9 +64,7 @@ describe('Cache', () => {
     it('should store YouTube video ids', () => {
       Cache.add('youtube', 'video_urls', { id: 'bar' });
 
-      return Cache.youtube.video_urls.bar.then((cached) => {
-        assert.deepEqual(cached, {id: 'bar'});
-      })
+      assert.deepEqual(Cache.youtube.video_urls, [{id: 'bar'}]);
     });
   });
 

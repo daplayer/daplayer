@@ -28,7 +28,7 @@ module.exports = class Cache {
     // loaded playlists and an URL for each video.
     this.youtube = {
       items:      [],
-      video_urls: {}
+      video_urls: []
     };
 
     // Define the default scope
@@ -57,7 +57,7 @@ module.exports = class Cache {
     // Early return for `video_urls` since we have a higher
     // level of nesting.
     if (section == 'video_urls')
-      return this.youtube.video_urls[data.id] = Promise.resolve(data);
+      return this.youtube.video_urls.push(data);
 
     // If the section is empty, we just create a brand new
     // promise with the given data.

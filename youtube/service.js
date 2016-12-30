@@ -193,8 +193,14 @@ module.exports = class YouTubeService extends NetService {
   static videoURL(id) {
     // If the URL has already been computed, let's
     // return it from the cache.
-    if (Cache.youtube.video_urls[id])
-      return Cache.youtube.video_urls[id];
+    if (Cache.youtube.video_urls.length) {
+      var url = Cache.youtube.video_urls.find((url) => {
+        return url.id == id && url.quality == Config.youtube.quality
+      });
+
+      if (url)
+        return Promise.resolve(url);
+    }
 
     var options = { video_id: id, el: 'detailpage' };
 
@@ -220,7 +226,8 @@ module.exports = class YouTubeService extends NetService {
             var result = {
               id: id,
               url: `${url}&signature=${signature}`,
-              type: type
+              type: type,
+              quality: stream.quality
             };
 
             Cache.add('youtube', 'video_urls', result);
@@ -230,7 +237,8 @@ module.exports = class YouTubeService extends NetService {
           var result = {
             id: id,
             url: url,
-            type: type
+            type: type,
+            quality: stream.quality
           };
 
           Cache.add('youtube', 'video_urls', result);
