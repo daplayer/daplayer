@@ -8,6 +8,9 @@ module.exports = class Context {
     if (hash instanceof Array) {
       this.collection = hash;
       return this;
+    } else if (hash.items) {
+      this.collection = hash.items;
+      return this;
     }
 
     this.collection = [];

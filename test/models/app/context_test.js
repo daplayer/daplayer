@@ -16,6 +16,7 @@ describe('Context', () => {
 
     it('should generate a collection from a playlist', () => {
       var playlist   = new Playlist();
+      playlist.title = 'foo';
       playlist.items = [1, 2, 3];
 
       var context = new Context(playlist);
