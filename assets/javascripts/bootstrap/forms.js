@@ -41,7 +41,7 @@ $('.content').on('submit', 'form.configuration', function(e) {
 
 // --------------------------------------------------------
 // Display a file selector clicking on file picker buttons.
-$('body').on('click', '.flat_button, .tiny_button', function(e) {
+$('body').on('click', 'a[data-picker]', function(e) {
   var button = $(this);
   var field  = button.data('field');
   var picker = button.data('picker');
