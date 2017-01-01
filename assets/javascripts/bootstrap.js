@@ -57,7 +57,7 @@ Application.boot(function() {
     if (e.keyCode == 13) {
       var module = Cache.current.module;
 
-      if (module == 'meta')
+      if (module == 'meta' || $(this).val() == '')
         return;
 
       Cache.search = { query: $(this).val() };
