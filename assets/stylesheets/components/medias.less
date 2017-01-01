@@ -1,8 +1,21 @@
 // +-------------------+
 // | Shared properties |
 // +-------------------+
+.music, .video {
+  .flat_button {
+    font-size: 13px;
+  }
+}
+
 div.music.box, div.video.box {
   float: left;
+  position: relative;
+  overflow: hidden;
+
+  .caption, .options {
+    height: 35px;
+    position: absolute;
+  }
 
   .title {
     line-height: 1em;
@@ -12,6 +25,11 @@ div.music.box, div.video.box {
   .thumbnail {
     width: 100%;
     position: relative;
+  }
+
+  .flat_button {
+    margin-right: 10px;
+    padding: 7px 10px 3px 10px;
   }
 
   img {
@@ -26,6 +44,16 @@ li.music, li.video {
   border-bottom: 1px solid lighten(@light-purple, 5%);
   cursor: pointer;
   padding: 10px 0px;
+
+  &:hover .options {
+    display: block;
+  }
+
+  .flat_button {
+    height: 30px;
+    margin-left: 10px;
+    padding: 0 10px;
+  }
 }
 
 // +----------------+
@@ -35,6 +63,13 @@ div.music.box {
   height: @div-music-height;
   width:  @div-music-width;
   margin-right: 0px;
+
+  .caption, .options {
+    width: @div-music-width - 5px;
+    overflow: hidden;
+  }
+
+  .options { left: @div-music-width; }
 }
 
 div.music.bar {
@@ -69,6 +104,13 @@ div.video.box {
   height: @div-video-height;
   width:  @div-video-width;
   margin-left: 20px;
+
+  .caption, .options {
+    overflow: hidden;
+    width: @div-video-width - 5px;
+  }
+
+  .options { left: @div-video-width; }
 }
 
 li.video {

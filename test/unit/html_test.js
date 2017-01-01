@@ -49,8 +49,8 @@ describe('Html', () => {
     it('should add the adequate options for local files', () => {
       var output = Html.options('local');
 
-      assert.include(output, '<li data-function="tag">');
-      assert.include(output, '<li data-function="addToPlaylist">');
+      assert.include(output, '<div class="flat_button" data-function="tag"');
+      assert.include(output, '<div class="flat_button" data-function="addToPlaylist"');
 
       assert.include(output, I18n.t('meta.options.tag'));
       assert.include(output, I18n.t('meta.options.add_to_playlist'));
@@ -62,29 +62,13 @@ describe('Html', () => {
 
       assert.equal(sc_output, yt_output);
 
-      assert.include(sc_output, '<li data-function="share">');
-      assert.include(sc_output, '<li data-function="tag">');
-      assert.include(sc_output, '<li data-function="addToPlaylist">');
+      assert.include(sc_output, '<div class="flat_button" data-function="share"');
+      assert.include(sc_output, '<div class="flat_button" data-function="tag"');
+      assert.include(sc_output, '<div class="flat_button" data-function="addToPlaylist"');
 
       assert.include(sc_output, I18n.t('meta.options.share'));
       assert.include(sc_output, I18n.t('meta.options.download'));
       assert.include(sc_output, I18n.t('meta.options.add_to_playlist'));
-    });
-
-    it('should not include labels when `skip_text` is true', () => {
-      var local_output = Html.options('local', true);
-
-      assert.exclude(local_output, I18n.t('meta.options.tag'));
-      assert.exclude(local_output, I18n.t('meta.options.add_to_playlist'));
-
-      var sc_output = Html.options('soundcloud', true);
-      var yt_output = Html.options('youtube', true);
-
-      assert.equal(sc_output, yt_output);
-
-      assert.exclude(sc_output, I18n.t('meta.options.share'));
-      assert.exclude(sc_output, I18n.t('meta.options.download'));
-      assert.exclude(sc_output, I18n.t('meta.options.add_to_playlist'));
     });
   });
 

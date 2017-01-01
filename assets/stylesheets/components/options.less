@@ -1,80 +1,21 @@
 .options {
-  display: none;
-
-  ul {
-    height: 100%;
-    margin: 0;
-    padding: 0!important;
-    overflow: hidden;
-
-    li { cursor: pointer; }
-  }
-}
-
-div.music {
-  .options {
-    height: 180px;
-    line-height: 60px;
-
-    ul li {
-      height: 60px;
-    }
-  }
-
-  .options-toggler {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-  }
-}
-
-div.video {
-  .options {
-    height: 140px;
-    line-height: 45px;
-
-    ul li {
-      height: 46px;
-    }
-  }
+  height: 30px;
+  margin-right: 10px;
+  padding-top: 0;
 }
 
 div.music, div.video {
   .options-toggler {
     cursor: pointer;
-    text-align: right;
-  }
-
-  .options {
-    background: fade(black, 55%);
-    width: 100%;
     position: absolute;
-    left: 0;
-    bottom: 0;
-    z-index: 250;
-
-    ul li {
-      border-bottom: 1px solid darken(@white, 20%);
-      color: darken(@white, 5%);
-      padding: 0 10px;
-
-      .glyphicon { letter-spacing: 10px; }
-      &:last-child { border: none; }
-    }
+    bottom: 3px;
+    right: 10px;
   }
 }
 
 li.music, li.video {
   .options {
+    display: none;
     float: left;
-    height: 25px;
-    margin-right: 10px;
-    padding-top: 0;
-
-    ul li {
-      display: inline-block;
-      font-size: 12px;
-      margin-right: 15px;
-    }
   }
 }

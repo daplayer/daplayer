@@ -41,9 +41,7 @@ module.exports = class Html {
    * for sharing, downloading, tagging or adding a media to
    * a playlist.
    *
-   * @param  {String}   service   - The record's service.
-   * @param  {Boolean=} skip_text - Whether to include text
-   *                                or not.
+   * @param  {String} service - The record's service.
    * @return {String}
    */
   static options(service, skip_text) {
@@ -56,20 +54,21 @@ module.exports = class Html {
                      ['list',         'meta.options.add_to_playlist', 'addToPlaylist']];
 
     return Html.tag('div', {class: 'options'}, () => {
-      return Html.tag('ul', {}, () => {
-        var output = '';
+      var output = '';
 
-        mapping.forEach((set) => {
-          output = output.concat(Html.tag('li', {'data-function': set.last()}, () => {
-            if (skip_text)
-              return Html.glyphicon(set.first());
-            else
-              return Html.glyphicon(set.first()) + I18n.t(set[1]);
-          }));
-        });
+      mapping.forEach((set) => {
+        var attributes = {
+          class: 'flat_button',
+          'data-function': set.last(),
+          title: I18n.t(set[1])
+        };
 
-        return output;
+        output = output.concat(Html.tag('div', attributes, () => {
+          return Html.glyphicon(set.first());
+        }));
       });
+
+      return output;
     });
   }
 

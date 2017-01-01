@@ -1,7 +1,7 @@
 // --------------------------------------------------------
 // Common helpers shared across the application
 Handlebars.registerHelper('options', function(scope) {
-  return new Handlebars.SafeString(Html.options(scope.data.root.service, true));
+  return new Handlebars.SafeString(Html.options(scope.data.root.service));
 });
 
 Handlebars.registerHelper('pluralize', function(count, word) {
