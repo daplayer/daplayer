@@ -48,6 +48,9 @@ module.exports = class SoundCloudPlayer {
     }
 
     media.onstalled = function() {
+      if (this.paused)
+        return;
+
       Ui.Player.showLoader();
       Ui.Player.pauseEqualizer();
     }

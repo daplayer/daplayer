@@ -72,6 +72,9 @@ module.exports = class YouTubePlayer {
     }
 
     media.onstalled = function() {
+      if (this.paused)
+        return;
+
       Ui.Player.showLoader();
       Ui.Player.pauseEqualizer();
     }
