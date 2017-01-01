@@ -1,24 +1,24 @@
-<h2>{{t 'meta.options.download'}}</h3>
+<h2>{{t 'download'}}</h3>
 
 <form data-service="youtube">
   <div class="left">
     <img src="{{ icon }}">
 
     <a href="#" class="flat_button" data-field="icon" data-picker="picture">
-      {{g 'picture'}} &nbsp; {{t 'meta.pick_picture'}}
+      {{g 'picture'}} &nbsp; {{t 'pick_picture'}}
     </a>
 
     <input type="hidden" name="icon" value="{{ icon }}">
   </div>
 
   <div class="right">
-    <label>{{t 'meta.title'}}</label>
+    <label>{{titleize ( t 'title' )}} :</label>
     <input type="text" name="title" value="{{ title }}">
 
-    <label>{{t 'meta.format'}}</label>
+    <label>{{titleize ( t 'format' )}} :</label>
 
     <input type="radio" value="mp3" name="format" checked="checked"> <label>MP3</label>
-    <input type="radio" value="video" name="format"> <label>{{t 'meta.video'}}</label><br>
+    <input type="radio" value="video" name="format"> <label>{{titleize ( t 'video' )}}</label><br>
 
     <input type="hidden" name="id" value="{{ id }}">
 
@@ -27,6 +27,6 @@
   <div class="clearer"></div>
   <hr>
 
-  <input type="submit" class="button download" value="{{t 'meta.options.download'}}">
+  <input type="submit" class="button download" value="{{t 'download'}}">
 </form>
 

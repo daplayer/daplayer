@@ -1,24 +1,24 @@
-<h2>{{t 'meta.options.download'}}</h2>
+<h2>{{t 'download'}}</h2>
 
 <form data-service="soundcloud">
   <div class="left">
     <img src="{{ icon }}">
 
     <a href="#" class="flat_button" data-field="icon" data-picker="picture">
-      {{g 'picture'}} &nbsp; {{t 'meta.pick_picture'}}
+      {{g 'picture'}} &nbsp; {{t 'pick_picture'}}
     </a>
 
     <input type="hidden" name="icon" value="{{ icon }}">
   </div>
 
   <div class="right">
-    <label>{{t 'meta.title'}} :</label>
+    <label>{{titleize ( t 'title')}} :</label>
     <input type="text" name="title" value="{{ title }}">
 
-    <label>{{t 'meta.artist'}} :</label>
+    <label>{{titleize ( t 'artist')}} :</label>
     <input type="text" name="artist" value="{{a title artist}}">
 
-    <label>{{t 'meta.genre'}} :</label>
+    <label>{{titleize ( t 'genre')}} :</label>
     <input type="text" name="genre" value="{{ genre }}">
 
     <input type="hidden" name="id" value="{{ id }}">
@@ -28,5 +28,5 @@
   <div class="clearer"></div>
   <hr>
 
-  <input type="submit" class="button download" value="{{t 'meta.options.download'}}">
+  <input type="submit" class="button download" value="{{t 'download'}}">
 </form>
