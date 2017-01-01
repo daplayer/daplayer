@@ -66,6 +66,15 @@ Application.boot(function() {
   });
 
   // --------------------------------------------------------
+  // > Hide the shadow clicking on it
+  $('.shadow.main').on('click', function(e) {
+    if (!$(e.target).hasClass('shadow'))
+      return;
+
+    Ui.hideShadow();
+  });
+
+  // --------------------------------------------------------
   // > Handle clicks on musics or videos items
   require('./assets/javascripts/bootstrap/medias');
 
@@ -80,10 +89,6 @@ Application.boot(function() {
   // --------------------------------------------------------
   // > Dialogs (for tagging, downloading, etc.)
   require('./assets/javascripts/bootstrap/dialog');
-
-  // --------------------------------------------------------
-  // > Shadow-related event handlers
-  require('./assets/javascripts/bootstrap/shadow');
 
   // --------------------------------------------------------
   // > Container (option toggler, scrolling, etc.)
@@ -130,5 +135,11 @@ Application.boot(function() {
       $('.search-form input').focus();
     else if (e.keyCode == 32)
       Player.paused ? Player.play() : Player.pause();
+  });
+
+  $(document).on('keyup', function(e) {
+    // 27: 'esc' key
+    if (e.keyCode == 27)
+      Ui.hideShadow();
   });
 });
