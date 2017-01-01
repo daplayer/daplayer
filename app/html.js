@@ -46,12 +46,12 @@ module.exports = class Html {
    */
   static options(service, skip_text) {
     if (service == 'local')
-      var mapping = [['tags', 'meta.options.tag',             'tag'],
-                     ['list', 'meta.options.add_to_playlist', 'addToPlaylist']];
+      var mapping = [['tags', 'app.tag',             'tag'],
+                     ['list', 'app.add_to_playlist', 'addToPlaylist']];
     else
-      var mapping = [['share-alt',    'meta.options.share',           'share'],
-                     ['download-alt', 'meta.options.download',        'tag'],
-                     ['list',         'meta.options.add_to_playlist', 'addToPlaylist']];
+      var mapping = [['share-alt',    'app.share',           'share'],
+                     ['download-alt', 'app.download',        'tag'],
+                     ['list',         'app.add_to_playlist', 'addToPlaylist']];
 
     return Html.tag('div', {class: 'options'}, () => {
       var output = '';

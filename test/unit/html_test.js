@@ -52,8 +52,8 @@ describe('Html', () => {
       assert.include(output, '<div class="flat_button" data-function="tag"');
       assert.include(output, '<div class="flat_button" data-function="addToPlaylist"');
 
-      assert.include(output, I18n.t('meta.options.tag'));
-      assert.include(output, I18n.t('meta.options.add_to_playlist'));
+      assert.include(output, I18n.t('app.tag'));
+      assert.include(output, I18n.t('app.add_to_playlist'));
     });
 
     it('should add the adequate options for SoundCloud and YouTube records', () => {
@@ -66,9 +66,9 @@ describe('Html', () => {
       assert.include(sc_output, '<div class="flat_button" data-function="tag"');
       assert.include(sc_output, '<div class="flat_button" data-function="addToPlaylist"');
 
-      assert.include(sc_output, I18n.t('meta.options.share'));
-      assert.include(sc_output, I18n.t('meta.options.download'));
-      assert.include(sc_output, I18n.t('meta.options.add_to_playlist'));
+      assert.include(sc_output, I18n.t('app.share'));
+      assert.include(sc_output, I18n.t('app.download'));
+      assert.include(sc_output, I18n.t('app.add_to_playlist'));
     });
   });
 
