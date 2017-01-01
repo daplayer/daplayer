@@ -42,6 +42,10 @@ module.exports = class YouTubePlayer {
       Ui.Player.startEqualizer();
     }
 
+    media.onpause = function() {
+      Ui.Player.pauseEqualizer();
+    }
+
     media.onprogress = function() {
       if (this.buffered.length > 0) {
         var time = this.buffered.end(this.buffered.length - 1);
@@ -53,7 +57,9 @@ module.exports = class YouTubePlayer {
         // loaded to play the audio.
         if (time - this.currentTime > 1) {
           Ui.Player.hideLoader();
-          Ui.Player.startEqualizer();
+
+          if (!this.paused)
+            Ui.Player.startEqualizer();
         }
       }
     }

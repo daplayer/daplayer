@@ -21,6 +21,10 @@ module.exports = class LocalPlayer {
       Ui.Player.startEqualizer();
     }
 
+    media.onpause = function() {
+      Ui.Player.pauseEqualizer();
+    }
+
     media.oncanplay = function() {
       Ui.Player.buffered(this.duration);
     }
