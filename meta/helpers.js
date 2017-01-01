@@ -1,13 +1,5 @@
 // --------------------------------------------------------
 // Common helpers
-Handlebars.registerHelper('g', function(name) {
-  return new Handlebars.SafeString(Html.glyphicon(name));
-});
-
-Handlebars.registerHelper('t', function(string_path) {
-  return I18n.t(string_path);
-});
-
 Handlebars.registerHelper('a', function(title, account) {
   return Formatter.artist(title, account);
 });

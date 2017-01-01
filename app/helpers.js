@@ -11,3 +11,11 @@ Handlebars.registerHelper('pluralize', function(count, word) {
 Handlebars.registerHelper('titleize', function(word) {
   return I18n.titleize(word);
 });
+
+Handlebars.registerHelper('g', function(name) {
+  return new Handlebars.SafeString(Html.glyphicon(name));
+});
+
+Handlebars.registerHelper('t', function(string_path) {
+  return I18n.t(string_path);
+});
