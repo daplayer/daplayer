@@ -20,16 +20,19 @@ module.exports = class YouTubePlayer {
       var lt_10secs = (this.duration - this.currentTime) <= 10;
 
       if (lt_10secs)
-        Queue.next().then((set) => {
-          if (!set.first())
+        Queue.next().then((record) => {
+          if (!record)
             return;
 
-          var next_id  = set.first().id;
-          var next_url = Cache.youtube.video_urls[next_id];
+          var next_id  = record.id;
+          var next_url = Cache.youtube.video_urls.find(u => u.id == next_id);
 
           if (!this.buffering_next_url && !next_url) {
             this.buffering_next_url = true;
-            Service.for('youtube').videoURL(next_id);
+
+            Service.for('youtube').videoURL(next_id).then(() => {
+              this.buffering_next_url = false;
+            });
           }
         });
     }
