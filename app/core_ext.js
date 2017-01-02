@@ -135,6 +135,12 @@ String.prototype.dasherize = function() {
 }
 
 /**
+ * Alias `toLowerCase` to `downcase` as it is shorter and I'm
+ * unable to remember that I'm not writing Ruby. :-)
+ */
+String.prototype.downcase = String.prototype.toLowerCase;
+
+/**
  * Mixes-in a class inside another one.
  *
  * This one is not defined through `Object.prototype` since
