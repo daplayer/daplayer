@@ -67,6 +67,45 @@ describe('Media', () => {
     });
   });
 
+  describe('#real_artist', () => {
+    it('should pick artist from title instead of any record account', () => {
+      var media = new Media();
+
+      media.title  = 'Darius - Helios';
+      media.artist = 'RocheMusique'
+
+      assert.equal(media.real_artist, 'Darius');
+
+      media.title  = 'Pomo - Blue Soda';
+      media.artist = 'THUMP';
+
+      assert.equal(media.real_artist, 'Pomo');
+    });
+
+    it('should remove "(Official)" from the name', () => {
+      var media = new Media();
+
+      media.title  = 'Take Care of You';
+      media.artist = 'Cherokee (Official)';
+
+      assert.equal(media.real_artist, 'Cherokee');
+    });
+
+    it('should pick the artist who did the remix if it is one', () => {
+      var media = new Media();
+
+      media.title  = 'Alina Baraz & Galimatias - Fantasy (Pomo Remix)';
+      media.artist = '';
+
+      assert.equal(media.real_artist, 'Pomo');
+
+      media.title  = 'Darius - Helios (Feat. Wayne Snow) (Myd Remix)';
+      media.artist = '';
+
+      assert.equal(media.real_artist, 'Myd');
+    });
+  });
+
   describe('#soundcloud', () => {
     var hash = {
       title: 'Faut qu\'on rentre bosser',

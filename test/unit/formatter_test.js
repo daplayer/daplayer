@@ -26,23 +26,6 @@ describe('Formatter', () => {
     });
   });
 
-  describe('#artist', () => {
-    it('should pick artist from title instead of any record account', () => {
-      assert.equal("Darius", Formatter.artist("Darius - Helios", "RocheMusique"));
-      assert.equal("Pomo", Formatter.artist("Pomo - Blue Soda", "THUMP"));
-      assert.equal("Darius", Formatter.artist("Darius - Pyor", "Red Bull Studios Paris"));
-    });
-
-    it('should remove "(Official)" from the name', () => {
-      assert.equal("Cherokee", Formatter.artist("Take Care of You", "Cherokee (Official)"));
-    });
-
-    it('should pick the artist who did the remix if it is one', () => {
-      assert.equal(Formatter.artist('Alina Baraz & Galimatias - Fantasy (Pomo Remix)'), 'Pomo');
-      assert.equal(Formatter.artist('Darius - Helios (Feat. Wayne Snow) (Myd Remix)'), 'Myd');
-    });
-  });
-
   describe('#path', () => {
     before(() => {
       Config.store('soundcloud', 'download', '/home/jacky');

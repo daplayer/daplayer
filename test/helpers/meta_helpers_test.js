@@ -2,14 +2,6 @@ require('../test_helper');
 require('../../meta/helpers');
 
 describe('Meta helpers', () => {
-  describe('#a', () => {
-    it('should delegate to the formatter\'s artist method', () => {
-      var output = Handlebars.helpers.a('Darius - Helios Feat. Wayne Snow', 'RocheMusique');
-
-      assert.equal(output, 'Darius');
-    });
-  });
-
   describe('#radio', () => {
     it('should generate a radio input with a label', () => {
       var output = Handlebars.helpers.radio('foo', 'bar', 'baz', 'local');

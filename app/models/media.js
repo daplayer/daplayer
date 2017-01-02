@@ -31,6 +31,40 @@ module.exports = class Media extends Record {
       return "";
   }
 
+  /**
+   * Tries to guess the real media's author based upon the title
+   * and the associated account.
+   *
+   *   media.title  == 'Maliblue'
+   *   media.artist == 'Darius'
+   *   media.real_artist // => 'Darius'
+   *
+   *   media.title  == 'Kartell - Aura'
+   *   media.artist == 'Roche Musique'
+   *   media.real_artist // => 'Kartell'
+   *
+   *   media.title  == 'Talk Talk (Moon Boots Remix)'
+   *   media.artist == 'future classic'
+   *   media.real_artist // => 'Moon Boots'
+   *
+   *   media.title  == 'Take Care of You'
+   *   media.artist == 'Cherokee (Official)'
+   *   media.real_artist // => 'Cherokee'
+   *
+   * @return {String}
+   */
+  get real_artist() {
+    if (this.title.match(/remix/i))
+      var artist = this.title.match(/\((\w|\s)+ remix\)/i)[0]
+                        .split(/\(|remix\)/i)[1];
+    else if (this.title.indexOf("-") != -1)
+      var artist = this.title.split(" - ")[0];
+    else
+      var artist = this.artist.replace(/\s\(Official\)/, "");
+
+    return artist.trim();
+  }
+
   static soundcloud(hash, set) {
     var media = new Media(hash.id, 'soundcloud');
 

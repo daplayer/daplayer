@@ -105,35 +105,6 @@ module.exports = class Formatter {
   }
 
   /**
-   * Returns artist name based upon the media's title
-   * and associated account.
-   *
-   *   artist('Maliblue', 'Darius')
-   *   // => 'Darius'
-   *   artist('Kartell - Aura',: 'RocheMusique')
-   *   // => 'Kartell'
-   *   artist('Talk Talk (Moon Boots Remix)', 'future classic')
-   *   // => 'Moon Boots'
-   *   artist('Take Care of You', 'Cherokee (Official)')
-   *   // => 'Cherokee'
-   *
-   * @param  {String} title   - The media's title.
-   * @param  {String} account - The associated account.
-   * @return {String}
-   */
-  static artist(title, account) {
-    if (title.match(/remix/i))
-      var artist = title.match(/\((\w|\s)+ remix\)/i)[0]
-                        .split(/\(|remix\)/i)[1];
-    else if (title.indexOf("-") != -1)
-      var artist = title.split(" - ")[0];
-    else
-      var artist = account.replace(/\s\(Official\)/, "");
-
-    return artist.trim();
-  }
-
-  /**
    * Returns the exact file's path to store a
    * file that's going to be downloaded based on
    * the title, the artist and the service.

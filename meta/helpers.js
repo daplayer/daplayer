@@ -1,9 +1,5 @@
 // --------------------------------------------------------
 // Common helpers
-Handlebars.registerHelper('a', function(title, account) {
-  return Formatter.artist(title, account);
-});
-
 Handlebars.registerHelper('size', function(url, size) {
   return url.size(size);
 });
