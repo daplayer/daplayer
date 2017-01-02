@@ -53,3 +53,31 @@ $('body').on('click', '[data-picker]', function(e) {
       button.parent().find('img').attr('src', chosen);
   });
 });
+
+// ---------------------------------------------------------
+// Allow changing an artist's name
+$('.content').on('dblclick', '.banner .information h2', function() {
+  $(this).hide()
+  $(this).next().show();
+});
+
+$('.content').on('keypress', '.banner input[name="name"]', function(e) {
+  // 13 == 'Enter'
+  if (e.keyCode == 13) {
+    var field = $(this);
+    var title = field.prev();
+
+    field.hide();
+    title.show();
+
+    if (field.val() == title.text())
+      return;
+
+    Service.for('local').rename(title.text(), field.val()).then((changed) => {
+      if (changed)
+        Ui.render('local/artist', field.val());
+      else
+        field.val(title.text());
+    });
+  }
+});

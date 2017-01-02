@@ -117,12 +117,11 @@ module.exports = class Ui {
 
     // From now, we know that the user tries to load a
     // controller action.
-    $('.loading-shadow').show();
+    this.loading();
 
     return controller[Router.to(href).camel()](param).then((context) => {
       // Hide the loader once the action is rendered.
-      $('.loading-shadow').hide();
-      $('.loader-text').html('');
+      this.loaded();
 
       if (!context.token) {
         // Reset the current scroll
@@ -136,19 +135,28 @@ module.exports = class Ui {
   }
 
   /**
-   * Displays the number of files that have already been
-   * processed by the tagging library.
+   * Shows the loader.
    *
-   * Since this operation may take time, let's display some
-   * feedback to the user.
+   * @param  {String=} key     - An optional translation key.
+   * @param  {Object=} context - An eventual context to evaluate
+   *                             the translation.
+   * @return {null}
+   */
+  static loading(key, context) {
+    $('.loading-shadow').show();
+
+    if (key)
+      $('.loader-text').html(I18n.t(key, context));
+  }
+
+  /**
+   * Hide the loader.
    *
    * @return {null}
    */
-  static fileProcessProgress(processed) {
-    $('.loader-text').html(I18n.t('local.feedback.progress', {
-      current: processed[0],
-      total:   processed[1]
-    }));
+  static loaded() {
+    $('.loading-shadow').hide();
+    $('.loader-text').html('');
   }
 
   /**
@@ -279,6 +287,8 @@ module.exports = class Ui {
    * @return {null}
    */
   static hideShadow() {
+    Application.shadow_blocked = false;
+
     $('.shadow.main').fadeOut(250);
 
     if ($('.dialog, .video.player').is(':visible'))

@@ -79,4 +79,29 @@ module.exports = class UiDialog {
     this.show('meta', 'add_to_playlist', context);
     this.box.addClass('add_to_playlist');
   }
+
+  static confirm(current_name, new_name) {
+    return new Promise((resolve, reject) => {
+      Application.shadow_blocked = true;
+
+      this.show('local', 'conflict', {
+        current_name: current_name,
+        new_name:     new_name
+      });
+
+      this.form.on('submit', (e) => {
+        e.preventDefault();
+
+        Ui.hideShadow();
+        resolve(true);
+      });
+
+      this.form.on('reset', (e) => {
+        e.preventDefault();
+
+        Ui.hideShadow();
+        resolve(false);
+      });
+    });
+  }
 }

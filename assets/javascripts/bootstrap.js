@@ -68,7 +68,7 @@ Application.boot(function() {
   // --------------------------------------------------------
   // > Hide the shadow clicking on it
   $('.shadow.main').on('click', function(e) {
-    if (!$(e.target).hasClass('shadow'))
+    if (!$(e.target).hasClass('shadow') || Application.shadow_blocked)
       return;
 
     Ui.hideShadow();
@@ -139,7 +139,7 @@ Application.boot(function() {
 
   $(document).on('keyup', function(e) {
     // 27: 'esc' key
-    if (e.keyCode == 27)
+    if (e.keyCode == 27 && !Application.shadow_blocked)
       Ui.hideShadow();
   });
 });

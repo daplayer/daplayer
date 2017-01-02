@@ -11,7 +11,10 @@ module.exports = class LocalModelFiles {
 
       child.on('message', (message) => {
         if (message instanceof Array)
-          return Ui.fileProcessProgress(message);
+          return Ui.loading('local.feedback.progress', {
+            current: message.first(),
+            total:   message.last()
+          });
 
         this.processFiles(message).then((collection) => {
           resolve(collection[section]);

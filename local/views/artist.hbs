@@ -12,6 +12,7 @@
 
     <div class="information">
       <h2>{{ name }}</h2>
+      <input type="text" name="name" value="{{ name }}" class="hidden">
       <h3>{{pluralize albums.length 'album'}} / {{pluralize singles.length 'single'}}</h3>
     </div>
   </div>
