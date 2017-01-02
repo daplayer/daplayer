@@ -18,6 +18,7 @@ global.Model = class {
 const SoundCloudService = require('../soundcloud/service');
 const YouTubeService    = require('../youtube/service');
 const LocalService      = require('../local/service');
+const ArtistArtsService = require('./services/artist_arts');
 
 global.Service = class {
   static for(service) {
@@ -25,8 +26,10 @@ global.Service = class {
       return SoundCloudService;
     else if (service == 'youtube')
       return YouTubeService;
-    else
+    else if (service == 'local')
       return LocalService;
+    else if (service == 'artist_arts')
+      return ArtistArtsService;
   }
 }
 

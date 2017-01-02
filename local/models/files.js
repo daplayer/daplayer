@@ -53,6 +53,8 @@ module.exports = class LocalModelFiles {
       Cache.add('local', 'singles', singles);
       Cache.add('local', 'artists', artists);
 
+      Service.for('local').fetchUnknownArtists(artists);
+
       resolve({ singles: singles, artists: artists });
     });
   }

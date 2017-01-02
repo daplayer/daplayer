@@ -3,7 +3,7 @@ require('../../test_helper');
 describe('Artist', () => {
   before(() => {
     Cache.initialize();
-    Cache.local.artist_arts = ['path/to/Trivium.jpeg'];
+    Cache.local.artist_arts = {Trivium: true};
   });
 
   describe('constructor', () => {
@@ -32,7 +32,7 @@ describe('Artist', () => {
     it('should infer any existing art for that artist', () => {
       var artist = new Artist('Trivium', {}, []);
 
-      assert.equal(artist.picture, 'path/to/Trivium.jpeg');
+      assert(artist.picture.endsWith('Trivium.jpeg'));
     });
   });
 })

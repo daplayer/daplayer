@@ -39,8 +39,8 @@ global.Context  = require('../app/models/context');
 
 global.Service = class {
   static for(service) {
-    if (service == 'local')
-      return require('../local/service');
+    if (service == 'artist_arts')
+      return require('../app/services/artist_arts');
   }
 }
 

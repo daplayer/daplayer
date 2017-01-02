@@ -11,7 +11,8 @@ module.exports = class Artist {
       return Media.local(record);
     });
 
-    this.picture = Service.for('local').artistArts().find(art => art.includes(name));
+    if (Service.for('artist_arts').arts()[name])
+      this.picture = Paths.join(Paths.artists, name + '.jpeg');
   }
 
   findById(id, album) {

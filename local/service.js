@@ -1,7 +1,6 @@
 'use strict';
 
 const LocalModel = require('./model');
-const glob       = require('glob');
 const fs         = require('fs');
 
 module.exports = class LocalService {
@@ -21,21 +20,6 @@ module.exports = class LocalService {
         icon:   tags.icon
       });
     });
-  }
-
-  /**
-   * Returns a list of the images stored inside the artist
-   * arts folder.
-   *
-   * @return {Promise}
-   */
-  static artistArts() {
-    if (!Cache.local.artist_arts) {
-      var pattern = Paths.join(Paths.artists, '*.{jpeg,jpg,png}');
-      Cache.local.artist_arts = glob.sync(pattern);
-    }
-
-    return Cache.local.artist_arts;
   }
 
   /**
@@ -107,7 +91,6 @@ module.exports = class LocalService {
       // Then we change its tags on disk
       collection.forEach((id, index) => {
         if (feedback) {
-          console.log(index);
           Ui.loading('local.feedback.tagging', {
             current: index+1,
             total:   collection.length
@@ -129,6 +112,20 @@ module.exports = class LocalService {
 
       return true;
     });
+  }
+
+  /**
+   * Fetches all the unknown artist arts.
+   *
+   * @param  {Array} artists - All the artists.
+   * @return {null}
+   */
+  static fetchUnknownArtists(artists) {
+    var known   = Object.keys(Service.for('artist_arts').arts());
+    var unknown = artists.filter(a => !known.includes(a.name));
+
+    if (unknown.length)
+      require('../app/services/artist_arts').fetchArtists(unknown);
   }
 
   /**
