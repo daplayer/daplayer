@@ -411,7 +411,7 @@ module.exports = class YouTubeService extends NetService {
     var location = Formatter.path(tags.title, null, 'youtube');
 
     this.mp3URL(tags.id).then((url) => {
-      this.downloadURL(url, location, tags.id, (request) => {
+      this.downloadURL(url, location, tags.id).then(() => {
         Ui.downloadEnd(Downloads.dequeue(tags.id));
 
         TaggingService.define(location, {
@@ -441,7 +441,7 @@ module.exports = class YouTubeService extends NetService {
       var extension = '.' + url.type.split(';')[0].split('/')[1];
       var location  = Formatter.path(tags.title, null, 'youtube', extension);
 
-      this.downloadURL(url.url, location, tags.id, (request) => {
+      this.downloadURL(url.url, location, tags.id).then(() => {
         Ui.downloadEnd(Downloads.dequeue(tags.id));
       });
     });
