@@ -155,38 +155,4 @@ module.exports = class Formatter {
 
     return Paths.join(folder, file_name);
   }
-
-  /**
-   * Returns the path where the song's cover will be
-   * stored.
-   *
-   * We actually store the artwork in the folder where we
-   * store covers that are extracted when reading tags so
-   * we don't do extra work when we read the picture tag
-   * of this file as we already know it.
-   *
-   * This method matches the behavior of our tagging
-   * library for the image's name (i.e. take the artist
-   * and the name of the album or the title if the
-   * latter is not present).
-   *
-   * @param  {String}  url    - The location of the image.
-   * @param  {String}  artist - The song's artist.
-   * @param  {String}  title  - The song's title.
-   * @param  {String=} album  - Eventually the name of the album.
-   * @return {String}
-   */
-  static cover_path(url, artist, title, album) {
-    var extension = url.substr(url.lastIndexOf('.'));
-    var location  = artist + " - ";
-
-    if (album && album != '')
-      location = location + album;
-    else
-      location = location + title;
-
-    location = location + extension;
-
-    return Paths.join(Paths.covers, location);
-  }
 }

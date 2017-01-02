@@ -4,11 +4,12 @@ const fs      = require('fs');
 const request = require('request');
 
 module.exports = class NetService {
-  static downloadImage(url, artist, title, callback) {
-    var location = Formatter.cover_path(url, artist, title);
+  static downloadImage(url) {
+    // Not "secure" but I guess we don't really mind here.
+    var location = '/tmp/' + Formatter.currentTimestamp();
 
-    this.downloadURL(url, location, false).then(() => {
-      callback(location);
+    return this.downloadURL(url, location, false).then(() => {
+      return location;
     });
   }
 

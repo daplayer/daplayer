@@ -64,38 +64,4 @@ describe('Formatter', () => {
       assert(Formatter.path('Foo', 'Bar', 'soundcloud').startsWith(Config.soundcloud.download));
     });
   });
-
-  describe('#cover_path', () => {
-    it('should start with the location of the config folder', () => {
-      var cover_path = Formatter.cover_path('foo', 'bar', 'baz');
-
-      assert(cover_path.startsWith(Paths.user));
-    });
-
-    it('should have the proper extension', () => {
-      var cover_path = Formatter.cover_path('foo.png', 'foo', 'bar');
-
-      assert(cover_path.endsWith('.png'));
-    });
-
-    it('should pick the artist and album name', () => {
-      var cover_path = Formatter.cover_path('foo.png', 'Daft Punk', 'Voyager', 'Discovery');
-
-      assert(cover_path.endsWith('Daft Punk - Discovery.png'));
-    });
-
-    it('should fallback to the title if the album is not present', () => {
-      var first_path  = Formatter.cover_path('foo.png', 'Gojira', 'To Sirius')
-      var second_path = Formatter.cover_path('foo.png', 'Gojira', 'To Sirius', '');
-
-      assert(first_path.endsWith('Gojira - To Sirius.png'));
-      assert(first_path.endsWith('Gojira - To Sirius.png'));
-    });
-
-    it('should work with extensions with 4 letters', () => {
-      var location = Formatter.cover_path('foo.jpeg', 'Slipknot', 'Wait and Bleed');
-
-      assert(location.endsWith('Slipknot - Wait and Bleed.jpeg'));
-    });
-  });
 });

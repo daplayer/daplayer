@@ -109,7 +109,7 @@ module.exports = class SoundCloudService extends NetService {
       this.downloadURL(url, location, tags.id).then(() => {
         Ui.downloadEnd(Downloads.dequeue(tags.id));
 
-        this.downloadImage(tags.icon.size('t300x300'), tags.title, tags.artist, (icon_path) => {
+        this.downloadImage(tags.icon.size('t300x300')).then((icon_path) => {
           tags.icon = icon_path;
 
           TaggingService.define(location, tags);
