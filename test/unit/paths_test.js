@@ -61,4 +61,26 @@ describe('Paths', () => {
       assert.equal(Paths.youtube_history, 'foo/.daplayer/youtube/history.jspf');
     });
   });
+
+  describe('#path', () => {
+    before(() => {
+      Config.store('soundcloud', 'download', '/home/jacky');
+    });
+
+    after(() => {
+      Config.store('soundcloud', 'download', '');
+    });
+
+    it('should include the artist and the title in the file name', () => {
+      assert(Paths.for('Maliblue', 'Darius', 'soundcloud').endsWith("/Darius - Maliblue.mp3"));
+    });
+
+    it('should include the artist name only once', () => {
+      assert(Paths.for('Darius - Maliblue', 'Darius', 'soundcloud').endsWith("/Darius - Maliblue.mp3"));
+    });
+
+    it('should include the user\'s download folder', () => {
+      assert(Paths.for('Foo', 'Bar', 'soundcloud').startsWith(Config.soundcloud.download));
+    });
+  });
 });

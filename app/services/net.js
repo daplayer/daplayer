@@ -6,7 +6,7 @@ const request = require('request');
 module.exports = class NetService {
   static downloadImage(url) {
     // Not "secure" but I guess we don't really mind here.
-    var location = '/tmp/' + Formatter.currentTimestamp();
+    var location = '/tmp/' + Timing.currentTimestamp();
 
     return this.downloadURL(url, location, false).then(() => {
       return location;

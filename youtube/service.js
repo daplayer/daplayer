@@ -27,9 +27,9 @@ module.exports = class YouTubeService extends NetService {
 
     var expires_at = Credentials.user.youtube.expires_at;
 
-    if (expires_at > Formatter.currentTimestamp()) {
+    if (expires_at > Timing.currentTimestamp()) {
       return true;
-    } else if (expires_at && expires_at < Formatter.currentTimestamp()) {
+    } else if (expires_at && expires_at < Timing.currentTimestamp()) {
       this.refreshToken();
       return true;
     } else {
@@ -143,7 +143,7 @@ module.exports = class YouTubeService extends NetService {
     if (Credentials.user.youtube.refresh_token)
       credentials.refresh_token = Credentials.user.youtube.refresh_token;
 
-    credentials.expires_at = Formatter.currentTimestamp() + credentials.expires_in;
+    credentials.expires_at = Timing.currentTimestamp() + credentials.expires_in;
     credentials.connected  = true;
 
     delete credentials.expires_in;
@@ -408,7 +408,7 @@ module.exports = class YouTubeService extends NetService {
     Downloads.enqueue(tags);
     Ui.downloadStart(tags);
 
-    var location = Formatter.path(tags.title, null, 'youtube');
+    var location = Paths.for(tags.title, null, 'youtube');
 
     this.mp3URL(tags.id).then((url) => {
       this.downloadURL(url, location, tags.id).then(() => {
@@ -439,7 +439,7 @@ module.exports = class YouTubeService extends NetService {
 
     this.videoURL(tags.id).then((url) => {
       var extension = '.' + url.type.split(';')[0].split('/')[1];
-      var location  = Formatter.path(tags.title, null, 'youtube', extension);
+      var location  = Paths.for(tags.title, null, 'youtube', extension);
 
       this.downloadURL(url.url, location, tags.id).then(() => {
         Ui.downloadEnd(Downloads.dequeue(tags.id));

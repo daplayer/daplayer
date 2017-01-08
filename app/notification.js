@@ -12,7 +12,7 @@ module.exports = class Notification {
         icon: hash.icon
       });
 
-    var id = Formatter.currentTimestamp();
+    var id = Timing.currentTimestamp();
 
     var html = Html.tag('div', {class: 'notification', id: id}, () => {
       return Html.tag('div', 'box', () => {

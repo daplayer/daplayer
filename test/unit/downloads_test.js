@@ -132,7 +132,7 @@ describe('Downloads', () => {
 
       assert.deepEqual(Downloads.history.first(), {
         foo: 'bar',
-        date: Formatter.currentTimestamp()
+        date: Timing.currentTimestamp()
       });
     });
 
@@ -146,7 +146,7 @@ describe('Downloads', () => {
       assert.equal(Downloads.history.length, 20);
       assert.deepEqual(Downloads.history.first(), {
         foo: 'bar',
-        date: Formatter.currentTimestamp()
+        date: Timing.currentTimestamp()
       });
     });
   });

@@ -214,4 +214,27 @@ module.exports = class Paths {
       track: []
     }));
   }
+
+  /**
+   * Returns the exact file's path to store a
+   * file that's going to be downloaded based on
+   * the title, the artist and the service.
+   *
+   * @param  {String}  title     - The media's title.
+   * @param  {String}  artist    - The media's artist.
+   * @param  {String}  service   - The download service.
+   * @param  {String=} extension - The file's extension.
+   * @return {String}
+   */
+  static for(title, artist, service, extension) {
+    var folder    = Config.read(service, 'download');
+    var file_name = title + (extension || ".mp3");
+
+    // Include the artist if there's none already
+    // specified (i.e. if there's no '-').
+    if (title.indexOf(' - ') == -1 && service == 'soundcloud')
+      file_name = artist + ' - ' + file_name;
+
+    return this.join(folder, file_name);
+  }
 }

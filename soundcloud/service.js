@@ -104,7 +104,7 @@ module.exports = class SoundCloudService extends NetService {
     Ui.downloadStart(tags);
 
     this.stream_url(tags.id).then((url) => {
-      var location = Formatter.path(tags.title, tags.artist, 'soundcloud');
+      var location = Paths.for(tags.title, tags.artist, 'soundcloud');
 
       this.downloadURL(url, location, tags.id).then(() => {
         Ui.downloadEnd(Downloads.dequeue(tags.id));

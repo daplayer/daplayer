@@ -54,7 +54,7 @@ module.exports = class Downloads {
   }
 
   static addToHistory(hash) {
-    hash.date = Formatter.currentTimestamp();
+    hash.date = Timing.currentTimestamp();
 
     var history = this.history;
 

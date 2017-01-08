@@ -150,7 +150,7 @@ module.exports = class UiPlayer {
     this.progress_bar.css({ width: width * 100 + '%' });
     this.progress_circle.val(time);
 
-    this.current_time.html(Formatter.time(time));
+    this.current_time.html(Timing.time(time));
   }
 
   /**

@@ -5,7 +5,7 @@ Handlebars.registerHelper('size', function(url, size) {
 });
 
 Handlebars.registerHelper('r', function(timestamp) {
-  return Formatter.relativeTime(timestamp);
+  return Timing.relativeTime(timestamp);
 });
 
 // --------------------------------------------------------

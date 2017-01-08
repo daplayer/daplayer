@@ -19,7 +19,7 @@ module.exports = class Record {
   }
 
   get human_time() {
-    return Formatter.time(this.duration);
+    return Timing.time(this.duration);
   }
 
   static from(id, playlist) {
