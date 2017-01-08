@@ -27,11 +27,8 @@ module.exports = class ArtistArtsService extends NetService {
 
         var result = JSON.parse(body);
 
-        if (!result.artists)
-          return resolve({ name: artist, icon: false });
-        else if (!result.artists.items.length)
-          return resolve({ name: artist, icon: false });
-        else if (!result.artists.items.first().images.length)
+        if (!result.artists || !result.artists.items.length ||
+            !result.artists.items.first().images.length)
           return resolve({ name: artist, icon: false });
 
         resolve({
