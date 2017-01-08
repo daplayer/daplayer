@@ -2,6 +2,11 @@
   <div class="showcase">
     <div class="artist-thumbnail">
       <div class="thumbnail">
+        <div class="picker" data-picker="picture" data-service="local"
+             data-function="copy" data-id="{{ name }}">
+          {{g 'camera'}}
+        </div>
+
         {{#if picture}}
           <img src="{{ picture }}">
         {{else}}

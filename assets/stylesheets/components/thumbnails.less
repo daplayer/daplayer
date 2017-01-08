@@ -5,6 +5,7 @@
   height: 245px;
   width: 180px;
   margin: 0 20px 20px 30px;
+  position: relative;
   text-align: center;
 
   .thumbnail {
@@ -20,9 +21,31 @@
     font-size: 70px;
     margin-bottom: 0.2em;
 
-    img { height: 180px; }
+    img { height: 100%; }
 
-    .glyphicon { line-height: 230% };
+    .glyphicon-user { line-height: 230% };
+
+    .picker {
+      background: fade(@black, 50%);
+      border: 1px solid fade(@white, 40%);
+      border-radius: 4px;
+      color: fade(@white, 70%);
+      cursor: pointer;
+      display: none;
+      font-size: 14px;
+      height: 22px;
+      width: 35px;
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+
+      .glyphicon { line-height: 140%; }
+    }
+
+    &:hover .picker {
+      display: block;
+    }
   }
 }
 

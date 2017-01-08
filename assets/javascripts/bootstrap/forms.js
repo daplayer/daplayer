@@ -51,6 +51,9 @@ $('body').on('click', '[data-picker]', function(e) {
 
     if (picker == 'picture')
       button.parent().find('img').attr('src', chosen);
+
+    if (button.data('function'))
+      Service.for(button.data('service'))[button.data('function')](chosen, button.data('id'));
   });
 });
 

@@ -129,6 +129,19 @@ module.exports = class LocalService {
   }
 
   /**
+   * Copies a given file as an artist's art.
+   *
+   * @param  {String} file   - The file's location.
+   * @param  {String} artist - The artist's name.
+   * @return {null}
+   */
+  static copy(file, artist) {
+    var location = Paths.join(Paths.artists, artist + '.jpeg');
+
+    fs.createReadStream(file).pipe(fs.createWriteStream(location));
+  }
+
+  /**
    * Searches dispatching to the model's methods depending
    * on the syntax used by the user.
    *
