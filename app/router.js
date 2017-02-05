@@ -5,10 +5,8 @@ module.exports = class Router {
     var parts   = href.split('/');
     var mapping = {
       activities: 'stream_view',
-      tracks:     'stream_view',
-      singles:    'files_view',
-      artists:    'files_view'
-    }
+      tracks:     'stream_view'
+    };
 
     parts.splice(1, 0, mapping[parts[1]]);
 
