@@ -12,24 +12,9 @@ module.exports = class Timing {
    * @return {String}
    */
   static time(duration) {
-    if (typeof duration == 'string') {
-      // Special case when there's no seconds, our trick with
-      // the reversed array won't work.
-      if (duration.indexOf("M") != -1 && duration.indexOf("S") == -1)
-        duration = duration + "0S";
-
-      var components = duration.split(/PT|H|M|S/);
-          components = components.filter((c) => { if (c) return c; });
-          components = components.reverse();
-
-      var hours   = parseInt(components[2] || 0);
-      var minutes = parseInt(components[1] || 0);
-      var seconds = parseInt(components[0]);
-    } else {
-      var hours   = Math.trunc(duration / 3600);
-      var minutes = Math.trunc(duration / 60) - (hours * 60);
-      var seconds = Math.trunc(duration % 60);
-    }
+    var hours   = Math.trunc(duration / 3600);
+    var minutes = Math.trunc(duration / 60) - (hours * 60);
+    var seconds = Math.trunc(duration % 60);
 
     if (seconds < 10)
       seconds = "0" + seconds;
@@ -44,23 +29,27 @@ module.exports = class Timing {
   }
 
   /**
-   * Returns a duration in seconds for a given human time.
-   * For instance:
+   * Returns a total duration in seconds given an ISO 8601
+   * time string.
    *
-   *   duration("2:30") // => 150
-   *
-   * @param  {String} human_time - A duration in the HH:MM:SS format.
+   * @param  {String} string - The timing string.
    * @return {Number}
    */
-  static duration(human_time) {
-    var components = human_time.split(":");
+  static fromISO8601(string) {
+    // Special case when there's no seconds, our trick with
+    // the reversed array won't work.
+    if (string.indexOf("M") != -1 && string.indexOf("S") == -1)
+      string = string + "0S";
+
+    var components = string.split(/PT|H|M|S/);
+        components = components.filter((c) => { if (c) return c; });
         components = components.reverse();
 
-    var hours   = parseInt(components[2] || 0) * 3600;
-    var minutes = parseInt(components[1] || 0) * 60;
+    var hours   = parseInt(components[2] || 0);
+    var minutes = parseInt(components[1] || 0);
     var seconds = parseInt(components[0]);
 
-    return hours + minutes + seconds;
+    return (hours * 3600) + (minutes * 60) + seconds;
   }
 
   /**

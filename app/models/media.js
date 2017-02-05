@@ -97,7 +97,7 @@ module.exports = class Media extends Record {
     media.icon   = hash.snippet.thumbnails.medium.url;
     media.tags   = hash.snippet.tags;
 
-    media.duration = Timing.duration(Timing.time(hash.contentDetails.duration));
+    media.duration = Timing.fromISO8601(hash.contentDetails.duration);
 
     return media;
   }

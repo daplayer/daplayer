@@ -4,11 +4,6 @@ require('../test_helper');
 
 describe('Timing', () => {
   describe('#time', () => {
-    it('should parse ISO8601 times', () => {
-      assert.equal("4:19", Timing.time("4M19S"));
-      assert.equal("5:00", Timing.time("5M"));
-    });
-
     it('should parse seconds to human time', () => {
       assert.equal("4:19", Timing.time(259));
     });
@@ -18,11 +13,13 @@ describe('Timing', () => {
     });
   });
 
-  describe("#duration", () => {
-    it('should return a duration in seconds', () => {
-      assert.equal(10, Timing.duration("0:10"));
-      assert.equal(259, Timing.duration("4:19"));
-      assert.equal(3675, Timing.duration("1:01:15"));
+  describe('#fromISO8601', () => {
+    it('should parse ISO8601 times', () => {
+      assert.equal(Timing.fromISO8601("4M19S"), 259);
+    });
+
+    it('should add a "seconds" component if absent', () => {
+      assert.equal(Timing.fromISO8601("5M"), 300);
     });
   });
 });
