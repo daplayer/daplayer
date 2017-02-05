@@ -34,5 +34,8 @@ module.exports = class Context {
         this.collection = this.collection.concat(hash[key].items);
       }
     });
+
+    // Remove `undefined` occurences
+    this.collection = this.collection.filter(e => e);
   }
 }

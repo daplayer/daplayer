@@ -41,5 +41,11 @@ describe('Context', () => {
 
       assert.deepEqual(context.collection, []);
     });
+
+    it('should remove `undefined` from the collection', () => {
+      var context = new Context({foo: {items: undefined}});
+
+      assert.deepEqual(context.collection, []);
+    });
   });
 });
