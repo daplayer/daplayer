@@ -37,10 +37,12 @@ global.Activity = require('../app/models/activity');
 global.Artist   = require('../app/models/artist');
 global.Context  = require('../app/models/context');
 
+const ArtistArtsService = require('../app/services/artist_arts');
+
 global.Service = class {
   static for(service) {
     if (service == 'artist_arts')
-      return require('../app/services/artist_arts');
+      return ArtistArtsService;
   }
 }
 
