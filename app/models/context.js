@@ -1,5 +1,17 @@
 'use strict';
 
+/**
+ * This class represents a view's context.
+ *
+ * It has an associated collection which is just a flat array
+ * to easily deal with the playing queue.
+ *
+ * This is because when we are on an artist's page for instance,
+ * if we are playing the last track of the last album, the user
+ * would certainly expect the singles to be read next to this
+ * track but since tracks are nested inside the album, it's
+ * hard to go back to the root level to play these singles.
+ */
 module.exports = class Context {
   constructor(hash) {
     if (!hash)

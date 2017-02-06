@@ -1,5 +1,12 @@
 'use strict';
 
+/**
+ * This class is responsible for all the caching inside the
+ * application.
+ *
+ * This is mostly just a big hash which is clever enough
+ * to set some default values and deal with paginated contents.
+ */
 module.exports = class Cache {
   /**
    * Initializes the different pieces of the cache to make
@@ -84,6 +91,8 @@ module.exports = class Cache {
    * is a facility to return data inside a Promise since
    * model methods return such kind of objects.
    *
+   * @param  {String} module  - The wanted module.
+   * @param  {String} section - The wanted section.
    * @return {Promise}
    */
   static fetch(module, section) {

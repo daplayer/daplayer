@@ -3,6 +3,17 @@
 const clipboard = require('electron').clipboard;
 const Player    = require('./player');
 
+/**
+ * This class manages some elements of the user interface
+ * and contains methods that are related to it.
+ *
+ * You can also check out these classes for further information:
+ *
+ *  * Ui.Dialog
+ *  * Ui.Menu
+ *  * Ui.Player
+ *  * Ui.VideoPlayer
+ */
 module.exports = class Ui {
   static get Player() {
     if (!this._Player)
@@ -66,7 +77,7 @@ module.exports = class Ui {
    * - "controller/action": Controller rendering.
    * - "#service/method": Call to a specific service.
    *
-   * == Controller rendering
+   * ### Controller rendering
    *
    * If a link is referencing a controller/action set, then
    * this function will extract the controller name from the
@@ -80,7 +91,7 @@ module.exports = class Ui {
    * It also don't barely call the specified action; the h-ref
    * is first given to `Router.to` to match user's preferences.
    *
-   * == Call to a specific service
+   * ### Call to a specific service
    *
    * If the h-ref starts with a sharp (#) then it is considered
    * as a call to a specific service class so just like for

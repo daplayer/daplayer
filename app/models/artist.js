@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * This class represents an artist with their associated
+ * collection.
+ */
 module.exports = class Artist {
   constructor(name, albums, singles) {
     this.name   = name;

@@ -3,6 +3,12 @@
 const Cache = require('./cache');
 const fs    = require('fs');
 
+/**
+ * This class is a sort of black-box managing views inside
+ * the application. It relies on both Handlebars (to generate
+ * the HTML from .hbs files) and jQuery to inject the results
+ * inside the DOM.
+ */
 module.exports = class View {
   /**
    * Fills the current page with the result of the template

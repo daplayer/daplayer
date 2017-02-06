@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * Common interface to manage notifications within the application
+ * and outside of the application when needed.
+ */
 module.exports = class Notification {
   static show(hash, outer) {
     // If the player's window is not focused and the outer

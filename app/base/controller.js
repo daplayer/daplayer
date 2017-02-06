@@ -1,5 +1,11 @@
 'use strict';
 
+/**
+ * Abstract representation of a controller. It brings the
+ * basic rendering logic.
+ *
+ * @abstract
+ */
 module.exports = class BaseController {
   /**
    * Delegates to the given module's controller and action.

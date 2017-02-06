@@ -2,6 +2,10 @@
 
 const BrowserWindow = require('electron').remote.BrowserWindow;
 
+/**
+ * This class is a wrapper around the Electron's `BrowserWindow`
+ * API to create windows within the application.
+ */
 module.exports = class SubWindow {
   /**
    * Creates a new sub-window.
@@ -28,6 +32,7 @@ module.exports = class SubWindow {
   /**
    * Loads the given URL (delegates to BrowserWindow#load).
    *
+   * @param  {String} url - The URL to load.
    * @return {null}
    */
   load(url) {
@@ -50,6 +55,9 @@ module.exports = class SubWindow {
    * `"redirect"` can be passed as a short-hand for the
    * `"did-get-redirect-request"` event.
    *
+   * @param  {String}   event    - The event to listen.
+   * @param  {Function} callback - The function to trigger when
+   *                               the event happens.
    * @return {null}
    */
   on(event, callback) {

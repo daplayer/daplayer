@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * This class manages the dialog as shown to the user inside
+ * the application (e.g. for tagging medias).
+ */
 module.exports = class UiDialog {
   static get form() {
     return $('.dialog form');

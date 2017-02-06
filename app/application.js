@@ -1,3 +1,8 @@
+'use strict';
+
+/**
+ * This class manages some application logic.
+ */
 module.exports = class Application {
   /**
    * Handles all the necessary initializations and loads

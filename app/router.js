@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * This class handles the routing, dispatching links to the
+ * proper controler/action when needed.
+ */
 module.exports = class Router {
   static setFavoriteRouteFor(href) {
     var parts   = href.split('/');

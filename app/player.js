@@ -5,6 +5,12 @@ const YouTubePlayer    = require('../youtube/player');
 const YouTubeModel     = require('../youtube/model');
 const LocalPlayer      = require('../local/player');
 
+/**
+ * This class is responsible for managing the playing logic
+ * inside the application.
+ *
+ * The user interface is managed by the `Ui.Player` class.
+ */
 module.exports = class Player {
   /**
    * Initializes all the necessary elements for audio analysis.
@@ -63,7 +69,7 @@ module.exports = class Player {
   /**
    * Starts the player for a given record.
    *
-   * @param  {Media|Activity} record - The record to play.
+   * @param  {Media} record - The record to play.
    * @return {null}
    */
   static start(record) {
@@ -253,6 +259,7 @@ module.exports = class Player {
   /**
    * Changes the playing mode for the current set.
    *
+   * @param  {String} mode - The playing mode for the current set.
    * @return {null}
    */
   static currentSetMode(mode) {
@@ -291,7 +298,7 @@ module.exports = class Player {
    * Sorthand to access the current playing media based
    * upon the record's kind.
    *
-   * @return {HTMLAudioElement|HTMLVideoElement}
+   * @return {HTMLMediaElement}
    */
   static get media() {
     if (this.record.kind == 'video')

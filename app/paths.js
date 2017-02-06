@@ -3,6 +3,10 @@
 const fs   = require('fs');
 const path = require('path');
 
+/**
+ * Wrapper around the native path modules with some getters
+ * to access common locations.
+ */
 module.exports = class Paths {
   /**
    * Delegates to `path#join`.

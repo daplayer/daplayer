@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * In-memory representation of a playlist.
+ */
 module.exports = class Playlist extends Record {
   toJSPF() {
     var hash = {};

@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * This class is managing the playing queue.
+ */
 module.exports = class Queue {
   static start(current) {
     var context = Cache.playing.context;

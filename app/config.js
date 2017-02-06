@@ -1,11 +1,29 @@
 'use strict';
 
+/**
+ * Wrapper around the local storage to manage the user
+ * configuration.
+ *
+ * Configuration settings are stored on a per service
+ * basis under a service_config key (e.g. `local_config`).
+ */
 module.exports = class Config {
+  /**
+   * Returns the configuration for the meta section.
+   *
+   * @return {Object}
+   */
   static get meta() {
     return {
       locale: this.read('meta', 'locale'),
     }
   }
+
+  /**
+   * Returns the configuration for the local section.
+   *
+   * @return {Object}
+   */
 
   static get local() {
     return {
@@ -14,6 +32,11 @@ module.exports = class Config {
     }
   }
 
+  /**
+   * Returns the configuration for the SoundCloud section.
+   *
+   * @return {Object}
+   */
   static get soundcloud() {
     return {
       download:       this.read('soundcloud', 'download'),
@@ -22,7 +45,11 @@ module.exports = class Config {
     }
   }
 
-
+  /**
+   * Returns the configuration for the YouTube section.
+   *
+   * @return {Object}
+   */
   static get youtube() {
     return {
       download:          this.read('youtube', 'download'),
@@ -32,6 +59,12 @@ module.exports = class Config {
     }
   }
 
+  /**
+   * Contains the default configuration settings for all
+   * the services.
+   *
+   * @return {Object}
+   */
   static get default() {
     return {
       meta: {
@@ -56,6 +89,14 @@ module.exports = class Config {
     }
   }
 
+  /**
+   * Reads the configuration setting of a given section reading
+   * from the local storage or returning the default value if unset.
+   *
+   * @param  {String} section - The section to look in.
+   * @param  {String} key     - The setting key.
+   * @return {Object|String|Number}
+   */
   static read(section, key) {
     var hash = JSON.parse(localStorage.getItem(section + '_config') || '{}');
 
@@ -65,6 +106,15 @@ module.exports = class Config {
       return this.default[section][key];
   }
 
+  /**
+   * Stores a given configuration setting in the local storage
+   * making sure that the previous values are kept.
+   *
+   * @param  {String} section - The section to write to.
+   * @param  {String} key     - The setting key.
+   * @param  {String} value   - The value to set.
+   * @return {null}
+   */
   static store(section, key, value) {
     var hash = JSON.parse(localStorage.getItem(section + '_config') || '{}');
 

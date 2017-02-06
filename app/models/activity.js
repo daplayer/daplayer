@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * This class represents a SoundCloud activity.
+ */
 module.exports = class Activity {
   constructor(hash) {
     if (hash.track)

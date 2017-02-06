@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * Generic wrapper for any sort of playable media (i.e. video
+ * or music).
+ */
 module.exports = class Media extends Record {
   toJSPF() {
     var hash = {};
@@ -35,21 +39,21 @@ module.exports = class Media extends Record {
    * Tries to guess the real media's author based upon the title
    * and the associated account.
    *
-   *   media.title  == 'Maliblue'
-   *   media.artist == 'Darius'
-   *   media.real_artist // => 'Darius'
+   *     media.title  == 'Maliblue'
+   *     media.artist == 'Darius'
+   *     media.real_artist // => 'Darius'
    *
-   *   media.title  == 'Kartell - Aura'
-   *   media.artist == 'Roche Musique'
-   *   media.real_artist // => 'Kartell'
+   *     media.title  == 'Kartell - Aura'
+   *     media.artist == 'Roche Musique'
+   *     media.real_artist // => 'Kartell'
    *
-   *   media.title  == 'Talk Talk (Moon Boots Remix)'
-   *   media.artist == 'future classic'
-   *   media.real_artist // => 'Moon Boots'
+   *     media.title  == 'Talk Talk (Moon Boots Remix)'
+   *     media.artist == 'future classic'
+   *     media.real_artist // => 'Moon Boots'
    *
-   *   media.title  == 'Take Care of You'
-   *   media.artist == 'Cherokee (Official)'
-   *   media.real_artist // => 'Cherokee'
+   *     media.title  == 'Take Care of You'
+   *     media.artist == 'Cherokee (Official)'
+   *     media.real_artist // => 'Cherokee'
    *
    * @return {String}
    */

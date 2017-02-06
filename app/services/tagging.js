@@ -6,6 +6,9 @@ const crypto  = require('crypto');
 const glob    = require('glob');
 const fs      = require('fs');
 
+/**
+ * Wrapper around our tagging library.
+ */
 module.exports = class TaggingService {
   /**
    * Defines the tag of a given media or file location.

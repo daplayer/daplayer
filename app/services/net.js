@@ -3,6 +3,11 @@
 const fs      = require('fs');
 const request = require('request');
 
+/**
+ * Abstract service to deal with network related things.
+ *
+ * @abstract
+ */
 module.exports = class NetService {
   static downloadImage(url) {
     // Not "secure" but I guess we don't really mind here.

@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * This class contains some common functions that are related
+ * to timing.
+ */
 module.exports = class Timing {
   /**
    * Converts the given number of seconds to a human readable
@@ -85,7 +89,7 @@ module.exports = class Timing {
   }
 
   /**
-   * Get the current timestamp in seconds.
+   * Returns the current timestamp in seconds.
    *
    * @return {Number}
    */

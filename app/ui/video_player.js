@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * This class manages the video player's user interface.
+ */
 module.exports = class UiVideoPlayer {
     /**
    * Shows the video player and the black transparent

@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * This class manages the downloads done at the application
+ * level (i.e. SoundCloud or YouTube medias).
+ */
 module.exports = class Downloads {
   static enqueue(hash) {
     this.queue.push(hash);

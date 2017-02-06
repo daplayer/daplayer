@@ -1,5 +1,15 @@
 'use strict';
 
+/**
+ * Low level representation of any thing related to data inside
+ * the application.
+ *
+ * Children are:
+ *
+ *  * `Media`
+ *  * `Playlist`
+ *  * `Album` (which extends `Playlist`)
+ */
 module.exports = class Record {
   constructor(id, service) {
     this.id      = id;

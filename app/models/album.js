@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * This class represents an album (stored locally, on disk).
+ */
 module.exports = class Album extends Playlist {
   constructor(title, artist, items) {
     super(title.dasherize(), 'local');

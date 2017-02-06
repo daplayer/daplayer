@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Wrapper around IndexedDB.
+ */
 module.exports = class Database {
   constructor(database) {
     this.database = database;
@@ -47,6 +50,9 @@ module.exports = class Database {
   }
 }
 
+/**
+ * Representation of an IndexedDB table.
+ */
 class Table {
   constructor(store) {
     this.store = store;

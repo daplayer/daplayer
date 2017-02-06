@@ -2,6 +2,10 @@
 
 const dialog = require('electron').remote.dialog;
 
+/**
+ * Wrapper around Electron's dialog to choose files that are
+ * stored on disk.
+ */
 module.exports = class FilePicker {
   /**
    * Opens up a dialog to pick a file or a directory.

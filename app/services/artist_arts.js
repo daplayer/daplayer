@@ -3,6 +3,11 @@
 const NetService = require('./net');
 const request    = require('request');
 
+/**
+ * Service tied to the Spotify API that is able to fetch
+ * artist's images and store them on disk to display a
+ * nice local library.
+ */
 module.exports = class ArtistArtsService extends NetService {
   /**
    * Fetches an image for a given artist name looking on

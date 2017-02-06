@@ -11,7 +11,8 @@
   "devDependencies": {
     "electron-rebuild": "^1.2.0",
     "mocha": "*",
-    "spectron": "*"
+    "spectron": "*",
+    "documentation": "^4.0.0-beta.18"
   },
   "scripts": {
     "less": "lessc",

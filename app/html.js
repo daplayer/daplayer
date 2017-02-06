@@ -1,15 +1,19 @@
 'use strict';
 
+/**
+ * Class responsible for generating HTML strings that will
+ * be rendered to the user.
+ */
 module.exports = class Html {
   /**
    * Generates an HTML tag. For instance:
    *
-   *   Html.tag('a', { href: 'meta/index'}, 'Home page')
-   *   // => '<a href="meta/index">Home page</a>'
-   *   Html.tag('img', { src: 'foo.png'})
-   *   // => '<img src="foo.png">'
-   *   Html.tag('div', 'box', () => { return "Hello world"})
-   *   // => '<div class="box">Hello world</div>'
+   *     Html.tag('a', { href: 'meta/index'}, 'Home page')
+   *     // => '<a href="meta/index">Home page</a>'
+   *     Html.tag('img', { src: 'foo.png'})
+   *     // => '<img src="foo.png">'
+   *     Html.tag('div', 'box', () => { return "Hello world"})
+   *     // => '<div class="box">Hello world</div>'
    *
    * @param  {String}           name
    * @param  {Object|String}    attributes
@@ -44,7 +48,7 @@ module.exports = class Html {
    * @param  {String} service - The record's service.
    * @return {String}
    */
-  static options(service, skip_text) {
+  static options(service) {
     if (service == 'local')
       var mapping = [['tags', 'tag',             'tag'],
                      ['list', 'add_to_playlist', 'addToPlaylist']];
@@ -73,7 +77,7 @@ module.exports = class Html {
   }
 
   /**
-   * Returns a span having the proper Glyphicon's class.
+   * Returns a `span` having the proper Glyphicon's class.
    *
    * @param  {String} name - The glyph name.
    * @return {String}

@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * This class manages the player's user interface.
+ */
 module.exports = class UiPlayer {
   static get el() {
     if (!this.elements)
@@ -136,9 +139,9 @@ module.exports = class UiPlayer {
    * This method can be interrupted by setting the value of
    * the Player's `auto_progression` value to `false`.
    *
-   * @param  {Number}   time    - The current time.
-   * @param  {Boolean=} boolean - By-pass the `auto_progression`
-                                  check to force update.
+   * @param  {Number}   time   - The current time.
+   * @param  {Boolean=} bypass - By-pass the `auto_progression`
+                                 check to force update.
    * @return {null}
    */
   static progression(time, bypass) {
@@ -237,6 +240,8 @@ module.exports = class UiPlayer {
   /**
    * Toggles the playing mode for the current set.
    *
+   * @param  {String} previous - Previous queuing mode.
+   * @param  {String} wanted   - The new queuing mode.
    * @return {null}
    */
   static currentSetMode(previous, wanted) {

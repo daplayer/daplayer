@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * This class manages the menu inside the application's bar.
+ */
 module.exports = class UiMenu {
   static define(module, section) {
     var keys = {
