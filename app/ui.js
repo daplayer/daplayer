@@ -359,20 +359,4 @@ module.exports = class Ui {
         scrollTop: $(`[data-id="${id}"]`).offset().top - 50
       }, 300);
   }
-
-  /**
-   * Animates the height of an element randomly.
-   *
-   * @param  {$}    element - The element to animate.
-   * @return {null}
-   */
-  static animateHeight(element) {
-    var sample = Math.max(Player.sample(), 0.1);
-
-    element.animate({
-      height: sample * 100 + "%"
-    }, 250, () => {
-      this.animateHeight(element);
-    });
-  }
 }

@@ -316,9 +316,9 @@ module.exports = class UiPlayer {
    * @return {null}
    */
   static startEqualizer() {
-    Ui.animateHeight($('.equalizer .rect1'));
-    Ui.animateHeight($('.equalizer .rect2'));
-    Ui.animateHeight($('.equalizer .rect3'));
+    $('.equalizer .rect1').animateHeight();
+    $('.equalizer .rect2').animateHeight();
+    $('.equalizer .rect3').animateHeight();
   }
 
   /**
