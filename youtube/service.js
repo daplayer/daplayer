@@ -271,7 +271,7 @@ module.exports = class YouTubeService extends NetService {
         // that contains the decrypting function.
         var script_url = body.match(/"js":"(.*?)"/i)[1];
             script_url = script_url.replace(/\\\//g, "/");
-            script_url = "http:" + script_url;
+            script_url = "http://youtube.com" + script_url;
 
         // Once we know the location of the script, we try
         // to extract the decrypting function from it and
@@ -324,6 +324,8 @@ module.exports = class YouTubeService extends NetService {
               else if (jscode[position] == '}')
                 braces--;
             }
+
+            console.log(code);
 
             eval("Cache.inner_object = " + code);
 
