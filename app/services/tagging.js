@@ -42,7 +42,7 @@ module.exports = class TaggingService {
   static extract(location, callback) {
     this.location = location;
 
-    var pattern = Paths.join(location, '**/*.{mp3,ogg,m4a}');
+    var pattern = Paths.join(location, '**/*.{mp3,ogg,m4a,wav}');
 
     return new Promise((resolve, reject) => {
       glob(pattern, (err, files) => {
