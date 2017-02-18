@@ -309,24 +309,17 @@ module.exports = class Ui {
   /**
    * Displays a popup to add an element to a playlist.
    *
-   * @param  {$} element - The HTML node that represents
-   *                       the media we want to add to a
-   *                       playlist.
+   * @param  {Number|String} id - The record's id.
    * @return {null}
    */
-  static addToPlaylist(element) {
-    if (element.hasClass('soundcloud'))
-      var module = 'soundcloud';
-    else if (element.hasClass('youtube'))
-      var module = 'youtube';
-    else if (element.hasClass('local'))
-      var module = 'local';
+  static addToPlaylist(id) {
+    var record = Record.from(id);
 
-    Playlist.all(module).then((playlists) => {
+    Playlist.all(record.service).then((playlists) => {
       this.Dialog.addToPlaylist({
-        id:         element.data('id'),
-        soundcloud: module == 'soundcloud',
-        youtube:    module == 'youtube',
+        id:         id,
+        soundcloud: record.isSoundCloud(),
+        youtube:    record.isYouTube(),
         playlists:  playlists,
       });
     })
