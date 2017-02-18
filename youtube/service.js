@@ -11,65 +11,49 @@ const YT             = require('./client');
 
 module.exports = class YouTubeService extends NetService {
   /**
-   * Checks whether the access token is still valid and the user
-   * can reach oAuth URLs to fetch data.
-   *
-   * Basically, the expire date of the token is stored when the
-   * user give access to their account so we store it and compare
-   * it with the current time to check whether it's still valid.
-   * If it's not, we just refresh it.
+   * Checks whether the user's already connected their account.
    *
    * @return {Bool}
    */
   static isConnected() {
-    if (!Credentials.user.youtube.connected)
-      return false;
-
-    var expires_at = Credentials.user.youtube.expires_at;
-
-    if (expires_at > Timing.currentTimestamp()) {
-      return true;
-    } else if (expires_at && expires_at < Timing.currentTimestamp()) {
-      this.refreshToken();
-      return true;
-    } else {
-      return false;
-    }
+    return Credentials.user.youtube.connected
   }
 
   /**
-   * Just trigger the process to refresh a token if the user
-   * isn't connected (i.e. doesn't have a sufficiently fresh
-   * token to pull data from the API).
+   * Trigger the process to refresh a token if the user doesn't
+   * doesn't have a sufficiently fresh token to pull data from
+   * the API.
    *
-   * This method is a pure alias to `isConnected`; the name
-   * just better shows our intent here.
+   * Basically, the expire date of the token is stored when the
+   * users give access to their account so we store it and compare
+   * it with the current time to check whether it's still valid.
+   * If it's not, we ask for a brand new token.
    *
-   * @return {null}
+   * @return {Promise}
    */
   static connect() {
-    this.isConnected();
-  }
+    var expires_at = Credentials.user.youtube.expires_at;
 
-  /**
-   * Hits oAuth url to get a new access token from the existing
-   * refresh token.
-   *
-   * @return {null}
-   */
-  static refreshToken() {
-    var parameters = {
-      client_id:     Credentials.youtube.client_id,
-      client_secret: Credentials.youtube.client_secret,
-      refresh_token: Credentials.user.youtube.refresh_token,
-      grant_type:    'refresh_token'
-    };
+    if (expires_at < Timing.currentTimestamp())
+      return new Promise((resolve, reject) => {
+        var parameters = {
+          client_id:     Credentials.youtube.client_id,
+          client_secret: Credentials.youtube.client_secret,
+          refresh_token: Credentials.user.youtube.refresh_token,
+          grant_type:    'refresh_token'
+        }
 
-    request.post(YT.url.token, { form: parameters }, (err, response, body) => {
-      var credentials = JSON.parse(body);
+        var req  = request.post(YT.url.token, { form: parameters })
+        var body = ''
 
-      this.storeCredentials(credentials, true);
-    });
+        req.on('data', chunck => body += chunck)
+        req.on('end', () => resolve(JSON.parse(body)))
+        req.on('error', e => reject(e))
+      }).then((hash) => {
+        return this.storeCredentials(hash, true)
+      })
+    else
+      return Promise.resolve(true)
   }
 
   /**

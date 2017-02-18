@@ -25,46 +25,44 @@ module.exports = class YT {
   /**
    * Facility to fetch data from the YouTube API.
    *
-   * @param  {String}           resource - The YouTube data API endpoint.
-   * @param  {Object=|Function} options  - Some options or the callback.
-   * @param  {Function=}        callback - The callback function.
+   * @param  {String}  resource - The YouTube data API endpoint.
+   * @param  {Object=} options  - Some options or the callback.
    * @return {null}
    */
-  static fetch(resource, options, callback) {
+  static fetch(resource, options) {
     // Refresh the token whenever we try to hit the API but
     // the current access token is no longer valid.
-    Service.for('youtube').connect();
+    return Service.for('youtube').connect().then(() => {
+      // Mapping between resource and options
+      var mapping = {
+        channels:  { part: 'snippet,contentDetails', mine: true },
+        items:     { part: 'snippet' },
+        search:    { part: 'snippet' },
+        playlists: { part: 'snippet,contentDetails' },
+        videos:    { part: 'snippet,contentDetails'}
+      };
 
-    // Mapping between resource and options
-    var mapping = {
-      channels:  { part: 'snippet,contentDetails', mine: true },
-      items:     { part: 'snippet' },
-      search:    { part: 'snippet' },
-      playlists: { part: 'snippet,contentDetails' },
-      videos:    { part: 'snippet,contentDetails'}
-    };
+      if (!options)
+        options = mapping[resource];
+      else
+        Object.assign(options, mapping[resource])
 
-    if (!callback) {
-      callback = options;
-      options  = mapping[resource];
-    } else {
-      Object.assign(options, mapping[resource]);
-    }
+      // Shorthand for playlistItems
+      if (resource == 'items')
+        resource = 'playlistItems';
 
-    // Shorthand for playlistItems
-    if (resource == 'items')
-      resource = 'playlistItems';
+      options.access_token = Credentials.user.youtube.access_token;
 
-    options.access_token = Credentials.user.youtube.access_token;
+      var url  = this.url.data + resource;
+      var body = ''
 
-    var url = this.url.data + resource;
+      return new Promise((resolve, reject) => {
+        var req = request.get(url, { qs: options })
 
-    // Send the request with the parameters
-    request.get(url, { qs: options }, (error, response, body) => {
-      if (error)
-        console.error(error);
-
-      callback(JSON.parse(body));
+        req.on('data', chunck => body += chunck)
+        req.on('end', () => resolve(JSON.parse(body)))
+        req.on('error', (e) => reject(e))
+      })
     });
   }
 
@@ -153,14 +151,12 @@ module.exports = class YT {
    * @return {Promise}
    */
   static playlists(token) {
-    return new Promise((resolve) => {
-      var options = { mine: true };
+    var options = { mine: true }
 
-      if (token)
-        options.pageToken = token;
+    if (token)
+      options.pageToken = token
 
-      this.fetch('playlists', options, (data) => resolve(data));
-    });
+    return this.fetch('playlists', options)
   }
 
   /**
@@ -188,29 +184,25 @@ module.exports = class YT {
    * @return {Promise}
    */
   static fetchItems(id, full, token, collection) {
-    return new Promise((resolve) => {
-      var options = { playlistId: id };
+    var options = { playlistId: id };
 
-      if (token)
-        options.pageToken = token;
+    if (token)
+      options.pageToken = token;
 
-      if (!collection)
-        collection = [];
+    if (!collection)
+      collection = [];
 
-      this.fetch('items', options, (data) => {
-        collection = collection.concat(data.items);
+    return this.fetch('items', options).then((data) => {
+      collection = collection.concat(data.items);
 
-        if (data.nextPageToken && full)
-          this.fetchItems(id, full, data.nextPageToken, collection).then((data) => {
-            resolve(data);
-          });
-        else
-          resolve({
-            id: id,
-            items: collection,
-            nextPageToken: data.nextPageToken
-          });
-      });
+      if (data.nextPageToken && full)
+        return this.fetchItems(id, full, data.nextPageToken, collection)
+      else
+        return {
+          id: id,
+          items: collection,
+          nextPageToken: data.nextPageToken
+        }
     });
   }
 
@@ -223,19 +215,16 @@ module.exports = class YT {
    * @return {Promise}
    */
   static items(id, full, token) {
-    return new Promise((resolve) => {
-      this.fetchItems(id, full, token).then((page) => {
-        token = page.nextPageToken;
+    return this.fetchItems(id, full, token).then((page) => {
+      token = page.nextPageToken;
 
-        return page.items.map((item) => {
-          return item.snippet.resourceId.videoId;
-        });
-      }).then((ids) => {
-        this.fetch('videos', { id: ids.join(",") }, (data) => {
-          data.nextPageToken = token;
-          data.id            = id;
-          resolve(data);
-        });
+      return page.items.map(item => item.snippet.resourceId.videoId)
+    }).then((ids) => {
+      return this.fetch('videos', { id: ids.join(",") }).then((data) => {
+        data.nextPageToken = token;
+        data.id            = id;
+
+        return data
       });
     });
   }
@@ -247,11 +236,7 @@ module.exports = class YT {
    * @return {Promise}
    */
   static search(query) {
-    return new Promise((resolve) => {
-      this.fetch('search', { q: query, part: 'snippet' }, (data) => {
-        resolve(data);
-      })
-    });
+    return this.fetch('search', { q: query, part: 'snippet' })
   }
 
   /**
