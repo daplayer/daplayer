@@ -91,12 +91,18 @@ Application.boot(function() {
   require('./assets/javascripts/bootstrap/dialog');
 
   // --------------------------------------------------------
-  // > Container (option toggler, scrolling, etc.)
-  require('./assets/javascripts/bootstrap/container');
-
-  // --------------------------------------------------------
   // > Forms (create playlists, etc.)
   require('./assets/javascripts/bootstrap/forms');
+
+  // --------------------------------------------------------
+  // > Container event handlers
+  //
+  // Handle the loading of new resources: load new resources
+  // when we are at the bottom of the page.
+  $('.container').scroll(function() {
+    if ($(this)[0].scrollHeight - $(this).scrollTop() == $(this).outerHeight())
+      Ui.loadNextRecords();
+  });
 
   // --------------------------------------------------------
   // > Focus state of the main window.
