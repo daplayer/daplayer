@@ -37,12 +37,11 @@ module.exports = class Playlist extends Record {
   static soundcloud(hash) {
     var playlist = new Playlist(hash.id, 'soundcloud');
 
-    playlist.title    = hash.title;
-    playlist.duration = hash.duration * Math.pow(10, -3);
-    playlist.artist   = hash.user.username;
-
-    if (hash.uri)
-      playlist.uri = hash.uri;
+    playlist.title       = hash.title
+    playlist.duration    = hash.duration * Math.pow(10, -3)
+    playlist.artist      = hash.user.username
+    playlist.track_count = hash.track_count
+    playlist.uri         = hash.uri
 
     if (hash.tracks)
       playlist.items = hash.tracks.map((track) => {

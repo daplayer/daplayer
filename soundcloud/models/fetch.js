@@ -43,24 +43,40 @@ module.exports = class SoundCloudModelFetch {
       // If we are fetching playlists, SoundCloud is only giving
       // us the URI to fetch their items so we need to do some
       // extra work to get them.
-      if (cache_key == 'playlists') {
-        var collections = result.collection.map((playlist) => {
-          return this.fetch(playlist.uri).then(items => items.collection);
+      //
+      // As for playlists in the news feed (i.e. activities),
+      // SoundCloud will actually only fetch as many items in
+      // as the specified `limit` query parameter.
+      //
+      // Thus, for playlists that have more than 10 items, we need
+      // to take their URL, fetch the items and associate them with
+      // the in-memory representation of the set.
+      //
+      // It is required to fetch the playlist items for playlists
+      // fetched through the `playlists/liked_and_owned` endpoint.
+      if (cache_key == 'playlists' || action == 'activities') {
+        if (cache_key == 'playlists')
+          var collection = result.collection
+        else
+          var collection = result.collection.map(e => e.item)
+                                 .filter(e => e instanceof Playlist)
+                                 .filter(p => p.track_count > 10)
+
+        var collections = collection.map((playlist) => {
+          return this.fetch(playlist.uri, null, playlist.track_count)
+                     .then(items => items.collection)
         });
 
         return Promise.all(collections).then((items) => {
-          result.collection.forEach((playlist, index) => {
+          collection.forEach((playlist, index) => {
             playlist.items = items[index];
             playlist.items.forEach(item => item.set = playlist);
           });
 
-          return {
-            collection: result.collection,
-            next_token: result.next_token
-          }
+          return result
         });
       } else {
-        return result;
+        return result
       }
     }).then((result) => {
       // Add the computed result to cache; we can safely do this
