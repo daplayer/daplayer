@@ -45,7 +45,7 @@ module.exports = class YouTubeModel {
     if (action == 'items' && Cache.youtube.items.includes(token_or_id))
       return this.findPlaylist(token_or_id);
     else if (Cache.youtube[action] && !token_or_id)
-      return Cache.fetch('youtube', 'action');
+      return Cache.fetch('youtube', action)
 
     return YT[action](token_or_id, full).then((set) => {
       return {
