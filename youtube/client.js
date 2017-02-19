@@ -27,7 +27,7 @@ module.exports = class YT {
    *
    * @param  {String}  resource - The YouTube data API endpoint.
    * @param  {Object=} options  - Some options.
-   * @return {null}
+   * @return {Promise}
    */
   static fetch(resource, options) {
     // Refresh the token whenever we try to hit the API but
@@ -274,7 +274,7 @@ module.exports = class YT {
    * @return {null}
    */
   static fetchRelatedPlaylists() {
-    this.fetch('channels', (data) => {
+    this.fetch('channels').then((data) => {
       let playlists = data.items[0].contentDetails.relatedPlaylists;
 
       Config.store('youtube', 'related_playlists', playlists);
