@@ -26,7 +26,7 @@ module.exports = class YT {
    * Facility to fetch data from the YouTube API.
    *
    * @param  {String}  resource - The YouTube data API endpoint.
-   * @param  {Object=} options  - Some options or the callback.
+   * @param  {Object=} options  - Some options.
    * @return {null}
    */
   static fetch(resource, options) {
@@ -67,7 +67,63 @@ module.exports = class YT {
   }
 
   /**
-   * Facility to insert an element inside a playlist gven its
+   * Fetches a given resource recursively stopping once there
+   * is enough data to fill the screen.
+   *
+   * @param  {String} resource   - The resource passed to `fetch`.
+   * @param  {Object} options    - Options delegated to `fetch`.
+   * @param  {Array=} collection - Already fetched collection.
+   * @return {Promise}
+   */
+  static fetchWithLimit(resource, options, collection) {
+    if (!collection)
+      collection = []
+
+    return this.fetch(resource, options).then((data) => {
+      collection = collection.concat(data.items)
+      options.pageToken = data.nextPageToken
+
+      if (data.nextPageToken && collection.length < Ui.pageSize('video'))
+        return this.fetchWithLimit(resource, options, collection)
+      else
+        return {
+          nextPageToken: data.nextPageToken,
+          items: collection
+        }
+    })
+  }
+
+  /**
+   * Fetches a given playlist until all its items have been
+   * fetched.
+   *
+   * @param  {String}  id         - The playlist's id.
+   * @param  {String=} token      - The current page token.
+   * @param  {Array=}  collection - Already fetched items.
+   * @return {Promise}
+   */
+  static fetchFull(id, token, collection) {
+    var options = { playlistId: id, pageToken: token }
+
+    if (!collection)
+      collection = []
+
+    return this.fetch('items', options).then((data) => {
+      collection = collection.concat(data.items)
+
+      if (data.nextPageToken)
+        return this.fetchFull(id, data.nextPageToken, collection)
+      else
+        return {
+          id: id,
+          items: collection,
+          nextPageToken: data.nextPageToken
+        }
+    })
+  }
+
+  /**
+   * Facility to insert an element inside a playlist given its
    * id.
    *
    * @param  {String} playlist_id - The playlist's id.
@@ -147,16 +203,13 @@ module.exports = class YT {
   /**
    * Returns the list of playlists that the user owns.
    *
-   * @param  {String=} token - The page token.
+   * @param  {String=} token - The next page token.
    * @return {Promise}
    */
   static playlists(token) {
-    var options = { mine: true }
+    var options = { mine: true, pageToken: token }
 
-    if (token)
-      options.pageToken = token
-
-    return this.fetch('playlists', options)
+    return this.fetchWithLimit('playlists', options)
   }
 
   /**
@@ -166,67 +219,37 @@ module.exports = class YT {
    * @return {Promise}
    */
   static likes(token) {
-    return YT.items(Config.youtube.related_playlists.likes, false, token);
+    var id = Config.youtube.related_playlists.likes
+
+    return this.items(id, false, token)
   }
 
   /**
-   * Facility to fetch items of a specific playlist. By
-   * default it will only fetch the 5 first items if the `full`
-   * parameter is not specified. Otherwise, it will fetch
-   * all the playlist items.
-   *
-   * @param  {String}  id         - The playlist's id.
-   * @param  {Bool=}   full       - Specify whether we want to
-   *                                load the full playlist or not.
-   * @param  {String=} token      - The next page token.
-   * @param  {Array=}  collection - Holds the collection as we
-   *                                call the method recursively.
-   * @return {Promise}
-   */
-  static fetchItems(id, full, token, collection) {
-    var options = { playlistId: id };
-
-    if (token)
-      options.pageToken = token;
-
-    if (!collection)
-      collection = [];
-
-    return this.fetch('items', options).then((data) => {
-      collection = collection.concat(data.items);
-
-      if (data.nextPageToken && full)
-        return this.fetchItems(id, full, data.nextPageToken, collection)
-      else
-        return {
-          id: id,
-          items: collection,
-          nextPageToken: data.nextPageToken
-        }
-    });
-  }
-
-  /**
-   * Fetches the different fields related to a list of items.
+   * Fetches the items of a given playlist.
    *
    * @param  {String}  id    - The playlist's id.
-   * @param  {Bool=}   full  - Delegated to `fetchItems`.
-   * @param  {String=} token - Delegated to `fetchItems`.
+   * @param  {Bool=}   full  - Whether all items should be fetched.
+   * @param  {String=} token - The next page token.
    * @return {Promise}
    */
   static items(id, full, token) {
-    return this.fetchItems(id, full, token).then((page) => {
-      token = page.nextPageToken;
+    var options = { pageToken: token, playlistId: id }
 
-      return page.items.map(item => item.snippet.resourceId.videoId)
-    }).then((ids) => {
+    if (full)
+      var promise = this.fetchFull(id, token)
+    else
+      var promise = this.fetchWithLimit('items', options)
+
+    return promise.then((items) => {
+      var ids = items.items.map(item => item.snippet.resourceId.videoId)
+
       return this.fetch('videos', { id: ids.join(",") }).then((data) => {
-        data.nextPageToken = token;
-        data.id            = id;
+        data.nextPageToken = items.nextPageToken
+        data.id            = id
 
         return data
-      });
-    });
+      })
+    })
   }
 
   /**

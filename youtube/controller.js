@@ -9,9 +9,7 @@ module.exports = class YouTubeController extends BaseController {
         playlists: page,
         token: token
       })
-    }).then(() => {
-      this.loadNextRecords()
-    });
+    })
   }
 
   static history() {
@@ -28,9 +26,7 @@ module.exports = class YouTubeController extends BaseController {
         likes: page,
         token: token
       });
-    }).then(() => {
-      this.loadNextRecords()
-    });
+    })
   }
 
   static playlistItems(id) {
@@ -43,10 +39,5 @@ module.exports = class YouTubeController extends BaseController {
     return Service.for('youtube').search().then((results) => {
       this.render('youtube/search_results', results);
     });
-  }
-
-  static loadNextRecords() {
-    if (Ui.dataShouldBeLoaded())
-      Ui.loadNextRecords();
   }
 }

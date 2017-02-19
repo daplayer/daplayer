@@ -326,14 +326,19 @@ module.exports = class Ui {
   }
 
   /**
-   * Tells whether data should be loaded or not on the
-   * current page. It checks whether the container is
-   * fully filled or not.
+   * Tries to guess the number of records that should
+   * be loaded on the page.
    *
    * @return {Bool}
    */
-  static dataShouldBeLoaded() {
-    return !($('.container').get(0).scrollHeight > $('.container').get(0).clientHeight);
+  static pageSize(kind) {
+    var box_height = kind == 'music' ? 250.0 : 220.0
+    var box_width  = kind == 'music' ? 200.0 : 270.0
+
+    var nb_columns = Math.floor($('.container').get(0).clientHeight / box_height)
+    var nb_lines   = Math.floor($('.container').get(0).clientWidth / box_width)
+
+    return nb_columns * (nb_lines + 1)
   }
 
   /**
