@@ -1,44 +1,20 @@
 'use strict';
 
-// Make sure that we have the necessary files created when
-// we run the application (e.g. for the first time or if
-// the user accidentally deleted the "cache" folder).
-const Paths = require('./app/paths');
+const electron       = require('electron')
+const app            = electron.app
+const BrowserWindow  = electron.BrowserWindow
+const globalShortcut = electron.globalShortcut
 
-// > For folders.
-Paths.to_make.forEach((folder) => {
-  if (!Paths.exists(folder))
-    Paths.mkdir(folder);
-});
+const path = require('path')
+const url  = require('url')
 
-// > For the "YouTube History" playlist files.
-if (!Paths.exists('youtube_history'))
-  Paths.touchYouTubeHistory();
+// Make sure that the users have the different folders
+// and files needed to properly use the application.
+require('./app/application').ensurePathsExist()
 
-// Start the Electron "popote".
-const electron       = require('electron');
-const app            = electron.app;           // Module to control application life.
-const BrowserWindow  = electron.BrowserWindow; // Module to create browser window.
-const globalShortcut = electron.globalShortcut;
+let mainWindow
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-var mainWindow = null;
-
-// Quit when all windows are closed.
-app.on('window-all-closed', function() {
-  // On OS X it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform != 'darwin')
-    app.quit();
-
-  globalShortcut.unregisterAll();
-});
-
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-app.on('ready', function() {
-  // Create the browser window.
+function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1200,
     height: 650,
@@ -46,13 +22,13 @@ app.on('ready', function() {
     autoHideMenuBar: true,
     webgl: false,
     titleBarStyle: 'hidden-inset'
-  });
+  })
 
-  // and load the index.html of the app.
-  mainWindow.loadURL('file://' + __dirname + '/index.html');
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'index.html'),
+    protocol: 'file:',
+    slashes:  true
+  }))
 
   // --------------------------------------------------------
   // Global shortcuts
@@ -76,17 +52,25 @@ app.on('ready', function() {
   // Update the focus state of the main window.
   mainWindow.on('blur', function() {
     mainWindow.webContents.send('focus', false);
-  });
+  })
 
   mainWindow.on('focus', function() {
     mainWindow.webContents.send('focus', true);
-  });
+  })
 
-  // Emitted when the window is closed.
-  mainWindow.on('closed', function() {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    mainWindow = null;
-  });
-});
+  mainWindow.on('closed', function () {
+    mainWindow = null
+  })
+}
+
+app.on('ready', createWindow)
+
+app.on('window-all-closed', function () {
+  if (process.platform !== 'darwin')
+    app.quit()
+})
+
+app.on('activate', function () {
+  if (mainWindow === null)
+    createWindow()
+})

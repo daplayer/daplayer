@@ -28,4 +28,23 @@ module.exports = class Application {
       $(document).ready(on_ready);
     });
   }
+
+  /**
+   * Makes sure that we have the necessary files created when
+   * we run the application (e.g. for the first time or if
+   * the user accidentally deleted the "cache" folder).
+   *
+   * @return {null}
+   */
+  static ensurePathsExist() {
+    const Paths = require('./paths')
+
+    Paths.to_make.forEach((folder) => {
+      if (!Paths.exists(folder))
+        Paths.mkdir(folder);
+    })
+
+    if (!Paths.exists('youtube_history'))
+      Paths.touchYouTubeHistory()
+  }
 }
