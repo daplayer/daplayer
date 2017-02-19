@@ -107,7 +107,7 @@ Application.boot(function() {
   // --------------------------------------------------------
   // > Focus state of the main window.
   ipcRenderer.on('focus', function(event, emmited) {
-    Cache.focus = emmited;
+    Application.focused = emmited;
   });
 
   // --------------------------------------------------------

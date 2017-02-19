@@ -21,6 +21,10 @@ module.exports = class Application {
       I18n.load(Config.meta.locale),
       Service.for('youtube').connect()
     ]).then(() => {
+      // By default we assume that the player's window
+      // is the focused one.
+      this.focused = true;
+
       $(document).ready(on_ready);
     });
   }

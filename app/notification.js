@@ -10,7 +10,7 @@ module.exports = class Notification {
     // parameter is set to true, then we should rather show
     // a native notification to alert the user as they won't
     // see it otherwise.
-    if (outer && !Cache.focus)
+    if (outer && !Application.focused)
       return new NativeNotification(hash.action, {
         body: hash.title,
         icon: hash.icon
