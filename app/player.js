@@ -13,27 +13,13 @@ const LocalPlayer      = require('../local/player');
  */
 module.exports = class Player {
   /**
-   * Initializes all the necessary elements for audio analysis.
-   * These ones should be instantiated just once.
+   * Initializes all the necessary elements.
    *
    * @return {null}
    */
   static initialize() {
-    this.context  = new AudioContext();
-    this.analyser = this.context.createAnalyser();
-
     this.audio = new Audio();
     this.video = document.querySelector('video');
-
-    this.audio_source = this.context.createMediaElementSource(this.audio);
-    this.video_source = this.context.createMediaElementSource(this.video);
-
-    this.video_source.connect(this.analyser);
-    this.audio_source.connect(this.analyser);
-
-    this.analyser.connect(this.context.destination);
-
-    this.analyser.fftSize = 128;
   }
 
   /**
@@ -189,8 +175,6 @@ module.exports = class Player {
       return;
 
     this.media.pause();
-
-    Ui.Player.pauseEqualizer();
     Ui.Player.playButton();
   }
 
@@ -266,23 +250,6 @@ module.exports = class Player {
     Ui.Player.currentSetMode(Queue.mode, mode);
 
     Queue.mode == mode ? Queue.setMode(null) : Queue.setMode(mode);
-  }
-
-  /**
-   * Returns a random value from the array returned by the
-   * audio context's `getByteFrequencyData` method.
-   *
-   * This method is used to give an idea of the height of
-   * the equalizer bars.
-   *
-   * @return {Float}
-   */
-  static sample() {
-    var dataArray = new Uint8Array(this.analyser.frequencyBinCount);
-
-    this.analyser.getByteFrequencyData(dataArray);
-
-    return dataArray[Math.floor(Math.random() * (dataArray.length / 2))] / 256;
   }
 
   /**

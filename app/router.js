@@ -31,13 +31,19 @@ module.exports = class Router {
       return href.split("/").last();
   }
 
+  /**
+   * Reversed method of `to` expect for `local/artist` which is
+   * just special cased to make sure that the play icon is shown
+   * at the right place to specify the currently playing action.
+   *
+   * soundcloud/{activities,tracks} => soundcloud/stream
+   * local/artist                   => local/artists
+   *
+   * @param  {String} module
+   * @param  {String} action
+   * @return {String}
+   */
   static from(module, action) {
-    // Reversed method of `to` expect for `local/artist` which is
-    // just special cased to make sure that the equalizer is shown
-    // at the right place:
-    //
-    // * soundcloud/{activities,tracks} => soundcloud/stream
-    // * local/artist                   => local/artists
     if (module == 'soundcloud' && ['activities', 'tracks'].includes(action))
       return 'soundcloud/stream';
     else if (module == 'local' && action == 'artist')

@@ -41,14 +41,6 @@ module.exports = class YouTubePlayer {
       Player.playNext();
     }
 
-    media.onplay = function() {
-      Ui.Player.startEqualizer();
-    }
-
-    media.onpause = function() {
-      Ui.Player.pauseEqualizer();
-    }
-
     media.onprogress = function() {
       if (this.buffered.length > 0) {
         var time = this.buffered.end(this.buffered.length - 1);
@@ -58,12 +50,8 @@ module.exports = class YouTubePlayer {
         // Pretty hacky but if the video's stalled and the loader
         // is present, we can try to see if there's enough data
         // loaded to play the audio.
-        if (time - this.currentTime > 1) {
+        if (time - this.currentTime > 1)
           Ui.Player.hideLoader();
-
-          if (!this.paused)
-            Ui.Player.startEqualizer();
-        }
       }
     }
 
@@ -76,7 +64,6 @@ module.exports = class YouTubePlayer {
         return;
 
       Ui.Player.showLoader();
-      Ui.Player.pauseEqualizer();
     }
   }
 

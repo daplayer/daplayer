@@ -81,7 +81,7 @@ module.exports = class UiPlayer {
    * @return {null}
    */
   static setupInterface() {
-    this.showEqualizer();
+    this.specifyPlayingLocation()
 
     Queue.previous().then((record) => {
       if (record) {
@@ -129,6 +129,21 @@ module.exports = class UiPlayer {
 
     this.playing_details.title(this.record.title);
     this.playing_details.artist(this.record.artist, this.record.isLocal());
+  }
+
+  static specifyPlayingLocation() {
+    var {module, action} = Cache.current
+
+    var current = $('.sidebar .glyphicon-play').parents("a")
+    var future  = $(`.sidebar a[href="${Router.from(module, action)}"]`)
+
+    if (current[0] == future[0])
+      return
+
+    if (current)
+      current.find('.glyphicon-play').remove()
+
+    future.append(Html.tag('div', {class: 'right'}, Html.glyphicon('play')))
   }
 
   /**
@@ -279,57 +294,6 @@ module.exports = class UiPlayer {
   static hideLoader() {
     this.loading_shadow.empty('');
     this.loading_shadow.fadeOut(200);
-  }
-
-  /**
-   * Shows an animated equalizer on the current playing action's
-   * link in the sidebar. Basically creates the element.
-   *
-   * @return {null}
-   */
-  static showEqualizer() {
-    var module  = Cache.playing.module;
-    var action  = Cache.playing.action;
-
-    var current = $(`.equalizer`).parents("a");
-    var future  = $(`a[href="${Router.from(module, action)}"]`);
-
-    // Do nothing if the current track is played through the
-    // same action.
-    if (current[0] == future[0])
-      return;
-
-    // Clear current equalizer
-    if (current)
-      current.find('.equalizer').remove();
-
-    future.append(`<div class="equalizer">
-                    <div class="rect1"></div>
-                    <div class="rect2"></div>
-                    <div class="rect3"></div>
-                  </div>`);
-  }
-
-  /**
-   * Starts the animation of the different bars of the equalizer.
-   *
-   * @return {null}
-   */
-  static startEqualizer() {
-    $('.equalizer .rect1').animateHeight();
-    $('.equalizer .rect2').animateHeight();
-    $('.equalizer .rect3').animateHeight();
-  }
-
-  /**
-   * Pauses the animation of the equalizer.
-   *
-   * @return {null}
-   */
-  static pauseEqualizer() {
-    $('.equalizer .rect1').stop(true);
-    $('.equalizer .rect2').stop(true);
-    $('.equalizer .rect3').stop(true);
   }
 
   /**
