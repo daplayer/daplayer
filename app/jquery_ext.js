@@ -84,20 +84,3 @@ $.fn.slideOut = function() {
     self.remove();
   });
 }
-
-/**
- * Function that animates an element's height
- * randomly picking a value from the frequency
- * data extracted.
- *
- * @return {null}
- */
-$.fn.animateHeight = function() {
-  var sample = Math.max(Player.sample(), 0.1);
-
-  this.animate({
-    height: sample * 100 + "%"
-  }, 250, () => {
-    this.animateHeight();
-  });
-}
