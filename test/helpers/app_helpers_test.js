@@ -2,6 +2,10 @@ require('../test_helper');
 require('../../app/helpers');
 
 describe('Application helpers', () => {
+  before(() => {
+    I18n.load('en')
+  })
+
   describe('#g', () => {
     it('should generate a Glyphicon span', () => {
       var output = Handlebars.helpers.g('foo');
@@ -13,8 +17,6 @@ describe('Application helpers', () => {
 
   describe('#t', () => {
     it('should delegate to the translation module', () => {
-      I18n.load('en');
-
       var output = Handlebars.helpers.t('meta.history');
 
       assert.equal(output, 'History');
@@ -23,8 +25,6 @@ describe('Application helpers', () => {
 
   describe('#interpolate', () => {
     it('should delegate to the i18n module passing the current scope', () => {
-      I18n.load('en');
-
       var context = { current: 10, total: 100 };
       var output  = Handlebars.helpers.interpolate('local.feedback.progress', {
         data: { root: context }
@@ -33,4 +33,20 @@ describe('Application helpers', () => {
       assert.equal(output.string, '10 files processed out of 100.');
     });
   });
+
+  describe('pluralize', () => {
+    it('should delegate to the i18n module', () => {
+      var output = Handlebars.helpers.pluralize(10, 'album')
+
+      assert.equal(output, '10 albums')
+    })
+  })
+
+  describe('titleize', () => {
+    it('should delegate to the i18n module', () => {
+      var output = Handlebars.helpers.titleize('album')
+
+      assert.equal(output, 'Album')
+    })
+  })
 });
