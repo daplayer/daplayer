@@ -44,4 +44,45 @@ describe('Activity', () => {
       });
     });
   });
+
+  describe('icon', () => {
+    it('should return an icon based on the type of activity', () => {
+      var mapping = {
+        'track-repost':    'retweet',
+        'playlist-repost': 'retweet',
+        'track':           'music',
+        'playlist':        'list',
+      }
+
+      Object.keys(mapping).forEach(key => {
+        var activity = new Activity({track: {}, type: key, user: {}})
+        var icon     = activity.icon()
+
+        assert.include(icon, 'glyphicon ')
+        assert.include(icon, `glyphicon-${mapping[key]}`)
+      })
+    })
+  })
+
+  describe('description', () => {
+    beforeEach(() => {
+      I18n.load('en')
+    })
+
+    it('should return a translated message with the proper information', () => {
+      var types = ['track-repost', 'playlist-repost', 'track', 'playlist']
+
+      types.forEach(type => {
+        var activity = new Activity({
+          track: { title: 'FKJ - Skyline', user: { username: 'FKJ' }},
+          user: { username: 'Darius', avatar_url: 'foo.png' },
+          type: type
+        })
+        var description = activity.description().string
+
+        assert.include(description, '<img src="foo.png">')
+        assert.include(description, I18n.t(`sc.activities.${type}`, { user: 'Darius'}))
+      })
+    })
+  })
 });

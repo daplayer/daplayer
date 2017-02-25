@@ -65,6 +65,5 @@ global.Context  = require('./models/context');
 
 // ----------------------------------------------
 // Helpers stack
-require('../soundcloud/helpers');
 require('../meta/helpers');
 require('../app/helpers');
