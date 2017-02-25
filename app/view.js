@@ -70,10 +70,12 @@ module.exports = class View {
    * a Handlebars safe string.
    *
    * @param  {String} location - The partial's location.
-   * @param  {Object} context  - The context for rendering.
-   * @return {Handlebars.SafeString}
+   * @param  {String} name     - The helper's name.
+   * @return {null}
    */
-  static partial(location, context) {
-    return new Handlebars.SafeString(this.compile(location)(context));
+  static registerPartial(location, name) {
+    Handlebars.registerHelper(name, context => {
+      return new Handlebars.SafeString(View.compile(location)(context))
+    })
   }
 }

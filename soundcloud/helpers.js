@@ -1,11 +1,5 @@
 'use strict';
 
-Handlebars.registerHelper('soundcloud_music_bar', function(record) {
-  var template = View.compile('soundcloud/partials/music_bar');
-
-  return new Handlebars.SafeString(template(record));
-});
-
 Handlebars.registerHelper('soundcloud_activity_icon', function(type) {
   var mapping = {
     'track-repost':    'retweet',

@@ -23,11 +23,12 @@ global.Handlebars = require('handlebars');
 
 global.I18n = require('daplayer-i18n');
 
-global.Config = require('../app/config');
-global.Cache  = require('../app/cache');
-global.Html   = require('../app/html');
-global.Timing = require('../app/timing');
-global.Paths  = require('../app/paths');
+global.Config = require('../app/config')
+global.Cache  = require('../app/cache')
+global.Html   = require('../app/html')
+global.Timing = require('../app/timing')
+global.Paths  = require('../app/paths')
+global.View   = require('../app/view')
 
 global.Record   = require('../app/models/record');
 global.Playlist = require('../app/models/playlist');

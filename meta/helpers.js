@@ -45,27 +45,3 @@ Handlebars.registerHelper('input', function(id, section, path_selector) {
 
   return new Handlebars.SafeString(html);
 });
-
-// --------------------------------------------------------
-// Shared helpers
-Handlebars.registerHelper('set_box', function(set) {
-  return View.partial('meta/partials/set_box', set);
-});
-
-Handlebars.registerHelper('set_item', function(item) {
-  return View.partial('meta/partials/set_item', item);
-});
-
-Handlebars.registerHelper('playlist_option', function(playlist) {
-  return View.partial('meta/partials/playlist_option', playlist);
-});
-
-Handlebars.registerHelper('media_box', function(media) {
-  return View.partial('meta/partials/media_box', media);
-});
-
-// --------------------------------------------------------
-// Helpers for meta controller's actions
-Handlebars.registerHelper('download_box', function(media) {
-  return View.partial('meta/partials/download_box', media);
-});

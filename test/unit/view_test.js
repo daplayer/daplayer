@@ -2,8 +2,6 @@
 
 require('../test_helper');
 
-const View = require('../../app/view');
-
 describe('View', () => {
   describe('#compile', () => {
     before(() => {
@@ -27,17 +25,22 @@ describe('View', () => {
     });
   });
 
-  describe('#partial', () => {
+  describe('registerPartial', () => {
     beforeEach(() => {
-      Cache.templates.foo = (context) => { return context };
+      Cache['templates']['foo'] = (context) => { return context }
+      View.registerPartial('foo', 'bar')
     });
+
+    it('should define the Handlebars helper', () => {
+      assert.equal(typeof Handlebars.helpers.bar, 'function')
+    })
 
     it('should return a Handlebars.SafeString instance', () => {
-      assert(View.partial('foo') instanceof Handlebars.SafeString);
-    });
+      assert(Handlebars.helpers.bar('baz') instanceof Handlebars.SafeString);
+    })
 
-    it('should compile the template', () => {
-      assert.equal(View.partial('foo', 'bar').string, 'bar');
+    it('should properly compile the template', () => {
+      assert.equal(Handlebars.helpers.bar('baz').string, 'baz');
     })
   });
 });
