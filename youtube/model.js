@@ -1,7 +1,7 @@
 'use strict';
 
 const YT         = require('./client');
-const LocalModel = require('../local/models/playlists');
+const LocalModel = require('../local/model');
 
 module.exports = class YouTubeModel {
   static history() {

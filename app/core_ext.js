@@ -139,24 +139,3 @@ String.prototype.dasherize = function() {
  * unable to remember that I'm not writing Ruby. :-)
  */
 String.prototype.downcase = String.prototype.toLowerCase;
-
-/**
- * Mixes-in a class inside another one.
- *
- * This one is not defined through `Object.prototype` since
- * we cannot pollute this scope otherwise jQuery is bugged.
- *
- * @param  {Object} object   - The object to mix functions in.
- * @param  {String} location - The path to load the file containing
- *                             the functions that will be mixed in.
- * @return {null}
- */
-global.include = function(object, location) {
-  var klass = require(location);
-
-  Object.getOwnPropertyNames(klass)
-    .filter(func => typeof klass[func] === "function")
-    .forEach((func) => {
-      object[func] = klass[func];
-    });
-}
