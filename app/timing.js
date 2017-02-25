@@ -9,9 +9,6 @@ module.exports = class Timing {
    * Converts the given number of seconds to a human readable
    * string like "hours:minutes:seconds".
    *
-   * If given a string, consider that we are dealing with a
-   * YouTube duration in the ISO 8601 format.
-   *
    * @param  {Number} duration - The number of seconds.
    * @return {String}
    */
