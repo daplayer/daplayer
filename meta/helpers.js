@@ -64,10 +64,6 @@ Handlebars.registerHelper('media_box', function(media) {
   return View.partial('meta/partials/media_box', media);
 });
 
-Handlebars.registerHelper('media_details', function(media) {
-  return View.partial('meta/partials/media_details', media);
-});
-
 // --------------------------------------------------------
 // Helpers for meta controller's actions
 Handlebars.registerHelper('download_box', function(media) {

@@ -238,8 +238,8 @@ module.exports = class UiPlayer {
     this.playing_set_items.html('');
 
     set.items.forEach((item) => {
-      this.playing_set_items.append(Handlebars.helpers.media_details(item).string);
-    });
+      this.playing_set_items.append(View.compile('app/partials/media_details')(item))
+    })
   }
 
   /**
