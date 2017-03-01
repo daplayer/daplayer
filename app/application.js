@@ -18,8 +18,7 @@ module.exports = class Application {
     return Promise.all([
       Cache.initialize(),
       Player.initialize(),
-      I18n.load(Config.meta.locale),
-      Service.for('youtube').connect()
+      I18n.load(Config.meta.locale)
     ]).then(() => {
       // By default we assume that the player's window
       // is the focused one.
