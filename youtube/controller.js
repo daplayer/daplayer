@@ -37,7 +37,7 @@ module.exports = class YouTubeController extends BaseController {
 
   static searchResults() {
     return Service.for('youtube').search().then((results) => {
-      this.render('youtube/search_results', results);
+      return this.render('youtube/search_results', results)
     });
   }
 }

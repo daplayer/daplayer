@@ -96,23 +96,21 @@ module.exports = class YouTubeModel {
    * @return {Promise}
    */
   static netSearch(value) {
-    return new Promise((resolve, reject) => {
-      return YT.search(value).then((results) => {
-        var ids = results.items.map(item => item.id.videoId);
+    return YT.search(value).then((results) => {
+      var ids = results.items.map(item => item.id.videoId)
 
-        return YT.fetch('videos', { id: ids.join(",") }, (data) => {
-          var hash = {
-            collection: data.items.map(result => Media.youtube(result)),
-            next_token: results.next_token,
-            net:        true
-          };
+      return YT.fetch('videos', { id: ids.join(",") }).then((data) => {
+        var hash = {
+          collection: data.items.map(result => Media.youtube(result)),
+          next_token: results.next_token,
+          net:        true
+        }
 
-          Cache.add('youtube', 'search_results', hash);
+        Cache.add('youtube', 'search_results', hash)
 
-          resolve(hash);
-        });
-      });
-    });
+        return hash
+      })
+    })
   }
 
   /**
