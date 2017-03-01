@@ -259,7 +259,7 @@ module.exports = class YT {
    * @return {Promise}
    */
   static search(query) {
-    return this.fetch('search', { q: query, part: 'snippet' })
+    return this.fetchWithLimit('search', { q: query, part: 'snippet' })
   }
 
   /**
