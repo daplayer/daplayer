@@ -61,7 +61,7 @@ Application.boot(function() {
         return;
 
       Cache.search = { query: $(this).val() };
-      Controller.for(module).searchResults();
+      Ui.render(`${module}/search_results`)
     }
   });
 
