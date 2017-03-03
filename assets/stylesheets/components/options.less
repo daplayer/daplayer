@@ -19,3 +19,12 @@ li.music, li.video {
     float: left;
   }
 }
+
+// Make sure that the option icons aren't out of the
+// box for video items as the line height is much bigger
+// and also make sure that flat_buttons are in the middle
+// of the line.
+li.video .options {
+  margin-top: 14px;
+  line-height: @li-music-height;
+}
