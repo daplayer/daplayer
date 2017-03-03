@@ -21,24 +21,19 @@
   }
 }
 
-.tiny_button {
+.flat_button {
   background: @thiner-grey;
   border: 1px solid @grey;
   border-radius: 3px;
+  color: @base-color;
   cursor: pointer;
   display: inline-block;
   height: 20px;
-  width: 20px;
+  width: auto;
   padding: 7px 10px;
 
   &:hover {
     background: @grey;
     border: 1px solid darken(@grey, 3%);
   }
-}
-
-.flat_button {
-  .tiny_button();
-  color: @base-color;
-  width: auto;
 }
