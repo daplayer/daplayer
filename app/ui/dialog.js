@@ -24,7 +24,7 @@ module.exports = class UiDialog {
 
     this.box.addClass(service);
 
-    this.box.html(View.partial(location, context).string);
+    this.box.html(View.compile(location)(context))
 
     if ($('.video.player').is(':visible'))
       $('.video.player').hide();
@@ -80,7 +80,7 @@ module.exports = class UiDialog {
   }
 
   static addToPlaylist(context) {
-    this.show('meta', 'add_to_playlist', context);
+    this.show('app', 'add_to_playlist', context);
     this.box.addClass('add_to_playlist');
   }
 

@@ -49,12 +49,15 @@ $('.dialog').on('keydown', '#new_playlist', function(e) {
     Model.for(service).createPlaylist(title).then((playlist) => {
       $(this).val('');
 
-      // Create the new option
-      $('.dialog .items ul:visible').append(View.partial('meta/partials/playlist_option', {
+      let partial_path = 'app/partials/playlist_option'
+      let context      = {
         title:   title,
         service: service,
         id:      playlist.id
-      }).string);
+      }
+
+      // Create the new option
+      $('.dialog .items ul:visible').append(View.compile(partial_path)(context))
     });
   }
 });
