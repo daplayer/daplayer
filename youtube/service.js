@@ -265,7 +265,7 @@ module.exports = class YouTubeService extends NetService {
           if (error)
             reject(error);
 
-          var fname = jscode.match(/\.set\("signature",(.*?)\(/)[1];
+          var fname = jscode.match(/\.set\("signature",([a-z]*)\(/)[1];
           var pos   = jscode.indexOf(fname + "=function");
           var fbody = '', protoype = '';
 
