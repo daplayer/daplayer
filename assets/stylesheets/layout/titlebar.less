@@ -44,33 +44,38 @@
   }
 
   .search-form {
-    background: @light-grey;
-    border: 1px solid darken(@light-grey, 10%);
-    border-radius: 2px;
     float: left;
-    height: 25px;
-    width: 200px;
-    padding: 2px 5px;
     margin: 5px 10px;
+    position: relative;
 
     .glyphicon {
       color: @light-purple-grey;
       float: left;
-      margin: 4px 7px 0 0;
+      height: 5px;
+      position: absolute;
+      left: 6px;
+      top: 8px;
     }
 
     input[type="text"] {
       background: @light-grey;
+      border: 1px solid darken(@light-grey, 10%);
+      border-radius: 2px;
       color: darken(@light-purple-grey, 10%);
       display: block;
-      height: 100%;
-      width: 170px;
-      border: 0;
-      padding: 0;
+      height: 25px;
+      width: 165px;
       margin: 0;
+      overflow: hidden;
+      padding: 2px 5px 2px 30px;
+      transition : border 300ms ease-out;
 
       &::-webkit-input-placeholder {
         color: @light-purple-grey;
+      }
+
+      &:focus {
+        border-color: darken(@light-purple-grey, 10%);
       }
     }
   }
