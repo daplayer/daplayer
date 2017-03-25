@@ -55,15 +55,15 @@ module.exports = class Ui {
    * placeholders that are waiting some contents to be
    * loaded (e.g. sidebar).
    *
-   * @param  {Bool=} only_sidebar - Whether to reload only the
-   *                                sidebar or not.
+   * @param  {Bool=} text_only - Whether to load partials
+   *                             with text or all of them.
    * @return {null}
    */
-  static loadPartials(only_sidebar) {
+  static loadPartials(text_only) {
     $('.sidebar').html(View.compile('app/sidebar')());
+    $('.titlebar').html(View.compile('app/titlebar')());
 
-    if (!only_sidebar) {
-      $('.titlebar').html(View.compile('app/titlebar'));
+    if (!text_only) {
       $('.main.player').html(View.compile('app/player')());
       $('.video.player .controls').html(View.compile('app/video_controls')());
       $('.player .duration').html(View.compile('app/duration')());
