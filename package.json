@@ -1,12 +1,12 @@
 {
   "dependencies": {
-    "electron":         "^1.4.3",
+    "electron":         "^1.6.1",
     "handlebars":       "^4.0.5",
     "jquery":           "^2.2.0",
     "glob":             "^7.1.1",
     "less":             "^2.7.1",
-    "daplayer-i18n":    "git://github.com/daplayer/i18n.git#master",
-    "daplayer-tagging": "git://github.com/daplayer/tagging.git#master"
+    "daplayer-i18n":    "git+https://github.com/daplayer/i18n.git#master",
+    "daplayer-tagging": "git+https://github.com/daplayer/tagging.git#master"
   },
   "devDependencies": {
     "electron-rebuild": "^1.2.0",
@@ -18,7 +18,7 @@
     "less": "lessc",
     "mocha": "mocha",
     "start": "electron main.js",
-    "rebuild": "electron-rebuild"
+    "rebuild": "electron-rebuild -f -w daplayer-tagging"
   },
   "main": "main.js",
   "productName": "DaPlayer",
