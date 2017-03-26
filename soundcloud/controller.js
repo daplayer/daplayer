@@ -46,7 +46,7 @@ module.exports = class SoundCloudController extends BaseController {
   }
 
   static connection() {
-    return this.render('soundcloud/connection');
+    return this.render('soundcloud/connection', {});
   }
 
   static get service() {

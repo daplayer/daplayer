@@ -40,4 +40,12 @@ module.exports = class YouTubeController extends BaseController {
       return this.render('youtube/search_results', results)
     });
   }
+
+  static connection() {
+    return this.render('youtube/connection', {});
+  }
+
+  static get service() {
+    return Service.for('youtube');
+  }
 }
