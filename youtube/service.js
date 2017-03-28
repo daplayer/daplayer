@@ -292,7 +292,7 @@ module.exports = class YouTubeService extends NetService {
           var parameters = protoype.split(/,\s?/);
               parameters = new RegExp('^' + parameters.join('\\.|') + '\\.');
 
-          var inner_obj = fbody.match(/\w+\.\w+/g).find(e => !e.match(parameters));
+          var inner_obj = fbody.match(/\$?\w+\.\w+/g).find(e => !e.match(parameters));
               inner_obj = inner_obj.split('.').first();
 
           // Copy the code of the inner object.
