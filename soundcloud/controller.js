@@ -1,6 +1,7 @@
 'use strict';
 
-const SoundCloudModel = require('./model');
+const BaseController  = require('../app/base/controller')
+const SoundCloudModel = require('./model')
 
 module.exports = class SoundCloudController extends BaseController {
   static activities(token) {

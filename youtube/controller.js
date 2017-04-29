@@ -1,6 +1,7 @@
 'use strict';
 
-const YouTubeModel = require('./model');
+const BaseController = require('../app/base/controller')
+const YouTubeModel   = require('./model')
 
 module.exports = class YouTubeController extends BaseController {
   static playlists(token) {

@@ -1,5 +1,7 @@
 'use strict';
 
+const BaseController = require('../app/base/controller');
+
 module.exports = class MetaController extends BaseController {
   static index() {
     return this.render('meta/index', {});

@@ -1,6 +1,7 @@
 'use strict';
 
-const LocalModel = require('./model');
+const BaseController = require('../app/base/controller')
+const LocalModel     = require('./model')
 
 module.exports = class LocalController extends BaseController {
   static singles() {
