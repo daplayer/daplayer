@@ -62,12 +62,15 @@ div.music.box {
   width:  @div-music-width;
   margin-right: 0px;
 
-  .caption, .options {
+  .caption {
     width: @div-music-width - 5px;
     overflow: hidden;
   }
 
-  .options { left: @div-music-width; }
+  .options {
+    left: @div-music-width;
+    width: @div-music-width - 40px;
+  }
 }
 
 div.music.bar {
