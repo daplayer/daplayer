@@ -9,6 +9,7 @@
     "daplayer-tagging": "git+https://github.com/daplayer/tagging.git#master"
   },
   "devDependencies": {
+    "electron-packager": "^8.6.0",
     "electron-rebuild": "^1.2.0",
     "mocha": "*",
     "spectron": "*",
