@@ -131,7 +131,7 @@ module.exports = class SoundCloudModel {
         else
           var collection = result.collection.map(e => e.item)
                                  .filter(e => e instanceof Playlist)
-                                 .filter(p => p.track_count > 10)
+                                 .filter(p => p.track_count > 5)
 
         var collections = collection.map((playlist) => {
           return this.fetch(playlist.uri, null, playlist.track_count)
