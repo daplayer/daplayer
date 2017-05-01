@@ -17,9 +17,10 @@
   },
   "scripts": {
     "less": "lessc",
-    "mocha": "mocha",
     "start": "electron main.js",
-    "rebuild": "electron-rebuild -f -w daplayer-tagging"
+    "rebuild": "electron-rebuild -f -w daplayer-tagging",
+    "test": "mocha test/{unit,models,helpers,views}/**/*_test.js",
+    "package": "electron-packager"
   },
   "main": "main.js",
   "productName": "DaPlayer",

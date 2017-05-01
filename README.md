@@ -13,7 +13,8 @@ have [Yarn](https://yarnpkg.com/) installed and then, you are done with:
 ~~~
 $ git clone https://github.com/daplayer/daplayer
 $ cd daplayer
-$ make install
+$ yarn
+$ yarn rebuild
 $ yarn start
 ~~~
 
