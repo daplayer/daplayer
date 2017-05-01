@@ -42,7 +42,11 @@ module.exports = class Activity {
    * @return {Handlebars.SafeString}
    */
   description() {
-    var img  = Html.tag('img', {src: this.origin.avatar_url.size('tiny')});
+    var img  = Html.tag('div', {
+      style: "background-image: url(" + this.origin.avatar_url.size('small') + ")",
+      class: 'image'
+    }, ' ')
+
     var desc = I18n.t('sc.activities.' + this.type, {
       user: this.origin.username
     });

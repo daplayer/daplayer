@@ -79,6 +79,9 @@ module.exports = class Media extends Record {
     media.waveform_url = hash.waveform_url;
     media.duration     = hash.duration * Math.pow(10, -3);
 
+    media.reposts   = hash.reposts_count
+    media.playbacks = hash.playback_count
+
     if (set)
       media.set = set;
 

@@ -116,7 +116,9 @@ describe('Media', () => {
       permalink_url: 'http://foo/bar',
       user: {
         username: 'Casseurs Flowteurs'
-      }
+      },
+      playback_count: 200,
+      reposts_count: 100
     };
 
     var media = Media.soundcloud(hash);
@@ -127,6 +129,9 @@ describe('Media', () => {
       assert.equal(media.tags,   hash.tag_list);
       assert.equal(media._url,   hash.permalink_url);
       assert.equal(media.genre,  hash.genre);
+
+      assert.equal(media.reposts, hash.reposts_count)
+      assert.equal(media.playbacks, hash.playback_count)
     });
 
     it('should pick the right icon dimension', () => {

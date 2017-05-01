@@ -80,7 +80,8 @@ describe('Activity', () => {
         })
         var description = activity.description().string
 
-        assert.include(description, '<img src="foo.png">')
+        assert.include(description, 'style="background-image: url(foo.png)"')
+        assert.include(description, 'class="image"')
         assert.include(description, I18n.t(`sc.activities.${type}`, { user: 'Darius'}))
       })
     })
