@@ -36,12 +36,12 @@ module.exports = class Record {
     var context = Cache.current.context;
 
     if (playlist instanceof Playlist)
-      return playlist.items.find(i => i.id == id);
+      return playlist.items.find(i => i.id == id)
     else if (context.findById)
-      return context.findById(id, playlist);
+      return context.findById(id, playlist)
     else if (context.collection)
-      return context.collection.find(r => r.id == id);
+      return context.collection.find(r => r.id == id)
     else
-      return context.find(r => r.id == id);
+      return context.find(r => r.id == id)
   }
 }

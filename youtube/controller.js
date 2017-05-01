@@ -6,33 +6,25 @@ const YouTubeModel   = require('./model')
 module.exports = class YouTubeController extends BaseController {
   static playlists(token) {
     return YouTubeModel.playlists(token).then((page) => {
-      return this.render('youtube/playlists', {
-        playlists: page,
-        token: token
-      })
+      return this.render('youtube/playlists', page, token)
     })
   }
 
   static history() {
     return YouTubeModel.history().then((history) => {
-      return this.render('youtube/history', {
-        history: history
-      });
-    });
+      return this.render('youtube/history', history)
+    })
   }
 
   static likes(token) {
     return YouTubeModel.likes(token).then((page) => {
-      return this.render('youtube/likes', {
-        likes: page,
-        token: token
-      });
+      return this.render('youtube/likes', page, token)
     })
   }
 
   static playlistItems(id) {
     return YouTubeModel.playlistItems(id).then((playlist) => {
-      return this.render('youtube/playlist', playlist, id);
+      return this.render('youtube/playlist', playlist, null, id)
     });
   }
 

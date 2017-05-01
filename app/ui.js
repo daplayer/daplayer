@@ -130,11 +130,11 @@ module.exports = class Ui {
     // controller action.
     this.loading();
 
-    return controller[Router.to(href).camel()](param).then((context) => {
+    return controller[Router.to(href).camel()](param).then((token) => {
       // Hide the loader once the action is rendered.
       this.loaded();
 
-      if (!context.token) {
+      if (!token) {
         // Reset the current scroll
         $('.container').scrollTop(0);
 

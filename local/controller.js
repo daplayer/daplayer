@@ -6,31 +6,25 @@ const LocalModel     = require('./model')
 module.exports = class LocalController extends BaseController {
   static singles() {
     return LocalModel.singles().then((singles) => {
-      return this.render('local/singles', {
-        singles: singles,
-      });
+      return this.render('local/singles', singles)
     });
   }
 
   static artists() {
     return LocalModel.artists().then((artists) => {
-      return this.render('local/artists', {
-        artists: artists
-      })
+      return this.render('local/artists', artists)
     });
   }
 
   static artist(name) {
     return LocalModel.artist(name).then((artist) => {
-      return this.render('local/artist', artist, name);
+      return this.render('local/artist', artist, null, name);
     });
   }
 
   static playlists() {
     return LocalModel.playlists().then((playlists) => {
-      return this.render('local/playlists', {
-        playlists: playlists
-      });
+      return this.render('local/playlists', playlists)
     });
   }
 

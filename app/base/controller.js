@@ -12,17 +12,18 @@ module.exports = class BaseController {
    *
    * @param  {String}  view    - The view's path.
    * @param  {Object}  context - The view's context.
+   * @param  {String=} token   - An eventual token.
    * @param  {Object=} id      - An eventual attached id.
    * @return {Promise}
    */
-  static render(view, context, id) {
+  static render(view, context, token, id) {
     var [module, action] = view.split('/');
 
-    if (context instanceof Artist   || context instanceof Array ||
-        context instanceof Playlist || context.collection)
+    if (context instanceof Artist || context instanceof Array ||
+        context instanceof Playlist)
       var cached_context = context;
-    else
-      var cached_context = new Context(Cache[module][action]);
+    else if (Cache[module][action])
+      var cached_context = new Context(Cache[module][action].collection)
 
     // Define the current scope.
     Cache.current = {
@@ -35,12 +36,9 @@ module.exports = class BaseController {
     Ui.Menu.define(module, action);
 
     return new Promise((resolve, reject) => {
-      var token = context.token;
-      var meth  = token ? 'append' : 'render';
+      View[token ? 'append' : 'render'](view, context)
 
-      View[meth](view, context);
-
-      resolve(context);
+      resolve(token)
     });
   }
 }

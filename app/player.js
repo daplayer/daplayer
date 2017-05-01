@@ -59,9 +59,6 @@ module.exports = class Player {
    * @return {null}
    */
   static start(record) {
-    if (record instanceof Activity)
-      record = record.item;
-
     this.stop();
     this.record = record;
 
