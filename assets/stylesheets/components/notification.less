@@ -1,64 +1,62 @@
 .notifications {
-  overflow: hidden;
-  position: absolute;
+  position: fixed;
   right: 20px;
   top: @titlebar-height + 5px;
-  width: 300px;
   z-index: 500;
+  width: 300px;
+  padding: 5px 5px 5px 5px;
 
   .notification {
+    background: #AA92A1;
+    border: 1px solid fade(@dark-purple, 20%);
+    border-radius: 5px;
+    box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    color: white;
     cursor: pointer;
-    height: 65px;
+    display: none;
+    height: 70px;
+    width: 300px;
     margin-top: 10px;
+    padding: 5px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 
-    .box {
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 3px;
-      box-sizing: border-box;
-      height: 60px;
-      width: 300px;
-      margin: 0;
-      opacity: 0;
-      padding: 0;
-      position: absolute;
-      right: -300px;
+    .text {
+      font-size: 14px;
+      margin: 11px 0 0 10px;
+      width: 210px;
 
-      .text {
-        font-size: 14px;
-        margin: 11px 0 0 10px;
-        width: 210px;
-
-        .action, .title {
-          display: block;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
-
-        .action { font-weight: bold; }
+      .action, .title {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
-      .icon {
-        float: right;
-        height: 45px;
-        width: 45px;
-        margin: 7px 10px;
-        position: relative;
-        text-align: center;
+      .action { font-weight: bold; }
+    }
 
-        .glyphicon {
-          color: @smooth-purple;
-          line-height: 45px;
-          font-size: 30px;
-        }
+    .icon {
+      float: right;
+      height: 45px;
+      width: 45px;
+      margin: 7px 10px;
+      position: relative;
+      text-align: center;
 
-        img {
-          cursor: default;
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 100%;
-        }
+      .glyphicon {
+        color: @white;
+        line-height: 45px;
+        font-size: 30px;
+      }
+
+      img {
+        border: 1px solid fade(@dark-purple, 50%);
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
       }
     }
   }

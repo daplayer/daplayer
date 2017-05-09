@@ -18,31 +18,26 @@ module.exports = class Notification {
 
     var id = Timing.currentTimestamp();
 
-    var html = Html.tag('div', {class: 'notification', id: id}, () => {
-      return Html.tag('div', 'box', () => {
-        var icon = Html.tag('div', 'icon', () => {
-          if (hash.icon)
-            return Html.tag('img', { src: hash.icon });
-          else
-            return Html.glyphicon(hash.glyphicon);
-        });
+    var html = Html.tag('div', { class: 'notification', id: id }, () => {
+      var icon = Html.tag('div', 'icon', () => {
+        if (hash.icon)
+          return Html.tag('img', { src: hash.icon })
+        else
+          return Html.glyphicon(hash.glyphicon)
+      })
 
-        var text = Html.tag('div', 'text', () => {
-          return Html.tag('span', 'action', hash.action) +
-                 Html.tag('span', 'title', hash.title || ' ');
-        });
+      var text = Html.tag('div', 'text', () => {
+        return Html.tag('span', 'action', hash.action) +
+               Html.tag('span', 'title', hash.title || ' ')
+      })
 
-        return icon + text;
-      });
-    });
+      return icon + text
+    })
 
     $('.notifications').append(html);
-    $(`#${id} .box`).last().animate({
-      right:   0,
-      opacity: 1
-    }, 500);
+    $(`#${id}`).fadeIn(300)
 
     // Remove the notification after 3 seconds.
-    setTimeout(() => $(`#${id}`).slideOut(), 3000);
+    setTimeout(() => $(`#${id}`).fadeOut(300), 5000)
   }
 }

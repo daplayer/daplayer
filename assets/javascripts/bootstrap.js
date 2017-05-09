@@ -46,7 +46,7 @@ Application.boot(function() {
   // --------------------------------------------------------
   // > Handle clicks on notifications
   $('.notifications').on('click', '.notification', function(e) {
-    $(this).slideOut();
+    $(this).fadeOut(300)
   });
 
   // --------------------------------------------------------
