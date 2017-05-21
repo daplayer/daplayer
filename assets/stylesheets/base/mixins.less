@@ -1,13 +1,12 @@
-.scroll-bar(@thumb-color, @track-color) {
+.scroll-bar(@thumb-color, @border-color) {
   &::-webkit-scrollbar-track {
     border-bottom: 0px;
-    background: @track-color;
   }
 
   &::-webkit-scrollbar-thumb {
     background: @thumb-color;
-    border-radius: 5px;
-    border: 1px solid fade(@white, 90%);
+    border-radius: 20px;
+    border: 1px solid @border-color;
   }
 }
 
