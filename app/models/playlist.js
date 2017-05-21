@@ -26,6 +26,17 @@ module.exports = class Playlist extends Record {
     return this._item_count || this.items.length;
   }
 
+  /**
+   * Finds a record by a given id inside the playlist's
+   * items.
+   *
+   * @param  {String|Number} id - The item's id.
+   * @return {Media}
+   */
+  findById(id) {
+    return this.items.find(i => i.id == id);
+  }
+
   flatten() {
     return this.items;
   }

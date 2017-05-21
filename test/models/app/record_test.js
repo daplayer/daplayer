@@ -41,4 +41,21 @@ describe('Record', () => {
       assert.equal('5:40', record.human_time);
     });
   });
+
+  describe('#from', () => {
+    beforeEach(() => {
+      Cache.initialize()
+    })
+
+    describe('with a playlist as the context', () => {
+      it('should look for an item by its id', () => {
+        var playlist   = new Playlist()
+        playlist.items = [{ id: 'foo' }]
+
+        Cache.current.context = playlist
+
+        assert.equal(Record.from('foo').id, 'foo')
+      })
+    })
+  })
 });

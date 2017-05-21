@@ -42,6 +42,15 @@ describe('Playlist', () => {
     });
   });
 
+  describe('#findById', () => {
+    it('should look for an item with the given id', () => {
+      var playlist   = new Playlist()
+      playlist.items = [{ id: 'foo' }, { id: 'bar' }]
+
+      assert.equal(playlist.findById('bar').id, 'bar')
+    })
+  })
+
   describe('#item_count', () => {
     it('should pick the `_item_count` attribute if present', () => {
       var playlist = new Playlist();
