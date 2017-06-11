@@ -8,7 +8,7 @@ module.exports = class Queue {
     var context = Cache.playing.context;
 
     this.current = current;
-    this.queue   = context.flatten ? context.flatten() : context.collection;
+    this.queue   = context.flatten ? context.flatten() : (context.collection || context);
     this.history = [];
   }
 

@@ -29,6 +29,14 @@ describe('Queue', () => {
 
       assert.equal(Queue.mode, undefined);
     });
+
+    it('should pick the context as a collection if it is an array', () => {
+      Cache.playing.context = [1, 2, 3]
+
+      Queue.start()
+
+      assert.deepEqual(Queue.queue, Cache.playing.context)
+    })
   });
 
   describe('#setMode', () => {
