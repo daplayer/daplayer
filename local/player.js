@@ -1,6 +1,8 @@
 'use strict';
 
-module.exports = class LocalPlayer {
+const BasePlayer = require('../app/base/player');
+
+module.exports = class LocalPlayer extends BasePlayer {
   /**
    * Sets the value of the different callbacks for an audio
    * element that is played through a local file.
@@ -9,13 +11,11 @@ module.exports = class LocalPlayer {
    * @return {null}
    */
   static callbacks(media) {
+    super.callbacks(media);
+
     media.ontimeupdate = function() {
       Ui.Player.progression(this.currentTime);
     };
-
-    media.onended = function() {
-      Player.playNext();
-    }
 
     media.oncanplay = function() {
       Ui.Player.buffered(this.duration);

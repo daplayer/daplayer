@@ -1,6 +1,8 @@
 'use strict';
 
-module.exports = class SoundCloudPlayer {
+const BasePlayer = require('../app/base/player');
+
+module.exports = class SoundCloudPlayer extends BasePlayer {
   /**
    * Sets the value of the different callbacks for an audio
    * element that is played through a SoundCloud.
@@ -9,12 +11,10 @@ module.exports = class SoundCloudPlayer {
    * @return {null}
    */
   static callbacks(media) {
+    super.callbacks(media);
+
     media.ontimeupdate = function() {
       Ui.Player.progression(this.currentTime);
-    }
-
-    media.onended = function() {
-      Player.playNext();
     }
 
     media.onprogress = function() {
