@@ -27,15 +27,7 @@ Application.boot(function() {
     var href = $(this).attr('href');
     var parent = $(this).parent();
 
-    // Clicking a link on the sidebar should remove the active
-    // class of the previous link and add it to the current one.
-    if (parent.hasClass('nav') || parent.hasClass('titlebar') || parent.hasClass('right'))
-      $('a.active').removeClass('active');
-
-    $(this).addClass('active');
-
-    if (parent.parent().hasClass('titlebar') && href != '#')
-      Router.setFavoriteRouteFor(href);
+    Ui.setCurrentAction(href, parent)
 
     if ($(this).data('id'))
       Ui.render(href, $(this).data('id'));
@@ -60,8 +52,11 @@ Application.boot(function() {
       if (module == 'meta' || $(this).val() == '')
         return;
 
+      var href = `${module}/search_results`
+
       Cache.search = { query: $(this).val() };
-      Ui.render(`${module}/search_results`)
+      Ui.setCurrentAction(href)
+      Ui.render(href)
     }
   });
 

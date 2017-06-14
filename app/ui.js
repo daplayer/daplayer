@@ -190,6 +190,29 @@ module.exports = class Ui {
   }
 
   /**
+   * Properly set the current item, both for the sidebar and the
+   * the titlebar in case it is displayed.
+   *
+   * @param  {String}  href - The path that's going to be loaded.
+   * @param  {jQuery=} parent - An eventual parent DOM element.
+   * @return {null}
+   */
+  static setCurrentAction(href, parent) {
+    var [module, action] = href.split('/')
+    var sidebar_href     = Router.from(module, action)
+
+    // Properly store the chosen tab in case the user is clicking
+    // on a titlebar link for future accesses.
+    if (parent && parent.parent().hasClass('titlebar') && href != '#')
+      Router.setFavoriteRouteFor(module, action)
+
+    Ui.Menu.define(module, action)
+
+    $('.sidebar a.active').removeClass('active')
+    $(`.sidebar a[href="${sidebar_href}"]`).addClass('active')
+  }
+
+  /**
    * Puts the media's URL in the clipboard.
    *
    * @param  {Number|String}   id  - The media's id.

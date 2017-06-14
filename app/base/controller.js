@@ -33,8 +33,6 @@ module.exports = class BaseController {
       id:      id
     };
 
-    Ui.Menu.define(module, action);
-
     return new Promise((resolve, reject) => {
       View[token ? 'append' : 'render'](view, context)
 
