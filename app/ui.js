@@ -104,10 +104,6 @@ module.exports = class Ui {
    * @return {Promise}
    */
   static render(href, param) {
-    // Links h-referencing just "#" are skipped
-    if (href == "#")
-      return;
-
     var [module, action] = href.split('/');
 
     // Handle function calls to services from links

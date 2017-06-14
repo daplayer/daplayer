@@ -21,15 +21,15 @@ $('.dialog').on('click', '.add_to_playlist.button', function(e) {
 });
 
 // Handle clicks on the filter links
-$('.dialog').on('click', 'nav a', function() {
+$('.dialog').on('click', 'nav li', function() {
   if ($(this).hasClass('active'))
     return;
 
-  $('.dialog .navbar a.active').removeClass('active');
+  $('.dialog .navbar li.active').removeClass('active')
   $(this).addClass('active');
 
-  var tohide = $('.dialog ul').not('.hidden');
-  var toshow = $('.dialog ul.hidden');
+  var tohide = $('.dialog .items ul').not('.hidden')
+  var toshow = $('.dialog .items ul.hidden')
 
   tohide.addClass('hidden').hide();
   toshow.removeClass('hidden').show();

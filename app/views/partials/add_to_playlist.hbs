@@ -1,17 +1,19 @@
 <h2>{{t 'add_to_playlist'}}</h2>
 
 <nav class="navbar">
-  {{#if soundcloud}}
-    <a href="#" class="active" data-service="soundcloud">{{g 'cloud'}} {{t 'sc.name'}}</a>
-  {{else if youtube}}
-    <a href="#" class="active" data-service="youtube">{{g 'film'}}  {{t 'yt.name'}}</a>
-  {{/if}}
+  <ul>
+    {{#if soundcloud}}
+      <li class="active" data-service="soundcloud">{{g 'cloud'}} {{t 'sc.name'}}</li>
+    {{else if youtube}}
+      <li class="active" data-service="youtube">{{g 'film'}} {{t 'yt.name'}}</li>
+    {{/if}}
 
-  {{#unless playlists.remote}}
-    <a href="#" class="active" data-service="local">{{g 'music'}} {{t 'local.name'}}</a>
-  {{else}}
-    <a href="#" data-service="local">{{g 'music'}} {{t 'local.name'}}</a>
-  {{/unless}}
+    {{#unless playlists.remote}}
+      <li class="active" data-service="local">{{g 'music'}} {{t 'local.name'}}</li>
+    {{else}}
+      <li data-service="local">{{g 'music'}} {{t 'local.name'}}</li>
+    {{/unless}}
+  </ul>
 </nav>
 
 <form>
