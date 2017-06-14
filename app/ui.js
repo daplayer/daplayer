@@ -91,13 +91,6 @@ module.exports = class Ui {
    * It also don't barely call the specified action; the h-ref
    * is first given to `Router.to` to match user's preferences.
    *
-   * ### Call to a specific service
-   *
-   * If the h-ref starts with a sharp (#) then it is considered
-   * as a call to a specific service class so just like for
-   * controller rendering, the service name and method are
-   * extracted from the h-ref and properly delegated.
-   *
    * @param  {String}  href  - The controller/action set
    *                           or the service/method one.
    * @param  {Object=} param - An eventual extra param.
@@ -105,10 +98,6 @@ module.exports = class Ui {
    */
   static render(href, param) {
     var [module, action] = href.split('/');
-
-    // Handle function calls to services from links
-    if (href.startsWith('#'))
-      return Service.for(module.slice(1))[action]();
 
     var controller = Controller.for(module);
 

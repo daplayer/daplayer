@@ -90,6 +90,12 @@ Application.boot(function() {
   require('./assets/javascripts/bootstrap/forms');
 
   // --------------------------------------------------------
+  // > Handle the different actions in the application.
+  $('.container').on('click', '[data-action]', function() {
+    Actions[$(this).data('action')]()
+  })
+
+  // --------------------------------------------------------
   // > Container event handlers
   //
   // Handle the loading of new resources: load new resources

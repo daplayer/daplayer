@@ -17,13 +17,13 @@
     <div class="clearer"></div>
 
     {{#unless soundcloud.connected}}
-      <a href="#soundcloud/signin" class="soundcloud">
+      <span data-action="soundCloudSignIn" class="button tiny">
         <img src="assets/images/icons/soundcloud.svg"> {{t 'sc.connect'}}
-      </a>
+      </span>
     {{else}}
-      <a href="#soundcloud/signout" class="button tiny">
+      <span data-action="soundCloudSignOut" class="button tiny">
         {{g 'remove'}} {{t 'sc.disconnect'}}
-      </a>
+      </span>
     {{/unless}}
   </div>
 
@@ -41,13 +41,13 @@
     {{radio '360' 'quality' 'quality.low'      'youtube'}}
 
     {{#unless youtube.connected}}
-      <a href="#youtube/signin" class="youtube">
+      <span data-action="youTubeSignIn" class="button tiny">
         <img src="assets/images/icons/youtube.svg"> {{t 'yt.connect'}}
-      </a>
+      </span>
     {{else}}
-      <a href="#youtube/signout" class="button tiny">
+      <span data-action="youTubeSignOut" class="button tiny">
         {{g 'remove'}} {{t 'yt.disconnect'}}
-      </a>
+      </span>
     {{/unless}}
   </div>
 
