@@ -15,7 +15,7 @@ Application.boot(function() {
 
   // --------------------------------------------------------
   // Load the index page
-  Application.controllers.meta.index();
+  Page.render('meta/index')
 
   // --------------------------------------------------------
   // Handle clicks on links
@@ -30,9 +30,9 @@ Application.boot(function() {
     Ui.setCurrentAction(href, parent)
 
     if ($(this).data('id'))
-      Ui.render(href, $(this).data('id'));
+      Page.render(href, $(this).data('id'))
     else
-      Ui.render(href);
+      Page.render(href)
   });
 
   // --------------------------------------------------------
@@ -102,7 +102,7 @@ Application.boot(function() {
   // when we are at the bottom of the page.
   $('.container').scroll(function() {
     if ($(this)[0].scrollHeight - $(this).scrollTop() == $(this).outerHeight())
-      Ui.loadNextRecords();
+      Page.loadNextRecords();
   });
 
   // --------------------------------------------------------

@@ -91,7 +91,7 @@ module.exports = class LocalService {
       // Then we change its tags on disk
       collection.forEach((id, index) => {
         if (feedback) {
-          Ui.loading('local.feedback.tagging', {
+          Page.loading('local.feedback.tagging', {
             current: index+1,
             total:   collection.length
           });

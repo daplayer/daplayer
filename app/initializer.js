@@ -38,6 +38,7 @@ global.FilePicker   = require('./file_picker');
 global.Timing       = require('./timing');
 global.Html         = require('./html');
 global.Notification = require('./notification');
+global.Page         = require('./page');
 global.Paths        = require('./paths');
 global.Player       = require('./player');
 global.Queue        = require('./queue');

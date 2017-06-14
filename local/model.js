@@ -14,7 +14,7 @@ module.exports = class LocalModel {
 
       child.on('message', (message) => {
         if (message instanceof Array)
-          return Ui.loading('local.feedback.progress', {
+          return Page.loading('local.feedback.progress', {
             current: message.first(),
             total:   message.last()
           })
