@@ -104,7 +104,7 @@ module.exports = class Ui {
     // Early return if we try to access a service that
     // the user isn't yet connected to.
     if (controller.service && !controller.service.isConnected())
-      return controller.connection();
+      return controller.signIn()
 
     // Clear out the content if we are trying to render
     // a new page.

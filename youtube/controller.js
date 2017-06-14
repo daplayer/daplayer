@@ -34,8 +34,8 @@ module.exports = class YouTubeController extends BaseController {
     });
   }
 
-  static connection() {
-    return this.render('youtube/connection', {});
+  static signIn() {
+    return this.render('youtube/sign_in', {})
   }
 
   static get service() {
