@@ -1,5 +1,10 @@
 'use strict';
 
+const SoundCloudController = require('../soundcloud/controller');
+const YouTubeController    = require('../youtube/controller');
+const LocalController      = require('../local/controller');
+const MetaController       = require('../meta/controller');
+
 /**
  * This class manages some application logic.
  */
@@ -9,6 +14,8 @@ module.exports = class Application {
    * before the application can properly boot-up (i.e.
    * register all its event handlers).
    *
+   * Also instantiates the different controllers to be able
+   * to render actions.
    *
    * @param  {Function} on_ready - The function to call once
    *                               the application is ready.
@@ -23,6 +30,15 @@ module.exports = class Application {
       // By default we assume that the player's window
       // is the focused one.
       this.focused = true;
+
+      // Instantiate all the different controllers to be able to
+      // render pages inside the application.
+      this.controllers = {
+        soundcloud: new SoundCloudController(),
+        youtube:    new YouTubeController(),
+        local:      new LocalController(),
+        meta:       new MetaController()
+      }
 
       $(document).ready(on_ready);
     });

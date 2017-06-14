@@ -4,41 +4,31 @@ const BaseController = require('../app/base/controller')
 const YouTubeModel   = require('./model')
 
 module.exports = class YouTubeController extends BaseController {
-  static playlists(token) {
-    return YouTubeModel.playlists(token).then((page) => {
-      return this.render('youtube/playlists', page, token)
-    })
+  constructor() {
+    super()
+
+    this.defineAction('history')
+    this.defineAction('playlists')
+    this.defineAction('likes')
+
+    this.defineSearchAction()
   }
 
-  static history() {
-    return YouTubeModel.history().then((history) => {
-      return this.render('youtube/history', history)
-    })
-  }
-
-  static likes(token) {
-    return YouTubeModel.likes(token).then((page) => {
-      return this.render('youtube/likes', page, token)
-    })
-  }
-
-  static playlistItems(id) {
+  playlistItems(id) {
     return YouTubeModel.playlistItems(id).then((playlist) => {
       return this.render('youtube/playlist', playlist, null, id)
     });
   }
 
-  static searchResults() {
-    return Service.for('youtube').search().then((results) => {
-      return this.render('youtube/search_results', results)
-    });
+  get module() {
+    return 'youtube'
   }
 
-  static signIn() {
-    return this.render('youtube/sign_in', {})
+  get model() {
+    return YouTubeModel
   }
 
-  static get service() {
-    return Service.for('youtube');
+  get authenticable() {
+    return true
   }
 }

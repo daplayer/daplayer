@@ -97,13 +97,14 @@ module.exports = class Ui {
    * @return {Promise}
    */
   static render(href, param) {
-    var [module, action] = href.split('/');
+    var [module, _] = href.split('/');
 
-    var controller = Controller.for(module);
+    var controller = Application.controllers[module]
+    var action     = Router.to(href).camel()
 
     // Early return if we try to access a service that
     // the user isn't yet connected to.
-    if (controller.service && !controller.service.isConnected())
+    if (controller.authenticable && !Service.for(module).isConnected())
       return controller.signIn()
 
     // Clear out the content if we are trying to render
@@ -115,7 +116,7 @@ module.exports = class Ui {
     // controller action.
     this.loading();
 
-    return controller[Router.to(href).camel()](param).then((token) => {
+    return controller[action](param).then((token) => {
       // Hide the loader once the action is rendered.
       this.loaded();
 

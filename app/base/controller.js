@@ -7,6 +7,30 @@
  * @abstract
  */
 module.exports = class BaseController {
+  constructor() {
+    if (this.authenticable) {
+      this.signIn = function() {
+        return this.render('soundcloud/sign_in', {})
+      }
+    }
+  }
+
+  defineAction(name) {
+    this[name] = function(token) {
+      return this.model[name](token).then((data) => {
+        return this.render(`${this.module}/${name}`, data, token)
+      })
+    }
+  }
+
+  defineSearchAction() {
+    this.searchResults = function() {
+      return Service.for(this.module).search().then((results) => {
+        return this.render(`${this.module}/search_results`, results)
+      });
+    }
+  }
+
   /**
    * Delegates to the given module's controller and action.
    *
@@ -16,7 +40,7 @@ module.exports = class BaseController {
    * @param  {Object=} id      - An eventual attached id.
    * @return {Promise}
    */
-  static render(view, context, token, id) {
+  render(view, context, token, id) {
     var [module, action] = view.split('/');
 
     if (context instanceof Artist || context instanceof Array ||

@@ -32,21 +32,3 @@ global.Service = class {
       return ArtistArtsService;
   }
 }
-
-const SoundCloudController = require('../soundcloud/controller');
-const YouTubeController = require('../youtube/controller');
-const LocalController = require('../local/controller');
-const MetaController = require('../meta/controller');
-
-global.Controller = class {
-  static for(service) {
-    if (service == 'soundcloud')
-      return SoundCloudController;
-    else if (service == 'youtube')
-      return YouTubeController;
-    else if (service == 'local')
-      return LocalController;
-    else if (service == 'meta')
-      return MetaController;
-  }
-}

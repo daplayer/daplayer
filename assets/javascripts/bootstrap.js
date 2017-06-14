@@ -15,7 +15,7 @@ Application.boot(function() {
 
   // --------------------------------------------------------
   // Load the index page
-  Controller.for('meta').index();
+  Application.controllers.meta.index();
 
   // --------------------------------------------------------
   // Handle clicks on links

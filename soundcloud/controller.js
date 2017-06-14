@@ -4,41 +4,26 @@ const BaseController  = require('../app/base/controller')
 const SoundCloudModel = require('./model')
 
 module.exports = class SoundCloudController extends BaseController {
-  static activities(token) {
-    return SoundCloudModel.activities(token).then((activities) => {
-      return this.render('soundcloud/activities', activities, token)
-    });
+  constructor() {
+    super()
+
+    this.defineAction('activities')
+    this.defineAction('tracks')
+    this.defineAction('likes')
+    this.defineAction('playlists')
+
+    this.defineSearchAction()
   }
 
-  static tracks(token) {
-    return SoundCloudModel.tracks(token).then((tracks) => {
-      return this.render('soundcloud/tracks', tracks, token)
-    });
+  get module() {
+    return 'soundcloud'
   }
 
-  static likes(token) {
-    return SoundCloudModel.likes(token).then((likes) => {
-      return this.render('soundcloud/likes', likes, token)
-    });
+  get model() {
+    return SoundCloudModel
   }
 
-  static playlists(token) {
-    return SoundCloudModel.playlists(token).then((playlists) => {
-      return this.render('soundcloud/playlists', playlists, token)
-    })
-  }
-
-  static searchResults() {
-    return Service.for('soundcloud').search().then((results) => {
-      return this.render('soundcloud/search_results', results);
-    });
-  }
-
-  static signIn() {
-    return this.render('soundcloud/sign_in', {})
-  }
-
-  static get service() {
-    return Service.for('soundcloud');
+  get authenticable() {
+    return true
   }
 }

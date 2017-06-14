@@ -3,11 +3,11 @@
 const BaseController = require('../app/base/controller');
 
 module.exports = class MetaController extends BaseController {
-  static index() {
+  index() {
     return this.render('meta/index', {});
   }
 
-  static configuration() {
+  configuration() {
     return this.render('meta/configuration', {
       soundcloud: {
         connected: Service.for('soundcloud').isConnected()
@@ -18,7 +18,7 @@ module.exports = class MetaController extends BaseController {
     });
   }
 
-  static downloads() {
+  downloads() {
     return this.render('meta/downloads', {
       downloads: Downloads.queue,
       history:   Downloads.history
