@@ -13,7 +13,7 @@ module.exports = class YT {
   static get url() {
     return {
       token:  'https://accounts.google.com/o/oauth2/token',
-      auth:   'https://accounts.google.com/o/oauth2/auth',
+      auth:   'https://accounts.google.com/o/oauth2/v2/auth',
       data:   'https://www.googleapis.com/youtube/v3/',
       revoke: 'https://accounts.google.com/b/0/IssuedAuthSubTokens',
       info:   'http://www.youtube.com/get_video_info',
@@ -274,10 +274,12 @@ module.exports = class YT {
    * @return {null}
    */
   static fetchRelatedPlaylists() {
-    this.fetch('channels').then((data) => {
+    return this.fetch('channels').then((data) => {
       let playlists = data.items[0].contentDetails.relatedPlaylists;
 
       Config.store('youtube', 'related_playlists', playlists);
-    });
+
+      return true
+    })
   }
 }

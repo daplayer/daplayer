@@ -76,7 +76,7 @@ module.exports = class SubWindow {
    */
   close(avoid_refresh) {
     if (!avoid_refresh)
-      Ui.refresh();
+      Page.refresh()
 
     this.window.close();
   }

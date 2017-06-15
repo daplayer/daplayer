@@ -89,6 +89,14 @@ module.exports = class Page {
   }
 
   /**
+   * Refreshes the current page.
+   */
+  static refresh() {
+    var {module, action} = Cache.current
+    this.render([module, action].join('/'))
+  }
+
+  /**
    * Scrolls to the current playing element or playlist.
    */
   static scrollToPlayingElement() {

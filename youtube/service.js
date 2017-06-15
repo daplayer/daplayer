@@ -81,12 +81,10 @@ module.exports = class YouTubeService extends NetService {
     // Whenever the URL of the page changes, we check whether the
     // new URL contains a `code` parameter and then we request a
     // token with this code and close the window.
-    auth_window.on('redirect', (event, old_url, new_url) => {
-      if (new_url.match(/code=/)) {
-        this.requestToken(new_url);
-        auth_window.close();
-      }
-    });
+    auth_window.on('will-navigate', (event, url) => {
+      if (url.match(/code=/))
+        this.requestToken(url).then(() => auth_window.close())
+    })
   }
 
   /**
@@ -95,7 +93,7 @@ module.exports = class YouTubeService extends NetService {
    * stored on the user's computer.
    *
    * @param  {String} url - The returned URL when auth is given.
-   * @return {null}
+   * @return {Promise}
    */
   static requestToken(url) {
     var params = {
@@ -106,9 +104,11 @@ module.exports = class YouTubeService extends NetService {
         grant_type:    'authorization_code'
     };
 
-    request.post(YT.url.token, { form: params }, (e, r, body) => {
-      this.storeCredentials(body, false);
-    });
+    return new Promise((resolve, reject) => {
+      request.post(YT.url.token, { form: params }, (e, r, body) => {
+        resolve(this.storeCredentials(body, false))
+      })
+    })
   }
 
   /**
@@ -116,7 +116,7 @@ module.exports = class YouTubeService extends NetService {
    * the token inside the user's configuration file.
    *
    * @param  {Object|String} credentails - The credentials.
-   * @return {null}
+   * @return {Promise}
    */
   static storeCredentials(credentials, refreshing_token) {
     if (typeof credentials === 'string')
@@ -138,7 +138,9 @@ module.exports = class YouTubeService extends NetService {
     // inside the user configuration because they won't change
     // unless another account is connected.
     if (!refreshing_token)
-      YT.fetchRelatedPlaylists();
+      return YT.fetchRelatedPlaylists()
+    else
+      return Promise.resolve(true)
   }
 
   /**
