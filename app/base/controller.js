@@ -10,7 +10,7 @@ module.exports = class BaseController {
   constructor() {
     if (this.authenticable) {
       this.signIn = function() {
-        return this.render('soundcloud/sign_in', {})
+        return this.render(`${this.module}/sign_in`, {})
       }
     }
   }
