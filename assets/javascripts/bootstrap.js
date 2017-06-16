@@ -56,7 +56,7 @@ Application.boot(function() {
 
       Cache.search = { query: $(this).val() };
       Ui.setCurrentAction(href)
-      Ui.render(href)
+      Page.render(href)
     }
   });
 
